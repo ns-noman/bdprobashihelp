@@ -81,7 +81,7 @@ class ItemController extends Controller
             'items.vat',
             'items.status',
         ];
-        $query = Item::query();
+        $query = Item::with('package_items');
         if($item_type){
             $query = $query->where('items.item_type', $item_type);
         }else{

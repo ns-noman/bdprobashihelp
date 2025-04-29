@@ -11,14 +11,10 @@ class SaleDetails extends Model
     protected $fillable = 
     [
         'sale_id',
-        'item_type',
         'item_id',
-        'service_id',
-        'quantity',
-        'unit_price',
+        'date',
         'purchase_price',
+        'sale_price',
         'profit',
-        'net_sale_price',
-        'net_profit',
     ];
 }

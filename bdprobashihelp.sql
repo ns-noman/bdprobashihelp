@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 28, 2025 at 11:48 AM
+-- Generation Time: Apr 29, 2025 at 12:12 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -107,7 +107,10 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1, 1, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-30 19:03:44', '2024-12-31 17:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7'),
-(2, 1, 'Agent', NULL, 2, '62', 'agent@gmail.com', '$2y$10$.VcBTFGCDXfpv27VF7c32uIaDnGbmd2cJCZONPbN0P6Blysqu9j.i', NULL, 1, '2025-04-16 04:20:15', '2025-04-16 04:22:57', 'u44VNRpJKqnWwkkZZcIochNAGfOemImrMusKOcwBLDO2tEIGia8WQAYNtq2M');
+(2, 1, 'Agent', NULL, 2, '62', 'agent@gmail.com', '$2y$10$.VcBTFGCDXfpv27VF7c32uIaDnGbmd2cJCZONPbN0P6Blysqu9j.i', NULL, 1, '2025-04-16 04:20:15', '2025-04-16 04:22:57', 'u44VNRpJKqnWwkkZZcIochNAGfOemImrMusKOcwBLDO2tEIGia8WQAYNtq2M'),
+(3, NULL, 'Lilah Preston', NULL, 2, '93', 'mojyf@mailinator.com', '$2y$10$Fib2zH/CegPPo7NsAMoJ1uhgK290clSfJalnHptksfwqwO9RLQbWa', NULL, 0, '2025-04-29 09:15:04', '2025-04-29 09:15:04', NULL),
+(4, NULL, 'Lionel Carlson', NULL, 2, '11', 'kimezaxa@mailinator.com', '$2y$10$qyGNxhetANjF5J7npxCm8..OdOOdMhhkayZDics2stsl623YQonEG', NULL, 0, '2025-04-29 09:15:17', '2025-04-29 09:15:17', NULL),
+(5, NULL, 'Iona Hodges', NULL, 2, '81', 'pyzizeret@mailinator.com', '$2y$10$bfoF9N4riJsKRHf95HQ.xeujE6W1LUEvrxCCsewE/Tmq8ink7S.7q', NULL, 0, '2025-04-29 09:15:23', '2025-04-29 09:15:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -137,7 +140,10 @@ CREATE TABLE `agents` (
 --
 
 INSERT INTO `agents` (`id`, `name`, `email`, `contact`, `address`, `dob`, `nid`, `balance`, `is_self`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, '0.00', 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07');
+(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, '0.00', 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07'),
+(2, 'Lilah Preston', 'mojyf@mailinator.com', '93', 'Cupidatat nostrum in', '1984-07-16', 17, '0.00', 0, 1, 1, 1, '2025-04-29 09:15:04', '2025-04-29 09:15:11'),
+(3, 'Lionel Carlson', 'kimezaxa@mailinator.com', '11', 'Commodi cum reprehen', '2021-06-23', 90, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:17', '2025-04-29 09:15:17'),
+(4, 'Iona Hodges', 'pyzizeret@mailinator.com', '81', 'Sint ipsum pariatur', '1993-11-12', 59, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:23', '2025-04-29 09:15:23');
 
 -- --------------------------------------------------------
 
@@ -877,7 +883,11 @@ INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `name`,
 (3, 0, NULL, NULL, 'Settlement', NULL, 2500.00, 3000.00, 0.00, 1, '2025-04-28 10:54:14', '2025-04-28 10:55:38'),
 (4, 1, NULL, NULL, 'Basic Package', NULL, 4500.00, 5000.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
 (5, NULL, 4, 2, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
-(6, NULL, 4, 3, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53');
+(6, NULL, 4, 3, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
+(7, 1, NULL, NULL, 'Premium Package', NULL, 12000.00, 14000.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
+(8, NULL, 7, 1, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
+(9, NULL, 7, 2, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
+(10, NULL, 7, 3, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23');
 
 -- --------------------------------------------------------
 
@@ -1029,7 +1039,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (134, 35, 5, 'View', NULL, 0, NULL, 'bike-purchases.invoice', 1, '2025-03-20 09:05:09', '2025-03-20 09:05:09'),
 (135, 35, 6, 'Print', NULL, 0, NULL, 'bike-purchases.invoice.print', 1, '2025-03-20 09:05:32', '2025-03-20 09:05:32'),
 (136, 0, 5, 'Clients', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 0, '2025-03-22 19:17:08', '2025-04-28 09:29:42'),
-(137, 0, 6, 'Jobs', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'sales.create', 'sales.index', 0, '2025-03-22 20:31:30', '2025-04-28 09:30:36'),
+(137, 0, 6, 'Jobs', '<i class=\"fa fa-tasks nav-icon\"></i>', 1, 'sales.create', 'sales.index', 1, '2025-03-22 20:31:30', '2025-04-29 05:03:09'),
 (138, 0, 5, 'Client Payment', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 1, '2025-03-23 08:47:00', '2025-04-28 11:47:51'),
 (139, 0, 12, 'Loan Manage', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 0, '2025-04-09 05:37:41', '2025-04-28 06:21:48'),
 (140, 139, 1, 'Party Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'parties.create', 'parties.index', 1, '2025-04-09 05:39:23', '2025-04-09 05:39:23'),
@@ -1140,15 +1150,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (44, '2025_04_09_105706_create_party_ledgers_table', 44),
 (45, '2025_04_09_110301_create_party_payments_table', 45),
 (46, '2025_03_23_005302_create_customers_table', 46),
-(47, '2025_03_23_010022_create_sales_table', 47),
 (48, '2025_02_27_162237_create_bike_purchases_table', 48),
 (49, '2025_03_09_095309_create_bike_sales_table', 49),
-(50, '2025_03_23_010039_create_sale_details_table', 50),
 (51, '2024_04_21_174416_create_purchases_table', 51),
 (52, '2025_04_18_232237_add_is_repurchased_to_bike_sales_table', 52),
 (53, '2025_04_21_094759_create_fund_transfer_histories_table', 53),
 (123, '2025_02_19_124857_create_agents_table', 54),
-(130, '2023_12_26_170202_create_items_table', 55);
+(130, '2023_12_26_170202_create_items_table', 55),
+(135, '2025_03_23_010022_create_sales_table', 56),
+(137, '2025_03_23_010039_create_sale_details_table', 57);
 
 -- --------------------------------------------------------
 
@@ -1429,22 +1439,18 @@ INSERT INTO `roles` (`id`, `is_superadmin`, `created_by`, `role`, `is_default`, 
 
 CREATE TABLE `sales` (
   `id` bigint UNSIGNED NOT NULL,
-  `customer_id` int DEFAULT NULL,
-  `bike_reg_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agent_id` int DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
-  `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
-  `vat_tax` double(20,2) DEFAULT '0.00',
-  `discount_method` tinyint NOT NULL DEFAULT '1' COMMENT '0=Percentage, 1=Solid',
-  `discount_rate` double(20,2) NOT NULL,
-  `discount` double(20,2) NOT NULL,
-  `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1460,15 +1466,11 @@ CREATE TABLE `sales` (
 CREATE TABLE `sale_details` (
   `id` bigint UNSIGNED NOT NULL,
   `sale_id` int NOT NULL,
-  `item_type` int NOT NULL COMMENT '0=item, 1=service',
-  `item_id` int DEFAULT NULL,
-  `service_id` int DEFAULT NULL,
-  `quantity` double(20,2) NOT NULL,
-  `unit_price` double(20,2) NOT NULL,
+  `item_id` int NOT NULL,
+  `date` date NOT NULL,
   `purchase_price` double(20,2) DEFAULT NULL,
+  `sale_price` double(20,2) DEFAULT NULL,
   `profit` double(20,2) DEFAULT NULL,
-  `net_sale_price` double(20,2) DEFAULT NULL,
-  `net_profit` double(20,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1991,13 +1993,13 @@ ALTER TABLE `account_ledgers`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `agents`
 --
 ALTER TABLE `agents`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `basic_infos`
@@ -2165,7 +2167,7 @@ ALTER TABLE `investor_transactions`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -2177,7 +2179,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `parties`

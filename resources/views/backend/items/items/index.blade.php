@@ -82,7 +82,24 @@
             },
             columns: [
                 { data: null, orderable: false, searchable: false },
-                { data: 'name', name: 'items.name'},
+                // { data: 'name', name: 'items.name'},
+                { 
+                    data: null, 
+                    name: 'items.name', 
+                    orderable: true, 
+                    searchable: false, 
+                    render: function(data, type, row, meta) {
+                        let text = row.name;
+                        let colors = ['info','primary','warning','danger'];
+                        if(row.package_items.length) text += '(';
+                        row.package_items.forEach((element, index)=> {
+                            
+                            text += element.item.name + (index + 1 < row.package_items.length ? ', ' : '');
+                        });
+                        if(row.package_items.length) text += ')';
+                        return text;
+                    }
+                },
                 { 
                     data: null, 
                     name: 'items.item_type', 

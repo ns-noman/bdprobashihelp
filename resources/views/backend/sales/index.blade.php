@@ -21,9 +21,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
-                                                    <th>Vouchar No</th>
-                                                    <th>Customer/Reg#</th>
-                                                    <th>Date</th>
+                                                    <th>Job No</th>
+                                                    <th>Agent Name</th>
+                                                    <th>P</th>
                                                     <th>Total Price</th>
                                                     <th>Vat/Tax</th>
                                                     <th>Discount</th>
@@ -37,23 +37,6 @@
                                             </thead>
                                             <tbody>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>SN</th>
-                                                    <th>Vouchar No</th>
-                                                    <th>Customer/Reg#</th>
-                                                    <th>Date</th>
-                                                    <th>Total Price</th>
-                                                    <th>Vat/Tax</th>
-                                                    <th>Discount</th>
-                                                    <th>Payable</th>
-                                                    <th>Paid|Due</th>
-                                                    <th>Note</th>
-                                                    <th>Payment Status</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

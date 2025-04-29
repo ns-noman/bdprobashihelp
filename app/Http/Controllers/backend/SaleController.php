@@ -6,8 +6,8 @@ use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\BasicInfo;
 use App\Models\PaymentMethod;
-use App\Models\CustomerPayment;
-use App\Models\Customer;
+use App\Models\AgentPayment;
+use App\Models\Agent;
 use App\Models\Item;
 use App\Models\BikeService;
 use App\Models\StockHistory;
@@ -21,7 +21,7 @@ use Auth;
 class SaleController extends Controller
 {
     protected $breadcrumb;
-    public function __construct(){$this->breadcrumb = ['title'=>'Sales'];}
+    public function __construct(){$this->breadcrumb = ['title'=>'Job'];}
     public function index()
     {
       
@@ -59,28 +59,15 @@ class SaleController extends Controller
         }
         $data['paymentMethods'] = $this->paymentMethods();
         $data['currency_symbol'] = BasicInfo::first()->currency_symbol;
-        $data['customers'] = Customer::where('status',1)->orderBy('name','asc')->get();
+        $data['agents'] = Agent::where('status',1)->orderBy('name','asc')->get();
 
-        $items = Item::join('units','units.id','=','items.unit_id')
-                            ->where('items.status',1)
-                            ->orderBy('name','asc')
-                            ->select('items.id','items.name','items.sale_price as price','items.current_stock as stock_quantity','units.title as unit_name')
-                            ->get()
-                            ->toArray();
-        foreach ($items as $key => &$item) {
-            $item['item_type'] = 'item';
-        }
-        $services = BikeService::where('status',1)
-                                    ->orderBy('name','asc')
-                                    ->select('id','name','price')
-                                    ->get()
-                                    ->toArray();
-        foreach ($services as $key => &$service) {
-            $service['item_type'] = 'service';
-            $service['unit_name'] = 'Service';
-            $service['stock_quantity'] = null;
-        }
-        $data['items'] = [...$items, ...$services];
+        $items = Item::where('items.status',1)
+                ->orderBy('item_type','desc')
+                ->where('item_type', '!=', null)
+                ->select('items.id','items.item_type','items.name','items.sale_price as price')
+                ->get()
+                ->toArray();
+        $data['items'] = $items;
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.sales.create-or-edit',compact('data'));
     }
@@ -92,7 +79,7 @@ class SaleController extends Controller
 
         $select = 
         [
-            'sales.customer_id',
+            'sales.agent_id',
             'sales.account_id',
             'sales.invoice_no',
             'sales.bike_reg_no',
@@ -132,7 +119,7 @@ class SaleController extends Controller
         ];
 
         $data['basicInfo'] = BasicInfo::first()->toArray();
-        $data['master'] = Sale::join('customers','customers.id','=','sales.customer_id')
+        $data['master'] = Sale::join('customers','customers.id','=','sales.agent_id')
                             ->leftJoin('accounts', 'accounts.id', '=', 'sales.account_id')
                             ->leftJoin('payment_methods', 'payment_methods.id', '=', 'accounts.payment_method_id')
                             ->join('admins', 'admins.id', '=', 'sales.created_by_id')
@@ -160,11 +147,11 @@ class SaleController extends Controller
         $note = $request->note;
         $created_by_id = Auth::guard('admin')->user()->id;
         $sale = Sale::find($request->sale_id);
-        $customer_id = $sale->customer_id;
+        $agent_id = $sale->agent_id;
 
-        //CustomerPayment Create**********
-        $payment = new CustomerPayment();
-        $payment->customer_id = $customer_id;
+        //AgentPayment Create**********
+        $payment = new AgentPayment();
+        $payment->agent_id = $agent_id;
         $payment->account_id = $account_id;
         $payment->sale_id = $sale_id;
         $payment->date = $date;
@@ -184,21 +171,14 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
         try {
-            $customer_id = $request->customer_id;
+            $agent_id = $request->agent_id;
             $account_id = $request->account_id;
             $date = $request->date;
             $total_pice = $request->total_price;
-            $vat_tax = $request->vat_tax ?? 0;
-            $discount_method = $request->discount_method;
-            $discount_rate = $request->discount_rate ?? 0;
-            $discount = $request->discount ?? 0;
-            $total_payable = $request->total_payable;
             $paid_amount = $request->paid_amount;
             $note = $request->note;
             $reference_number = $request->reference_number;
-    
             $item_id = $request->item_id;
-            $item_type = $request->item_type;
             $unit_price = $request->unit_price;
             $quantity = $request->quantity;
     
@@ -206,35 +186,23 @@ class SaleController extends Controller
             $created_by_id = Auth::guard('admin')->user()->id;
             // Sale creation
             $sale = new Sale();
-            $sale->customer_id = $customer_id;
+            $sale->agent_id = $agent_id;
             $sale->account_id = $account_id;
             $sale->invoice_no = $invoice_no;
             $sale->date = $date;
             $sale->total_price = $total_pice;
-            $sale->vat_tax = $vat_tax;
-            $sale->discount_method = $discount_method;
-            $sale->discount_rate = $discount_rate;
-            $sale->discount = $discount;
-            $sale->total_payable = $total_payable;
             $sale->paid_amount = $paid_amount;
             $sale->reference_number = $reference_number;
             $sale->note = $note;
-            $sale->payment_status = ($total_payable == $paid_amount) ? 1 : 0;
+            $sale->payment_status = ($total_price == $paid_amount) ? 1 : 0;
             $sale->status = 0;
             $sale->created_by_id = $created_by_id;
             $sale->save();
             for ($i = 0; $i < count($item_id); $i++) {
                 $saleDetails = new SaleDetails();
                 $saleDetails->sale_id = $sale->id;
-                $saleDetails->item_type = $item_type[$i];
                 $saleDetails->item_id = null;
-                $saleDetails->service_id = null;
-                if($item_type[$i]==0){
-                    $saleDetails->item_id = $item_id[$i];
-                }else{
-                    $saleDetails->service_id = $item_id[$i];
-                }
-                $saleDetails->quantity = $quantity[$i];
+                $saleDetails->item_id = $item_id[$i];
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
             }
@@ -249,7 +217,7 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
         try {
-            $customer_id = $request->customer_id;
+            $agent_id = $request->agent_id;
             $account_id = $request->account_id;
             $date = $request->date;
             $total_pice = $request->total_price;
@@ -269,7 +237,7 @@ class SaleController extends Controller
     
             $updated_by_id = Auth::guard('admin')->user()->id;
             $sale = Sale::find($id);
-            $sale->customer_id = $customer_id;
+            $sale->agent_id = $agent_id;
             $sale->account_id = $account_id;
             $sale->date = $date;
             $sale->total_price = $total_pice;
@@ -319,7 +287,7 @@ class SaleController extends Controller
 
             $sale = Sale::findOrFail($id);
 
-            $customer_id = $sale->customer_id;
+            $agent_id = $sale->agent_id;
             $account_id = $sale->account_id;
             $invoice_no = $sale->invoice_no;
             $date = $sale->date;
@@ -393,8 +361,8 @@ class SaleController extends Controller
                 }
             }
 
-            // Customer ledger entry for sale
-            $customerLedgerDataSale['customer_id'] = $customer_id;
+            // Agent ledger entry for sale
+            $customerLedgerDataSale['agent_id'] = $agent_id;
             $customerLedgerDataSale['sale_id'] = $sale->id;
             $customerLedgerDataSale['particular'] = 'Sale';
             $customerLedgerDataSale['date'] = $date;
@@ -415,8 +383,8 @@ class SaleController extends Controller
                 ];
                 $this->accountTransaction($accountData);
 
-                $payment = new CustomerPayment();
-                $payment->customer_id = $customer_id;
+                $payment = new AgentPayment();
+                $payment->agent_id = $agent_id;
                 $payment->account_id = $account_id;
                 $payment->sale_id = $sale->id;
                 $payment->date = $date;
@@ -427,7 +395,7 @@ class SaleController extends Controller
                 $payment->created_by_id = $created_by_id;
                 $payment->save();
 
-                $customerLedgerDataPayment['customer_id'] = $customer_id;
+                $customerLedgerDataPayment['agent_id'] = $agent_id;
                 $customerLedgerDataPayment['payment_id'] = $payment->id;
                 $customerLedgerDataPayment['account_id'] = $account_id;
                 $customerLedgerDataPayment['particular'] = 'Payment';
@@ -471,7 +439,7 @@ class SaleController extends Controller
             'customers.name as customer_name',
             'customers.phone as customer_contact',
             'admins.name as creator_name',
-            'sales.customer_id',
+            'sales.agent_id',
             'sales.bike_reg_no',
             'sales.invoice_no',
             'sales.date',
@@ -487,7 +455,7 @@ class SaleController extends Controller
             'sales.updated_by_id',
 
         ];
-        $query = Sale::join('customers', 'customers.id', '=', 'sales.customer_id')
+        $query = Sale::join('customers', 'customers.id', '=', 'sales.agent_id')
                             ->join('admins', 'admins.id', '=', 'sales.created_by_id');
         if(!$request->has('order')) $query = $query->orderBy('sales.id','desc');
         $query = $query->select($select);

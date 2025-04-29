@@ -23,15 +23,10 @@ class Item extends Model
 
     public function package_items()
     {
-        return $this->hasMany(PackageItem::class, 'package_id', 'id');
+        return $this->hasMany(Item::class, 'package_id')->with('item')->select('id','package_item_id','package_id');
     }
-    
-    public function getPackageItemNamesAttribute()
+    public function item()
     {
-        return $this->package_items->map(function($packageItem){
-            return $packageItem->product->name;
-        })->implode(', ');
+        return $this->belongsTo(Item::class, 'package_item_id')->select('id', 'name');
     }
-    
-
 }

@@ -11,15 +11,11 @@ return new class extends Migration
         Schema::create('sale_details', function (Blueprint $table) {
             $table->id();
             $table->integer('sale_id');
-            $table->integer('item_type')->comment('0=item, 1=service');
-            $table->integer('item_id')->nullable();
-            $table->integer('service_id')->nullable();
-            $table->double('quantity',20,2);
-            $table->double('unit_price',20,2);
+            $table->integer('item_id');
+            $table->date('date');
             $table->double('purchase_price',20,2)->nullable();
+            $table->double('sale_price',20,2)->nullable();
             $table->double('profit',20,2)->nullable();
-            $table->double('net_sale_price',20,2)->nullable();
-            $table->double('net_profit',20,2)->nullable();
             $table->timestamps();
         });
     }
