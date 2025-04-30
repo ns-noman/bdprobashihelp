@@ -22,10 +22,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
-                                                    <th>Customer Name</th>
+                                                    <th>Agent Name</th>
                                                     <th>Date</th>
                                                     <th>Amount</th>
-                                                    <th>Vouchar No</th>
+                                                    <th>Job No</th>
                                                     <th>Payment Method</th>
                                                     <th>Reference No</th>
                                                     <th>Note</th>

@@ -18,8 +18,8 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                            <label>Customer Name *</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->name : null }}" type="text" class="form-control" name="name" placeholder="Customer Name" required>
+                                            <label>Name *</label>
+                                            <input value="{{ isset($data['item']) ? $data['item']->name : null }}" type="text" class="form-control" name="name" placeholder="Name" required>
                                         </div>
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                             <label>Phone *</label>
@@ -29,27 +29,15 @@
                                             <label>Email</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->email : null }}" type="email" class="form-control" name="email" placeholder="example@gmail.com">
                                         </div>
-                                        {{-- <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                            <label>Organization</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->organization : null }}" type="text" class="form-control" name="organization" placeholder="Organization">
-                                        </div> --}}
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                             <label>Address</label>
                                             <textarea class="form-control" name="address" placeholder="Address" cols="30" rows="1">{{ isset($data['item']) ? $data['item']->address : null }}</textarea>
                                         </div>
-                                        @if(!isset($data['item']))
-                                            <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                                <label>Opening Payable</label>
-                                                <input value="{{ isset($data['item']) ? $data['item']->opening_payable : null }}" type="number" class="form-control" name="opening_payable" placeholder="0.00">
-                                            </div>
-                                        @endif
-                                        @if(!isset($data['item']))
-                                            <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                                <label>Opening Receivable</label>
-                                                <input value="{{ isset($data['item']) ? $data['item']->opening_receivable : null }}" type="number" class="form-control" name="opening_receivable" placeholder="0.00">
-                                            </div>
-                                        @endif
-                                        <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                                            <label>Organization</label>
+                                            <input value="{{ isset($data['item']) ? $data['item']->organization : null }}" type="text" class="form-control" name="organization" placeholder="Organization">
+                                        </div>
+                                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                             <label>Status</label>
                                             <select name="status" id="status" class="form-control">
                                                 <option {{ isset($data['item']) ? $data['item']->status == 1 ? 'selected' : null : null }} value="1">Active</option>

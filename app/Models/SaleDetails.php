@@ -13,8 +13,11 @@ class SaleDetails extends Model
         'sale_id',
         'item_id',
         'date',
+        'unit_price',
         'purchase_price',
-        'sale_price',
         'profit',
+        'net_sale_price',
+        'net_profit',
+        'is_service_generated',
     ];
 }

@@ -22,9 +22,9 @@
                                                 name="date" id="date" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
-                                            <label>Customer *</label>
+                                            <label>Agents *</label>
                                             <select name="customer_id" id="customer_id" class="form-control" required>
-                                                <option value="" selected>Select Customer</option>
+                                                <option value="" selected>Select Agent</option>
                                                 @foreach ($data['customers'] as $customer)
                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                 @endforeach

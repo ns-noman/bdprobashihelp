@@ -5,17 +5,19 @@ namespace App\Http\Controllers\backend;
 use App\Models\Customer;
 use App\Models\BasicInfo;
 use App\Models\CustomerLedger;
+use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
 
 class CustomerController extends Controller
 {
     protected $breadcrumb;
-    public function __construct(){$this->breadcrumb = ['title'=>'Clients'];}
+    public function __construct(){$this->breadcrumb = ['title'=>'Agents'];}
     public function index()
     {
-        $data['customers'] = Customer::where('customer_type', 0)->orderBy('id', 'desc')->get();
+        $data['customers'] = Customer::orderBy('id', 'desc')->get();
         $data['currency_symbol'] = BasicInfo::first()->currency_symbol;
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.customers.index', compact('data'));
@@ -38,13 +40,26 @@ class CustomerController extends Controller
         //Customer Create**********
         $data = $request->all();
         $data['created_by_id'] = Auth::guard('admin')->user()->id;
-        if (!$data['name']) {
-            $data['name'] = 'Walk-in Customer';
-        }
         $customer = Customer::create($data);
         //End
+
+        $admin = Admin::where('email',$data['email'])->first();
+        if($admin){
+            return redirect()->back()->with('alert',['messageType'=>'danger','message'=>'This email is already exists!']);
+        }
+
+        $admins['agent_id'] = $customer->id;
+        $admins['password'] = Hash::make('12345');
+        $admins['name'] = $data['name'];
+        $admins['type'] = 2;
+        $admins['mobile'] = $data['phone'];
+        $admins['email'] = $data['email'];
+        $admins['status'] = 0;
+        Admin::create($admins);
+
+
         //Customer Ledger Payment Create**********
-        if($data['opening_payable'])
+        if(isset($data['opening_payable']) && $data['opening_payable'])
         {
             $customerLedgerData['customer_id'] = $customer->id;
             $customerLedgerData['particular'] = 'Opening Payable';
@@ -54,7 +69,7 @@ class CustomerController extends Controller
             $customerLedgerData['created_by_id'] = Auth::guard('admin')->user()->id;
             $this->customerLedgerTransction($customerLedgerData);
         }
-        if($data['opening_receivable'])
+        if(isset($data['opening_receivable']) && $data['opening_receivable'])
         {
             $customerLedgerData['customer_id'] = $customer->id;
             $customerLedgerData['particular'] = 'Opening Receivable';

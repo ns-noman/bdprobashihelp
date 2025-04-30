@@ -19,7 +19,7 @@ use Auth;
 class CustomerPaymentController extends Controller
 {
     protected $breadcrumb;
-    public function __construct(){$this->breadcrumb = ['title'=>'Payments'];}
+    public function __construct(){$this->breadcrumb = ['title'=>'Agent Payments'];}
     public function index()
     {
         $data['payments'] = CustomerPayment::orderBy('id', 'desc')->get();

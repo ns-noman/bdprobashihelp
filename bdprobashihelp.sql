@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 29, 2025 at 12:12 PM
+-- Generation Time: Apr 30, 2025 at 12:10 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '0.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-04-23 04:22:38'),
+(1, 1, 'Hand Cash', 'Self', '96740.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-04-30 12:04:13'),
 (2, 2, '01839317038', 'Self', '0.00', 1, 1, NULL, '2025-02-26 10:41:05', '2025-04-28 08:10:18'),
 (3, 4, '20501680205073807', 'Nowab Shorif', '0.00', 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
 (4, 1, 'Check', 'Self', '0.00', 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
@@ -77,7 +77,11 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (1, 2, 1000.00, NULL, -1000.00, NULL, 'Transfered to other account', '2025-04-28', '2025-04-28 08:09:47', '2025-04-28 08:09:47'),
 (2, 3, NULL, 1000.00, 1000.00, '567hgjhu', 'Received from other account', '2025-04-28', '2025-04-28 08:09:47', '2025-04-28 08:09:47'),
 (3, 3, 1000.00, NULL, 0.00, NULL, 'Transfered to other account', '2025-04-28', '2025-04-28 08:10:18', '2025-04-28 08:10:18'),
-(4, 2, NULL, 1000.00, 0.00, '567890j', 'Received from other account', '2025-04-28', '2025-04-28 08:10:18', '2025-04-28 08:10:18');
+(4, 2, NULL, 1000.00, 0.00, '567890j', 'Received from other account', '2025-04-28', '2025-04-28 08:10:18', '2025-04-28 08:10:18'),
+(5, 1, NULL, 50000.00, 50000.00, NULL, 'Regular Sale', '2025-04-30', '2025-04-30 09:59:37', '2025-04-30 09:59:37'),
+(6, 1, NULL, 4750.00, 54750.00, NULL, 'Sale Payment', '2025-04-30', '2025-04-30 11:01:31', '2025-04-30 11:01:31'),
+(7, 1, NULL, 20995.00, 75745.00, NULL, 'Sale Payment', '2025-04-30', '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
+(8, 1, NULL, 20995.00, 96740.00, NULL, 'Sale Payment', '2025-04-30', '2025-04-30 12:04:13', '2025-04-30 12:04:13');
 
 -- --------------------------------------------------------
 
@@ -107,10 +111,12 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1, 1, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-30 19:03:44', '2024-12-31 17:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7'),
-(2, 1, 'Agent', NULL, 2, '62', 'agent@gmail.com', '$2y$10$.VcBTFGCDXfpv27VF7c32uIaDnGbmd2cJCZONPbN0P6Blysqu9j.i', NULL, 1, '2025-04-16 04:20:15', '2025-04-16 04:22:57', 'u44VNRpJKqnWwkkZZcIochNAGfOemImrMusKOcwBLDO2tEIGia8WQAYNtq2M'),
-(3, NULL, 'Lilah Preston', NULL, 2, '93', 'mojyf@mailinator.com', '$2y$10$Fib2zH/CegPPo7NsAMoJ1uhgK290clSfJalnHptksfwqwO9RLQbWa', NULL, 0, '2025-04-29 09:15:04', '2025-04-29 09:15:04', NULL),
-(4, NULL, 'Lionel Carlson', NULL, 2, '11', 'kimezaxa@mailinator.com', '$2y$10$qyGNxhetANjF5J7npxCm8..OdOOdMhhkayZDics2stsl623YQonEG', NULL, 0, '2025-04-29 09:15:17', '2025-04-29 09:15:17', NULL),
-(5, NULL, 'Iona Hodges', NULL, 2, '81', 'pyzizeret@mailinator.com', '$2y$10$bfoF9N4riJsKRHf95HQ.xeujE6W1LUEvrxCCsewE/Tmq8ink7S.7q', NULL, 0, '2025-04-29 09:15:23', '2025-04-29 09:15:23', NULL);
+(3, 1, 'Derek Roth', NULL, 2, '71', 'kozuc@mailinator.com', '$2y$10$TRWNTnPQaNeGrcY3yErucumdfy0rZNUI6bNzMDmqNMaqIJ3.z4rDa', NULL, 0, '2025-04-30 06:20:32', '2025-04-30 06:20:32', NULL),
+(4, 1, 'Ariel Wall', NULL, 2, '34', 'tywylavoco@mailinator.com', '$2y$10$uU3y9PD/FETQafrvx02HxOpivFdj1Yddekmqbkez8a7n6TQ84n8KG', NULL, 0, '2025-04-30 09:56:50', '2025-04-30 09:56:50', NULL),
+(5, 2, 'Theodore Maxwell', NULL, 2, '100', 'korylapic@mailinator.com', '$2y$10$sRIcSmN4QR15irOYsjgrju7wVMjLO5amay5kw52J9eiewR3DSEfS6', NULL, 0, '2025-04-30 09:57:45', '2025-04-30 09:57:45', NULL),
+(6, 1, 'Carter Jarvis', NULL, 2, '96', 'byjozed@mailinator.com', '$2y$10$jgIvsRZhrnkBvvpPB4UU6OYb7FmCtDCaPmf8tgg2KJPXZjyRCOn6S', NULL, 0, '2025-04-30 10:52:16', '2025-04-30 10:52:16', NULL),
+(7, 2, 'Jasper Morton', NULL, 2, '23', 'pemurydum@mailinator.com', '$2y$10$NUKAdsQ9CxngQY3iiZ2yj.sReF3Fnzz6MASfQPYTaPNGZFKnMVqwq', NULL, 0, '2025-04-30 10:52:21', '2025-04-30 10:52:21', NULL),
+(8, 3, 'Aquila Stafford', NULL, 2, '53', 'xoje@mailinator.com', '$2y$10$gpUsalpXMdZuJwCEiRmazu0jmcoEagWNqMsiWodqd4iYIU9vwFDO2', NULL, 0, '2025-04-30 10:52:25', '2025-04-30 10:52:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -591,14 +597,13 @@ INSERT INTO `colors` (`id`, `name`, `hex_code`, `status`, `created_at`, `updated
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Walk-in Customer',
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `customer_type` tinyint NOT NULL DEFAULT '0' COMMENT '0=General Customer, 1=Default Customer',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -609,8 +614,10 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `customer_type`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Walk-in Customer', NULL, NULL, NULL, NULL, 0.00, 1, '1', NULL, NULL, NULL, NULL);
+INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 'Carter Jarvis', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', -50016.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-04-30 12:04:13'),
+(2, 'Jasper Morton', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-04-30 10:52:31'),
+(3, 'Aquila Stafford', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-04-30 11:01:31');
 
 -- --------------------------------------------------------
 
@@ -637,6 +644,21 @@ CREATE TABLE `customer_ledgers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `customer_ledgers`
+--
+
+INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `account_id`, `particular`, `date`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `note`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, NULL, NULL, 'Opening Payable', '2025-04-30', '35.00', NULL, '-35.00', NULL, NULL, 1, NULL, '2025-04-30 05:07:30', '2025-04-30 05:07:30'),
+(2, 1, NULL, NULL, NULL, 'Opening Receivable', '2025-04-30', NULL, '19.00', '-16.00', NULL, NULL, 1, NULL, '2025-04-30 05:07:30', '2025-04-30 05:07:30'),
+(3, 1, NULL, NULL, 1, 'Payment', '2025-04-30', '50000.00', NULL, '-50016.00', NULL, 'Dolor laudantium ad', 1, NULL, '2025-04-30 09:59:37', '2025-04-30 09:59:37'),
+(4, 3, 1, NULL, NULL, 'Sale', '2025-04-30', NULL, '4750.00', '4750.00', NULL, NULL, 1, NULL, '2025-04-30 11:01:30', '2025-04-30 11:01:30'),
+(5, 3, NULL, 2, 1, 'Payment', '2025-04-30', '4750.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-04-30 11:01:31', '2025-04-30 11:01:31'),
+(6, 1, 2, NULL, NULL, 'Sale', '2025-04-30', NULL, '20995.00', '-29021.00', NULL, NULL, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
+(7, 1, NULL, 3, 1, 'Payment', '2025-04-30', '20995.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
+(8, 1, 2, NULL, NULL, 'Sale', '2025-04-30', NULL, '20995.00', '-29021.00', NULL, NULL, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13'),
+(9, 1, NULL, 4, 1, 'Payment', '2025-04-30', '20995.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13');
+
 -- --------------------------------------------------------
 
 --
@@ -658,6 +680,16 @@ CREATE TABLE `customer_payments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_payments`
+--
+
+INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, '2025-04-30', 50000.00, NULL, 'Dolor laudantium ad', 1, 1, NULL, '2025-04-30 09:59:07', '2025-04-30 09:59:37'),
+(2, 3, 1, 1, '2025-04-30', 4750.00, NULL, NULL, 1, 1, NULL, '2025-04-30 11:01:31', '2025-04-30 11:01:31'),
+(3, 1, 1, 2, '2025-04-30', 20995.00, NULL, NULL, 1, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
+(4, 1, 1, 2, '2025-04-30', 20995.00, NULL, NULL, 1, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13');
 
 -- --------------------------------------------------------
 
@@ -892,6 +924,18 @@ INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `name`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `job_service_records`
+--
+
+CREATE TABLE `job_service_records` (
+  `id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menus`
 --
 
@@ -934,7 +978,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (23, 19, 3, 'Delete', NULL, 0, NULL, 'service-types.destroy', 1, '2024-10-31 10:29:54', '2024-10-31 10:31:16'),
 (24, 16, 1, 'Add', NULL, 0, NULL, 'colors.create', 1, '2024-10-31 10:32:07', '2025-03-11 08:45:06'),
 (25, 16, 2, 'Edit', NULL, 0, NULL, 'colors.edit', 1, '2024-10-31 10:32:22', '2025-03-11 08:45:11'),
-(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 1, '2024-11-03 08:16:54', '2025-04-21 06:28:17'),
+(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 0, '2024-11-03 08:16:54', '2025-04-30 06:22:53'),
 (30, 0, 10, 'Service Manage', '<i class=\"nav-icon fa fa-tools\"></i>', 1, NULL, NULL, 0, '2024-11-03 10:01:16', '2025-04-28 08:45:50'),
 (33, 2, 1, 'Edit', NULL, 0, NULL, 'basic-infos.edit', 1, '2024-11-09 10:07:19', '2024-11-09 10:07:19'),
 (34, 43, 1, 'Branch Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'branches.create', 'branches.index', 1, '2024-12-22 04:37:22', '2025-01-12 11:37:55'),
@@ -966,7 +1010,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (60, 52, 8, 'Stock History', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.stock-histories', 1, '2025-01-29 04:36:58', '2025-04-20 08:33:56'),
 (61, 52, 9, 'Procurement History', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, NULL, 0, '2025-01-29 04:37:22', '2025-03-22 03:35:16'),
 (62, 52, 10, 'Compliance', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, NULL, 0, '2025-01-29 04:37:43', '2025-03-22 03:35:25'),
-(63, 0, 4, 'Agents', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'agents.create', 'agents.index', 1, '2025-02-19 07:06:17', '2025-04-28 06:38:15'),
+(63, 0, 4, 'Investors', '<i class=\"nav-icon fas fa-user-tie\"></i>', 0, NULL, NULL, 0, '2025-02-19 07:06:17', '2025-04-30 04:55:41'),
 (64, 167, 2, 'Investor Transaction', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'investor-transactions.create', 'investor-transactions.index', 1, '2025-02-20 04:28:14', '2025-04-21 07:08:53'),
 (65, 64, 1, 'Edit', NULL, 0, NULL, 'investor-transactions.edit', 1, '2025-02-26 05:36:31', '2025-02-26 05:36:31'),
 (66, 64, 2, 'Delete', NULL, 0, NULL, 'investor-transactions.destroy', 1, '2025-02-26 05:37:01', '2025-02-26 05:37:01'),
@@ -1038,9 +1082,9 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (133, 73, 6, 'Print', NULL, 0, NULL, 'bike-service-records.invoice.print', 1, '2025-03-20 08:05:40', '2025-03-20 08:06:27'),
 (134, 35, 5, 'View', NULL, 0, NULL, 'bike-purchases.invoice', 1, '2025-03-20 09:05:09', '2025-03-20 09:05:09'),
 (135, 35, 6, 'Print', NULL, 0, NULL, 'bike-purchases.invoice.print', 1, '2025-03-20 09:05:32', '2025-03-20 09:05:32'),
-(136, 0, 5, 'Clients', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 0, '2025-03-22 19:17:08', '2025-04-28 09:29:42'),
+(136, 0, 5, 'Agent', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 1, '2025-03-22 19:17:08', '2025-04-30 04:56:08'),
 (137, 0, 6, 'Jobs', '<i class=\"fa fa-tasks nav-icon\"></i>', 1, 'sales.create', 'sales.index', 1, '2025-03-22 20:31:30', '2025-04-29 05:03:09'),
-(138, 0, 5, 'Client Payment', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 1, '2025-03-23 08:47:00', '2025-04-28 11:47:51'),
+(138, 0, 7, 'Agent Payments', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, 'customer-payments.create', 'customer-payments.index', 1, '2025-03-23 08:47:00', '2025-04-30 05:52:05'),
 (139, 0, 12, 'Loan Manage', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 0, '2025-04-09 05:37:41', '2025-04-28 06:21:48'),
 (140, 139, 1, 'Party Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'parties.create', 'parties.index', 1, '2025-04-09 05:39:23', '2025-04-09 05:39:23'),
 (141, 139, 2, 'Loans', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'loans.create', 'loans.index', 1, '2025-04-10 04:25:30', '2025-04-10 04:25:41'),
@@ -1149,7 +1193,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (43, '2025_04_09_111223_create_party_loans_table', 43),
 (44, '2025_04_09_105706_create_party_ledgers_table', 44),
 (45, '2025_04_09_110301_create_party_payments_table', 45),
-(46, '2025_03_23_005302_create_customers_table', 46),
 (48, '2025_02_27_162237_create_bike_purchases_table', 48),
 (49, '2025_03_09_095309_create_bike_sales_table', 49),
 (51, '2024_04_21_174416_create_purchases_table', 51),
@@ -1157,8 +1200,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (53, '2025_04_21_094759_create_fund_transfer_histories_table', 53),
 (123, '2025_02_19_124857_create_agents_table', 54),
 (130, '2023_12_26_170202_create_items_table', 55),
-(135, '2025_03_23_010022_create_sales_table', 56),
-(137, '2025_03_23_010039_create_sale_details_table', 57);
+(144, '2025_03_23_005302_create_customers_table', 58),
+(146, '2025_03_23_010022_create_sales_table', 59),
+(149, '2025_03_23_010039_create_sale_details_table', 60),
+(150, '2025_04_30_171205_create_job_service_records_table', 60);
 
 -- --------------------------------------------------------
 
@@ -1439,23 +1484,36 @@ INSERT INTO `roles` (`id`, `is_superadmin`, `created_by`, `role`, `is_default`, 
 
 CREATE TABLE `sales` (
   `id` bigint UNSIGNED NOT NULL,
-  `agent_id` int DEFAULT NULL,
+  `customer_id` int NOT NULL,
   `account_id` bigint DEFAULT NULL,
-  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
+  `vat_tax` double(20,2) DEFAULT '0.00',
+  `discount_method` tinyint NOT NULL DEFAULT '1' COMMENT '0=Percentage, 1=Solid',
+  `discount_rate` double(20,2) NOT NULL,
+  `discount` double(20,2) NOT NULL,
+  `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
   `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
-  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Complete',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 'Nowab Shorif', '23457890', '0000001', '2025-04-30', 5000.00, 0.00, 0, 5.00, 250.00, 4750.00, 4750.00, NULL, NULL, 1, 0, 1, NULL, '2025-04-30 10:55:11', '2025-04-30 11:01:30'),
+(2, 1, 1, 'Malek Azad', '345674', '0000002', '2025-04-30', 22100.00, 0.00, 0, 5.00, 1105.00, 20995.00, 20995.00, NULL, NULL, 1, 1, 1, 1, '2025-04-30 11:31:46', '2025-04-30 12:04:13');
 
 -- --------------------------------------------------------
 
@@ -1466,14 +1524,26 @@ CREATE TABLE `sales` (
 CREATE TABLE `sale_details` (
   `id` bigint UNSIGNED NOT NULL,
   `sale_id` int NOT NULL,
-  `item_id` int NOT NULL,
+  `item_id` int DEFAULT NULL,
   `date` date NOT NULL,
+  `unit_price` double(20,2) NOT NULL,
   `purchase_price` double(20,2) DEFAULT NULL,
-  `sale_price` double(20,2) DEFAULT NULL,
   `profit` double(20,2) DEFAULT NULL,
+  `net_sale_price` double(20,2) DEFAULT NULL,
+  `net_profit` double(20,2) DEFAULT NULL,
+  `is_service_generated` tinyint NOT NULL DEFAULT '0' COMMENT '0=No, 1=Yes',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sale_details`
+--
+
+INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `purchase_price`, `profit`, `net_sale_price`, `net_profit`, `is_service_generated`, `created_at`, `updated_at`) VALUES
+(13, 2, 7, '2025-04-30', 14000.00, 12000.00, 2000.00, 13287.10, 1287.10, 0, '2025-04-30 11:52:20', '2025-04-30 12:04:13'),
+(14, 2, 1, '2025-04-30', 6000.00, 5000.00, 1000.00, 5643.55, 643.55, 0, '2025-04-30 11:52:20', '2025-04-30 12:04:13'),
+(15, 2, 2, '2025-04-30', 2100.00, 2000.00, 100.00, 2064.35, 64.35, 0, '2025-04-30 11:52:20', '2025-04-30 12:04:13');
 
 -- --------------------------------------------------------
 
@@ -1838,6 +1908,12 @@ ALTER TABLE `items`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `job_service_records`
+--
+ALTER TABLE `job_service_records`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
@@ -1987,13 +2063,13 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `agents`
@@ -2101,19 +2177,19 @@ ALTER TABLE `colors`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2170,6 +2246,12 @@ ALTER TABLE `items`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `job_service_records`
+--
+ALTER TABLE `job_service_records`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
@@ -2179,7 +2261,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT for table `parties`
@@ -2245,13 +2327,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `sellers`

@@ -100,8 +100,9 @@
                                                             @foreach ($data['saleDetails'] as $sd)
                                                                 <tr>
                                                                     <td class="serial">{{ $loop->iteration }}</td>
-                                                                    <td class="text-left">{{ $sd['item_name'] }}
+                                                                    <td class="text-left">
                                                                         <input type="hidden" value="{{ $sd['item_id'] ? $sd['item_id'] : $sd['service_id'] }}" name="item_id[]">
+                                                                        <input type="hidden" value="{{ $sd['item_type'] }}" name="item_type[]">
                                                                     </td>
                                                                     <td><input type="number" value="{{ $sd['unit_price'] }}" class="form-control form-control-sm calculate" name="unit_price[]" placeholder="0.00" required></td>
                                                                     <td><button class="btn btn-sm btn-danger btn-del" type="button"><i class="fa-solid fa-trash btn-del"></i></button></td>
@@ -112,47 +113,25 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Discount Method</label>
-                                            <select name="discount_method" id="discount_method" class="form-control">
-                                                <option @selected(isset($data['item']) && $data['item']['discount_method'] == 0) selected value="0" >In Percentage</option>
-                                                <option @selected(isset($data['item']) && $data['item']['discount_method'] == 1) value="1">Solid Amount</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Discount Rate</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount_rate : null }}" step="0.01" type="number" class="form-control" name="discount_rate" id="discount_rate" placeholder="0.00">
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Discount Amount</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount : null }}" readonly type="number" class="form-control" name="discount" id="discount" placeholder="0.00">
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Total</label>
+                                        
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-4">
+                                            <label>Total Amount</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->total_price : null }}" type="number" class="form-control" name="total_price" id="total_price" placeholder="0.00" readonly>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Vat</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->vat_tax : null }}" readonly value="0.00" type="number" class="form-control" name="vat_tax" id="vat_tax" placeholder="0.00">
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Total Payable</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->total_payable : null }}" readonly type="number" class="form-control" name="total_payable" id="total_payable" placeholder="0.00">
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Payment Methods *</label>
-                                            <select class="form-control" name="account_id" id="account_id">
-                                                <option selected value=''>Select Payment Methods</option>
-                                                @foreach ($data['paymentMethods'] as $paymentMethod)
-                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-4">
                                             <label>Paid Amount</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->paid_amount : null }}" value="0.00" step="0.01" type="number" 
                                                 class="form-control" name="paid_amount"
                                                 id="paid_amount" placeholder="0.00">
+                                        </div>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-4">
+                                            <label>Payment Methods *</label>
+                                            <select class="form-control" name="account_id" id="account_id">
+                                                <option selected value=''>Select Payment Methods</option>
+                                                @foreach ($data['paymentMethods'] as $paymentMethod)
+                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected((isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) || 1 == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Refference Number</label>
@@ -188,6 +167,7 @@
                 let item_id = $('#item_id_temp').val();
                 let item_name = $('#item_id_temp option:selected').attr('item_name');
                 let item_price = $('#item_id_temp option:selected').attr('item_price');
+                let item_type = $('#item_id_temp option:selected').attr('item_type');
                 if (checkDuplicate(item_id)) return duplicateAlert();
                 let tbody =  ``;
                 tbody += `<tr>
@@ -195,6 +175,7 @@
                             <td class="text-left">
                                 ${item_name}
                                 <input type="hidden" value="${item_id}" name="item_id[]">
+                                <input type="hidden" value="${item_type}" name="item_type[]">    
                             </td>
                             <td><input type="number" value="${item_price}" class="form-control form-control-sm calculate" name="unit_price[]" placeholder="0.00" required></td>
                             <td><button class="btn btn-sm btn-danger btn-del" type="button"><i class="fa-solid fa-trash btn-del"></i></button></td>
@@ -224,7 +205,7 @@
                 e.preventDefault();
                 Swal.fire("Please Insert Item!");
             }
-            if(parseFloat($('#paid_amount').val())>parseFloat($('#total_payable').val())){
+            if(parseFloat($('#paid_amount').val())>parseFloat($('#total_price').val())){
                 e.preventDefault();
                 Swal.fire("Couldn't be pay more then payable!");
             }
@@ -233,35 +214,16 @@
                 Swal.fire("Please Select Payment Method");
             }
         });
-        $('#discount_rate').on('keyup', function(e) {
-            calculate();
-        });
-        
-        $('#discount_method').on('change', function(e) {
-            calculate();
-        });
         function calculate() {
             let item_id = $('input[name="item_id[]"]');
             let total_price = 0;
             for (let i = 0; i < item_id.length; i++) {
+                let item_type = $('input[name="item_type[]"]')[i].value;
                 let unit_price = parseFloat($('input[name="unit_price[]"]')[i].value);
                 total_price += unit_price;
             }
             $('#total_price').val(total_price.toFixed(2));
-            let discount_method = $('#discount_method').val();
-            let discount_rate = parseFloat($('#discount_rate').val()) || 0;
-            let vat_tax = parseFloat($('#vat_tax').val()) || 0;
-            let discount = 0;
-            let total_payable = 0;
-            if (discount_method == 0){
-                discount = total_price * (discount_rate / 100);
-            }else{
-                discount = discount_rate;
-            }
-            total_payable = total_price + vat_tax - discount;
-            $('#paid_amount').val(total_payable.toFixed(2));
-            $('#discount').val(discount.toFixed(2));
-            $('#total_payable').val(total_payable.toFixed(2));
+            $('#paid_amount').val(total_price);
         }
         function checkDuplicate(item_id) {
             let isDuplicate = false;

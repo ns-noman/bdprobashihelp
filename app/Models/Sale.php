@@ -10,13 +10,18 @@ class Sale extends Model
     use HasFactory;
     protected $fillable = 
     [
-        'agent_id',
+        'customer_id',
         'account_id',
         'passenger_name',
         'passenger_passport_no',
         'invoice_no',
         'date',
         'total_price',
+        'vat_tax',
+        'discount_method',
+        'discount_rate',
+        'discount',
+        'total_payable',
         'paid_amount',
         'reference_number',
         'note',

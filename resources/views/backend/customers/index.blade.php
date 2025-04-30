@@ -21,11 +21,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
-                                                    <th>Customer Name</th>
+                                                    <th>Agent Name</th>
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>Address</th>
-                                                    {{-- <th>Organization</th> --}}
+                                                    <th>Organization</th>
                                                     <th>Current Balance</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -39,7 +39,7 @@
                                                         <td>{{ $customer->phone }}</td>
                                                         <td>{{ $customer->email }}</td>
                                                         <td>{{ $customer->address }}</td>
-                                                        {{-- <td>{{ $customer->organization }}</td> --}}
+                                                        <td>{{ $customer->organization }}</td>
                                                         <td>{{ $data['currency_symbol'] }} {{ number_format($customer->current_balance,2) }}</td>
                                                         <td><span class="badge badge-{{ $customer->status == 1 ? 'success' : 'danger' }}">{{ $customer->status==1? 'Active' : 'Inactive' }}</span></td>
                                                         <td>
@@ -53,19 +53,6 @@
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>SN</th>
-                                                    <th>Customer Name</th>
-                                                    <th>Phone</th>
-                                                    <th>Email</th>
-                                                    <th>Address</th>
-                                                    {{-- <th>Organization</th> --}}
-                                                    <th>Current Balance</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

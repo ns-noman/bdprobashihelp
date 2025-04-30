@@ -21,16 +21,18 @@
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
-                                                    <th>Job No</th>
-                                                    <th>Agent Name</th>
-                                                    <th>P</th>
-                                                    <th>Total Price</th>
+                                                    <th>JobNo</th>
+                                                    <th>AgentName</th>
+                                                    <th>PassengerName</th>
+                                                    <th>PassportNo</th>
+                                                    <th>Date</th>
+                                                    <th>TotalPrice</th>
                                                     <th>Vat/Tax</th>
                                                     <th>Discount</th>
                                                     <th>Payable</th>
                                                     <th>Paid|Due</th>
                                                     <th>Note</th>
-                                                    <th>Payment Status</th>
+                                                    <th>PaymentStatus</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -142,6 +144,8 @@
                                 return `${row.customer_name}${row.bike_reg_no ? '<br>' + row.bike_reg_no : ''}`;
                             }
                         },
+                        { data: 'passenger_name', name: 'sales.passenger_name'},
+                        { data: 'passenger_passport_no', name: 'sales.passenger_passport_no'},
                         { data: 'date', name: 'sales.date'},
                         { data: 'total_price', name: 'sales.total_price'},
                         { data: 'vat_tax', name: 'sales.vat_tax'},
