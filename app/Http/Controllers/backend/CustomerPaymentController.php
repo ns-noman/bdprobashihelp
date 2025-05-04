@@ -88,7 +88,7 @@ class CustomerPaymentController extends Controller
             $payment->save();
             //End*****
         }
-        return redirect()->route('payments.index')->with('alert',['messageType'=>'success','message'=>'Data Inserted Successfully!']);
+        return redirect()->route('customer-payments.index')->with('alert',['messageType'=>'success','message'=>'Data Inserted Successfully!']);
     }
     public function dueInvoice(Request $request)
     {

@@ -215,6 +215,8 @@ Route::prefix('backend')->group(function () {
                 Route::post('payment/store','payment')->name('sales.payment.store');
                 Route::get('list','list')->name('sales.list');
                 Route::get('edit/{id?}','createOrEdit')->name('sales.edit');
+                Route::get('service-edit/{saleId?}/{serviceRecordId?}','serviceEdit')->name('sales.service-edit');
+                Route::put('service-update/{serviceRecordId}','serviceUpdate')->name('sales.service-update');
                 Route::delete('delete/{id}','destroy')->name('sales.destroy');
                 Route::get('approve/{id}','approve')->name('sales.approve');
             });

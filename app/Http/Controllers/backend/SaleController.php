@@ -11,6 +11,8 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\BikeService;
 use App\Models\CustomerLedger;
+use App\Models\JobServiceRecords;
+use App\Models\StatusList;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +38,7 @@ class SaleController extends Controller
             $data['title'] = 'Edit';
             $data['item'] = Sale::find($id);
             $data['saleDetails'] = SaleDetails::leftJoin('items','items.id','sale_details.item_id')
-                                    ->where('sale_id',$id)
+                                    ->where('sale_details.sale_id',$id)
                                     ->select([
                                         'sale_details.id',
                                         'sale_details.sale_id',
@@ -46,6 +48,7 @@ class SaleController extends Controller
                                     ])
                                     ->get()
                                     ->toArray();
+
         }else{
             $data['title'] = 'Create';
         }
@@ -66,6 +69,23 @@ class SaleController extends Controller
         return view('backend.sales.create-or-edit',compact('data'));
     }
 
+    public function serviceEdit($saleId, $serviceRecordId)
+    {
+
+        
+        $data['title'] = 'Edit';
+        $data['sale'] = Sale::find($saleId)->toArray();
+        $data['jobServiceRecord'] = JobServiceRecords::join('items','items.id','job_service_records.item_id')
+                                ->where('job_service_records.id',$serviceRecordId)
+                                ->select(['job_service_records.*','items.id as item_id','items.name as item_name'])
+                                ->first()->toArray();
+        $data['customer_name'] = Customer::find($data['sale']['customer_id'])->name;
+        $data['statusList'] = StatusList::where('item_id',$data['jobServiceRecord']['item_id'])->orderBy('srl', 'asc')->get()->toArray();
+
+        $data['breadcrumb'] = $this->breadcrumb;
+        return view('backend.sales.service-info',compact('data'));
+    }
+
     public function inovice($id, $print=null)
     {
         $data['breadcrumb'] = $this->breadcrumb;
@@ -76,7 +96,8 @@ class SaleController extends Controller
             'sales.customer_id',
             'sales.account_id',
             'sales.invoice_no',
-            'sales.bike_reg_no',
+            'sales.passenger_name',
+            'sales.passenger_passport_no',
             'sales.date as sale_date',
             'sales.total_price',
             'sales.discount',
@@ -104,7 +125,6 @@ class SaleController extends Controller
             'sale_details.sale_id',
             'sale_details.item_id',
             'items.name as item_name',
-            'units.title as unit_name',
             'sale_details.unit_price',
         ];
 
@@ -122,8 +142,6 @@ class SaleController extends Controller
                             ->select($selectDetails)
                             ->get()
                             ->toArray();
-
-
         return view('backend.sales.invoice',compact('data'));
     }
     public function payment(Request $request)
@@ -270,6 +288,20 @@ class SaleController extends Controller
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
+    public function serviceUpdate(Request $request,$id)
+    {
+        DB::beginTransaction();
+        try {
+                $data = $request->all();
+                JobServiceRecords::find($id)->update($data);
+            DB::commit();
+            return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
+        }
+    }
 
     public function approve($id)
     {
@@ -311,6 +343,17 @@ class SaleController extends Controller
                 $sd->subtotal_profit = round(($item->sale_price - $item->purchase_price), 2);
                 $totalPurchasePrice += $item->purchase_price;
                 $totalSalesPrice += $item->sale_price;
+
+                if($item->item_type==0){
+
+                }elseif($item->item_type==1){
+                    $service_item_ids = Item::where('package_id',$item->id)->pluck('package_item_id');
+                    foreach ($service_item_ids as $key => $service_item_id) {
+                        $statusId = StatusList::where(['item_id'=>$service_item_id,'is_initial'=>1])->first()->id;
+                        $jobserviceRecordData = ['job_id'=>$sale->id,'item_id'=>$service_item_id,'status_id'=>$statusId];
+                        JobServiceRecords::create($jobserviceRecordData);
+                    }
+                }
             }
             $totalProfit = $totalSalesPrice - $totalPurchasePrice;
 
@@ -425,9 +468,8 @@ class SaleController extends Controller
             'sales.status',
             'sales.created_by_id',
             'sales.updated_by_id',
-
         ];
-        $query = Sale::join('customers', 'customers.id', '=', 'sales.customer_id')
+        $query = Sale::with(['serviceshorts'])->join('customers', 'customers.id', '=', 'sales.customer_id')
                             ->join('admins', 'admins.id', '=', 'sales.created_by_id');
         if(!$request->has('order')) $query = $query->orderBy('sales.id','desc');
         $query = $query->select($select);

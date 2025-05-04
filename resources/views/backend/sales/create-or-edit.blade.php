@@ -40,16 +40,7 @@
                                             <label>Agents *</label>
                                             <select name="customer_id" id="customer_id" class="form-control select2">
                                                 @foreach ($data['customers'] as $customer)
-                                                    <option
-                                                        {{ 
-                                                            isset($data['item'])
-                                                            ?
-                                                            ($customer->id == $data['item']->customer_id ? 'selected' : null)
-                                                            :
-                                                            ($customer->customer_type == 1 ? 'selected' : null)                                                                
-                                                        }} 
-                                                        value="{{ $customer->id }}"
-                                                        >
+                                                    <option {{ isset($data['item']) ? ($customer->id == $data['item']->customer_id) ? 'selected' : null : null }} value="{{ $customer->id }}">
                                                         {{ $customer->name }}
                                                     </option>
                                                 @endforeach
@@ -57,11 +48,11 @@
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-2">
                                             <label>Passenger Name *</label>
-                                            <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control" placeholder="Passenger Name">
+                                            <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control" placeholder="Passenger Name" required>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-2">
                                             <label>Passport No *</label>
-                                            <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control" placeholder="0123456789">
+                                            <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control" placeholder="0123456789" required>
                                         </div>
                                         <div class="form-group col-sm-2 col-md-2 col-lg-2">
                                             <label>Date *</label>

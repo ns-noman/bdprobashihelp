@@ -25,6 +25,7 @@
                                                     <th>AgentName</th>
                                                     <th>PassengerName</th>
                                                     <th>PassportNo</th>
+                                                    <th style="min-width: 400px;">Service Availed</th>
                                                     <th>Date</th>
                                                     <th>TotalPrice</th>
                                                     <th>Vat/Tax</th>
@@ -146,6 +147,53 @@
                         },
                         { data: 'passenger_name', name: 'sales.passenger_name'},
                         { data: 'passenger_passport_no', name: 'sales.passenger_passport_no'},
+
+                        {
+                            data: null, 
+                            name: '', 
+                            orderable: false, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let tr = ``;
+                                
+                                let ServiceColor = '';
+                                let serviceUrl = 'javascript:void(0)';
+                                let text;
+                                let eventClass = '';
+                                let disabled = '';
+                                row.serviceshorts.forEach(element => {
+                                    statusTxt = element.servicestatus.name;
+                                    statusColor = element.servicestatus.color_code;
+                                    console.log(element);
+                                    serviceUrl = `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', element.id);
+                                    
+                                    if(element.servicestatus.is_initial == '1'){
+                                        ServiceColor = 'warning';
+                                    }else{
+                                        ServiceColor = 'info';
+                                    }
+                                    tr+=`<tr>
+                                            <td style="width: 40%"><a ${disabled} style="width: 100%;" href="${serviceUrl}" class="btn btn-sm btn-${ServiceColor} ${eventClass}">${element.items.name}</a></td>
+                                            <td style="width: 60%"><button transaction_id=${row.id} style="width: 100%;background-color:${statusColor};color: white;" type="button" class="btn btn-sm">${statusTxt}</button></td>
+                                        </tr>`;
+                                });
+                                let table = `
+                                            <table class="table table-sm table-striped table-bordered table-centre">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 40%">Service Name</th>
+                                                        <th style="width: 60%">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    ${tr}
+                                                </tbody>
+                                            </table>
+                                        `;
+                                return table;
+                            }
+                        },
+
                         { data: 'date', name: 'sales.date'},
                         { data: 'total_price', name: 'sales.total_price'},
                         { data: 'vat_tax', name: 'sales.vat_tax'},

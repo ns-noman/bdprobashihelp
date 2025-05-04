@@ -31,14 +31,14 @@
                                    
                                     To
                                     <address>
-                                        <strong>{{ $data['master']['customer_name'] }}{{ $data['master']['bike_reg_no'] ? ' /Reg#' . $data['master']['bike_reg_no'] : null }}</strong><br>
+                                        <strong>{{ $data['master']['customer_name'] }}(PN:{{ $data['master']['passenger_name'] }}#{{ $data['master']['passenger_passport_no'] }})</strong><br>
                                         {{ $data['master']['customer_address'] }}<br>
                                         Phone: {{ $data['master']['customer_contact'] }}<br>
                                         Email: {{ $data['master']['customer_email'] }}<br>
                                     </address>
                                 </div>
                               <div class="col-sm-4 invoice-col">
-                                  <b>Invoice #{{ $data['master']['invoice_no'] }}</b><br>
+                                  <b>Job #{{ $data['master']['invoice_no'] }}</b><br>
                                   <br>
                                   <p><span><svg class="barcode"></svg></span></p>
                               </div>
@@ -49,26 +49,16 @@
                                       <thead>
                                         <tr>
                                             <th>SN</th>
-                                            <th>Item Name</th>
-                                            <th>Quantity</th>
-                                            <th>Unit Price</th>
-                                            <th>Sub Total</th>
+                                            <th>Service Item</th>
+                                            <th>Price</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($data['details'] as $sd)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>
-                                                        @if ($sd['item_type']==0)
-                                                            {{ $sd['item_name'] }}
-                                                        @else
-                                                            {{ $sd['service_name'] }}
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $sd['quantity'] }} {{ $sd['unit_name'] ?? "Service" }}</td>
+                                                    <td>{{ $sd['item_name'] }}</td>
                                                     <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($sd['unit_price'], 2) }}</td>
-                                                    <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($sd['unit_price'] * $sd['quantity'], 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

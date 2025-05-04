@@ -6,24 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('job_service_records', function (Blueprint $table) {
             $table->id();
+            $table->integer('job_id');
+            $table->integer('item_id');
+            $table->date('entry_date')->nullable();
+            $table->date('expire_date')->nullable();
+            $table->string('remarks')->nullable();
+            $table->integer('status_id');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('job_service_records');

@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class JobServiceRecords extends Model
 {
     use HasFactory;
+    protected $fillable = 
+    [
+        'job_id',
+        'item_id',
+        'entry_date',
+        'expire_date',
+        'remarks',
+        'status_id',
+    ];
+
+    public function items()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
+    }
+        
+    public function servicestatus()
+    {
+        return $this->belongsTo(StatusList::class, 'status_id');
+    }
 }

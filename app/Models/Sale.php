@@ -30,4 +30,9 @@ class Sale extends Model
         'created_by_id',
         'updated_by_id',
     ];
+    
+    public function serviceshorts()
+    {
+        return $this->hasMany(JobServiceRecords::class, 'job_id')->with(['items','servicestatus']);
+    }
 }
