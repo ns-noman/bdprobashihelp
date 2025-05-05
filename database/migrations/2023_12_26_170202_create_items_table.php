@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('item_type')->defaul(0)->comment('0=Item, 1=Package');
+            $table->tinyInteger('item_type')->nullable()->comment('0=Item, 1=Package');
             $table->integer('package_id')->nullable();
             $table->integer('package_item_id')->nullable();
+            $table->integer('srl')->nullable();
             $table->string('name');
             $table->longText('description')->nullable();
             $table->double('purchase_price',20,2)->default(0.00);

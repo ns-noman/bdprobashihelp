@@ -50,25 +50,50 @@
                                             <label>Service Name</label>
                                             <input type="text" value="{{ $data['jobServiceRecord']['item_name'] }}" class="form-control" disabled>
                                         </div>
-                                        <div class="form-group col-sm-2 col-md-2 col-lg-3">
-                                            <label>Entry Date *</label>
-                                            <input name="entry_date" id="entry_date" type="date" @disabled(!empty($data['jobServiceRecord']['entry_date'])) value="{{ !empty($data['jobServiceRecord']['entry_date']) ? $data['jobServiceRecord']['entry_date'] : date('Y-m-d') }}" class="form-control" required>
-                                        </div>
-                                        <div class="form-group col-sm-2 col-md-2 col-lg-3">
-                                            <label>Expire Date *</label>
-                                            <input name="expire_date" id="expire_date" type="date" @disabled(!empty($data['jobServiceRecord']['expire_date'])) value="{{ !empty($data['jobServiceRecord']['expire_date']) ? $data['jobServiceRecord']['expire_date'] : date('Y-m-d') }}" class="form-control" required>
-                                        </div>
-                                        <div class="form-group col-sm-2 col-md-2 col-lg-3">
-                                            <label>Remarks</label>
-                                            <input name="remarks" id="remarks" type="text" @disabled(!empty($data['jobServiceRecord']['remarks'])) value="{{ !empty($data['jobServiceRecord']['remarks']) ? $data['jobServiceRecord']['remarks'] : null }}" class="form-control" placeholder="Remarks">
-                                        </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
-                                            <label>Status *</label>
-                                            <select name="status_id" id="status_id" class="form-control select2">
-                                                @foreach ($data['statusList'] as $statusList)
-                                                    <option {{ '' }} value="{{ $statusList['id'] }}">{{ $statusList['name'] }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-12">
+                                            <div class="row">
+                                                @if(in_array($data['jobServiceRecord']['item_id'],[1]))
+                                                <div class="form-group col">
+                                                    <label>Entry Date *</label>
+                                                    <input name="entry_date" id="entry_date" type="date" @disabled(!empty($data['jobServiceRecord']['entry_date'])) value="{{ !empty($data['jobServiceRecord']['entry_date']) ? $data['jobServiceRecord']['entry_date'] : date('Y-m-d') }}" class="form-control" required>
+                                                </div>
+                                                @endif
+                                                @if(in_array($data['jobServiceRecord']['item_id'],[0]))
+                                                <div class="form-group col">
+                                                    <label>Expire Date *</label>
+                                                    <input name="expire_date" id="expire_date" type="date" @disabled(!empty($data['jobServiceRecord']['expire_date'])) value="{{ !empty($data['jobServiceRecord']['expire_date']) ? $data['jobServiceRecord']['expire_date'] : date('Y-m-d') }}" class="form-control" required>
+                                                </div>
+                                                @endif
+                                                @if(in_array($data['jobServiceRecord']['item_id'],[3,5]))
+                                                    <div class="form-group col-sm-12 col-md col-lg" >
+                                                        <div class="form-group">
+                                                            <label>Medical Centers</label>
+                                                            <select class="select2" name="medical_center_ids[]" id="medical_center_ids" multiple="multiple" data-placeholder="Select Package Items" style="width: 100%;">
+                                                                @foreach ($data['centers'] as $center)
+                                                                    <option value="{{ $center['id'] }}" 
+                                                                        {{-- {{ isset($data['item']) ? (in_array($center['id'],$data['packageItems']) ? 'selected' : null) : null }} --}}
+                                                                    
+                                                                    >{{ $center['name'] }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                @if(in_array($data['jobServiceRecord']['item_id'],[1]))
+                                                <div class="form-group col">
+                                                    <label>Remarks</label>
+                                                    <input name="remarks" id="remarks" type="text" @disabled(!empty($data['jobServiceRecord']['remarks'])) value="{{ !empty($data['jobServiceRecord']['remarks']) ? $data['jobServiceRecord']['remarks'] : null }}" class="form-control" placeholder="Remarks">
+                                                </div>
+                                                @endif
+                                                <div class="form-group col">
+                                                    <label>Status *</label>
+                                                    <select name="status_id" id="status_id" class="form-control select2">
+                                                        @foreach ($data['statusList'] as $statusList)
+                                                            <option @selected($data['jobServiceRecord']['status_id'] == $statusList['id']) value="{{ $statusList['id'] }}">{{ $statusList['name'] }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

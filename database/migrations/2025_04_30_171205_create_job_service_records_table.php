@@ -15,6 +15,8 @@ return new class extends Migration
             $table->date('entry_date')->nullable();
             $table->date('expire_date')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('medical_centers')->nullable();
+            $table->tinyInteger('is_enabled')->default(0);
             $table->integer('status_id');
             $table->timestamps();
         });

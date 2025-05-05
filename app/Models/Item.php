@@ -13,6 +13,7 @@ class Item extends Model
         'item_type',
         'package_id',
         'package_item_id',
+        'srl',
         'name',
         'description',
         'purchase_price',

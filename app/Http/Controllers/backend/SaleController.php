@@ -12,12 +12,14 @@ use App\Models\Item;
 use App\Models\BikeService;
 use App\Models\CustomerLedger;
 use App\Models\JobServiceRecords;
+use App\Models\MedicalCenter;
 use App\Models\StatusList;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
+use Carbon\Carbon;
 
 class SaleController extends Controller
 {
@@ -81,7 +83,7 @@ class SaleController extends Controller
                                 ->first()->toArray();
         $data['customer_name'] = Customer::find($data['sale']['customer_id'])->name;
         $data['statusList'] = StatusList::where('item_id',$data['jobServiceRecord']['item_id'])->orderBy('srl', 'asc')->get()->toArray();
-
+        $data['centers'] = MedicalCenter::where('status',1)->orderBy('name','asc')->get()->toArray();
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.sales.service-info',compact('data'));
     }
@@ -293,7 +295,46 @@ class SaleController extends Controller
         DB::beginTransaction();
         try {
                 $data = $request->all();
-                JobServiceRecords::find($id)->update($data);
+                $jobServiceRecord = JobServiceRecords::find($id);
+                //Setting Expirey Date For Settlement & Slip Proccess and Enabled, Disabled Action....
+                if($jobServiceRecord->item_id == 1 && in_array($data['status_id'], [6])){
+                    $entry_date = Carbon::now();
+                    $expireDate = (clone $entry_date)->addDays(25);
+                    JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
+                        ->whereIn('item_id', [2, 3])
+                        ->update([
+                            'entry_date' => $entry_date->toDateString(),
+                            'expire_date' => $expireDate->toDateString(),
+                        ]);
+                }
+                //End....................................................
+
+
+                //Setting Expirey Date For MOFA....
+                if($jobServiceRecord->item_id == 3 && $data['status_id'] == 16){
+                    $entry_date = Carbon::now();
+                    $expireDate = (clone $entry_date)->addDays(55);
+                    JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
+                        ->whereIn('item_id', [4])
+                        ->update([
+                            'entry_date' => $entry_date->toDateString(),
+                            'expire_date' => $expireDate->toDateString(),
+                        ]);
+                }
+                //End....................................................
+
+
+                $this->btnControl($id);
+                
+                if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
+                        $medicalCenterTxt = '';
+                    foreach ($data['medical_center_ids'] as $key => $medical_center_id) {
+                        $medicalCenter = MedicalCenter::find($medical_center_id);
+                        $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($data['medical_center_ids']) ? '|' : null);
+                    }
+                    $data['medical_centers'] = $medicalCenterTxt;
+                }
+                $jobServiceRecord->update($data);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
@@ -301,6 +342,23 @@ class SaleController extends Controller
             dd($e);
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
+    }
+
+    public function btnControl($job_service_record_id)
+    {
+        $current_job_item = JobServiceRecords::find($job_service_record_id);
+        // dd(in_array($current_job_item->status_id, [5,6,10,16,21,26]));
+        // $current_job_item_id = $current_job_id->item_id;
+        if(in_array($current_job_item->status_id, [5,6,10,16,21,26])){
+            $current_job_item->is_enabled = 0;
+            $current_job_item->save();
+        }
+
+
+
+                            // ->where('item_id', 2);
+
+                            // ->update(['is_enabled' => 1]);
     }
 
     public function approve($id)
@@ -326,8 +384,6 @@ class SaleController extends Controller
             $created_by_id = $sale->created_by_id;
             $updated_by_id = $sale->updated_by_id;
 
-            // Update sale status
-            $sale->update(['status' => 1]);
 
             $saleDetails = SaleDetails::where('sale_id', $id)->get();
 
@@ -347,9 +403,24 @@ class SaleController extends Controller
                 if($item->item_type==0){
 
                 }elseif($item->item_type==1){
+                    
+                  
+                    
                     $service_item_ids = Item::where('package_id',$item->id)->pluck('package_item_id');
                     foreach ($service_item_ids as $key => $service_item_id) {
-                        $statusId = StatusList::where(['item_id'=>$service_item_id,'is_initial'=>1])->first()->id;
+                        $statusId = StatusList::where(['item_id'=>$service_item_id,'status_state'=>0])->first()->id;
+                        // if(empty($item)){
+
+                        //     dd($item);
+                        // }
+                        // if(empty($sale)){
+    
+                        //     dd($sale);
+                        // }
+                        // if(empty($statusId)){
+    
+                        //     dd($statusId);
+                        // }
                         $jobserviceRecordData = ['job_id'=>$sale->id,'item_id'=>$service_item_id,'status_id'=>$statusId];
                         JobServiceRecords::create($jobserviceRecordData);
                     }
@@ -364,6 +435,7 @@ class SaleController extends Controller
                 $discount_of_each_item = $discount * ($profit_percentage_per_item/100);
                 $net_sale_price = $sd->unit_price - $discount_of_each_item;
                 $net_subtotal_profit = round($sd->subtotal_profit - $discount_of_each_item, 2);
+
 
                 SaleDetails::find($sd->id)->update(
                     [
@@ -420,6 +492,10 @@ class SaleController extends Controller
                 $customerLedgerDataPayment['created_by_id'] = $created_by_id;
                 $this->customerLedgerTransction($customerLedgerDataPayment);
             }
+
+            
+            // Update sale status
+            $sale->update(['status' => 1]);
             
             DB::commit();
 
@@ -430,6 +506,9 @@ class SaleController extends Controller
             
         } catch (\Exception $e) {
             DB::rollBack();
+
+            // dd($e);
+
             return response()->json([
                 'success' => false,
                 'message' => 'Error approving sale.',

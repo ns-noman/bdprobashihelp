@@ -14,8 +14,7 @@ class StatusList extends Model
         'srl',
         'name',
         'color_code',
-        'is_initial',
-        'is_final',
+        'status_state',
         'status',
     ];
 

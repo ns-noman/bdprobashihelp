@@ -1,5 +1,11 @@
 @extends('layouts.admin.master')
 @section('content')
+    <style>
+        .custom-disabled {
+            cursor: not-allowed!important;
+            pointer-events: none!important;
+        }
+    </style>
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
         <section class="content">
@@ -17,7 +23,7 @@
                             <div class="card-body">
                                 <div class="bootstrap-data-table-panel">
                                     <div class="table-responsive">
-                                        <table id="dataTable" class="table table-sm table-striped table-bordered table-centre">
+                                        <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center">
                                             <thead>
                                                 <tr>
                                                     <th>SN</th>
@@ -25,7 +31,7 @@
                                                     <th>AgentName</th>
                                                     <th>PassengerName</th>
                                                     <th>PassportNo</th>
-                                                    <th style="min-width: 400px;">Service Availed</th>
+                                                    <th style="min-width: 1000px;text-align: center;">Service Availed</th>
                                                     <th>Date</th>
                                                     <th>TotalPrice</th>
                                                     <th>Vat/Tax</th>
@@ -118,7 +124,7 @@
                 }
             });
             var table = $('#dataTable').DataTable({
-            processing: true,
+            processing: false,
             serverSide: true,
             ajax: {
                 url: '{{ route("sales.list") }}',
@@ -155,34 +161,58 @@
                             searchable: false, 
                             render: function(data, type, row, meta) {
                                 let tr = ``;
-                                
                                 let ServiceColor = '';
                                 let serviceUrl = 'javascript:void(0)';
                                 let text;
                                 let eventClass = '';
                                 let disabled = '';
-                                row.serviceshorts.forEach(element => {
-                                    statusTxt = element.servicestatus.name;
-                                    statusColor = element.servicestatus.color_code;
-                                    console.log(element);
-                                    serviceUrl = `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', element.id);
-                                    
-                                    if(element.servicestatus.is_initial == '1'){
-                                        ServiceColor = 'warning';
-                                    }else{
-                                        ServiceColor = 'info';
-                                    }
-                                    tr+=`<tr>
-                                            <td style="width: 40%"><a ${disabled} style="width: 100%;" href="${serviceUrl}" class="btn btn-sm btn-${ServiceColor} ${eventClass}">${element.items.name}</a></td>
-                                            <td style="width: 60%"><button transaction_id=${row.id} style="width: 100%;background-color:${statusColor};color: white;" type="button" class="btn btn-sm">${statusTxt}</button></td>
-                                        </tr>`;
-                                });
-                                let table = `
-                                            <table class="table table-sm table-striped table-bordered table-centre">
+                                let table = `<h6>Pending</h6>`;
+                                if (row.serviceshorts.length) {
+                                    row.serviceshorts.forEach(job_service_record => {
+                                        let medicalCenterTxt = '';
+                                        if(job_service_record.medical_centers !=null){
+                                            let centersArray = job_service_record.medical_centers.split('|');
+                                            centersArray.forEach((center, index)=>{
+                                                medicalCenterTxt += center.split(':')[2] + ((index+1)<centersArray.length ? ', ' : '') ;
+                                            });
+                                        }
+
+                                        statusTxt = job_service_record.servicestatus.name;
+                                        statusColor = job_service_record.servicestatus.color_code;
+                                        serviceUrl = `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
+                                        
+                                        if(job_service_record.servicestatus.is_initial == '1'){
+                                            ServiceColor = 'warning';
+                                        }else{
+                                            ServiceColor = 'info';
+                                        }
+                                        
+                                        tr+=`<tr>
+                                                <td class="p-0" style="vertical-align: middle;width: auto;">
+                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} ${eventClass} m-0" aria-disabled="true">${job_service_record.items.name}</a>
+                                                </td>
+                                                <td style="vertical-align: middle;width: auto;">${job_service_record.entry_date ?? ''}</td>
+                                                <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
+                                                <td style="vertical-align: middle;width: auto;">${(job_service_record.entry_date !=null && job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
+                                                <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
+                                                <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
+                                                    <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
+                                                </td>
+                                                <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
+
+                                            </tr>`;
+                                    });
+                                        table = `
+                                            <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 40%">Service Name</th>
-                                                        <th style="width: 60%">Status</th>
+                                                        <th class="text-center" style="width: 100px;">ServiceName</th>
+                                                        <th class="text-center" style="width: 80px;">EntryDate</th>
+                                                        <th class="text-center" style="width: 80px;">ExpireDate</th>
+                                                        <th class="text-center" style="width: 30px;">R.Day</th>
+                                                        <th class="text-center" style="width: 150px;">Centers</th>
+                                                        <th class="text-center" style="width: 150px;">Status</th>
+                                                        <th class="text-center" style="width: 300px;">Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -190,6 +220,7 @@
                                                 </tbody>
                                             </table>
                                         `;
+                                }
                                 return table;
                             }
                         },
@@ -354,5 +385,18 @@
 
             });
         });
+        function getDateDifferenceInDays(start_date, end_date) {
+            const d1 = new Date(start_date);
+            const d2 = new Date(end_date);
+            d1.setHours(0, 0, 0, 0);
+            d2.setHours(0, 0, 0, 0);
+            const diffInMs = d2 - d1;
+            const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
+            return diffInDays;
+        }
+        function btnControl(input){
+            return !(input.is_enabled) ? ' disabled custom-disabled ' : ''; 
+        }
+
     </script>
 @endsection

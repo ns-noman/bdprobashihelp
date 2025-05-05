@@ -19,23 +19,25 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="row">
-                                                <div class="form-group col-sm-12 col-md col-lg">
+                                                <div class="form-group col-sm-12 col-md col-lg" hidden>
                                                     <label>Item Type*</label>
                                                     <select name="item_type" id="item_type" class="form-control" required>
-                                                        <option value="0">Item</option>
-                                                        <option value="1">Package</option>
+                                                        <option value="0" {{ isset($data['item']) ? ($data['item']->item_type == 0 ? 'selected' : null ): null }}>Item</option>
+                                                        <option value="1" {{ isset($data['item']) ? ($data['item']->item_type == 1 ? 'selected' : null) : 'selected' }}>Package</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-sm-12 col-md col-lg">
-                                                    <div class="form-group">
-                                                        <label>Package Items*</label>
-                                                        <select class="select2" name="package_item_ids[]" id="package_item_ids" multiple="multiple" data-placeholder="Select Package Items" style="width: 100%;">
-                                                            @foreach ($data['package_items'] as $package_item)
-                                                                <option value="{{ $package_item->id }}">{{ $package_item->name }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                @if(!(isset($data['item']) && ($data['item']->item_type == 0)))
+                                                    <div class="form-group col-sm-12 col-md col-lg" >
+                                                        <div class="form-group">
+                                                            <label>Package Items*</label>
+                                                            <select class="select2" name="package_item_ids[]" id="package_item_ids" multiple="multiple" data-placeholder="Select Package Items" style="width: 100%;" required>
+                                                                @foreach ($data['package_items'] as $package_item)
+                                                                    <option value="{{ $package_item->id }}" {{ isset($data['item']) ? (in_array($package_item->id,$data['packageItems']) ? 'selected' : null) : null }}>{{ $package_item->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endif
                                                 <div class="form-group col-sm-12 col-md col-lg">
                                                     <label>Item Name *</label>
                                                     <input value="{{ isset($data['item']) ? $data['item']->name : null }}" type="text" class="form-control" name="name" placeholder="Item Name" required>

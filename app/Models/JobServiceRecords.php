@@ -15,6 +15,8 @@ class JobServiceRecords extends Model
         'entry_date',
         'expire_date',
         'remarks',
+        'medical_centers',
+        'is_enabled',
         'status_id',
     ];
 

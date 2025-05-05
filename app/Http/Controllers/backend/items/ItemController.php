@@ -30,6 +30,7 @@ class ItemController extends Controller
         if($id){
             $data['title'] = 'Edit';
             $data['item'] = Item::find($id);
+            $data['packageItems'] = Item::where('package_id', $id)->pluck('package_item_id')->toArray();
         }else{
             $data['title'] = 'Create';
         }
@@ -42,9 +43,11 @@ class ItemController extends Controller
     {
         $data = $request->all();
         $item = Item::create($data);
+        $data['package_item_ids'] = $data['package_item_ids'] ?? [];
         foreach ($data['package_item_ids'] as $key => $package_item_id) {
             Item::create(
             [
+                'item_type'=> null,
                 'package_id'=> $item->id,
                 'package_item_id'=> $package_item_id,
             ]);
@@ -56,8 +59,20 @@ class ItemController extends Controller
 
     public function update(Request $request,$id)
     {
-        $item = Item::find($id);
         $data = $request->all();
+        $item = Item::find($id);
+        $data['package_item_ids'] = $data['package_item_ids'] ?? [];
+        if($item->item_type==1){
+            Item::where('package_id', $id)->delete();
+        }
+        foreach ($data['package_item_ids'] as $key => $package_item_id) {
+            Item::create(
+            [
+                'item_type'=> null,
+                'package_id'=> $item->id,
+                'package_item_id'=> $package_item_id,
+            ]);
+        }
         $item->update($data);
         return redirect()->route('items.index')->with('alert',['messageType'=>'warning','message'=>'Data Updated Successfully!']);
     }
@@ -82,13 +97,15 @@ class ItemController extends Controller
             'items.status',
         ];
         $query = Item::with('package_items');
-        if($item_type){
+        if($item_type != null){
             $query = $query->where('items.item_type', $item_type);
         }else{
             $query = $query->where('items.item_type','!=', null);
         }
         $query = $query->select($select);
-        if(!$request->has('order')) $query = $query->orderBy('items.id','desc');
+        if(!$request->has('order')){
+            $query = $query->orderBy('items.item_type','desc')->orderBy('items.srl','asc');
+        }
         return DataTables::of($query)->make(true);
     }
 }

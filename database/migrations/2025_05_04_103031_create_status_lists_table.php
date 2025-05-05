@@ -14,8 +14,7 @@ return new class extends Migration
             $table->integer('srl')->default(0);
             $table->string('name');
             $table->string('color_code');
-            $table->tinyInteger('is_initial')->default(0)->comment('1=Initial State');
-            $table->tinyInteger('is_final')->default(0)->comment('1=Final State');
+            $table->tinyInteger('status_state')->default(0)->comment('0=Initial State, 1=Middle State, 2=Final State');
             $table->tinyInteger('status')->default(0)->comment('0=Inactive, 1=Active');
             $table->timestamps();
         });

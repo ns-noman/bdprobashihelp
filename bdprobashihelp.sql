@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 04, 2025 at 12:02 PM
+-- Generation Time: May 05, 2025 at 12:07 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '204985.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-04 10:15:07'),
+(1, 1, 'Hand Cash', 'Self', '243985.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-05 07:37:59'),
 (2, 2, '01839317038', 'Self', '21850.00', 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-04 03:44:57'),
 (3, 4, '20501680205073807', 'Nowab Shorif', '0.00', 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
 (4, 1, 'Check', 'Self', '0.00', 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
@@ -93,7 +93,9 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (17, 1, NULL, 6100.00, 172685.00, NULL, 'Regular Sale', '2025-05-04', '2025-05-04 04:05:09', '2025-05-04 04:05:09'),
 (18, 1, NULL, 13300.00, 185985.00, NULL, 'Regular Sale', '2025-05-04', '2025-05-04 04:05:11', '2025-05-04 04:05:11'),
 (19, 1, NULL, 5000.00, 190985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(20, 1, NULL, 14000.00, 204985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 10:15:07', '2025-05-04 10:15:07');
+(20, 1, NULL, 14000.00, 204985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 10:15:07', '2025-05-04 10:15:07'),
+(21, 1, NULL, 19000.00, 223985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(22, 1, NULL, 20000.00, 243985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 07:37:59', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -629,7 +631,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 'Carter Jarvis', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', -50016.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-04 10:15:07'),
 (2, 'Jasper Morton', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-04-30 10:52:31'),
-(3, 'Aquila Stafford', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', -55.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-04 09:51:43');
+(3, 'Aquila Stafford', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -661,38 +663,10 @@ CREATE TABLE `customer_ledgers` (
 --
 
 INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `account_id`, `particular`, `date`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `note`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, NULL, NULL, NULL, 'Opening Payable', '2025-04-30', '35.00', NULL, '-35.00', NULL, NULL, 1, NULL, '2025-04-30 05:07:30', '2025-04-30 05:07:30'),
-(2, 1, NULL, NULL, NULL, 'Opening Receivable', '2025-04-30', NULL, '19.00', '-16.00', NULL, NULL, 1, NULL, '2025-04-30 05:07:30', '2025-04-30 05:07:30'),
-(3, 1, NULL, NULL, 1, 'Payment', '2025-04-30', '50000.00', NULL, '-50016.00', NULL, 'Dolor laudantium ad', 1, NULL, '2025-04-30 09:59:37', '2025-04-30 09:59:37'),
-(4, 3, 1, NULL, NULL, 'Sale', '2025-04-30', NULL, '4750.00', '4750.00', NULL, NULL, 1, NULL, '2025-04-30 11:01:30', '2025-04-30 11:01:30'),
-(5, 3, NULL, 2, 1, 'Payment', '2025-04-30', '4750.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-04-30 11:01:31', '2025-04-30 11:01:31'),
-(6, 1, 2, NULL, NULL, 'Sale', '2025-04-30', NULL, '20995.00', '-29021.00', NULL, NULL, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
-(7, 1, NULL, 3, 1, 'Payment', '2025-04-30', '20995.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
-(8, 1, 2, NULL, NULL, 'Sale', '2025-04-30', NULL, '20995.00', '-29021.00', NULL, NULL, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13'),
-(9, 1, NULL, 4, 1, 'Payment', '2025-04-30', '20995.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13'),
-(10, 3, 3, NULL, NULL, 'Sale', '2025-05-04', NULL, '4750.00', '4750.00', NULL, NULL, 1, NULL, '2025-05-04 03:35:21', '2025-05-04 03:35:21'),
-(11, 3, NULL, 5, 1, 'Payment', '2025-05-04', '4750.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-04 03:35:21', '2025-05-04 03:35:21'),
-(12, 3, 4, NULL, NULL, 'Sale', '2025-05-04', NULL, '5700.00', '5700.00', NULL, 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:38:07', '2025-05-04 03:38:07'),
-(13, 3, NULL, 6, 1, 'Payment', '2025-05-04', '5700.00', NULL, '0.00', '567890-', 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:38:07', '2025-05-04 03:38:07'),
-(14, 3, 4, NULL, NULL, 'Sale', '2025-05-04', NULL, '21850.00', '21850.00', NULL, 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:44:57', '2025-05-04 03:44:57'),
-(15, 3, NULL, 7, 2, 'Payment', '2025-05-04', '21850.00', NULL, '0.00', '567890', 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:44:57', '2025-05-04 03:44:57'),
-(16, 3, 3, NULL, NULL, 'Sale', '2025-05-04', NULL, '4750.00', '4750.00', NULL, NULL, 1, NULL, '2025-05-04 03:45:00', '2025-05-04 03:45:00'),
-(17, 3, NULL, 8, 1, 'Payment', '2025-05-04', '4750.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-04 03:45:00', '2025-05-04 03:45:00'),
-(18, 1, 2, NULL, NULL, 'Sale', '2025-04-30', NULL, '20995.00', '-29021.00', NULL, NULL, 1, NULL, '2025-05-04 03:45:02', '2025-05-04 03:45:02'),
-(19, 1, NULL, 9, 1, 'Payment', '2025-04-30', '20995.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-05-04 03:45:02', '2025-05-04 03:45:02'),
-(20, 3, 5, NULL, NULL, 'Sale', '2025-05-04', NULL, '18050.00', '18050.00', NULL, 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:59:08', '2025-05-04 03:59:08'),
-(21, 3, NULL, 10, 1, 'Payment', '2025-05-04', '18050.00', NULL, '0.00', '7645678', 'Est ut in vero sunt', 1, NULL, '2025-05-04 03:59:08', '2025-05-04 03:59:08'),
-(22, 3, 6, NULL, NULL, 'Sale', '2025-05-04', NULL, '13300.00', '13300.00', NULL, NULL, 1, NULL, '2025-05-04 04:00:22', '2025-05-04 04:00:22'),
-(23, 3, 7, NULL, NULL, 'Sale', '2025-05-04', NULL, '11100.00', '24400.00', NULL, NULL, 1, NULL, '2025-05-04 04:00:57', '2025-05-04 04:00:57'),
-(24, 3, NULL, 7, 1, 'Payment', '2025-05-04', '5000.00', NULL, '19400.00', NULL, 'Culpa mollit quam cu', 1, NULL, '2025-05-04 04:01:27', '2025-05-04 04:01:27'),
-(25, 3, NULL, NULL, 1, 'Payment', '2025-05-04', '10600.00', NULL, '8800.00', NULL, NULL, 1, NULL, '2025-05-04 04:05:06', '2025-05-04 04:05:06'),
-(26, 3, NULL, 7, 1, 'Payment', '2025-05-04', '6100.00', NULL, '2700.00', NULL, NULL, 1, NULL, '2025-05-04 04:05:09', '2025-05-04 04:05:09'),
-(27, 3, NULL, 6, 1, 'Payment', '2025-05-04', '13300.00', NULL, '-10600.00', NULL, NULL, 1, NULL, '2025-05-04 04:05:11', '2025-05-04 04:05:11'),
-(28, 3, 8, NULL, NULL, 'Sale', '2025-05-04', NULL, '10545.00', '-55.00', NULL, NULL, 1, NULL, '2025-05-04 04:17:34', '2025-05-04 04:17:34'),
-(29, 3, 1, NULL, NULL, 'Sale', '2025-05-04', NULL, '5000.00', '4945.00', NULL, NULL, 1, NULL, '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(30, 3, NULL, 15, 1, 'Payment', '2025-05-04', '5000.00', NULL, '-55.00', NULL, NULL, 1, NULL, '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(31, 1, 2, NULL, NULL, 'Sale', '2025-05-04', NULL, '14000.00', '-36016.00', NULL, NULL, 1, NULL, '2025-05-04 10:15:07', '2025-05-04 10:15:07'),
-(32, 1, NULL, 16, 1, 'Payment', '2025-05-04', '14000.00', NULL, '-50016.00', NULL, NULL, 1, NULL, '2025-05-04 10:15:07', '2025-05-04 10:15:07');
+(1, 3, 1, NULL, NULL, 'Sale', '2025-05-05', NULL, '19000.00', '19000.00', NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(2, 3, NULL, 1, 1, 'Payment', '2025-05-05', '19000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(3, 3, 2, NULL, NULL, 'Sale', '2025-05-05', NULL, '20000.00', '20000.00', NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(4, 3, NULL, 2, 1, 'Payment', '2025-05-05', '20000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -721,22 +695,8 @@ CREATE TABLE `customer_payments` (
 --
 
 INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, '2025-04-30', 50000.00, NULL, 'Dolor laudantium ad', 1, 1, NULL, '2025-04-30 09:59:07', '2025-04-30 09:59:37'),
-(2, 3, 1, 1, '2025-04-30', 4750.00, NULL, NULL, 1, 1, NULL, '2025-04-30 11:01:31', '2025-04-30 11:01:31'),
-(3, 1, 1, 2, '2025-04-30', 20995.00, NULL, NULL, 1, 1, NULL, '2025-04-30 11:55:37', '2025-04-30 11:55:37'),
-(4, 1, 1, 2, '2025-04-30', 20995.00, NULL, NULL, 1, 1, NULL, '2025-04-30 12:04:13', '2025-04-30 12:04:13'),
-(5, 3, 1, 3, '2025-05-04', 4750.00, NULL, NULL, 1, 1, NULL, '2025-05-04 03:35:21', '2025-05-04 03:35:21'),
-(6, 3, 1, 4, '2025-05-04', 5700.00, '567890-', 'Est ut in vero sunt', 1, 1, NULL, '2025-05-04 03:38:07', '2025-05-04 03:38:07'),
-(7, 3, 2, 4, '2025-05-04', 21850.00, '567890', 'Est ut in vero sunt', 1, 1, NULL, '2025-05-04 03:44:57', '2025-05-04 03:44:57'),
-(8, 3, 1, 3, '2025-05-04', 4750.00, NULL, NULL, 1, 1, NULL, '2025-05-04 03:45:00', '2025-05-04 03:45:00'),
-(9, 1, 1, 2, '2025-04-30', 20995.00, NULL, NULL, 1, 1, NULL, '2025-05-04 03:45:02', '2025-05-04 03:45:02'),
-(10, 3, 1, 5, '2025-05-04', 18050.00, '7645678', 'Est ut in vero sunt', 1, 1, NULL, '2025-05-04 03:59:08', '2025-05-04 03:59:08'),
-(11, 3, 1, 7, '2025-05-04', 5000.00, NULL, 'Culpa mollit quam cu', 1, 1, NULL, '2025-05-04 04:01:23', '2025-05-04 04:01:27'),
-(12, 3, 1, 6, '2025-05-04', 13300.00, NULL, NULL, 1, 1, NULL, '2025-05-04 04:03:53', '2025-05-04 04:05:11'),
-(13, 3, 1, 7, '2025-05-04', 6100.00, NULL, NULL, 1, 1, NULL, '2025-05-04 04:03:53', '2025-05-04 04:05:09'),
-(14, 3, 1, NULL, '2025-05-04', 10600.00, NULL, NULL, 1, 1, NULL, '2025-05-04 04:03:53', '2025-05-04 04:05:06'),
-(15, 3, 1, 1, '2025-05-04', 5000.00, NULL, NULL, 1, 1, NULL, '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(16, 1, 1, 2, '2025-05-04', 14000.00, NULL, NULL, 1, 1, NULL, '2025-05-04 10:15:07', '2025-05-04 10:15:07');
+(1, 3, 1, 1, '2025-05-05', 19000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(2, 3, 1, 2, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -942,6 +902,7 @@ CREATE TABLE `items` (
   `item_type` tinyint DEFAULT NULL COMMENT '0=Item, 1=Package',
   `package_id` int DEFAULT NULL,
   `package_item_id` int DEFAULT NULL,
+  `srl` int DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci,
   `purchase_price` double(20,2) NOT NULL DEFAULT '0.00',
@@ -956,17 +917,29 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `name`, `description`, `purchase_price`, `sale_price`, `vat`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, NULL, NULL, 'Medical', NULL, 5000.00, 6000.00, 0.00, 1, '2025-04-28 10:39:34', '2025-04-28 10:39:34'),
-(2, 0, NULL, NULL, 'Slip Proccess', NULL, 2000.00, 2100.00, 0.00, 1, '2025-04-28 10:53:22', '2025-04-28 10:53:22'),
-(3, 0, NULL, NULL, 'Settlement', NULL, 2500.00, 3000.00, 0.00, 1, '2025-04-28 10:54:14', '2025-04-28 10:55:38'),
-(4, 1, NULL, NULL, 'Basic Package', NULL, 4500.00, 5000.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
-(5, NULL, 4, 2, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
-(6, NULL, 4, 3, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-28 11:02:53', '2025-04-28 11:02:53'),
-(7, 1, NULL, NULL, 'Premium Package', NULL, 12000.00, 14000.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
-(8, NULL, 7, 1, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
-(9, NULL, 7, 2, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23'),
-(10, NULL, 7, 3, '', NULL, 0.00, 0.00, 0.00, 1, '2025-04-29 04:53:23', '2025-04-29 04:53:23');
+INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `vat`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 0.00, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
+(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 0.00, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
+(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 0.00, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
+(4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
+(5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:41:34', '2025-05-05 04:41:34'),
+(6, 1, NULL, NULL, NULL, 'Basic Package', NULL, 12000.00, 14000.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(7, NULL, 6, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(8, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(9, NULL, 6, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(10, NULL, 6, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(11, 1, NULL, NULL, NULL, 'Premium Package', NULL, 16000.00, 18000.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(12, NULL, 11, 1, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(13, NULL, 11, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(14, NULL, 11, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(15, NULL, 11, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(16, NULL, 11, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(17, 1, NULL, NULL, NULL, 'Advanced Package', NULL, 17000.00, 20000.00, 0.00, 1, '2025-05-05 05:08:01', '2025-05-05 05:14:56'),
+(32, NULL, 17, 1, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(33, NULL, 17, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(34, NULL, 17, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(35, NULL, 17, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(36, NULL, 17, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21');
 
 -- --------------------------------------------------------
 
@@ -981,6 +954,8 @@ CREATE TABLE `job_service_records` (
   `entry_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
   `remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `medical_centers` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_enabled` tinyint NOT NULL DEFAULT '0',
   `status_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -990,12 +965,17 @@ CREATE TABLE `job_service_records` (
 -- Dumping data for table `job_service_records`
 --
 
-INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, NULL, NULL, NULL, 8, '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(2, 1, 3, NULL, NULL, NULL, 15, '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
-(3, 2, 1, '2025-05-04', '2025-05-30', NULL, 7, '2025-05-04 10:15:07', '2025-05-04 11:55:25'),
-(4, 2, 2, '2025-05-04', '2025-05-04', NULL, 12, '2025-05-04 10:15:07', '2025-05-04 12:01:03'),
-(5, 2, 3, '2025-05-04', '2025-05-04', NULL, 23, '2025-05-04 10:15:07', '2025-05-04 12:02:04');
+INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `medical_centers`, `is_enabled`, `status_id`, `created_at`, `updated_at`) VALUES
+(77, 1, 1, '2025-04-25', NULL, 'L.Eye(D-Un):36 R.Eye(D-Un):36 REMARKS:with glass corrected', NULL, 0, 6, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
+(78, 1, 2, '2025-05-05', '2025-05-30', NULL, NULL, 0, 10, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
+(79, 1, 3, '2025-05-05', '2025-05-30', NULL, '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', 0, 16, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
+(80, 1, 4, '2025-05-05', '2025-06-29', NULL, NULL, 0, 21, '2025-05-05 06:05:37', '2025-05-05 11:05:24'),
+(81, 1, 5, NULL, NULL, NULL, '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', 0, 26, '2025-05-05 06:05:37', '2025-05-05 11:05:03'),
+(82, 2, 1, NULL, NULL, NULL, NULL, 0, 1, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(83, 2, 2, NULL, NULL, NULL, NULL, 0, 7, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(84, 2, 3, NULL, NULL, NULL, NULL, 0, 11, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(85, 2, 4, NULL, NULL, NULL, NULL, 0, 17, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(86, 2, 5, NULL, NULL, NULL, NULL, 0, 22, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -1017,11 +997,11 @@ CREATE TABLE `medical_centers` (
 --
 
 INSERT INTO `medical_centers` (`id`, `name`, `code`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Center-1', 'c-1', 1, NULL, NULL),
-(2, 'Center-2', 'c-2', 1, NULL, NULL),
-(3, 'Center-3', 'c-3', 1, NULL, NULL),
-(4, 'Center-4', 'c-4', 1, NULL, NULL),
-(5, 'Center-5', 'c-5', 1, NULL, NULL);
+(1, 'Center-1', 'C-1', 1, NULL, NULL),
+(2, 'Center-2', 'C-2', 1, NULL, NULL),
+(3, 'Center-3', 'C-3', 1, NULL, NULL),
+(4, 'Center-4', 'C-4', 1, NULL, NULL),
+(5, 'Center-5', 'C-5', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1289,13 +1269,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (52, '2025_04_18_232237_add_is_repurchased_to_bike_sales_table', 52),
 (53, '2025_04_21_094759_create_fund_transfer_histories_table', 53),
 (123, '2025_02_19_124857_create_agents_table', 54),
-(130, '2023_12_26_170202_create_items_table', 55),
 (144, '2025_03_23_005302_create_customers_table', 58),
 (146, '2025_03_23_010022_create_sales_table', 59),
 (149, '2025_03_23_010039_create_sale_details_table', 60),
-(152, '2025_05_04_103031_create_status_lists_table', 61),
 (153, '2025_05_04_123429_create_medical_centers_table', 62),
-(154, '2025_04_30_171205_create_job_service_records_table', 63);
+(154, '2025_04_30_171205_create_job_service_records_table', 63),
+(155, '2023_12_26_170202_create_items_table', 64),
+(156, '2025_05_04_103031_create_status_lists_table', 65);
 
 -- --------------------------------------------------------
 
@@ -1604,8 +1584,8 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 'Malek Azad', '87638254093', '0000001', '2025-05-04', 5000.00, 0.00, 0, 0.00, 0.00, 5000.00, 5000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-04 09:48:13', '2025-05-04 09:51:43'),
-(2, 1, 1, 'Shoriful Alom', '345679876', '0000002', '2025-05-04', 14000.00, 0.00, 0, 0.00, 0.00, 14000.00, 14000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-04 10:15:03', '2025-05-04 10:15:07');
+(1, 3, 1, 'Malek Azad', '87638254093', '0000001', '2025-05-05', 20000.00, 0.00, 0, 5.00, 1000.00, 19000.00, 19000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-05 05:50:19', '2025-05-05 06:05:37'),
+(2, 3, 1, 'Nowab Shorif', '45678945', '0000002', '2025-05-05', 20000.00, 0.00, 0, 0.00, 0.00, 20000.00, 20000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-05 07:35:22', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -1633,8 +1613,8 @@ CREATE TABLE `sale_details` (
 --
 
 INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `purchase_price`, `profit`, `net_sale_price`, `net_profit`, `is_service_generated`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, '2025-05-04', 5000.00, 4500.00, 500.00, 5000.00, 500.00, 0, '2025-05-04 09:48:13', '2025-05-04 09:51:43'),
-(2, 2, 7, '2025-05-04', 14000.00, 12000.00, 2000.00, 14000.00, 2000.00, 0, '2025-05-04 10:15:03', '2025-05-04 10:15:07');
+(1, 1, 17, '2025-05-05', 20000.00, 17000.00, 3000.00, 19000.00, 2000.00, 0, '2025-05-05 05:50:19', '2025-05-05 06:05:37'),
+(2, 2, 17, '2025-05-05', 20000.00, 17000.00, 3000.00, 20000.00, 3000.00, 0, '2025-05-05 07:35:22', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -1669,8 +1649,7 @@ CREATE TABLE `status_lists` (
   `srl` int NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `color_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_initial` tinyint NOT NULL DEFAULT '0' COMMENT '1=Initial State',
-  `is_final` tinyint NOT NULL DEFAULT '0' COMMENT '1=Final State',
+  `status_state` tinyint NOT NULL DEFAULT '0' COMMENT '0=Initial State, 1=Middle State, 2=Final State',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1680,31 +1659,33 @@ CREATE TABLE `status_lists` (
 -- Dumping data for table `status_lists`
 --
 
-INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `color_code`, `is_initial`, `is_final`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Pending', '#dc3545', 1, 0, 1, NULL, NULL),
-(2, 1, 2, 'Activated', '#17a2b8', 0, 0, 1, NULL, NULL),
-(3, 1, 3, 'Waiting for result', '#17a2b8', 0, 0, 1, NULL, NULL),
-(4, 1, 4, 'Report is being completed', '#17a2b8', 0, 0, 1, NULL, NULL),
-(5, 1, 5, 'Medical status will show as “FIT” online', '#17a2b8', 0, 0, 1, NULL, NULL),
-(6, 1, 6, 'Online FIT', '#17a2b8', 0, 0, 1, NULL, NULL),
-(7, 1, 7, 'Medical Completed', '#28a745', 0, 1, 1, NULL, NULL),
-(8, 2, 1, 'Pending', '#dc3545', 1, 0, 1, NULL, NULL),
-(9, 2, 2, 'Activated', '#17a2b8', 0, 0, 1, NULL, NULL),
-(10, 2, 3, 'Settlement Proccesing', '#17a2b8', 0, 0, 1, NULL, NULL),
-(11, 2, 4, 'Proccessing Slip', '#17a2b8', 0, 0, 1, NULL, NULL),
-(12, 2, 5, 'Slip Recieved', '#17a2b8', 0, 0, 1, NULL, NULL),
-(13, 2, 6, 'Slip Submited', '#17a2b8', 0, 0, 1, NULL, NULL),
-(14, 2, 7, 'Completed', '#28a745', 0, 1, 1, NULL, NULL),
-(15, 3, 1, 'Pending', '#dc3545', 1, 0, 1, NULL, NULL),
-(16, 3, 2, 'Activated', '#17a2b8', 0, 0, 1, NULL, NULL),
-(17, 3, 3, 'State-1', '#17a2b8', 0, 0, 1, NULL, NULL),
-(18, 3, 4, 'State-2', '#17a2b8', 0, 0, 1, NULL, NULL),
-(19, 3, 5, 'State-3', '#17a2b8', 0, 0, 1, NULL, NULL),
-(20, 3, 6, 'State-4', '#17a2b8', 0, 0, 1, NULL, NULL),
-(21, 3, 7, 'State-5', '#17a2b8', 0, 0, 1, NULL, NULL),
-(22, 3, 8, 'State-6', '#17a2b8', 0, 0, 1, NULL, NULL),
-(23, 3, 9, 'State-7', '#17a2b8', 0, 0, 1, NULL, NULL),
-(24, 3, 10, 'Completed', '#28a745', 0, 1, 1, NULL, NULL);
+INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `color_code`, `status_state`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
+(2, 1, 2, 'Medical Completed', '#17a2b8', 1, 1, NULL, NULL),
+(3, 1, 3, 'Waiting For Medical Result', '#17a2b8', 1, 1, NULL, NULL),
+(4, 1, 4, 'Unfit & Processing For Refund', '#17a2b8', 1, 1, NULL, NULL),
+(5, 1, 5, 'Refund Completed', '#212529', 2, 1, NULL, NULL),
+(6, 1, 6, 'Result Published', '#28a745', 2, 1, NULL, NULL),
+(7, 2, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
+(8, 2, 2, 'Requested For Settlement', '#17a2b8', 1, 1, NULL, NULL),
+(9, 2, 3, 'Settlement Processing', '#17a2b8', 1, 1, NULL, NULL),
+(10, 2, 4, 'Settlement Completed', '#28a745', 2, 1, NULL, NULL),
+(11, 3, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
+(12, 3, 2, 'Requested For Slip', '#17a2b8', 1, 1, NULL, NULL),
+(13, 3, 3, 'Processing', '#17a2b8', 1, 1, NULL, NULL),
+(14, 3, 4, 'Slip Received', '#17a2b8', 1, 1, NULL, NULL),
+(15, 3, 5, 'Slip Submission Done', '#17a2b8', 1, 1, NULL, NULL),
+(16, 3, 6, 'Online Fit On WAFID', '#28a745', 2, 1, NULL, NULL),
+(17, 4, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
+(18, 4, 2, 'Requested For MOFA', '#17a2b8', 1, 1, NULL, NULL),
+(19, 4, 3, 'MOFA Received', '#17a2b8', 1, 1, NULL, NULL),
+(20, 4, 4, 'MOFA Processing', '#17a2b8', 1, 1, NULL, NULL),
+(21, 4, 5, 'MOFA Updated', '#28a745', 2, 1, NULL, NULL),
+(22, 5, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
+(23, 5, 2, 'Requested For Fit Card', '#17a2b8', 1, 1, NULL, NULL),
+(24, 5, 3, 'Fit Card Processing', '#17a2b8', 1, 1, NULL, NULL),
+(25, 5, 4, 'Fit Card Ready For Delivery', '#17a2b8', 1, 1, NULL, NULL),
+(26, 5, 5, 'Delivery Done', '#28a745', 2, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2215,7 +2196,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -2335,13 +2316,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2395,13 +2376,13 @@ ALTER TABLE `investor_transactions`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2419,7 +2400,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT for table `parties`
@@ -2503,7 +2484,7 @@ ALTER TABLE `sellers`
 -- AUTO_INCREMENT for table `status_lists`
 --
 ALTER TABLE `status_lists`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `stock_histories`
