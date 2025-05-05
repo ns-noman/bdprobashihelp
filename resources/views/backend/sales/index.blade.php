@@ -272,8 +272,11 @@
                                     text = 'Pending';
                                     eventClass = 'event';
                                 }else if(row.status == '1'){
-                                    color = 'success';
+                                    color = 'primary';
                                     text = 'Approved';
+                                }else if(row.status == '2'){
+                                    color = 'success';
+                                    text = 'Completed';
                                 }
                                 return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
                             }
@@ -291,13 +294,13 @@
                                                 <a href="${view}" class="btn btn-sm btn-warning ml-1">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status == '1' ? 'disabled' : null}">
+                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>
                                                 <form class="delete" action="${destroy}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status == '1' ? "disabled" : null}>
+                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </form>

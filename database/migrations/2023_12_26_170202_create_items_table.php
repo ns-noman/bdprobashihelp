@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('purchase_price',20,2)->default(0.00);
 			$table->double('sale_price',20,2)->default(0.00);
 			$table->double('vat',20,2)->default(0.00);
+            $table->integer('next_item_id')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

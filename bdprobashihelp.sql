@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 05, 2025 at 12:07 PM
+-- Generation Time: May 05, 2025 at 05:59 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,10 +45,10 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '243985.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-05 07:37:59'),
-(2, 2, '01839317038', 'Self', '21850.00', 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-04 03:44:57'),
-(3, 4, '20501680205073807', 'Nowab Shorif', '0.00', 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
-(4, 1, 'Check', 'Self', '0.00', 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
+(1, 1, 'Hand Cash', 'Self', 263985.00, 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-05 17:26:06'),
+(2, 2, '01839317038', 'Self', 21850.00, 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-04 03:44:57'),
+(3, 4, '20501680205073807', 'Nowab Shorif', 0.00, 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
+(4, 1, 'Check', 'Self', 0.00, 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,8 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (19, 1, NULL, 5000.00, 190985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 09:51:43', '2025-05-04 09:51:43'),
 (20, 1, NULL, 14000.00, 204985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 10:15:07', '2025-05-04 10:15:07'),
 (21, 1, NULL, 19000.00, 223985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
-(22, 1, NULL, 20000.00, 243985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 07:37:59', '2025-05-05 07:37:59');
+(22, 1, NULL, 20000.00, 243985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(23, 1, NULL, 20000.00, 263985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 17:26:06', '2025-05-05 17:26:06');
 
 -- --------------------------------------------------------
 
@@ -140,10 +141,10 @@ INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `e
 
 CREATE TABLE `agents` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date NOT NULL,
   `nid` bigint NOT NULL,
   `balance` decimal(20,2) NOT NULL DEFAULT '0.00',
@@ -160,10 +161,10 @@ CREATE TABLE `agents` (
 --
 
 INSERT INTO `agents` (`id`, `name`, `email`, `contact`, `address`, `dob`, `nid`, `balance`, `is_self`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, '0.00', 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07'),
-(2, 'Lilah Preston', 'mojyf@mailinator.com', '93', 'Cupidatat nostrum in', '1984-07-16', 17, '0.00', 0, 1, 1, 1, '2025-04-29 09:15:04', '2025-04-29 09:15:11'),
-(3, 'Lionel Carlson', 'kimezaxa@mailinator.com', '11', 'Commodi cum reprehen', '2021-06-23', 90, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:17', '2025-04-29 09:15:17'),
-(4, 'Iona Hodges', 'pyzizeret@mailinator.com', '81', 'Sint ipsum pariatur', '1993-11-12', 59, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:23', '2025-04-29 09:15:23');
+(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, 0.00, 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07'),
+(2, 'Lilah Preston', 'mojyf@mailinator.com', '93', 'Cupidatat nostrum in', '1984-07-16', 17, 0.00, 0, 1, 1, 1, '2025-04-29 09:15:04', '2025-04-29 09:15:11'),
+(3, 'Lionel Carlson', 'kimezaxa@mailinator.com', '11', 'Commodi cum reprehen', '2021-06-23', 90, 0.00, 0, 1, 1, NULL, '2025-04-29 09:15:17', '2025-04-29 09:15:17'),
+(4, 'Iona Hodges', 'pyzizeret@mailinator.com', '81', 'Sint ipsum pariatur', '1993-11-12', 59, 0.00, 0, 1, 1, NULL, '2025-04-29 09:15:23', '2025-04-29 09:15:23');
 
 -- --------------------------------------------------------
 
@@ -383,16 +384,16 @@ CREATE TABLE `bike_services` (
 --
 
 INSERT INTO `bike_services` (`id`, `bike_service_category_id`, `name`, `price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'General Bike Inspection', '1200.00', 1, '2025-03-05 07:03:49', '2025-03-05 07:07:00'),
-(2, 1, 'Periodic Oil Change', '1000.00', 1, '2025-03-05 07:04:03', '2025-03-05 07:04:03'),
-(3, 2, 'Engine Tuning', '1500.00', 1, '2025-03-05 07:04:22', '2025-03-05 07:06:44'),
-(4, 2, 'Engine Oil Replacement', '3000.00', 1, '2025-03-05 07:04:34', '2025-03-05 07:04:34'),
-(5, 3, 'Brake Pad Replacement', '5000.00', 1, '2025-03-05 07:04:51', '2025-03-05 07:04:51'),
-(6, 3, 'Clutch Cable Adjustment', '4000.00', 1, '2025-03-05 07:05:04', '2025-03-05 07:05:04'),
-(7, 4, 'Fork Oil Change', '2000.00', 1, '2025-03-05 07:05:19', '2025-03-05 07:05:19'),
-(8, 4, 'Steering Bearing Replacement', '2000.00', 1, '2025-03-05 07:05:43', '2025-03-05 07:05:43'),
-(9, 5, 'Battery Charging', '3000.00', 1, '2025-03-05 07:06:08', '2025-03-05 07:06:08'),
-(10, 5, 'Headlight & Indicator Check', '3000.00', 1, '2025-03-05 07:06:23', '2025-03-05 07:06:23');
+(1, 1, 'General Bike Inspection', 1200.00, 1, '2025-03-05 07:03:49', '2025-03-05 07:07:00'),
+(2, 1, 'Periodic Oil Change', 1000.00, 1, '2025-03-05 07:04:03', '2025-03-05 07:04:03'),
+(3, 2, 'Engine Tuning', 1500.00, 1, '2025-03-05 07:04:22', '2025-03-05 07:06:44'),
+(4, 2, 'Engine Oil Replacement', 3000.00, 1, '2025-03-05 07:04:34', '2025-03-05 07:04:34'),
+(5, 3, 'Brake Pad Replacement', 5000.00, 1, '2025-03-05 07:04:51', '2025-03-05 07:04:51'),
+(6, 3, 'Clutch Cable Adjustment', 4000.00, 1, '2025-03-05 07:05:04', '2025-03-05 07:05:04'),
+(7, 4, 'Fork Oil Change', 2000.00, 1, '2025-03-05 07:05:19', '2025-03-05 07:05:19'),
+(8, 4, 'Steering Bearing Replacement', 2000.00, 1, '2025-03-05 07:05:43', '2025-03-05 07:05:43'),
+(9, 5, 'Battery Charging', 3000.00, 1, '2025-03-05 07:06:08', '2025-03-05 07:06:08'),
+(10, 5, 'Headlight & Indicator Check', 3000.00, 1, '2025-03-05 07:06:23', '2025-03-05 07:06:23');
 
 -- --------------------------------------------------------
 
@@ -611,13 +612,13 @@ INSERT INTO `colors` (`id`, `name`, `hex_code`, `status`, `created_at`, `updated
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -629,9 +630,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Carter Jarvis', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', -50016.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-04 10:15:07'),
-(2, 'Jasper Morton', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-04-30 10:52:31'),
-(3, 'Aquila Stafford', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-05 07:37:59');
+(1, 'Karim Saheb', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', -50016.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-05 17:56:03'),
+(2, 'Malek Azad', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-05-05 17:55:53'),
+(3, 'Rahim Sheikh', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-05 17:55:34');
 
 -- --------------------------------------------------------
 
@@ -663,10 +664,12 @@ CREATE TABLE `customer_ledgers` (
 --
 
 INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `account_id`, `particular`, `date`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `note`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, NULL, NULL, 'Sale', '2025-05-05', NULL, '19000.00', '19000.00', NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
-(2, 3, NULL, 1, 1, 'Payment', '2025-05-05', '19000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
-(3, 3, 2, NULL, NULL, 'Sale', '2025-05-05', NULL, '20000.00', '20000.00', NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(4, 3, NULL, 2, 1, 'Payment', '2025-05-05', '20000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
+(1, 3, 1, NULL, NULL, 'Sale', '2025-05-05', NULL, 19000.00, 19000.00, NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(2, 3, NULL, 1, 1, 'Payment', '2025-05-05', 19000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
+(3, 3, 2, NULL, NULL, 'Sale', '2025-05-05', NULL, 20000.00, 20000.00, NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(4, 3, NULL, 2, 1, 'Payment', '2025-05-05', 20000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(5, 3, 3, NULL, NULL, 'Sale', '2025-05-05', NULL, 20000.00, 20000.00, NULL, NULL, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06'),
+(6, 3, NULL, 3, 1, 'Payment', '2025-05-05', 20000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06');
 
 -- --------------------------------------------------------
 
@@ -696,7 +699,8 @@ CREATE TABLE `customer_payments` (
 
 INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 1, '2025-05-05', 19000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
-(2, 3, 1, 2, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
+(2, 3, 1, 2, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
+(3, 3, 1, 3, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06');
 
 -- --------------------------------------------------------
 
@@ -903,10 +907,11 @@ CREATE TABLE `items` (
   `package_id` int DEFAULT NULL,
   `package_item_id` int DEFAULT NULL,
   `srl` int DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `purchase_price` double(20,2) NOT NULL DEFAULT '0.00',
   `sale_price` double(20,2) NOT NULL DEFAULT '0.00',
+  `next_item_id` int DEFAULT NULL COMMENT 'for service works order',
   `vat` double(20,2) NOT NULL DEFAULT '0.00',
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -917,29 +922,29 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `vat`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 0.00, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
-(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 0.00, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
-(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 0.00, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
-(4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
-(5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:41:34', '2025-05-05 04:41:34'),
-(6, 1, NULL, NULL, NULL, 'Basic Package', NULL, 12000.00, 14000.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(7, NULL, 6, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(8, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(9, NULL, 6, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(10, NULL, 6, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(11, 1, NULL, NULL, NULL, 'Premium Package', NULL, 16000.00, 18000.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(12, NULL, 11, 1, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(13, NULL, 11, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(14, NULL, 11, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(15, NULL, 11, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(16, NULL, 11, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(17, 1, NULL, NULL, NULL, 'Advanced Package', NULL, 17000.00, 20000.00, 0.00, 1, '2025-05-05 05:08:01', '2025-05-05 05:14:56'),
-(32, NULL, 17, 1, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(33, NULL, 17, 2, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(34, NULL, 17, 3, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(35, NULL, 17, 4, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(36, NULL, 17, 5, NULL, '', NULL, 0.00, 0.00, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21');
+INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `next_item_id`, `vat`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 2, 0.00, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
+(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 3, 0.00, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
+(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 4, 0.00, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
+(4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 5, 0.00, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
+(5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0, 0.00, 1, '2025-05-05 04:41:34', '2025-05-05 04:41:34'),
+(6, 1, NULL, NULL, NULL, 'Basic Package', NULL, 12000.00, 14000.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(7, NULL, 6, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(8, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(9, NULL, 6, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(10, NULL, 6, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
+(11, 1, NULL, NULL, NULL, 'Premium Package', NULL, 16000.00, 18000.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(12, NULL, 11, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(13, NULL, 11, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(14, NULL, 11, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(15, NULL, 11, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(16, NULL, 11, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
+(17, 1, NULL, NULL, NULL, 'Advanced Package', NULL, 17000.00, 20000.00, NULL, 0.00, 1, '2025-05-05 05:08:01', '2025-05-05 05:14:56'),
+(32, NULL, 17, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(33, NULL, 17, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(34, NULL, 17, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(35, NULL, 17, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
+(36, NULL, 17, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21');
 
 -- --------------------------------------------------------
 
@@ -953,29 +958,13 @@ CREATE TABLE `job_service_records` (
   `item_id` int NOT NULL,
   `entry_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
-  `remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `medical_centers` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `medical_centers` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_enabled` tinyint NOT NULL DEFAULT '0',
   `status_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `job_service_records`
---
-
-INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `medical_centers`, `is_enabled`, `status_id`, `created_at`, `updated_at`) VALUES
-(77, 1, 1, '2025-04-25', NULL, 'L.Eye(D-Un):36 R.Eye(D-Un):36 REMARKS:with glass corrected', NULL, 0, 6, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
-(78, 1, 2, '2025-05-05', '2025-05-30', NULL, NULL, 0, 10, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
-(79, 1, 3, '2025-05-05', '2025-05-30', NULL, '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', 0, 16, '2025-05-05 06:05:37', '2025-05-05 11:57:30'),
-(80, 1, 4, '2025-05-05', '2025-06-29', NULL, NULL, 0, 21, '2025-05-05 06:05:37', '2025-05-05 11:05:24'),
-(81, 1, 5, NULL, NULL, NULL, '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', 0, 26, '2025-05-05 06:05:37', '2025-05-05 11:05:03'),
-(82, 2, 1, NULL, NULL, NULL, NULL, 0, 1, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(83, 2, 2, NULL, NULL, NULL, NULL, 0, 7, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(84, 2, 3, NULL, NULL, NULL, NULL, 0, 11, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(85, 2, 4, NULL, NULL, NULL, NULL, 0, 17, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(86, 2, 5, NULL, NULL, NULL, NULL, 0, 22, '2025-05-05 07:37:59', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -985,8 +974,8 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 
 CREATE TABLE `medical_centers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1558,9 +1547,9 @@ CREATE TABLE `sales` (
   `id` bigint UNSIGNED NOT NULL,
   `customer_id` int NOT NULL,
   `account_id` bigint DEFAULT NULL,
-  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
   `vat_tax` double(20,2) DEFAULT '0.00',
@@ -1569,8 +1558,8 @@ CREATE TABLE `sales` (
   `discount` double(20,2) NOT NULL,
   `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Complete',
   `created_by_id` int DEFAULT NULL,
@@ -1578,14 +1567,6 @@ CREATE TABLE `sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 'Malek Azad', '87638254093', '0000001', '2025-05-05', 20000.00, 0.00, 0, 5.00, 1000.00, 19000.00, 19000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-05 05:50:19', '2025-05-05 06:05:37'),
-(2, 3, 1, 'Nowab Shorif', '45678945', '0000002', '2025-05-05', 20000.00, 0.00, 0, 0.00, 0.00, 20000.00, 20000.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-05 07:35:22', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -1607,14 +1588,6 @@ CREATE TABLE `sale_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sale_details`
---
-
-INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `purchase_price`, `profit`, `net_sale_price`, `net_profit`, `is_service_generated`, `created_at`, `updated_at`) VALUES
-(1, 1, 17, '2025-05-05', 20000.00, 17000.00, 3000.00, 19000.00, 2000.00, 0, '2025-05-05 05:50:19', '2025-05-05 06:05:37'),
-(2, 2, 17, '2025-05-05', 20000.00, 17000.00, 3000.00, 20000.00, 3000.00, 0, '2025-05-05 07:35:22', '2025-05-05 07:37:59');
 
 -- --------------------------------------------------------
 
@@ -1647,8 +1620,8 @@ CREATE TABLE `status_lists` (
   `id` bigint UNSIGNED NOT NULL,
   `item_id` int NOT NULL,
   `srl` int NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status_state` tinyint NOT NULL DEFAULT '0' COMMENT '0=Initial State, 1=Middle State, 2=Final State',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -2196,7 +2169,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -2316,13 +2289,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2382,7 +2355,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2466,13 +2439,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sellers`

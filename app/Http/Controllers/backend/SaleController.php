@@ -324,7 +324,7 @@ class SaleController extends Controller
                 //End....................................................
 
 
-                $this->btnControl($id);
+                $this->btnControl($id, $data['status_id']);
                 
                 if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
                         $medicalCenterTxt = '';
@@ -339,26 +339,27 @@ class SaleController extends Controller
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
 
-    public function btnControl($job_service_record_id)
+    public function btnControl($job_service_record_id, $status)
     {
         $current_job_item = JobServiceRecords::find($job_service_record_id);
-        // dd(in_array($current_job_item->status_id, [5,6,10,16,21,26]));
-        // $current_job_item_id = $current_job_id->item_id;
-        if(in_array($current_job_item->status_id, [5,6,10,16,21,26])){
+        if(in_array($status, [5,6,10,16,21,26])){
             $current_job_item->is_enabled = 0;
             $current_job_item->save();
+            if($status != 5) {
+                $next_item_id = Item::find($current_job_item->item_id)->next_item_id;
+                if ($next_item_id != 0) {
+                    $nextServiceItem = JobServiceRecords::where(['job_id'=> $current_job_item->job_id, 'item_id'=> $next_item_id])->first();
+                    $nextServiceItem->is_enabled = 1;
+                    $nextServiceItem->save();
+                }else{
+                    Sale::find($current_job_item->job_id)->update(['status'=> 2]);
+                }
+            }
         }
-
-
-
-                            // ->where('item_id', 2);
-
-                            // ->update(['is_enabled' => 1]);
     }
 
     public function approve($id)
@@ -399,29 +400,14 @@ class SaleController extends Controller
                 $sd->subtotal_profit = round(($item->sale_price - $item->purchase_price), 2);
                 $totalPurchasePrice += $item->purchase_price;
                 $totalSalesPrice += $item->sale_price;
-
                 if($item->item_type==0){
 
                 }elseif($item->item_type==1){
-                    
-                  
-                    
                     $service_item_ids = Item::where('package_id',$item->id)->pluck('package_item_id');
                     foreach ($service_item_ids as $key => $service_item_id) {
                         $statusId = StatusList::where(['item_id'=>$service_item_id,'status_state'=>0])->first()->id;
-                        // if(empty($item)){
-
-                        //     dd($item);
-                        // }
-                        // if(empty($sale)){
-    
-                        //     dd($sale);
-                        // }
-                        // if(empty($statusId)){
-    
-                        //     dd($statusId);
-                        // }
-                        $jobserviceRecordData = ['job_id'=>$sale->id,'item_id'=>$service_item_id,'status_id'=>$statusId];
+                        $is_enabled = $key == 0 ? 1 : 0;
+                        $jobserviceRecordData = ['job_id'=>$sale->id,'item_id'=>$service_item_id,'status_id'=>$statusId,'is_enabled'=>$is_enabled];
                         JobServiceRecords::create($jobserviceRecordData);
                     }
                 }
@@ -550,7 +536,9 @@ class SaleController extends Controller
         ];
         $query = Sale::with(['serviceshorts'])->join('customers', 'customers.id', '=', 'sales.customer_id')
                             ->join('admins', 'admins.id', '=', 'sales.created_by_id');
-        if(!$request->has('order')) $query = $query->orderBy('sales.id','desc');
+        if(!$request->has('order')){
+            $query = $query->orderBy('sales.status','asc')->orderBy('sales.id','desc');
+        }
         $query = $query->select($select);
         return DataTables::of($query)->make(true);
     }

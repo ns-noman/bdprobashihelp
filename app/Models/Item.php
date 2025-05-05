@@ -19,6 +19,7 @@ class Item extends Model
         'purchase_price',
         'sale_price',
         'vat',
+        'next_item_id',
         'status',
     ];
 
