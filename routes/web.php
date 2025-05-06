@@ -208,6 +208,7 @@ Route::prefix('backend')->group(function () {
             Route::prefix('sales')->controller(SaleController::class)->group(function(){
                 Route::get('','index')->name('sales.index');
                 Route::post('store','store')->name('sales.store');
+                Route::post('store','store')->name('sales.store');
                 Route::put('update/{id}','update')->name('sales.update');
                 Route::get('create','createOrEdit')->name('sales.create');
                 Route::get('invoice/{id}','inovice')->name('sales.invoice');
@@ -215,6 +216,8 @@ Route::prefix('backend')->group(function () {
                 Route::post('payment/store','payment')->name('sales.payment.store');
                 Route::get('list','list')->name('sales.list');
                 Route::get('edit/{id?}','createOrEdit')->name('sales.edit');
+                Route::get('add-new-item/{id?}','addNewItem')->name('sales.add-new-item');
+                Route::put('new-store/{id}','newStore')->name('sales.new-store');
                 Route::get('service-edit/{saleId?}/{serviceRecordId?}','serviceEdit')->name('sales.service-edit');
                 Route::put('service-update/{serviceRecordId}','serviceUpdate')->name('sales.service-update');
                 Route::delete('delete/{id}','destroy')->name('sales.destroy');

@@ -94,7 +94,7 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
         try {
-            
+            $customer_id = $request->customer_id;
             $account_id = $request->account_id;
             $date = $request->date;
             $total_pice = $request->total_price;
@@ -106,24 +106,28 @@ class SaleController extends Controller
             $paid_amount = $request->paid_amount;
             $note = $request->note;
             $reference_number = $request->reference_number;
-
-            $created_by_id = Auth::guard('admin')->user()->id;
+    
             $item_id = $request->item_id;
             $unit_price = $request->unit_price;
     
             $updated_by_id = Auth::guard('admin')->user()->id;
             $sale = Sale::find($id);
-            $sale->total_price += $total_pice;
-            $sale->total_payable += $total_payable;
-            $sale->paid_amount += $paid_amount;
-            if($discount>0){
-                $sale->discount_method = 2;
-                $sale->discount += $discount;
-                $sale->discount_rate = $sale->discount;
-            }
+            $sale->customer_id = $customer_id;
+            $sale->account_id = $account_id;
+            $sale->date = $date;
+            $sale->total_price = $total_pice;
+            $sale->vat_tax = $vat_tax;
+            $sale->discount_method = $discount_method;
+            $sale->discount_rate = $discount_rate;
+            $sale->discount = $discount;
+            $sale->total_payable = $total_payable;
+            $sale->paid_amount = $paid_amount;
+            $sale->reference_number = $reference_number;
+            $sale->note = $note;
             $sale->payment_status = ($total_payable == $paid_amount) ? 1 : 0;
+            $sale->status = 0;
             $sale->updated_by_id = $updated_by_id;
-            $sale->save();
+            // $sale->save();
             for ($i = 0; $i < count($item_id); $i++) {
                 $saleDetails = new SaleDetails();
                 $saleDetails->sale_id = $sale->id;
@@ -132,53 +136,6 @@ class SaleController extends Controller
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
             }
-
-            // Customer ledger entry for sale
-            $customerLedgerDataSale['customer_id'] = $sale->customer_id;
-            $customerLedgerDataSale['sale_id'] = $sale->id;
-            $customerLedgerDataSale['particular'] = 'Sale';
-            $customerLedgerDataSale['date'] = $date;
-            $customerLedgerDataSale['credit_amount'] = $total_payable;
-            $customerLedgerDataSale['note'] = $note;
-            $customerLedgerDataSale['created_by_id'] = $created_by_id;
-            $this->customerLedgerTransction($customerLedgerDataSale);
-
-            if ($paid_amount>0)
-            {
-            // Account Transaction
-                $accountData = [
-                    'account_id'        => $account_id,
-                    'credit_amount'      => $paid_amount,
-                    'reference_number'  => $reference_number,
-                    'description'       => 'Sale Payment',
-                    'transaction_date'  => $date, 
-                ];
-                $this->accountTransaction($accountData);
-
-                $payment = new CustomerPayment();
-                $payment->customer_id = $sale->customer_id;
-                $payment->account_id = $account_id;
-                $payment->sale_id = $sale->id;
-                $payment->date = $date;
-                $payment->amount = $paid_amount;
-                $payment->reference_number = $reference_number;
-                $payment->note = $note;
-                $payment->status = 1;
-                $payment->created_by_id = $created_by_id;
-                $payment->save();
-
-                $customerLedgerDataPayment['customer_id'] = $sale->customer_id;
-                $customerLedgerDataPayment['payment_id'] = $payment->id;
-                $customerLedgerDataPayment['account_id'] = $account_id;
-                $customerLedgerDataPayment['particular'] = 'Payment';
-                $customerLedgerDataPayment['date'] = $date;
-                $customerLedgerDataPayment['debit_amount'] = $paid_amount;
-                $customerLedgerDataPayment['reference_number'] = $reference_number;
-                $customerLedgerDataPayment['note'] = $note;
-                $customerLedgerDataPayment['created_by_id'] = $created_by_id;
-                $this->customerLedgerTransction($customerLedgerDataPayment);
-            }
-            $this->generateProfit($id);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
@@ -345,26 +302,13 @@ class SaleController extends Controller
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
             }
-            $this->generateJobServiceItem($sale->id);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
-
-    public function generateJobServiceItem($saleId)
-    {
-        $item_ids = Item::where('item_type',0)->pluck('id');
-        foreach ($item_ids as $key => $item_id) {
-            $initialStatusId = StatusList::where(['item_id'=> $item_id,'status_state'=>0])->first()->id;
-            $jobserviceRecordData = ['job_id'=>$saleId,'item_id'=>$item_id,'status_id'=>$initialStatusId,'is_enabled'=>0];
-            JobServiceRecords::create($jobserviceRecordData);
-        }
-    }
-
     public function update(Request $request,$id)
     {
         DB::beginTransaction();
@@ -515,7 +459,53 @@ class SaleController extends Controller
             $created_by_id = $sale->created_by_id;
             $updated_by_id = $sale->updated_by_id;
 
-            $this->generateProfit($id);
+
+            $saleDetails = SaleDetails::where('sale_id', $id)->get();
+
+            $totalProfit = 0;
+            $totalNetproft = 0;
+            $totalPurchasePrice = 0;
+            $totalSalesPrice = 0;
+
+            foreach ($saleDetails as $key => &$sd) {
+                $item = Item::findOrFail($sd->item_id);
+                $item->sale_price = $sd->unit_price;
+                $sd->purchase_price = $item->purchase_price;
+                $sd->subtotal_profit = round(($item->sale_price - $item->purchase_price), 2);
+                $totalPurchasePrice += $item->purchase_price;
+                $totalSalesPrice += $item->sale_price;
+                if($item->item_type==0){
+
+                }elseif($item->item_type==1){
+                    $service_item_ids = Item::where('package_id',$item->id)->pluck('package_item_id');
+                    foreach ($service_item_ids as $key => $service_item_id) {
+                        $statusId = StatusList::where(['item_id'=>$service_item_id,'status_state'=>0])->first()->id;
+                        $is_enabled = $key == 0 ? 1 : 0;
+                        $jobserviceRecordData = ['job_id'=>$sale->id,'item_id'=>$service_item_id,'status_id'=>$statusId,'is_enabled'=>$is_enabled];
+                        JobServiceRecords::create($jobserviceRecordData);
+                    }
+                }
+            }
+            $totalProfit = $totalSalesPrice - $totalPurchasePrice;
+
+
+            foreach ($saleDetails as $key => $sd) {
+                $saleDetails->purchase_price = $item->purchase_price;
+                $profit_percentage_per_item = ($totalProfit != 0) ? ($sd->subtotal_profit / $totalProfit) * 100 : 0;
+                $discount_of_each_item = $discount * ($profit_percentage_per_item/100);
+                $net_sale_price = $sd->unit_price - $discount_of_each_item;
+                $net_subtotal_profit = round($sd->subtotal_profit - $discount_of_each_item, 2);
+
+
+                SaleDetails::find($sd->id)->update(
+                    [
+                        'purchase_price'=>$sd->purchase_price,
+                        'profit'=>$sd->subtotal_profit,
+                        'net_sale_price'=>$net_sale_price,
+                        'net_profit'=>$net_subtotal_profit,
+                    ]
+                );
+            }
 
             // Customer ledger entry for sale
             $customerLedgerDataSale['customer_id'] = $customer_id;
@@ -576,52 +566,14 @@ class SaleController extends Controller
             
         } catch (\Exception $e) {
             DB::rollBack();
+
+            // dd($e);
+
             return response()->json([
                 'success' => false,
                 'message' => 'Error approving sale.',
                 'error'   => $e->getMessage(),
             ], 500);
-        }
-    }
-
-    public function generateProfit($sale_id)
-    {
-        $sale = Sale::find($sale_id);
-        $saleDetails = SaleDetails::where('sale_id', $sale_id)->get();
-
-        $totalProfit = 0;
-        $totalNetproft = 0;
-        $totalPurchasePrice = 0;
-        $totalSalesPrice = 0;
-
-        foreach ($saleDetails as $key => &$sd) {
-            $item = Item::findOrFail($sd->item_id);
-            $item->sale_price = $sd->unit_price;
-            $sd->purchase_price = $item->purchase_price;
-            $sd->subtotal_profit = round(($item->sale_price - $item->purchase_price), 2);
-            $totalPurchasePrice += $item->purchase_price;
-            $totalSalesPrice += $item->sale_price;
-        }
-        
-        JobServiceRecords::where(['job_id'=>$sale_id,'item_id'=>1])->update(['is_enabled'=> 1]);
-
-        $totalProfit = $totalSalesPrice - $totalPurchasePrice;
-
-
-        foreach ($saleDetails as $key => $sd) {
-            $saleDetails->purchase_price = $item->purchase_price;
-            $profit_percentage_per_item = ($totalProfit != 0) ? ($sd->subtotal_profit / $totalProfit) * 100 : 0;
-            $discount_of_each_item = $sale->discount * ($profit_percentage_per_item/100);
-            $net_sale_price = $sd->unit_price - $discount_of_each_item;
-            $net_subtotal_profit = round($sd->subtotal_profit - $discount_of_each_item, 2);
-            SaleDetails::find($sd->id)->update(
-                [
-                    'purchase_price'=>$sd->purchase_price,
-                    'profit'=>$sd->subtotal_profit,
-                    'net_sale_price'=>$net_sale_price,
-                    'net_profit'=>$net_subtotal_profit,
-                ]
-            );
         }
     }
     

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 05, 2025 at 05:59 PM
+-- Generation Time: May 06, 2025 at 08:35 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `id` bigint UNSIGNED NOT NULL,
   `payment_method_id` bigint NOT NULL,
-  `account_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `holder_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `holder_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `balance` decimal(20,2) NOT NULL DEFAULT '0.00',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
   `created_by_id` bigint DEFAULT NULL,
@@ -45,8 +45,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', 263985.00, 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-05 17:26:06'),
-(2, 2, '01839317038', 'Self', 21850.00, 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-04 03:44:57'),
+(1, 1, 'Hand Cash', 'Self', 405680.00, 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-06 18:43:44'),
+(2, 2, '01839317038', 'Self', 25175.00, 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-06 17:08:59'),
 (3, 4, '20501680205073807', 'Nowab Shorif', 0.00, 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
 (4, 1, 'Check', 'Self', 0.00, 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
 
@@ -62,8 +62,8 @@ CREATE TABLE `account_ledgers` (
   `debit_amount` double(20,2) DEFAULT NULL COMMENT 'Withdrawal',
   `credit_amount` double(20,2) DEFAULT NULL COMMENT 'Deposit',
   `current_balance` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `transaction_date` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -96,7 +96,18 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (20, 1, NULL, 14000.00, 204985.00, NULL, 'Sale Payment', '2025-05-04', '2025-05-04 10:15:07', '2025-05-04 10:15:07'),
 (21, 1, NULL, 19000.00, 223985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
 (22, 1, NULL, 20000.00, 243985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(23, 1, NULL, 20000.00, 263985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 17:26:06', '2025-05-05 17:26:06');
+(23, 1, NULL, 20000.00, 263985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 17:26:06', '2025-05-05 17:26:06'),
+(24, 1, NULL, 18500.00, 282485.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-05 18:38:18', '2025-05-05 18:38:18'),
+(25, 1, NULL, 14500.00, 296985.00, NULL, 'Sale Payment', '2025-05-05', '2025-05-05 20:14:10', '2025-05-05 20:14:10'),
+(26, 1, NULL, 14500.00, 311485.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-06 03:43:27', '2025-05-06 03:43:27'),
+(27, 1, NULL, 14500.00, 325985.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-06 14:23:17', '2025-05-06 14:23:17'),
+(28, 2, NULL, 3325.00, 25175.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-06 17:08:59', '2025-05-06 17:08:59'),
+(29, 1, NULL, 7695.00, 333680.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-06 17:13:31', '2025-05-06 17:13:31'),
+(33, 1, NULL, 47500.00, 381180.00, NULL, 'Sale Payment', '2025-05-06', '2025-05-06 18:06:56', '2025-05-06 18:06:56'),
+(34, 1, NULL, 8000.00, 389180.00, NULL, 'Sale Payment', '2025-05-07', '2025-05-06 18:11:18', '2025-05-06 18:11:18'),
+(35, 1, NULL, 4900.00, 394080.00, NULL, 'Sale Payment', '2025-05-07', '2025-05-06 18:16:03', '2025-05-06 18:16:03'),
+(36, 1, NULL, 8100.00, 402180.00, NULL, 'Sale Payment', '2025-05-07', '2025-05-06 18:40:31', '2025-05-06 18:40:31'),
+(37, 1, NULL, 3500.00, 405680.00, NULL, 'Sale Payment', '2025-05-07', '2025-05-06 18:43:44', '2025-05-06 18:43:44');
 
 -- --------------------------------------------------------
 
@@ -107,17 +118,17 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 CREATE TABLE `admins` (
   `id` bigint UNSIGNED NOT NULL,
   `agent_id` int DEFAULT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` int NOT NULL,
-  `mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -141,10 +152,10 @@ INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `e
 
 CREATE TABLE `agents` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date NOT NULL,
   `nid` bigint NOT NULL,
   `balance` decimal(20,2) NOT NULL DEFAULT '0.00',
@@ -174,31 +185,31 @@ INSERT INTO `agents` (`id`, `name`, `email`, `contact`, `address`, `dob`, `nid`,
 
 CREATE TABLE `basic_infos` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fax` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `web_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `facebook_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `twitter_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `linkedin_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `youtube_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` longtext COLLATE utf8mb4_unicode_ci,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `favicon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `web_link` text COLLATE utf8mb4_unicode_ci,
+  `facebook_link` text COLLATE utf8mb4_unicode_ci,
+  `twitter_link` text COLLATE utf8mb4_unicode_ci,
+  `linkedin_link` text COLLATE utf8mb4_unicode_ci,
+  `youtube_link` text COLLATE utf8mb4_unicode_ci,
   `assets_value` int NOT NULL,
   `total_employees` int NOT NULL,
   `total_companies` int NOT NULL,
   `start_year` int NOT NULL,
-  `map_embed` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_1` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_2` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_3` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_symbol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `map_embed` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_1` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_2` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_3` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_symbol` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -220,9 +231,9 @@ CREATE TABLE `bikes` (
   `id` bigint UNSIGNED NOT NULL,
   `model_id` bigint NOT NULL,
   `color_id` bigint NOT NULL,
-  `registration_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `chassis_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `engine_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `registration_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `chassis_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `engine_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -236,7 +247,7 @@ CREATE TABLE `bikes` (
 CREATE TABLE `bike_models` (
   `id` bigint UNSIGNED NOT NULL,
   `brand_id` bigint NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `manufacture_year` bigint DEFAULT NULL,
   `engine_capacity` bigint DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
@@ -293,8 +304,8 @@ CREATE TABLE `bike_profit_share_records` (
   `account_id` bigint NOT NULL,
   `amount` decimal(20,2) NOT NULL DEFAULT '0.00',
   `date` date NOT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint DEFAULT NULL,
   `updated_by_id` bigint DEFAULT NULL,
@@ -320,12 +331,12 @@ CREATE TABLE `bike_purchases` (
   `servicing_cost` decimal(20,2) NOT NULL DEFAULT '0.00',
   `total_cost` decimal(20,2) NOT NULL DEFAULT '0.00',
   `purchase_date` date NOT NULL,
-  `doc_nid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_reg_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_deed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_nid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_reg_card` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_deed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `purchase_status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `selling_status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Unsold, 1=Sold',
   `created_by_id` bigint DEFAULT NULL,
@@ -347,12 +358,12 @@ CREATE TABLE `bike_sales` (
   `buyer_id` bigint NOT NULL,
   `sale_price` decimal(20,2) NOT NULL DEFAULT '0.00',
   `sale_date` date NOT NULL,
-  `doc_nid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_reg_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doc_deed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_nid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_reg_card` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_deed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name_transfer_date` date DEFAULT NULL,
   `is_name_transfered` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Transfered',
   `is_repurchased` tinyint NOT NULL DEFAULT '0',
@@ -372,7 +383,7 @@ CREATE TABLE `bike_sales` (
 CREATE TABLE `bike_services` (
   `id` bigint UNSIGNED NOT NULL,
   `bike_service_category_id` bigint NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(20,2) NOT NULL DEFAULT '0.00',
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -403,7 +414,7 @@ INSERT INTO `bike_services` (`id`, `bike_service_category_id`, `name`, `price`, 
 
 CREATE TABLE `bike_service_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -433,14 +444,14 @@ INSERT INTO `bike_service_categories` (`id`, `name`, `status`, `created_at`, `up
 
 CREATE TABLE `bike_service_records` (
   `id` bigint UNSIGNED NOT NULL,
-  `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bike_purchase_id` bigint DEFAULT NULL,
   `customer_id` bigint DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `total_amount` decimal(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint DEFAULT NULL,
   `updated_by_id` bigint DEFAULT NULL,
@@ -472,8 +483,8 @@ CREATE TABLE `bike_service_record_details` (
 
 CREATE TABLE `brands` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -498,13 +509,13 @@ INSERT INTO `brands` (`id`, `name`, `logo`, `status`, `created_at`, `updated_at`
 
 CREATE TABLE `buyers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `dl_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bcn_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dl_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passport_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bcn_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -520,8 +531,8 @@ CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_cat_id` int NOT NULL DEFAULT '0',
   `cat_type_id` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -564,7 +575,7 @@ INSERT INTO `categories` (`id`, `parent_cat_id`, `cat_type_id`, `title`, `image`
 
 CREATE TABLE `category_types` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -585,8 +596,8 @@ INSERT INTO `category_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `colors` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hex_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hex_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -612,13 +623,13 @@ INSERT INTO `colors` (`id`, `name`, `hex_code`, `status`, `created_at`, `updated
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -630,9 +641,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Karim Saheb', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', -50016.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-05 17:56:03'),
-(2, 'Malek Azad', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-05-05 17:55:53'),
-(3, 'Rahim Sheikh', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-05 17:55:34');
+(1, 'Karim Saheb', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', 2100.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-06 18:48:20'),
+(2, 'Malek Azad', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-05-05 20:14:10'),
+(3, 'Rahim Sheikh', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-06 14:23:17');
 
 -- --------------------------------------------------------
 
@@ -646,13 +657,13 @@ CREATE TABLE `customer_ledgers` (
   `sale_id` int DEFAULT NULL,
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -669,7 +680,30 @@ INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `a
 (3, 3, 2, NULL, NULL, 'Sale', '2025-05-05', NULL, 20000.00, 20000.00, NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
 (4, 3, NULL, 2, 1, 'Payment', '2025-05-05', 20000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
 (5, 3, 3, NULL, NULL, 'Sale', '2025-05-05', NULL, 20000.00, 20000.00, NULL, NULL, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06'),
-(6, 3, NULL, 3, 1, 'Payment', '2025-05-05', 20000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06');
+(6, 3, NULL, 3, 1, 'Payment', '2025-05-05', 20000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06'),
+(7, 1, 1, NULL, NULL, 'Sale', '2025-05-06', NULL, 18500.00, 18500.00, NULL, NULL, 1, NULL, '2025-05-05 18:38:18', '2025-05-05 18:38:18'),
+(8, 1, NULL, 4, 1, 'Payment', '2025-05-06', 18500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 18:38:18', '2025-05-05 18:38:18'),
+(9, 2, 2, NULL, NULL, 'Sale', '2025-05-05', NULL, 14500.00, 14500.00, NULL, NULL, 1, NULL, '2025-05-05 20:14:10', '2025-05-05 20:14:10'),
+(10, 2, NULL, 5, 1, 'Payment', '2025-05-05', 14500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-05 20:14:10', '2025-05-05 20:14:10'),
+(11, 3, 3, NULL, NULL, 'Sale', '2025-05-06', NULL, 14500.00, 14500.00, NULL, NULL, 1, NULL, '2025-05-06 03:43:27', '2025-05-06 03:43:27'),
+(12, 3, NULL, 6, 1, 'Payment', '2025-05-06', 14500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 03:43:27', '2025-05-06 03:43:27'),
+(13, 3, 4, NULL, NULL, 'Sale', '2025-05-06', NULL, 14500.00, 14500.00, NULL, NULL, 1, NULL, '2025-05-06 14:23:17', '2025-05-06 14:23:17'),
+(14, 3, NULL, 7, 1, 'Payment', '2025-05-06', 14500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 14:23:17', '2025-05-06 14:23:17'),
+(15, 1, 9, NULL, NULL, 'Sale', '2025-05-06', NULL, 3325.00, 3325.00, NULL, NULL, 1, NULL, '2025-05-06 17:08:59', '2025-05-06 17:08:59'),
+(16, 1, NULL, 8, 2, 'Payment', '2025-05-06', 3325.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 17:08:59', '2025-05-06 17:08:59'),
+(17, 1, 10, NULL, NULL, 'Sale', '2025-05-06', NULL, 7695.00, 7695.00, NULL, NULL, 1, NULL, '2025-05-06 17:13:31', '2025-05-06 17:13:31'),
+(18, 1, NULL, 9, 1, 'Payment', '2025-05-06', 7695.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 17:13:31', '2025-05-06 17:13:31'),
+(24, 1, 10, NULL, NULL, 'Sale', '2025-05-06', NULL, 47500.00, 47500.00, NULL, NULL, 1, NULL, '2025-05-06 18:06:56', '2025-05-06 18:06:56'),
+(25, 1, NULL, 13, 1, 'Payment', '2025-05-06', 47500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 18:06:56', '2025-05-06 18:06:56'),
+(26, 1, 1, NULL, NULL, 'Sale', '2025-05-07', NULL, 8000.00, 8000.00, NULL, NULL, 1, NULL, '2025-05-06 18:11:18', '2025-05-06 18:11:18'),
+(27, 1, NULL, 14, 1, 'Payment', '2025-05-07', 8000.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 18:11:18', '2025-05-06 18:11:18'),
+(28, 1, 1, NULL, NULL, 'Sale', '2025-05-07', NULL, 4900.00, 4900.00, NULL, NULL, 1, NULL, '2025-05-06 18:16:03', '2025-05-06 18:16:03'),
+(29, 1, NULL, 15, 1, 'Payment', '2025-05-07', 4900.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 18:16:03', '2025-05-06 18:16:03'),
+(30, 1, 2, NULL, NULL, 'Sale', '2025-05-07', NULL, 8100.00, 8100.00, NULL, NULL, 1, NULL, '2025-05-06 18:40:31', '2025-05-06 18:40:31'),
+(31, 1, NULL, 16, 1, 'Payment', '2025-05-07', 8100.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 18:40:31', '2025-05-06 18:40:31'),
+(32, 1, 2, NULL, NULL, 'Sale', '2025-05-07', NULL, 3500.00, 3500.00, NULL, NULL, 1, NULL, '2025-05-06 18:43:44', '2025-05-06 18:43:44'),
+(33, 1, NULL, 17, 1, 'Payment', '2025-05-07', 3500.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-06 18:43:44', '2025-05-06 18:43:44'),
+(34, 1, 2, NULL, NULL, 'Sale', '2025-05-07', NULL, 2100.00, 2100.00, NULL, NULL, 1, NULL, '2025-05-06 18:48:20', '2025-05-06 18:48:20');
 
 -- --------------------------------------------------------
 
@@ -684,8 +718,8 @@ CREATE TABLE `customer_payments` (
   `sale_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -700,7 +734,18 @@ CREATE TABLE `customer_payments` (
 INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 1, '2025-05-05', 19000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 06:05:37', '2025-05-05 06:05:37'),
 (2, 3, 1, 2, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 07:37:59', '2025-05-05 07:37:59'),
-(3, 3, 1, 3, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06');
+(3, 3, 1, 3, '2025-05-05', 20000.00, NULL, NULL, 1, 1, NULL, '2025-05-05 17:26:06', '2025-05-05 17:26:06'),
+(4, 1, 1, 1, '2025-05-06', 18500.00, NULL, NULL, 1, 1, NULL, '2025-05-05 18:38:18', '2025-05-05 18:38:18'),
+(5, 2, 1, 2, '2025-05-05', 14500.00, NULL, NULL, 1, 1, NULL, '2025-05-05 20:14:10', '2025-05-05 20:14:10'),
+(6, 3, 1, 3, '2025-05-06', 14500.00, NULL, NULL, 1, 1, NULL, '2025-05-06 03:43:27', '2025-05-06 03:43:27'),
+(7, 3, 1, 4, '2025-05-06', 14500.00, NULL, NULL, 1, 1, NULL, '2025-05-06 14:23:17', '2025-05-06 14:23:17'),
+(8, 1, 2, 9, '2025-05-06', 3325.00, NULL, NULL, 1, 1, NULL, '2025-05-06 17:08:59', '2025-05-06 17:08:59'),
+(9, 1, 1, 10, '2025-05-06', 7695.00, NULL, NULL, 1, 1, NULL, '2025-05-06 17:13:31', '2025-05-06 17:13:31'),
+(13, 1, 1, 10, '2025-05-06', 47500.00, NULL, NULL, 1, 1, NULL, '2025-05-06 18:06:56', '2025-05-06 18:06:56'),
+(14, 1, 1, 1, '2025-05-07', 8000.00, NULL, NULL, 1, 1, NULL, '2025-05-06 18:11:18', '2025-05-06 18:11:18'),
+(15, 1, 1, 1, '2025-05-07', 4900.00, NULL, NULL, 1, 1, NULL, '2025-05-06 18:16:03', '2025-05-06 18:16:03'),
+(16, 1, 1, 2, '2025-05-07', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-06 18:40:31', '2025-05-06 18:40:31'),
+(17, 1, 1, 2, '2025-05-07', 3500.00, NULL, NULL, 1, 1, NULL, '2025-05-06 18:43:44', '2025-05-06 18:43:44');
 
 -- --------------------------------------------------------
 
@@ -711,11 +756,11 @@ INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `
 CREATE TABLE `expenses` (
   `id` bigint UNSIGNED NOT NULL,
   `account_id` bigint NOT NULL,
-  `expense_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expense_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_amount` decimal(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -731,7 +776,7 @@ CREATE TABLE `expenses` (
 
 CREATE TABLE `expense_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `cat_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cat_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -765,7 +810,7 @@ CREATE TABLE `expense_details` (
   `expense_head_id` int NOT NULL,
   `amount` decimal(20,2) NOT NULL,
   `quantity` decimal(10,2) NOT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -779,8 +824,8 @@ CREATE TABLE `expense_details` (
 CREATE TABLE `expense_heads` (
   `id` bigint UNSIGNED NOT NULL,
   `expense_category_id` bigint NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -822,11 +867,11 @@ INSERT INTO `expense_heads` (`id`, `expense_category_id`, `title`, `code`, `stat
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -840,8 +885,8 @@ CREATE TABLE `frontend_menus` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_id` int NOT NULL DEFAULT '0',
   `srln` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_in_menus` tinyint NOT NULL DEFAULT '1',
   `is_in_pages` tinyint NOT NULL DEFAULT '0',
   `status` tinyint NOT NULL DEFAULT '1',
@@ -863,8 +908,8 @@ CREATE TABLE `fund_transfer_histories` (
   `from_account_id` bigint UNSIGNED NOT NULL,
   `to_account_id` bigint UNSIGNED NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint UNSIGNED DEFAULT NULL,
   `updated_by_id` bigint UNSIGNED DEFAULT NULL,
@@ -885,9 +930,9 @@ CREATE TABLE `investor_transactions` (
   `debit_amount` decimal(20,2) DEFAULT NULL COMMENT 'Withdrawal',
   `credit_amount` decimal(20,2) DEFAULT NULL COMMENT 'Deposit',
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `transaction_date` date NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint DEFAULT NULL,
   `updated_by_id` bigint DEFAULT NULL,
@@ -907,12 +952,13 @@ CREATE TABLE `items` (
   `package_id` int DEFAULT NULL,
   `package_item_id` int DEFAULT NULL,
   `srl` int DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
   `purchase_price` double(20,2) NOT NULL DEFAULT '0.00',
   `sale_price` double(20,2) NOT NULL DEFAULT '0.00',
   `next_item_id` int DEFAULT NULL COMMENT 'for service works order',
   `vat` double(20,2) NOT NULL DEFAULT '0.00',
+  `is_saleable` tinyint DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -922,29 +968,47 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `next_item_id`, `vat`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 2, 0.00, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
-(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 3, 0.00, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
-(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 4, 0.00, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
-(4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 5, 0.00, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
-(5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0, 0.00, 1, '2025-05-05 04:41:34', '2025-05-05 04:41:34'),
-(6, 1, NULL, NULL, NULL, 'Basic Package', NULL, 12000.00, 14000.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(7, NULL, 6, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(8, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(9, NULL, 6, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(10, NULL, 6, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:44:49', '2025-05-05 04:44:49'),
-(11, 1, NULL, NULL, NULL, 'Premium Package', NULL, 16000.00, 18000.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(12, NULL, 11, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(13, NULL, 11, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(14, NULL, 11, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(15, NULL, 11, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(16, NULL, 11, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 04:49:32', '2025-05-05 04:49:32'),
-(17, 1, NULL, NULL, NULL, 'Advanced Package', NULL, 17000.00, 20000.00, NULL, 0.00, 1, '2025-05-05 05:08:01', '2025-05-05 05:14:56'),
-(32, NULL, 17, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(33, NULL, 17, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(34, NULL, 17, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(35, NULL, 17, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21'),
-(36, NULL, 17, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, 1, '2025-05-05 05:15:21', '2025-05-05 05:15:21');
+INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `next_item_id`, `vat`, `is_saleable`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 2, 0.00, 1, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
+(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 3, 0.00, 1, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
+(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 4, 0.00, 1, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
+(4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 5, 0.00, 0, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
+(5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0, 0.00, 0, 1, '2025-05-05 04:41:34', '2025-05-05 04:41:34'),
+(6, 1, NULL, NULL, NULL, 'Basic Package S-1', NULL, 13500.00, 14500.00, NULL, 0.00, NULL, 1, '2025-05-05 04:44:49', '2025-05-05 18:30:46'),
+(11, 1, NULL, NULL, NULL, 'Basic Package S-2', NULL, 14000.00, 15000.00, NULL, 0.00, NULL, 1, '2025-05-05 04:49:32', '2025-05-05 18:31:06'),
+(17, 1, NULL, NULL, NULL, 'Basic Package S-3', NULL, 15500.00, 16500.00, NULL, 0.00, NULL, 1, '2025-05-05 05:08:01', '2025-05-05 18:31:47'),
+(42, NULL, 6, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:30:46', '2025-05-05 18:30:46'),
+(43, NULL, 6, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:30:46', '2025-05-05 18:30:46'),
+(44, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:30:46', '2025-05-05 18:30:46'),
+(45, NULL, 6, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:30:46', '2025-05-05 18:30:46'),
+(46, NULL, 6, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:30:46', '2025-05-05 18:30:46'),
+(47, NULL, 11, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:06', '2025-05-05 18:31:06'),
+(48, NULL, 11, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:06', '2025-05-05 18:31:06'),
+(49, NULL, 11, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:06', '2025-05-05 18:31:06'),
+(50, NULL, 11, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:06', '2025-05-05 18:31:06'),
+(51, NULL, 11, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:06', '2025-05-05 18:31:06'),
+(57, NULL, 17, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:47', '2025-05-05 18:31:47'),
+(58, NULL, 17, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:47', '2025-05-05 18:31:47'),
+(59, NULL, 17, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:47', '2025-05-05 18:31:47'),
+(60, NULL, 17, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:47', '2025-05-05 18:31:47'),
+(61, NULL, 17, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:31:47', '2025-05-05 18:31:47'),
+(62, 1, NULL, NULL, NULL, 'Basic Package S-4', NULL, 16500.00, 17500.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(63, NULL, 62, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(64, NULL, 62, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(65, NULL, 62, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(66, NULL, 62, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(67, NULL, 62, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:32:45', '2025-05-05 18:32:45'),
+(68, 1, NULL, NULL, NULL, 'Basic Package S-5', NULL, 17500.00, 18500.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(69, NULL, 68, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(70, NULL, 68, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(71, NULL, 68, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(72, NULL, 68, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(73, NULL, 68, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 18:34:36', '2025-05-05 18:34:36'),
+(74, 1, NULL, NULL, NULL, 'Settlement Package - 1', NULL, 2500.00, 3500.00, NULL, 0.00, NULL, 1, '2025-05-05 19:28:52', '2025-05-05 19:28:52'),
+(75, NULL, 74, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 19:28:52', '2025-05-05 19:28:52'),
+(76, 1, NULL, NULL, NULL, 'Basic Package', NULL, 4000.00, 5000.00, NULL, 0.00, NULL, 1, '2025-05-06 17:17:30', '2025-05-06 18:07:38'),
+(79, NULL, 76, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-06 18:07:37', '2025-05-06 18:07:37'),
+(80, NULL, 76, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-06 18:07:38', '2025-05-06 18:07:38');
 
 -- --------------------------------------------------------
 
@@ -958,13 +1022,29 @@ CREATE TABLE `job_service_records` (
   `item_id` int NOT NULL,
   `entry_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
-  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `medical_centers` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `medical_centers` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_enabled` tinyint NOT NULL DEFAULT '0',
   `status_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `job_service_records`
+--
+
+INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `medical_centers`, `is_enabled`, `status_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2025-05-07', NULL, NULL, NULL, 0, 6, '2025-05-06 18:11:08', '2025-05-06 18:18:46'),
+(2, 1, 2, '2025-05-07', '2025-06-01', NULL, NULL, 0, 10, '2025-05-06 18:11:08', '2025-05-06 18:18:58'),
+(3, 1, 3, '2025-05-07', '2025-06-01', NULL, '5:Center-5:C-5', 0, 16, '2025-05-06 18:11:08', '2025-05-06 18:19:12'),
+(4, 1, 4, '2025-05-07', '2025-07-01', NULL, NULL, 0, 21, '2025-05-06 18:11:08', '2025-05-06 18:19:19'),
+(5, 1, 5, NULL, NULL, NULL, NULL, 0, 26, '2025-05-06 18:11:08', '2025-05-06 18:19:26'),
+(6, 2, 1, '2025-05-07', NULL, 'L.Eye(D-Un):36 R.Eye(D-Un):36', NULL, 0, 6, '2025-05-06 18:39:16', '2025-05-06 18:53:31'),
+(7, 2, 2, '2025-05-07', '2025-06-01', NULL, NULL, 0, 10, '2025-05-06 18:39:16', '2025-05-06 20:32:35'),
+(8, 2, 3, '2025-05-07', '2025-06-01', NULL, NULL, 0, 16, '2025-05-06 18:39:16', '2025-05-06 20:32:47'),
+(9, 2, 4, '2025-05-07', '2025-07-01', NULL, NULL, 0, 21, '2025-05-06 18:39:16', '2025-05-06 20:32:53'),
+(10, 2, 5, NULL, NULL, NULL, NULL, 0, 26, '2025-05-06 18:39:16', '2025-05-06 20:32:59');
 
 -- --------------------------------------------------------
 
@@ -974,8 +1054,8 @@ CREATE TABLE `job_service_records` (
 
 CREATE TABLE `medical_centers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1002,11 +1082,11 @@ CREATE TABLE `menus` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_id` int NOT NULL DEFAULT '0',
   `srln` int NOT NULL DEFAULT '1',
-  `menu_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `navicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menu_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `navicon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_side_menu` tinyint NOT NULL DEFAULT '0',
-  `create_route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `create_route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1037,7 +1117,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (23, 19, 3, 'Delete', NULL, 0, NULL, 'service-types.destroy', 1, '2024-10-31 10:29:54', '2024-10-31 10:31:16'),
 (24, 16, 1, 'Add', NULL, 0, NULL, 'colors.create', 1, '2024-10-31 10:32:07', '2025-03-11 08:45:06'),
 (25, 16, 2, 'Edit', NULL, 0, NULL, 'colors.edit', 1, '2024-10-31 10:32:22', '2025-03-11 08:45:11'),
-(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 0, '2024-11-03 08:16:54', '2025-04-30 06:22:53'),
+(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 1, '2024-11-03 08:16:54', '2025-05-05 18:08:06'),
 (30, 0, 10, 'Service Manage', '<i class=\"nav-icon fa fa-tools\"></i>', 1, NULL, NULL, 0, '2024-11-03 10:01:16', '2025-04-28 08:45:50'),
 (33, 2, 1, 'Edit', NULL, 0, NULL, 'basic-infos.edit', 1, '2024-11-09 10:07:19', '2024-11-09 10:07:19'),
 (34, 43, 1, 'Branch Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'branches.create', 'branches.index', 1, '2024-12-22 04:37:22', '2025-01-12 11:37:55'),
@@ -1199,7 +1279,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1274,14 +1354,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `parties` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `nid_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `nid_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1310,13 +1390,13 @@ CREATE TABLE `party_ledgers` (
   `loan_type` tinyint NOT NULL COMMENT '0 = loan_given, 1 = loan_taken',
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1333,17 +1413,17 @@ CREATE TABLE `party_loans` (
   `id` bigint UNSIGNED NOT NULL,
   `party_id` bigint UNSIGNED NOT NULL,
   `account_id` bigint UNSIGNED DEFAULT NULL,
-  `loan_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `loan_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `loan_type` tinyint NOT NULL COMMENT '0 = loan_given, 1 = loan_taken',
   `amount` double(20,2) NOT NULL,
   `loan_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `last_payment_date` date DEFAULT NULL,
   `paid_amount` double(20,2) NOT NULL DEFAULT '0.00',
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int UNSIGNED DEFAULT NULL,
   `updated_by_id` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1364,8 +1444,8 @@ CREATE TABLE `party_payments` (
   `loan_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -1380,8 +1460,8 @@ CREATE TABLE `party_payments` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1393,7 +1473,7 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `payment_methods` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1419,11 +1499,11 @@ INSERT INTO `payment_methods` (`id`, `name`, `status`, `created_at`, `updated_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1478,7 +1558,7 @@ CREATE TABLE `purchases` (
   `id` bigint UNSIGNED NOT NULL,
   `supplier_id` int NOT NULL,
   `account_id` bigint DEFAULT NULL,
-  `vouchar_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vouchar_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
   `vat_tax` double(20,2) DEFAULT '0.00',
@@ -1487,10 +1567,10 @@ CREATE TABLE `purchases` (
   `discount` double(20,2) NOT NULL,
   `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1523,7 +1603,7 @@ CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
   `is_superadmin` tinyint NOT NULL DEFAULT '0',
   `created_by` int DEFAULT NULL,
-  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_default` tinyint DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1547,9 +1627,9 @@ CREATE TABLE `sales` (
   `id` bigint UNSIGNED NOT NULL,
   `customer_id` int NOT NULL,
   `account_id` bigint DEFAULT NULL,
-  `passenger_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `passenger_passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
   `vat_tax` double(20,2) DEFAULT '0.00',
@@ -1558,8 +1638,8 @@ CREATE TABLE `sales` (
   `discount` double(20,2) NOT NULL,
   `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Complete',
   `created_by_id` int DEFAULT NULL,
@@ -1567,6 +1647,14 @@ CREATE TABLE `sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Shoriful Alom', '123456789', '0000001', '2025-05-07', 13100.00, 0.00, 2, 200.00, 200.00, 12900.00, 12900.00, NULL, NULL, 1, 2, 1, 1, '2025-05-06 18:11:08', '2025-05-06 18:19:26'),
+(2, 1, 1, 'Karim Saheb', '12345678', '0000002', '2025-05-07', 13700.00, 0.00, 0, 0.00, 0.00, 13700.00, 11600.00, NULL, NULL, 0, 2, 1, 1, '2025-05-06 18:39:16', '2025-05-06 20:32:59');
 
 -- --------------------------------------------------------
 
@@ -1589,6 +1677,17 @@ CREATE TABLE `sale_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `sale_details`
+--
+
+INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `purchase_price`, `profit`, `net_sale_price`, `net_profit`, `is_service_generated`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2025-05-07', 8100.00, 8000.00, 100.00, 8081.82, 81.82, 0, '2025-05-06 18:11:08', '2025-05-06 18:16:03'),
+(2, 1, 76, '2025-05-07', 5000.00, 4000.00, 1000.00, 4818.18, 818.18, 0, '2025-05-06 18:16:03', '2025-05-06 18:16:03'),
+(3, 2, 1, '2025-05-07', 8100.00, 8000.00, 100.00, 8100.00, 100.00, 0, '2025-05-06 18:39:16', '2025-05-06 18:40:31'),
+(4, 2, 74, '2025-05-07', 3500.00, 2500.00, 1000.00, 3500.00, 1000.00, 0, '2025-05-06 18:43:44', '2025-05-06 18:43:44'),
+(5, 2, 3, '2025-05-07', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-06 18:48:20', '2025-05-06 18:48:20');
+
 -- --------------------------------------------------------
 
 --
@@ -1597,13 +1696,13 @@ CREATE TABLE `sale_details` (
 
 CREATE TABLE `sellers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `dl_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bcn_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dl_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `passport_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bcn_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seller_type` tinyint DEFAULT '0' COMMENT '0=general seller, 1=broker',
   `status` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0=inactive, 1=active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1620,8 +1719,8 @@ CREATE TABLE `status_lists` (
   `id` bigint UNSIGNED NOT NULL,
   `item_id` int NOT NULL,
   `srl` int NOT NULL DEFAULT '0',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status_state` tinyint NOT NULL DEFAULT '0' COMMENT '0=Initial State, 1=Middle State, 2=Final State',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1653,7 +1752,7 @@ INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `color_code`, `statu
 (18, 4, 2, 'Requested For MOFA', '#17a2b8', 1, 1, NULL, NULL),
 (19, 4, 3, 'MOFA Received', '#17a2b8', 1, 1, NULL, NULL),
 (20, 4, 4, 'MOFA Processing', '#17a2b8', 1, 1, NULL, NULL),
-(21, 4, 5, 'MOFA Updated', '#28a745', 2, 1, NULL, NULL),
+(21, 4, 5, 'MOFA Updated On Visa Platform', '#28a745', 2, 1, NULL, NULL),
 (22, 5, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
 (23, 5, 2, 'Requested For Fit Card', '#17a2b8', 1, 1, NULL, NULL),
 (24, 5, 3, 'Fit Card Processing', '#17a2b8', 1, 1, NULL, NULL),
@@ -1670,7 +1769,7 @@ CREATE TABLE `stock_histories` (
   `id` bigint UNSIGNED NOT NULL,
   `item_id` int NOT NULL,
   `date` date NOT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stock_in_qty` double(20,2) DEFAULT NULL,
   `stock_out_qty` double(20,2) DEFAULT NULL,
   `rate` double(20,2) NOT NULL DEFAULT '0.00',
@@ -1688,15 +1787,15 @@ CREATE TABLE `stock_histories` (
 
 CREATE TABLE `suppliers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `opening_payable` double(20,2) NOT NULL DEFAULT '0.00',
   `opening_receivable` double(20,2) NOT NULL DEFAULT '0.00',
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1715,13 +1814,13 @@ CREATE TABLE `supplier_ledgers` (
   `purchase_id` int DEFAULT NULL,
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1741,8 +1840,8 @@ CREATE TABLE `supplier_payments` (
   `purchase_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -1759,8 +1858,8 @@ CREATE TABLE `supplier_payments` (
 CREATE TABLE `units` (
   `id` bigint UNSIGNED NOT NULL,
   `is_default` tinyint NOT NULL,
-  `unit_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_type` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1784,16 +1883,16 @@ INSERT INTO `units` (`id`, `is_default`, `unit_type`, `title`, `status`, `create
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `google_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `facebook_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `default_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `default_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2169,7 +2268,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -2289,13 +2388,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2349,13 +2448,13 @@ ALTER TABLE `investor_transactions`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2439,13 +2538,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sellers`

@@ -26,13 +26,22 @@
                                         <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center">
                                             <thead>
                                                 <tr>
-                                                    <th>Action</th>
-                                                    <th>Status</th>
-                                                    <th>PaymentStatus</th>
+                                                    <th>SN</th>
+                                                    <th>JobNo</th>
+                                                    <th>AgentName</th>
+                                                    <th>PassengerName</th>
+                                                    <th>PassportNo</th>
                                                     <th style="min-width: 1000px;text-align: center;">Service Availed</th>
-                                                    {{-- <th>Date</th>
+                                                    <th>Date</th>
+                                                    <th>TotalPrice</th>
+                                                    <th>Vat/Tax</th>
+                                                    <th>Discount</th>
+                                                    <th>Payable</th>
                                                     <th>Paid|Due</th>
-                                                    <th>Note</th> --}}
+                                                    <th>Note</th>
+                                                    <th>PaymentStatus</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -122,93 +131,29 @@
                 type: 'GET',
             },
             columns: [
-                        { 
-                            data: null,
-                            orderable: false, 
-                            searchable: false, 
+                        { data: null, orderable: false, searchable: false },
+                        {
+                            data: null, 
+                            name: 'sales.invoice_no', 
+                            orderable: true, 
+                            searchable: true, 
                             render: function(data, type, row, meta) {
-                                let addNewItem = `{{ route('sales.add-new-item', ":id") }}`.replace(':id', row.id);
-                                let edit = `{{ route('sales.edit', ":id") }}`.replace(':id', row.id);
-                                let print = `{{ route('sales.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
-                                let view = `{{ route('sales.invoice', [":id"]) }}`.replace(':id', row.id);
-                                let destroy = `{{ route('sales.destroy', ":id") }}`.replace(':id', row.id);
-                                return (` <div>
-                                               
-                                                <a href="${view}" class="btn btn-sm btn-warning">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </a>
-                                                <br>
-                                                <a href="${print}" class="btn btn-sm btn-dark">
-                                                    <i class="fa-solid fa-print"></i>
-                                                </a>
-                                                <br>
-                                                <button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
-                                                            data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
-                                                                ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
-                                                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                                                </button>
-                                                <br>
-                                                 <a href="${addNewItem}" class="btn btn-sm btn-primary">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </a>
-                                                <br>
-                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                                <br>
-                                                <form class="delete" action="${destroy}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        `);
+                                let view = `{{ route('sales.invoice', ":id") }}`.replace(':id', row.id);
+                                return `<a href="${view}" class=""><b>${row.invoice_no}</b></a>`;
                             }
                         },
                         {
                             data: null, 
-                            name: 'sales.status', 
+                            name: 'customers.name',
                             orderable: true, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
-                                let color;
-                                let text;
-                                let eventClass = '';
-                                if(row.status == '0'){
-                                    color = 'danger';
-                                    text = 'Pending';
-                                    eventClass = 'event';
-                                }else if(row.status == '1'){
-                                    color = 'primary';
-                                    text = 'Approved';
-                                }else if(row.status == '2'){
-                                    color = 'success';
-                                    text = 'Completed';
-                                }
-                                return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+                                return `${row.customer_name}${row.bike_reg_no ? '<br>' + row.bike_reg_no : ''}`;
                             }
                         },
-                        {
-                            data: null, 
-                            name: 'sales.payment_status', 
-                            orderable: true, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                                let color;
-                                let text;
-                                if(row.payment_status == '0'){
-                                    color = 'warning';
-                                    text = 'Unpaid';
-                                }else if(row.payment_status == '1'){
-                                    color = 'info';
-                                    text = 'Paid';
-                                }
-                                return `<span class="badge badge-${color}">${text}</span>`;
-                            }
-                        },
-                       
+                        { data: 'passenger_name', name: 'sales.passenger_name'},
+                        { data: 'passenger_passport_no', name: 'sales.passenger_passport_no'},
+
                         {
                             data: null, 
                             name: '', 
@@ -246,13 +191,13 @@
                                                 <td class="p-0" style="vertical-align: middle;width: auto;">
                                                     <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} ${eventClass} m-0" aria-disabled="true">${job_service_record.items.name}</a>
                                                 </td>
-                                                <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
-                                                    <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
-                                                </td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.entry_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${(job_service_record.entry_date !=null && job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
+                                                <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
+                                                    <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
+                                                </td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
 
                                             </tr>`;
@@ -260,25 +205,14 @@
                                         table = `
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
-                                                    <tr class="bg-secondary">
-                                                        <th class="text-center" style="width: 100px;" colspan="2">JN: <a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" class=""><b>#${row.invoice_no}</b></a></th>
-                                                        <th class="text-center" style="width: 200px;" colspan="2">Agent: ${row.customer_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="2">P.Name: ${row.passenger_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="1">Pass.No: ${row.passenger_passport_no}</th>
-                                                    </tr>
-                                                    <tr class="bg-light">
-                                                        <th class="text-center" colspan="2">Date: ${row.date}</th>
-                                                        <th class="text-center" colspan="3"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
-                                                        <th class="text-center" colspan="2">Note: ${row.note ?? ''}</th>
-                                                    </tr>
                                                     <tr>
                                                         <th class="text-center" style="width: 100px;">ServiceName</th>
-                                                        <th class="text-center" style="width: 150px;">Status</th>
                                                         <th class="text-center" style="width: 80px;">EntryDate</th>
                                                         <th class="text-center" style="width: 80px;">ExpireDate</th>
                                                         <th class="text-center" style="width: 30px;">R.Day</th>
                                                         <th class="text-center" style="width: 150px;">Centers</th>
-                                                        <th class="text-center" style="width: 300px;">Results/Remarks</th>
+                                                        <th class="text-center" style="width: 150px;">Status</th>
+                                                        <th class="text-center" style="width: 300px;">Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -290,7 +224,112 @@
                                 return table;
                             }
                         },
+
+                        { data: 'date', name: 'sales.date'},
+                        { data: 'total_price', name: 'sales.total_price'},
+                        { data: 'vat_tax', name: 'sales.vat_tax'},
+                        { data: 'discount', name: 'sales.discount'},
+                        { data: 'total_payable', name: 'sales.total_payable'},
+                        {
+                            data: null, 
+                            name: 'sales.paid_amount', 
+                            orderable: false, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                return `<div class="text-center"><span class="text-success fw-bold"><b>${row.paid_amount}</b></span><br><span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div>`;
+                            }
+                        },
+                        { data: 'note', name: 'sales.note'},
+                        {
+                            data: null, 
+                            name: 'sales.payment_status', 
+                            orderable: true, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let color;
+                                let text;
+                                if(row.payment_status == '0'){
+                                    color = 'warning';
+                                    text = 'Unpaid';
+                                }else if(row.payment_status == '1'){
+                                    color = 'info';
+                                    text = 'Paid';
+                                }
+                                return `<span class="badge badge-${color}">${text}</span>`;
+                            }
+                        },
+                        {
+                            data: null, 
+                            name: 'sales.status', 
+                            orderable: true, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let color;
+                                let text;
+                                let eventClass = '';
+                                if(row.status == '0'){
+                                    color = 'danger';
+                                    text = 'Pending';
+                                    eventClass = 'event';
+                                }else if(row.status == '1'){
+                                    color = 'primary';
+                                    text = 'Approved';
+                                }else if(row.status == '2'){
+                                    color = 'success';
+                                    text = 'Completed';
+                                }
+                                return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+                            }
+                        },
+                        { 
+                            data: null,
+                            orderable: false, 
+                            searchable: false, 
+                            render: function(data, type, row, meta) {
+                                let addNewItem = `{{ route('sales.add-new-item', ":id") }}`.replace(':id', row.id);
+                                let edit = `{{ route('sales.edit', ":id") }}`.replace(':id', row.id);
+                                let print = `{{ route('sales.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
+                                let view = `{{ route('sales.invoice', [":id"]) }}`.replace(':id', row.id);
+                                let destroy = `{{ route('sales.destroy', ":id") }}`.replace(':id', row.id);
+                                return (` <div class="d-flex justify-content-center">
+                                                <a href="${addNewItem}" class="btn btn-sm btn-dark ml-1">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </a>
+                                                <a href="${view}" class="btn btn-sm btn-warning">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
+                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>
+                                                <form class="delete" action="${destroy}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                        More
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now dropdown-item"
+                                                            data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
+                                                                ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}
+                                                            >Add Payments</button>
+                                                            <a href="${print}" class="dropdown-item">Print</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `);
+                            }
+                        }
                     ],
+                rowCallback: function(row, data, index) {
+                    var pageInfo = table.page.info();
+                    var serialNumber = pageInfo.start + index + 1;
+                    $('td:eq(0)', row).html(serialNumber);
+                },
                 order: [],
                 search: {return: false}
             }); 
