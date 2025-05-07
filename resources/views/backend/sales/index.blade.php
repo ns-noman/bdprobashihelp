@@ -148,7 +148,7 @@
                                                                 <i class="fa-solid fa-hand-holding-dollar"></i>
                                                 </button>
                                                 <br>
-                                                 <a href="${addNewItem}" class="btn btn-sm btn-primary">
+                                                 <a href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </a>
                                                 <br>
@@ -236,15 +236,14 @@
                                         statusColor = job_service_record.servicestatus.color_code;
                                         serviceUrl = `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
                                         
-                                        if(job_service_record.servicestatus.is_initial == '1'){
-                                            ServiceColor = 'warning';
-                                        }else{
+                                        if(job_service_record.is_agent_purchased == '1'){
                                             ServiceColor = 'info';
+                                        }else{
+                                            ServiceColor = 'danger';
                                         }
-                                        
                                         tr+=`<tr>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;">
-                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} ${eventClass} m-0" aria-disabled="true">${job_service_record.items.name}</a>
+                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} m-0" aria-disabled="true">${job_service_record.items.name}</a>
                                                 </td>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
                                                     <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
@@ -261,7 +260,7 @@
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
                                                     <tr class="bg-secondary">
-                                                        <th class="text-center" style="width: 100px;" colspan="2">JN: <a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" class=""><b>#${row.invoice_no}</b></a></th>
+                                                        <th class="text-center" style="width: 100px;" colspan="2">JN: <a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="color: #09b976;"><b>#${row.invoice_no}</b></a></th>
                                                         <th class="text-center" style="width: 200px;" colspan="2">Agent: ${row.customer_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="2">P.Name: ${row.passenger_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="1">Pass.No: ${row.passenger_passport_no}</th>

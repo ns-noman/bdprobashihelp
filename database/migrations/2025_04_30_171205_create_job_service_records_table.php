@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('remarks')->nullable();
             $table->string('medical_centers')->nullable();
             $table->tinyInteger('is_enabled')->default(0);
+            $table->tinyInteger('is_agent_purchased')->default(0);
             $table->integer('status_id');
             $table->timestamps();
         });

@@ -177,13 +177,13 @@ class SaleController extends Controller
                 $customerLedgerDataPayment['note'] = $note;
                 $customerLedgerDataPayment['created_by_id'] = $created_by_id;
                 $this->customerLedgerTransction($customerLedgerDataPayment);
+                $this->updateServiceItemPurchaseFlug($sale->id);
             }
             $this->generateProfit($id);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
@@ -566,7 +566,8 @@ class SaleController extends Controller
             
             // Update sale status
             $sale->update(['status' => 1]);
-            
+            JobServiceRecords::where(['job_id'=>$sale->id,'item_id'=>1])->update(['is_enabled'=> 1]);
+            $this->updateServiceItemPurchaseFlug($sale->id);
             DB::commit();
 
             return response()->json([
@@ -603,8 +604,6 @@ class SaleController extends Controller
             $totalSalesPrice += $item->sale_price;
         }
         
-        JobServiceRecords::where(['job_id'=>$sale_id,'item_id'=>1])->update(['is_enabled'=> 1]);
-
         $totalProfit = $totalSalesPrice - $totalPurchasePrice;
 
 
@@ -624,6 +623,41 @@ class SaleController extends Controller
             );
         }
     }
+    public function updateServiceItemPurchaseFlug($sale_id)
+    {
+        // Start with all standalone service items
+        $service_item_ids = Item::where(['item_type' => 0, 'is_saleable' => 0])->pluck('id')->toArray();
+    
+        $saleDetails = SaleDetails::where('sale_id', $sale_id)->get();
+    
+        foreach ($saleDetails as $sd) {
+            $item = Item::findOrFail($sd->item_id);
+    
+            if ($item->item_type == 0) {
+                // Already included in initial list, but just in case
+                if (!in_array($item->id, $service_item_ids)) {
+                    $service_item_ids[] = $item->id;
+                }
+            } elseif ($item->item_type == 1) {
+                // For packages, fetch all items in the package
+                $package_item_ids = Item::where('package_id', $item->id)->pluck('package_item_id')->toArray();
+    
+                foreach ($package_item_ids as $pid) {
+                    if (!in_array($pid, $service_item_ids)) {
+                        $service_item_ids[] = $pid;
+                    }
+                }
+            }
+        }
+    
+        // Update job service records where items match and not purchased yet
+        JobServiceRecords::where([
+            'job_id' => $sale_id,
+            'is_agent_purchased' => 0
+        ])->whereIn('item_id', $service_item_ids)
+          ->update(['is_agent_purchased' => 1]);
+    }
+    
     
     public function destroy($id)
     {

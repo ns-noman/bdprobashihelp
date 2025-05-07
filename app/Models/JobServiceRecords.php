@@ -17,6 +17,7 @@ class JobServiceRecords extends Model
         'remarks',
         'medical_centers',
         'is_enabled',
+        'is_agent_purchased',
         'status_id',
     ];
 
