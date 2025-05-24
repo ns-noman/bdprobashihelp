@@ -162,6 +162,7 @@
                 case 18:
                     ctrlElement({element_id: 'mofa_no',hidden: false,txtLabel: 'MOFA No *', required: true, disabled: false,defaultValue: null });
                     break;
+                case 16:
                 case 23:
                     ctrlElement({element_id: 'medical_center_ids',hidden: false,txtLabel: 'Medical Centers *', required: true, disabled: false,defaultValue: null});
                     break;

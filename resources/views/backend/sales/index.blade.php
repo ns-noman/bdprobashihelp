@@ -252,6 +252,7 @@
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${(job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
+                                                <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.slip_no || job_service_record.mofa_no || ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
                                             </tr>`;
                                     });
@@ -262,12 +263,12 @@
                                                         <th class="text-center" style="width: 100px;" colspan="2">JN: <a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="color: #09b976;"><b>#${row.invoice_no}</b></a></th>
                                                         <th class="text-center" style="width: 200px;" colspan="2">Agent: ${row.customer_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="2">P.Name: ${row.passenger_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="1">Pass.No: ${row.passenger_passport_no}</th>
+                                                        <th class="text-center" style="width: 150px;" colspan="2">Pass.No: ${row.passenger_passport_no}</th>
                                                     </tr>
                                                     <tr class="bg-light">
                                                         <th class="text-center" colspan="2">Date: ${row.date}</th>
                                                         <th class="text-center" colspan="3"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
-                                                        <th class="text-center" colspan="2">Note: ${row.note ?? ''}</th>
+                                                        <th class="text-center" colspan="3">Note: ${row.note ?? ''}</th>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-center" style="width: 100px;">ServiceName</th>
@@ -276,6 +277,7 @@
                                                         <th class="text-center" style="width: 80px;">ExpireDate</th>
                                                         <th class="text-center" style="width: 30px;">R.Day</th>
                                                         <th class="text-center" style="width: 150px;">Centers</th>
+                                                        <th class="text-center" style="width: 150px;">Slip/MOFA_No</th>
                                                         <th class="text-center" style="width: 300px;">Results/Remarks</th>
                                                     </tr>
                                                 </thead>

@@ -122,9 +122,10 @@ class SaleController extends Controller
             }
 
             $sale->paid_amount += $paid_amount;
-            $sale->payment_status = ($total_payable == $sale->paid_amount) ? 1 : 0;
+            $sale->payment_status = ($sale->total_payable == $sale->paid_amount) ? 1 : 0;
             $sale->updated_by_id = $updated_by_id;
             $sale->save();
+
             
        
 

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('expire_date')->nullable();
             $table->string('remarks')->nullable();
             $table->string('medical_centers')->nullable();
+            $table->string('slip_no')->nullable();
+            $table->string('mofa_no')->nullable();
             $table->tinyInteger('is_enabled')->default(0);
             $table->tinyInteger('is_agent_purchased')->default(0);
             $table->integer('status_id');

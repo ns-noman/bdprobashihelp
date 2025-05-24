@@ -16,6 +16,8 @@ class JobServiceRecords extends Model
         'expire_date',
         'remarks',
         'medical_centers',
+        'slip_no',
+        'mofa_no',
         'is_enabled',
         'is_agent_purchased',
         'status_id',
