@@ -250,10 +250,9 @@
                                                 </td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.entry_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
-                                                <td style="vertical-align: middle;width: auto;">${(job_service_record.entry_date !=null && job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
+                                                <td style="vertical-align: middle;width: auto;">${(job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
-
                                             </tr>`;
                                     });
                                         table = `

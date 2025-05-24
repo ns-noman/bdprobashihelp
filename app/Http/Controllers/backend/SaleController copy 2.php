@@ -431,19 +431,29 @@ class SaleController extends Controller
         try {
                 $data = $request->all();
                 $jobServiceRecord = JobServiceRecords::find($id);
-
-                if($jobServiceRecord->item_id == 1 && $data['status_id'] == 2){
+                //Setting Expirey Date For Settlement & Slip Proccess and Enabled, Disabled Action....
+                if($jobServiceRecord->item_id == 1 && in_array($data['status_id'], [6])){
+                    $entry_date = Carbon::now();
+                    $expireDate = (clone $entry_date)->addDays(25);
                     JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
                         ->whereIn('item_id', [2, 3])
-                        ->update(['expire_date'=> $data['expire_date']]);
+                        ->update($data);
                 }
+                //End....................................................
 
+
+                //Setting Expirey Date For MOFA....
                 if($jobServiceRecord->item_id == 3 && $data['status_id'] == 16){
-                        JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
+                    $entry_date = Carbon::now();
+                    $expireDate = (clone $entry_date)->addDays(55);
+                    JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
                         ->whereIn('item_id', [4])
-                        ->update(['expire_date'=> $data['expire_date']]);
-                        unset($data['expire_date']);
+                        ->update([
+                            'entry_date' => $entry_date->toDateString(),
+                            'expire_date' => $expireDate->toDateString(),
+                        ]);
                 }
+                //End....................................................
 
 
                 $this->btnControl($id, $data['status_id']);
