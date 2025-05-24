@@ -64,8 +64,9 @@ VALUES
 (1,2,'Medical Completed','#17a2b8',1,1),
 (1,3,'Waiting For Medical Result','#17a2b8',1,1),
 (1,4,'Unfit & Processing For Refund','#17a2b8',1,1),
-(1,5,'Refund Completed','#17a2b8',2,1),
-(1,6,'Result Published','#28a745',2,1);
+(27,1,5,'Refund Received','#17a2b8',1,1),
+(1,6,'Refund Completed','#17a2b8',2,1),
+(1,7,'Result Published','#28a745',2,1);
 
 -- Settlement
 INSERT INTO `status_lists`(`item_id`, `srl`, `name`, `color_code`, `status_state`, `status`)
