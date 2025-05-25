@@ -14,6 +14,7 @@ class Sale extends Model
         'account_id',
         'passenger_name',
         'passenger_passport_no',
+        'localhost_no',
         'invoice_no',
         'date',
         'total_price',

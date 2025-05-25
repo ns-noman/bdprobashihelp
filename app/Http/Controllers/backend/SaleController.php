@@ -31,6 +31,7 @@ class SaleController extends Controller
         $data['currency_symbol'] = BasicInfo::first()->currency_symbol;
         $data['paymentMethods'] = $this->paymentMethods();
         $data['breadcrumb'] = $this->breadcrumb;
+        $data['customers'] = Customer::where('status',1)->orderBy('name','asc')->get();
         return view('backend.sales.index', compact('data'));
     }
 
@@ -125,11 +126,6 @@ class SaleController extends Controller
             $sale->payment_status = ($sale->total_payable == $sale->paid_amount) ? 1 : 0;
             $sale->updated_by_id = $updated_by_id;
             $sale->save();
-
-            
-       
-
-
             for ($i = 0; $i < count($item_id); $i++) {
                 $saleDetails = new SaleDetails();
                 $saleDetails->sale_id = $sale->id;
@@ -306,6 +302,7 @@ class SaleController extends Controller
             $account_id = $request->account_id;
             $passenger_name = $request->passenger_name;
             $passenger_passport_no = $request->passenger_passport_no;
+            $localhost_no = $request->localhost_no;
             $date = $request->date;
             $total_pice = $request->total_price;
             $vat_tax = $request->vat_tax ?? 0;
@@ -327,6 +324,7 @@ class SaleController extends Controller
             $sale->customer_id = $customer_id;
             $sale->passenger_name = $passenger_name;
             $sale->passenger_passport_no = $passenger_passport_no;
+            $sale->localhost_no = $localhost_no;
             $sale->account_id = $account_id;
             $sale->invoice_no = $invoice_no;
             $sale->date = $date;
@@ -438,14 +436,17 @@ class SaleController extends Controller
                         ->whereIn('item_id', [2, 3])
                         ->update(['expire_date'=> $data['expire_date']]);
                 }
+                if($jobServiceRecord->item_id == 1 && $data['status_id'] == 5){
+                    $sale = Sale::find($jobServiceRecord->job_id)->update(['status'=> 3]);// 3 for refunded
+                }
 
                 if($jobServiceRecord->item_id == 3 && $data['status_id'] == 16){
                         JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
                         ->whereIn('item_id', [4])
                         ->update(['expire_date'=> $data['expire_date']]);
+                        unset($data['entry_date']);
                         unset($data['expire_date']);
                 }
-
 
                 $this->btnControl($id, $data['status_id']);
                 
@@ -456,6 +457,12 @@ class SaleController extends Controller
                         $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($data['medical_center_ids']) ? '|' : null);
                     }
                     $data['medical_centers'] = $medicalCenterTxt;
+
+                    if($jobServiceRecord->item_id == 3 && $data['status_id'] == 12){
+                        JobServiceRecords::where('job_id', $jobServiceRecord->job_id)
+                        ->whereIn('item_id', [4,5])
+                        ->update(['medical_centers'=> $medicalCenterTxt]);
+                    }
                 }
                 $jobServiceRecord->update($data);
             DB::commit();
@@ -670,6 +677,7 @@ class SaleController extends Controller
             'sales.customer_id',
             'sales.passenger_name',
             'sales.passenger_passport_no',
+            'sales.localhost_no',
             'sales.invoice_no',
             'sales.date',
             'sales.total_price',
@@ -688,8 +696,47 @@ class SaleController extends Controller
         if(!$request->has('order')){
             $query = $query->orderBy('sales.status','asc')->orderBy('sales.id','desc');
         }
+        if($request->has('customer_id') && $request->customer_id != 0){
+            $query = $query->where('customer_id', $request->customer_id);
+        }
         $query = $query->select($select);
-        return DataTables::of($query)->make(true);
+        return DataTables::of($query)
+                ->filter(function ($query) use ($request) {
+                    if ($search = $request->input('search.value')) {
+                        $query->where(function ($q) use ($search) {
+                            $q->where('customers.name', 'like', "%{$search}%")
+                            ->orWhere('customers.phone', 'like', "%{$search}%")
+                            ->orWhere('sales.passenger_name', 'like', "%{$search}%")
+                            ->orWhere('sales.passenger_passport_no', 'like', "%{$search}%")
+                            ->orWhere('sales.localhost_no', 'like', "%{$search}%")
+                            ->orWhere('sales.invoice_no', 'like', "%{$search}%")
+                            ->orWhere('sales.date', 'like', "%{$search}%")
+                            ->orWhere('sales.note', 'like', "%{$search}%");
+                            $statusMap = [
+                                'paid'    => 1,
+                                'unpaid'  => 0,
+                                'partial' => -1,
+                            ];
+                            $searchLower = strtolower($search);
+                            if (array_key_exists($searchLower, $statusMap)) {
+                                $search = $statusMap[$searchLower];
+                                $q->orWhere('sales.payment_status', $search);
+                            }
+                            $statusMap = [
+                                'pending'   => 0,
+                                'approve'   => 1,
+                                'complete'  => 2,
+                                'cancelled' => 3,
+                                'refunded'  => 4,
+                            ];
+                            $searchLower = strtolower($search);
+                            if (array_key_exists($searchLower, $statusMap)) {
+                                $searchValue = $statusMap[$searchLower];
+                                $q->orWhere('sales.status', $searchValue);
+                            }
+                        });
+                    }
+                })->make(true);
     }
 
     

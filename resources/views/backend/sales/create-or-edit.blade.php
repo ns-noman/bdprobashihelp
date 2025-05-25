@@ -36,9 +36,9 @@
                                 @endif 
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                                        <div class="form-group col-sm-2 col-md-2 col-lg-2">
                                             <label>Agents *</label>
-                                            <select name="customer_id" id="customer_id" class="form-control select2">
+                                            <select name="customer_id" id="customer_id" class="form-control form-control-sm select2">
                                                 @foreach ($data['customers'] as $customer)
                                                     <option {{ isset($data['item']) ? ($customer->id == $data['item']->customer_id) ? 'selected' : null : null }} value="{{ $customer->id }}">
                                                         {{ $customer->name }}
@@ -48,21 +48,25 @@
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-2">
                                             <label>Passenger Name *</label>
-                                            <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control" placeholder="Passenger Name" required>
+                                            <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control form-control-sm" placeholder="Passenger Name" required>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-2">
                                             <label>Passport No *</label>
-                                            <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control" placeholder="0123456789" required>
+                                            <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control form-control-sm" placeholder="0123456789" required>
+                                        </div>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                                            <label>Localhost No *</label>
+                                            <input name="localhost_no" id="localhost_no" type="text" value="{{ isset($data['item']) ? $data['item']->localhost_no : null }}" class="form-control form-control-sm" placeholder="0123456789" required>
                                         </div>
                                         <div class="form-group col-sm-2 col-md-2 col-lg-2">
                                             <label>Date *</label>
                                             <input name="date" id="date" type="date"
                                                 value="{{ isset($data['item']) ? $data['item']->date : date('Y-m-d') }}"
-                                                class="form-control" required>
+                                                class="form-control form-control-sm" required>
                                         </div>
-                                        <div class="form-group col-sm-4 col-md-4 col-lg-3">
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-2">
                                             <label>Service Item</label>
-                                            <select class="form-control select2" id="item_id_temp">
+                                            <select class="form-control form-control-sm select2" id="item_id_temp">
                                                 <option value="" selected disabled>Select Service Item</option>
                                                 @foreach ($data['items'] as $key => $item)
                                                     <option value="{{ $item['id'] }}"
@@ -105,34 +109,34 @@
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Method</label>
-                                            <select name="discount_method" id="discount_method" class="form-control">
+                                            <select name="discount_method" id="discount_method" class="form-control form-control-sm">
                                                 <option @selected(isset($data['item']) && $data['item']['discount_method'] == 0) selected value="0" >In Percentage</option>
                                                 <option @selected(isset($data['item']) && $data['item']['discount_method'] == 1) value="1">Solid Amount</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Rate</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount_rate : null }}" step="0.01" type="number" class="form-control" name="discount_rate" id="discount_rate" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->discount_rate : null }}" step="0.01" type="number" class="form-control form-control-sm" name="discount_rate" id="discount_rate" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Amount</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount : null }}" readonly type="number" class="form-control" name="discount" id="discount" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->discount : null }}" readonly type="number" class="form-control form-control-sm" name="discount" id="discount" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Total</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->total_price : null }}" type="number" class="form-control" name="total_price" id="total_price" placeholder="0.00" readonly>
+                                            <input value="{{ isset($data['item']) ? $data['item']->total_price : null }}" type="number" class="form-control form-control-sm" name="total_price" id="total_price" placeholder="0.00" readonly>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Vat</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->vat_tax : null }}" readonly value="0.00" type="number" class="form-control" name="vat_tax" id="vat_tax" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->vat_tax : null }}" readonly value="0.00" type="number" class="form-control form-control-sm" name="vat_tax" id="vat_tax" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Total Payable</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->total_payable : null }}" readonly type="number" class="form-control" name="total_payable" id="total_payable" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->total_payable : null }}" readonly type="number" class="form-control form-control-sm" name="total_payable" id="total_payable" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Payment Methods *</label>
-                                            <select class="form-control" name="account_id" id="account_id">
+                                            <select class="form-control form-control-sm" name="account_id" id="account_id">
                                                 <option selected value=''>Select Payment Methods</option>
                                                 @foreach ($data['paymentMethods'] as $paymentMethod)
                                                     <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
@@ -142,19 +146,19 @@
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Paid Amount</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->paid_amount : null }}" value="0.00" step="0.01" type="number" 
-                                                class="form-control" name="paid_amount"
+                                                class="form-control form-control-sm" name="paid_amount"
                                                 id="paid_amount" placeholder="0.00">
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Refference Number</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->reference_number : null }}"
-                                                class="form-control" type="text" name="reference_number" id="reference_number"
+                                                class="form-control form-control-sm" type="text" name="reference_number" id="reference_number"
                                                 placeholder="Reference Number">
                                         </div>
                                         <div class="form-group col-sm-8 col-md-8 col-lg-8">
                                             <label>Note</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->note : null }}"
-                                                class="form-control" type="text" name="note" id="note"
+                                                class="form-control form-control-sm" type="text" name="note" id="note"
                                                 placeholder="Note">
                                         </div>
                                     </div>

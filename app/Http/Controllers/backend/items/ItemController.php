@@ -74,7 +74,7 @@ class ItemController extends Controller
             ]);
         }
         $item->update($data);
-        return redirect()->route('items.index')->with('alert',['messageType'=>'warning','message'=>'Data Updated Successfully!']);
+        return redirect()->route('items.index')->with('alert',['messageType'=>'success','message'=>'Data Updated Successfully!']);
     }
 
     public function destroy($id)

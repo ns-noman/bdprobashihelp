@@ -19,9 +19,6 @@
                         <div class="card">
                             <div class="card-header bg-primary p-1">
                                 <h3 class="card-title">
-                                    <a href="{{ route('sales.create') }}"class="btn btn-light shadow rounded m-0"><i
-                                            class="fas fa-plus"></i>
-                                        <span>Add New</span></i></a>
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -44,56 +41,6 @@
                             </div>
                         </div>
                     </section>
-                </div>
-            </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Payment</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form id="form-submit" action="{{ route('sales.payment.store') }}" method="POST"
-                            enctype="multipart/form-data">
-                            <div class="modal-body">
-                                @csrf()
-                                <div class="row">
-                                    <input type="hidden" name="sale_id" id="sale_id">
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label>Payment Date *</label>
-                                        <input value="{{ date('Y-m-d') }}" type="date" class="form-control" name="date" id="date" placeholder="0.00">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label>Payment Methods *</label>
-                                        <select class="form-control" name="account_id" id="account_id" required>
-                                            <option selected value=''>Select Payment Methods</option>
-                                            @foreach ($data['paymentMethods'] as $paymentMethod)
-                                                <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label>Due Amount</label>
-                                        <input readonly value="0.00" type="number" class="form-control" name="due_amount" id="due_amount" placeholder="0.00">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label>Paid Amount</label>
-                                        <input value="0.00" type="number" class="form-control" name="amount" id="amount" placeholder="0.00">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
-                                        <label>Note</label>
-                                        <input type="text" class="form-control" name="note" id="note" placeholder="Note">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button id="save_payment" type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </section>
@@ -140,7 +87,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ route("sales.list") }}',
+                url: '{{ route("my-jobs.list") }}',
                 type: 'GET',
                 data: function(d) {
                     let rollType = "{{ $roleType }}";
@@ -150,18 +97,6 @@
                 },
                 dataSrc: function(json)
                 {
-                    // if (json.data.length) {
-                    //     let brought_forword = parseFloat(json.data[0].current_balance || 0) + parseFloat(json.data[0].debit_amount || 0) - parseFloat(json.data[0].credit_amount || 0);
-                    //     const bfRow = {
-                    //         transaction_date: '',
-                    //         description: 'B/F',
-                    //         reference_number: '',
-                    //         credit_amount: '',
-                    //         debit_amount: '',
-                    //         current_balance: brought_forword,
-                    //     };
-                    //     json.data.unshift(bfRow);
-                    // }
                     return json.data;
                 }
             },
@@ -171,11 +106,8 @@
                             orderable: false, 
                             searchable: false, 
                             render: function(data, type, row, meta) {
-                                let addNewItem = `{{ route('sales.add-new-item', ":id") }}`.replace(':id', row.id);
-                                let edit = `{{ route('sales.edit', ":id") }}`.replace(':id', row.id);
-                                let print = `{{ route('sales.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
-                                let view = `{{ route('sales.invoice', [":id"]) }}`.replace(':id', row.id);
-                                let destroy = `{{ route('sales.destroy', ":id") }}`.replace(':id', row.id);
+                                let print = `{{ route('my-jobs.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
+                                let view = `{{ route('my-jobs.invoice', [":id"]) }}`.replace(':id', row.id);
                                 return (` <div>
                                                
                                                 <a href="${view}" class="btn btn-sm btn-warning">
@@ -186,27 +118,7 @@
                                                     <i class="fa-solid fa-print"></i>
                                                 </a>
                                                 <br>
-                                                <button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
-                                                            data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
-                                                                ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
-                                                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                                                </button>
                                                 <br>
-                                                 <a href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </a>
-                                                <br>
-                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                                <br>
-                                                <form class="delete" action="${destroy}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
-                                                </form>
                                             </div>
                                         `);
                             }
@@ -219,7 +131,6 @@
                             render: function(data, type, row, meta) {
                                 let color;
                                 let text;
-                                let eventClass = '';
                                 if(row.status == '0'){
                                     color = 'danger';
                                     text = 'Pending';
@@ -237,7 +148,7 @@
                                     color = 'secondary';
                                     text = 'Cancelled';
                                 }
-                                return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+                                return `<button type="button" class="btn btn-sm btn-${color}">${text}</button>`;
                             }
                         },
                         {
@@ -275,7 +186,6 @@
                                 if (row.serviceshorts.length) {
                                     row.serviceshorts.forEach(job_service_record => {
                                         let medicalCenterTxt = '';
-                                        let serviceNotPurchaseEvent =  '';
                                         if(job_service_record.medical_centers !=null){
                                             let centersArray = job_service_record.medical_centers.split('|');
                                             centersArray.forEach((center, index)=>{
@@ -285,21 +195,16 @@
 
                                         statusTxt = job_service_record.servicestatus.name;
                                         statusColor = job_service_record.servicestatus.color_code;
-
-                                        serviceUrl =  `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
+                                        serviceUrl = `{{ route('my-jobs.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
                                         
                                         if(job_service_record.is_agent_purchased == '1'){
                                             ServiceColor = 'info';
                                         }else{
-                                            ServiceColor = 'info';
-                                            serviceUrl =  'javascript:void()';
-                                            serviceNotPurchaseEvent = ' serviceNotPurchaseEvent ';
+                                            ServiceColor = 'danger';
                                         }
-                                        ServiceColor = job_service_record.is_enabled == '1' ? 'primary' : ServiceColor;
-                                        let serviceNamePrefix = job_service_record.is_agent_purchased == '0' ? ' <i class="fa fa-ban text-danger"></i> ' : '';
                                         tr+=`<tr>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;">
-                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} m-0${serviceNotPurchaseEvent}" aria-disabled="true">${serviceNamePrefix}${job_service_record.items.name}</a>
+                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled, status_id: job_service_record.status_id})} btn btn-sm btn-${ServiceColor} m-0" aria-disabled="true">${job_service_record.items.name}</a>
                                                 </td>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
                                                     <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
@@ -316,7 +221,7 @@
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
                                                     <tr class="bg-info">
-                                                        <th class="text-center" style="width: 100px;" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
+                                                        <th class="text-center" style="width: 100px;" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('my-jobs.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
                                                         <th class="text-center" style="width: 200px;" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Passport No: </span><br>${row.passenger_passport_no}</th>
@@ -355,66 +260,7 @@
                 table.draw();
             });
 
-            $(document).on('click', '.delete button', function(e) {
-                e.preventDefault();
-                let form = $(this).closest('form');
-                let tr = $(this).closest('tr');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then(async (result) => {
-                    if (result.isConfirmed){
-                        nsAjaxPost(form.attr('action'), form.serialize())
-                        .then(res => {
-                            table.draw();
-                            message(res);
-                        })
-                        .catch(err => {
-                            message(err);
-                        });
-                    }
-                });
-            });
-            
-            $(document).on('click', '.event', function(e) {
-                e.preventDefault();
-                let transaction_id = $(this).attr('transaction_id');
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#198754",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Approve",
-                    cancelButtonText: "Cancel",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const url = `{{ route('sales.approve', ":id") }}`.replace(':id', transaction_id);
-                        $.ajax({
-                            url: url,
-                            method: 'GET',
-                            dataType: 'JSON',
-                            success: function(res) {
-                                message(res);
-                                table.draw();
-                            },
-                            error: function(xhr, status, error) {
-                                message(xhr.responseJSON);
-                            }
-                        });
-                    }
-                });
-
-            });
-            $(document).on('click', '.serviceNotPurchaseEvent', function(e) {
-                Swal.fire("Please buy this service!");
-            });
+       
         });
         function getDateDifferenceInDays(start_date, end_date) {
             const d1 = new Date(start_date);
@@ -426,7 +272,8 @@
             return diffInDays;
         }
         function btnControl(input){
-            return !(input.is_enabled) ? ' disabled custom-disabled ' : ''; 
+            let status_id = [7,11,17,22];
+            return !(input.is_enabled && status_id.includes(input.status_id)) ? ' disabled custom-disabled ' : ''; 
         }
 
     </script>

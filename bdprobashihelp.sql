@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 24, 2025 at 06:32 PM
+-- Generation Time: May 25, 2025 at 12:48 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,10 +45,10 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', 532580.00, 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-24 18:16:38'),
-(2, 2, '01839317038', 'Self', 27275.00, 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-24 09:40:15'),
-(3, 4, '20501680205073807', 'Nowab Shorif', 0.00, 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
-(4, 1, 'Check', 'Self', 0.00, 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
+(1, 1, 'Hand Cash', 'Self', '584480.00', 1, 1, NULL, '2025-02-26 10:40:39', '2025-05-25 12:47:02'),
+(2, 2, '01839317038', 'Self', '27275.00', 1, 1, NULL, '2025-02-26 10:41:05', '2025-05-24 09:40:15'),
+(3, 4, '20501680205073807', 'Nowab Shorif', '0.00', 1, 1, 1, '2025-02-26 10:42:59', '2025-04-28 08:10:18'),
+(4, 1, 'Check', 'Self', '0.00', 1, 1, NULL, '2025-04-21 06:30:11', '2025-04-23 04:21:03');
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,17 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (60, 1, NULL, 4200.00, 512180.00, NULL, 'Sale Payment', '2025-05-24', '2025-05-24 17:28:23', '2025-05-24 17:28:23'),
 (61, 1, NULL, 8100.00, 520280.00, NULL, 'Sale Payment', '2025-05-24', '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
 (62, 1, NULL, 4200.00, 524480.00, NULL, 'Regular Sale', '2025-05-25', '2025-05-24 18:13:30', '2025-05-24 18:13:30'),
-(63, 1, NULL, 8100.00, 532580.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-24 18:16:38', '2025-05-24 18:16:38');
+(63, 1, NULL, 8100.00, 532580.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-24 18:16:38', '2025-05-24 18:16:38'),
+(64, 1, NULL, 8100.00, 540680.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 03:18:04', '2025-05-25 03:18:04'),
+(65, 1, NULL, 4200.00, 544880.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(66, 1, NULL, 8100.00, 552980.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 06:18:38', '2025-05-25 06:18:38'),
+(67, 1, NULL, 4200.00, 557180.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(68, 1, NULL, 2100.00, 559280.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(69, 1, NULL, 7000.00, 566280.00, NULL, 'Regular Sale', '2025-05-25', '2025-05-25 12:14:26', '2025-05-25 12:14:26'),
+(70, 1, NULL, 7000.00, 573280.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 12:16:36', '2025-05-25 12:16:36'),
+(71, 1, NULL, 2100.00, 575380.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 12:19:23', '2025-05-25 12:19:23'),
+(72, 1, NULL, 7000.00, 582380.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 12:21:23', '2025-05-25 12:21:23'),
+(73, 1, NULL, 2100.00, 584480.00, NULL, 'Sale Payment', '2025-05-25', '2025-05-25 12:47:02', '2025-05-25 12:47:02');
 
 -- --------------------------------------------------------
 
@@ -160,13 +170,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
-(1, 1, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-30 19:03:44', '2024-12-31 17:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7'),
-(3, 1, 'Derek Roth', NULL, 2, '71', 'kozuc@mailinator.com', '$2y$10$TRWNTnPQaNeGrcY3yErucumdfy0rZNUI6bNzMDmqNMaqIJ3.z4rDa', NULL, 0, '2025-04-30 06:20:32', '2025-04-30 06:20:32', NULL),
-(4, 1, 'Ariel Wall', NULL, 2, '34', 'tywylavoco@mailinator.com', '$2y$10$uU3y9PD/FETQafrvx02HxOpivFdj1Yddekmqbkez8a7n6TQ84n8KG', NULL, 0, '2025-04-30 09:56:50', '2025-04-30 09:56:50', NULL),
-(5, 2, 'Theodore Maxwell', NULL, 2, '100', 'korylapic@mailinator.com', '$2y$10$sRIcSmN4QR15irOYsjgrju7wVMjLO5amay5kw52J9eiewR3DSEfS6', NULL, 0, '2025-04-30 09:57:45', '2025-04-30 09:57:45', NULL),
-(6, 1, 'Carter Jarvis', NULL, 2, '96', 'byjozed@mailinator.com', '$2y$10$jgIvsRZhrnkBvvpPB4UU6OYb7FmCtDCaPmf8tgg2KJPXZjyRCOn6S', NULL, 0, '2025-04-30 10:52:16', '2025-04-30 10:52:16', NULL),
-(7, 2, 'Jasper Morton', NULL, 2, '23', 'pemurydum@mailinator.com', '$2y$10$NUKAdsQ9CxngQY3iiZ2yj.sReF3Fnzz6MASfQPYTaPNGZFKnMVqwq', NULL, 0, '2025-04-30 10:52:21', '2025-04-30 10:52:21', NULL),
-(8, 3, 'Aquila Stafford', NULL, 2, '53', 'xoje@mailinator.com', '$2y$10$gpUsalpXMdZuJwCEiRmazu0jmcoEagWNqMsiWodqd4iYIU9vwFDO2', NULL, 0, '2025-04-30 10:52:25', '2025-04-30 10:52:25', NULL);
+(1, NULL, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-30 19:03:44', '2024-12-31 17:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7'),
+(3, 1, 'Karim Saheb', NULL, 2, '71', 'karim@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', NULL, 1, '2025-04-30 06:20:32', '2025-05-25 09:12:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -196,10 +201,10 @@ CREATE TABLE `agents` (
 --
 
 INSERT INTO `agents` (`id`, `name`, `email`, `contact`, `address`, `dob`, `nid`, `balance`, `is_self`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, 0.00, 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07'),
-(2, 'Lilah Preston', 'mojyf@mailinator.com', '93', 'Cupidatat nostrum in', '1984-07-16', 17, 0.00, 0, 1, 1, 1, '2025-04-29 09:15:04', '2025-04-29 09:15:11'),
-(3, 'Lionel Carlson', 'kimezaxa@mailinator.com', '11', 'Commodi cum reprehen', '2021-06-23', 90, 0.00, 0, 1, 1, NULL, '2025-04-29 09:15:17', '2025-04-29 09:15:17'),
-(4, 'Iona Hodges', 'pyzizeret@mailinator.com', '81', 'Sint ipsum pariatur', '1993-11-12', 59, 0.00, 0, 1, 1, NULL, '2025-04-29 09:15:23', '2025-04-29 09:15:23');
+(1, 'Carlos Ewing', 'mobizyri@mailinator.com', '56', 'Ea perferendis Nam q', '1985-07-11', 70, '0.00', 0, 1, 1, 1, '2025-04-28 07:07:44', '2025-04-28 08:55:07'),
+(2, 'Lilah Preston', 'mojyf@mailinator.com', '93', 'Cupidatat nostrum in', '1984-07-16', 17, '0.00', 0, 1, 1, 1, '2025-04-29 09:15:04', '2025-04-29 09:15:11'),
+(3, 'Lionel Carlson', 'kimezaxa@mailinator.com', '11', 'Commodi cum reprehen', '2021-06-23', 90, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:17', '2025-04-29 09:15:17'),
+(4, 'Iona Hodges', 'pyzizeret@mailinator.com', '81', 'Sint ipsum pariatur', '1993-11-12', 59, '0.00', 0, 1, 1, NULL, '2025-04-29 09:15:23', '2025-04-29 09:15:23');
 
 -- --------------------------------------------------------
 
@@ -419,16 +424,16 @@ CREATE TABLE `bike_services` (
 --
 
 INSERT INTO `bike_services` (`id`, `bike_service_category_id`, `name`, `price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'General Bike Inspection', 1200.00, 1, '2025-03-05 07:03:49', '2025-03-05 07:07:00'),
-(2, 1, 'Periodic Oil Change', 1000.00, 1, '2025-03-05 07:04:03', '2025-03-05 07:04:03'),
-(3, 2, 'Engine Tuning', 1500.00, 1, '2025-03-05 07:04:22', '2025-03-05 07:06:44'),
-(4, 2, 'Engine Oil Replacement', 3000.00, 1, '2025-03-05 07:04:34', '2025-03-05 07:04:34'),
-(5, 3, 'Brake Pad Replacement', 5000.00, 1, '2025-03-05 07:04:51', '2025-03-05 07:04:51'),
-(6, 3, 'Clutch Cable Adjustment', 4000.00, 1, '2025-03-05 07:05:04', '2025-03-05 07:05:04'),
-(7, 4, 'Fork Oil Change', 2000.00, 1, '2025-03-05 07:05:19', '2025-03-05 07:05:19'),
-(8, 4, 'Steering Bearing Replacement', 2000.00, 1, '2025-03-05 07:05:43', '2025-03-05 07:05:43'),
-(9, 5, 'Battery Charging', 3000.00, 1, '2025-03-05 07:06:08', '2025-03-05 07:06:08'),
-(10, 5, 'Headlight & Indicator Check', 3000.00, 1, '2025-03-05 07:06:23', '2025-03-05 07:06:23');
+(1, 1, 'General Bike Inspection', '1200.00', 1, '2025-03-05 07:03:49', '2025-03-05 07:07:00'),
+(2, 1, 'Periodic Oil Change', '1000.00', 1, '2025-03-05 07:04:03', '2025-03-05 07:04:03'),
+(3, 2, 'Engine Tuning', '1500.00', 1, '2025-03-05 07:04:22', '2025-03-05 07:06:44'),
+(4, 2, 'Engine Oil Replacement', '3000.00', 1, '2025-03-05 07:04:34', '2025-03-05 07:04:34'),
+(5, 3, 'Brake Pad Replacement', '5000.00', 1, '2025-03-05 07:04:51', '2025-03-05 07:04:51'),
+(6, 3, 'Clutch Cable Adjustment', '4000.00', 1, '2025-03-05 07:05:04', '2025-03-05 07:05:04'),
+(7, 4, 'Fork Oil Change', '2000.00', 1, '2025-03-05 07:05:19', '2025-03-05 07:05:19'),
+(8, 4, 'Steering Bearing Replacement', '2000.00', 1, '2025-03-05 07:05:43', '2025-03-05 07:05:43'),
+(9, 5, 'Battery Charging', '3000.00', 1, '2025-03-05 07:06:08', '2025-03-05 07:06:08'),
+(10, 5, 'Headlight & Indicator Check', '3000.00', 1, '2025-03-05 07:06:23', '2025-03-05 07:06:23');
 
 -- --------------------------------------------------------
 
@@ -665,8 +670,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 'Karim Saheb', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', 0.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-24 18:16:38'),
-(2, 'Malek Azad', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-05-05 20:14:10'),
+(1, 'Karim Saheb', 'byjozed@mailinator.com', '96', 'Et eiusmod repudiand', 'Gray Kaufman Associates', 0.00, '1', 1, NULL, '2025-04-30 10:52:16', '2025-05-25 12:47:02'),
+(2, 'Malek Azad', 'pemurydum@mailinator.com', '23', 'Alias voluptas ducim', 'Hopkins Fox Inc', 0.00, '1', 1, NULL, '2025-04-30 10:52:21', '2025-05-25 06:21:59'),
 (3, 'Rahim Sheikh', 'xoje@mailinator.com', '53', 'Totam ipsam aliquid', 'Joseph and Harmon Trading', 0.00, '1', 1, NULL, '2025-04-30 10:52:25', '2025-05-06 14:23:17');
 
 -- --------------------------------------------------------
@@ -699,13 +704,34 @@ CREATE TABLE `customer_ledgers` (
 --
 
 INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `account_id`, `particular`, `date`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `note`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, 8100.00, 8100.00, NULL, NULL, 1, NULL, '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
-(2, 1, NULL, 1, 1, 'Payment', '2025-05-24', 8100.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
-(3, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, 2100.00, 2100.00, NULL, NULL, 1, NULL, '2025-05-24 17:53:02', '2025-05-24 17:53:02'),
-(4, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, 2100.00, 4200.00, NULL, NULL, 1, NULL, '2025-05-24 17:59:27', '2025-05-24 17:59:27'),
-(5, 1, NULL, 1, 1, 'Payment', '2025-05-25', 4200.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-24 18:13:30', '2025-05-24 18:13:30'),
-(6, 1, 2, NULL, NULL, 'Sale', '2025-05-25', NULL, 8100.00, 8100.00, NULL, NULL, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38'),
-(7, 1, NULL, 3, 1, 'Payment', '2025-05-25', 8100.00, NULL, 0.00, NULL, NULL, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38');
+(1, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, '8100.00', '8100.00', NULL, NULL, 1, NULL, '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
+(2, 1, NULL, 1, 1, 'Payment', '2025-05-24', '8100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
+(3, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, '2100.00', '2100.00', NULL, NULL, 1, NULL, '2025-05-24 17:53:02', '2025-05-24 17:53:02'),
+(4, 1, 1, NULL, NULL, 'Sale', '2025-05-24', NULL, '2100.00', '4200.00', NULL, NULL, 1, NULL, '2025-05-24 17:59:27', '2025-05-24 17:59:27'),
+(5, 1, NULL, 1, 1, 'Payment', '2025-05-25', '4200.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-24 18:13:30', '2025-05-24 18:13:30'),
+(6, 1, 2, NULL, NULL, 'Sale', '2025-05-25', NULL, '8100.00', '8100.00', NULL, NULL, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38'),
+(7, 1, NULL, 3, 1, 'Payment', '2025-05-25', '8100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38'),
+(8, 1, 3, NULL, NULL, 'Sale', '2025-05-25', NULL, '8100.00', '8100.00', NULL, NULL, 1, NULL, '2025-05-25 03:18:04', '2025-05-25 03:18:04'),
+(9, 1, NULL, 4, 1, 'Payment', '2025-05-25', '8100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 03:18:04', '2025-05-25 03:18:04'),
+(10, 1, 2, NULL, NULL, 'Sale', '2025-05-25', NULL, '4200.00', '4200.00', NULL, NULL, 1, NULL, '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(11, 1, NULL, 5, 1, 'Payment', '2025-05-25', '4200.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(12, 2, 4, NULL, NULL, 'Sale', '2025-05-25', NULL, '8100.00', '8100.00', NULL, NULL, 1, NULL, '2025-05-25 06:18:38', '2025-05-25 06:18:38'),
+(13, 2, NULL, 6, 1, 'Payment', '2025-05-25', '8100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 06:18:38', '2025-05-25 06:18:38'),
+(14, 2, 4, NULL, NULL, 'Sale', '2025-05-25', NULL, '4200.00', '4200.00', NULL, NULL, 1, NULL, '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(15, 2, NULL, 7, 1, 'Payment', '2025-05-25', '4200.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(16, 1, 5, NULL, NULL, 'Sale', '2025-05-25', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-05-25 07:25:36', '2025-05-25 07:25:36'),
+(17, 1, 5, NULL, NULL, 'Sale', '2025-05-25', NULL, '2100.00', '9100.00', NULL, NULL, 1, NULL, '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(18, 1, NULL, 8, 1, 'Payment', '2025-05-25', '2100.00', NULL, '7000.00', NULL, NULL, 1, NULL, '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(19, 1, NULL, 5, 1, 'Payment', '2025-05-25', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:14:26', '2025-05-25 12:14:26'),
+(20, 1, 6, NULL, NULL, 'Sale', '2025-05-25', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-05-25 12:16:36', '2025-05-25 12:16:36'),
+(21, 1, NULL, 10, 1, 'Payment', '2025-05-25', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:16:36', '2025-05-25 12:16:36'),
+(22, 1, 6, NULL, NULL, 'Sale', '2025-05-25', NULL, '2100.00', '2100.00', NULL, NULL, 1, NULL, '2025-05-25 12:19:23', '2025-05-25 12:19:23'),
+(23, 1, NULL, 11, 1, 'Payment', '2025-05-25', '2100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:19:23', '2025-05-25 12:19:23'),
+(24, 1, 6, NULL, NULL, 'Sale', '2025-05-25', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:20:49', '2025-05-25 12:20:49'),
+(25, 1, 7, NULL, NULL, 'Sale', '2025-05-25', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-05-25 12:21:23', '2025-05-25 12:21:23'),
+(26, 1, NULL, 12, 1, 'Payment', '2025-05-25', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:21:23', '2025-05-25 12:21:23'),
+(27, 1, 7, NULL, NULL, 'Sale', '2025-05-25', NULL, '2100.00', '2100.00', NULL, NULL, 1, NULL, '2025-05-25 12:47:02', '2025-05-25 12:47:02'),
+(28, 1, NULL, 13, 1, 'Payment', '2025-05-25', '2100.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-25 12:47:02', '2025-05-25 12:47:02');
 
 -- --------------------------------------------------------
 
@@ -736,7 +762,17 @@ CREATE TABLE `customer_payments` (
 INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, '2025-05-24', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-24 17:48:05', '2025-05-24 17:48:05'),
 (2, 1, 1, 1, '2025-05-25', 4200.00, NULL, NULL, 1, 1, NULL, '2025-05-24 18:13:27', '2025-05-24 18:13:30'),
-(3, 1, 1, 2, '2025-05-25', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38');
+(3, 1, 1, 2, '2025-05-25', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-24 18:16:38', '2025-05-24 18:16:38'),
+(4, 1, 1, 3, '2025-05-25', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-25 03:18:04', '2025-05-25 03:18:04'),
+(5, 1, 1, 2, '2025-05-25', 4200.00, NULL, NULL, 1, 1, NULL, '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(6, 2, 1, 4, '2025-05-25', 8100.00, NULL, NULL, 1, 1, NULL, '2025-05-25 06:18:38', '2025-05-25 06:18:38'),
+(7, 2, 1, 4, '2025-05-25', 4200.00, NULL, NULL, 1, 1, NULL, '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(8, 1, 1, 5, '2025-05-25', 2100.00, NULL, NULL, 1, 1, NULL, '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(9, 1, 1, 5, '2025-05-25', 7000.00, NULL, NULL, 1, 1, NULL, '2025-05-25 12:14:23', '2025-05-25 12:14:26'),
+(10, 1, 1, 6, '2025-05-25', 7000.00, NULL, NULL, 1, 1, NULL, '2025-05-25 12:16:36', '2025-05-25 12:16:36'),
+(11, 1, 1, 6, '2025-05-25', 2100.00, NULL, NULL, 1, 1, NULL, '2025-05-25 12:19:23', '2025-05-25 12:19:23'),
+(12, 1, 1, 7, '2025-05-25', 7000.00, NULL, NULL, 1, 1, NULL, '2025-05-25 12:21:23', '2025-05-25 12:21:23'),
+(13, 1, 1, 7, '2025-05-25', 2100.00, NULL, NULL, 1, 1, NULL, '2025-05-25 12:47:02', '2025-05-25 12:47:02');
 
 -- --------------------------------------------------------
 
@@ -960,7 +996,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `next_item_id`, `vat`, `is_saleable`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 8000.00, 8100.00, 2, 0.00, 1, 1, '2025-05-05 03:25:44', '2025-05-05 05:04:21'),
+(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 7000.00, 7000.00, 2, 0.00, 1, 1, '2025-05-05 03:25:44', '2025-05-25 06:19:12'),
 (2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 3, 0.00, 1, 1, '2025-05-05 03:26:53', '2025-05-05 03:26:53'),
 (3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 4, 0.00, 1, 1, '2025-05-05 03:27:42', '2025-05-05 03:27:42'),
 (4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 5, 0.00, 0, 1, '2025-05-05 03:28:02', '2025-05-05 03:28:02'),
@@ -999,7 +1035,9 @@ INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, 
 (75, NULL, 74, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-05 19:28:52', '2025-05-05 19:28:52'),
 (76, 1, NULL, NULL, NULL, 'Basic Package', NULL, 4000.00, 5000.00, NULL, 0.00, NULL, 1, '2025-05-06 17:17:30', '2025-05-06 18:07:38'),
 (79, NULL, 76, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-06 18:07:37', '2025-05-06 18:07:37'),
-(80, NULL, 76, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-06 18:07:38', '2025-05-06 18:07:38');
+(80, NULL, 76, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-06 18:07:38', '2025-05-06 18:07:38'),
+(81, 1, NULL, NULL, NULL, 'Self Slip Process', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-25 10:38:50', '2025-05-25 10:38:50'),
+(82, NULL, 81, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-25 10:38:50', '2025-05-25 10:38:50');
 
 -- --------------------------------------------------------
 
@@ -1015,8 +1053,8 @@ CREATE TABLE `job_service_records` (
   `expire_date` date DEFAULT NULL,
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `medical_centers` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slip_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mofa_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slip_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mofa_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_enabled` tinyint NOT NULL DEFAULT '0',
   `is_agent_purchased` tinyint NOT NULL DEFAULT '0' COMMENT '1=Yes, 0=No',
   `status_id` int NOT NULL,
@@ -1034,11 +1072,36 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 (3, 1, 3, '2025-05-24', '2025-06-18', NULL, '1:Center-1:C-1', '2345689765', NULL, 0, 1, 16, '2025-05-24 17:48:00', '2025-05-24 18:03:20'),
 (4, 1, 4, NULL, '2025-07-19', NULL, '1:Center-1:C-1', NULL, '234567890', 0, 1, 21, '2025-05-24 17:48:00', '2025-05-24 18:09:44'),
 (5, 1, 5, NULL, NULL, NULL, '1:Center-1:C-1', NULL, NULL, 0, 1, 26, '2025-05-24 17:48:00', '2025-05-24 18:13:06'),
-(6, 2, 1, '2025-05-25', '2025-06-19', 'L.Eye(D-Un):36 R.Eye(D-Un):36', NULL, NULL, NULL, 0, 1, 5, '2025-05-24 18:16:34', '2025-05-24 18:24:28'),
-(7, 2, 2, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 0, 0, 7, '2025-05-24 18:16:34', '2025-05-24 18:17:09'),
-(8, 2, 3, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 0, 0, 11, '2025-05-24 18:16:34', '2025-05-24 18:17:09'),
-(9, 2, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 17, '2025-05-24 18:16:34', '2025-05-24 18:16:38'),
-(10, 2, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 22, '2025-05-24 18:16:34', '2025-05-24 18:16:38');
+(6, 2, 1, '2025-05-10', '2025-06-04', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', NULL, NULL, 0, 1, 6, '2025-05-24 18:16:34', '2025-05-25 05:53:27'),
+(7, 2, 2, NULL, '2025-06-04', NULL, NULL, NULL, NULL, 0, 1, 10, '2025-05-24 18:16:34', '2025-05-25 05:55:59'),
+(8, 2, 3, '2025-05-25', '2025-06-04', NULL, '2:Center-2:C-2', '2345689765', NULL, 0, 1, 16, '2025-05-24 18:16:34', '2025-05-25 05:55:59'),
+(9, 2, 4, NULL, '2025-07-19', NULL, '2:Center-2:C-2', NULL, '234567894567', 0, 1, 21, '2025-05-24 18:16:34', '2025-05-25 05:56:34'),
+(10, 2, 5, NULL, NULL, NULL, '2:Center-2:C-2', NULL, NULL, 0, 1, 26, '2025-05-24 18:16:34', '2025-05-25 05:56:49'),
+(11, 3, 1, '2025-05-10', '2025-06-04', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3', NULL, NULL, 0, 1, 6, '2025-05-25 03:18:01', '2025-05-25 04:00:45'),
+(12, 3, 2, NULL, '2025-06-04', NULL, NULL, NULL, NULL, 0, 0, 10, '2025-05-25 03:18:01', '2025-05-25 04:01:00'),
+(13, 3, 3, '2025-05-25', '2025-06-04', NULL, '4:Center-4:C-4', '2345689765', NULL, 0, 0, 16, '2025-05-25 03:18:01', '2025-05-25 04:49:18'),
+(14, 3, 4, NULL, '2025-07-11', NULL, '4:Center-4:C-4', NULL, '23456789', 0, 1, 21, '2025-05-25 03:18:01', '2025-05-25 05:04:30'),
+(15, 3, 5, NULL, NULL, NULL, '4:Center-4:C-4', NULL, NULL, 0, 1, 26, '2025-05-25 03:18:01', '2025-05-25 05:07:30'),
+(16, 4, 1, '2025-05-24', '2025-06-18', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3|4:Center-4:C-4|5:Center-5:C-5', NULL, NULL, 0, 1, 6, '2025-05-25 06:17:04', '2025-05-25 06:21:24'),
+(17, 4, 2, NULL, '2025-06-18', NULL, NULL, NULL, NULL, 0, 1, 10, '2025-05-25 06:17:04', '2025-05-25 06:22:13'),
+(18, 4, 3, '2025-05-25', '2025-06-18', NULL, '1:Center-1:C-1', '2345689765', NULL, 0, 1, 16, '2025-05-25 06:17:04', '2025-05-25 06:22:56'),
+(19, 4, 4, '2025-05-25', '2025-07-19', NULL, '1:Center-1:C-1', NULL, '234567894567', 0, 1, 21, '2025-05-25 06:17:04', '2025-05-25 06:26:49'),
+(20, 4, 5, '2025-05-25', NULL, NULL, '1:Center-1:C-1', NULL, NULL, 0, 1, 26, '2025-05-25 06:17:04', '2025-05-25 06:29:04'),
+(21, 5, 1, '2025-05-25', '2025-06-19', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2|3:Center-3:C-3', NULL, NULL, 0, 1, 6, '2025-05-25 07:24:43', '2025-05-25 09:32:56'),
+(22, 5, 2, '2025-05-25', '2025-06-19', NULL, NULL, NULL, NULL, 0, 1, 10, '2025-05-25 07:24:43', '2025-05-25 10:39:20'),
+(23, 5, 3, '2025-05-25', '2025-06-19', NULL, '5:Center-5:C-5', '1234567234567', NULL, 0, 1, 16, '2025-05-25 07:24:43', '2025-05-25 10:39:20'),
+(24, 5, 4, '2025-05-25', '2025-07-19', NULL, '5:Center-5:C-5', NULL, '234567890', 0, 1, 21, '2025-05-25 07:24:43', '2025-05-25 10:45:04'),
+(25, 5, 5, '2025-05-25', NULL, NULL, '5:Center-5:C-5', NULL, NULL, 0, 1, 26, '2025-05-25 07:24:43', '2025-05-25 12:13:20'),
+(26, 6, 1, '2025-05-25', '2025-06-19', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2|4:Center-4:C-4', NULL, NULL, 0, 1, 6, '2025-05-25 12:16:33', '2025-05-25 12:17:29'),
+(27, 6, 2, '2025-05-25', '2025-06-19', NULL, NULL, NULL, NULL, 0, 1, 10, '2025-05-25 12:16:33', '2025-05-25 12:20:22'),
+(28, 6, 3, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 1, 1, 11, '2025-05-25 12:16:33', '2025-05-25 12:20:49'),
+(29, 6, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 17, '2025-05-25 12:16:33', '2025-05-25 12:16:36'),
+(30, 6, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 22, '2025-05-25 12:16:33', '2025-05-25 12:16:36'),
+(31, 7, 1, '2025-05-25', '2025-06-19', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:C-1|2:Center-2:C-2', NULL, NULL, 0, 1, 6, '2025-05-25 12:21:19', '2025-05-25 12:24:21'),
+(32, 7, 2, '2025-05-25', '2025-06-19', NULL, NULL, NULL, NULL, 0, 1, 10, '2025-05-25 12:21:19', '2025-05-25 12:47:29'),
+(33, 7, 3, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 1, 0, 11, '2025-05-25 12:21:19', '2025-05-25 12:47:29'),
+(34, 7, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 17, '2025-05-25 12:21:19', '2025-05-25 12:21:23'),
+(35, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 22, '2025-05-25 12:21:19', '2025-05-25 12:21:23');
 
 -- --------------------------------------------------------
 
@@ -1217,7 +1280,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (135, 35, 6, 'Print', NULL, 0, NULL, 'bike-purchases.invoice.print', 1, '2025-03-20 09:05:32', '2025-03-20 09:05:32'),
 (136, 0, 5, 'Agent', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 1, '2025-03-22 19:17:08', '2025-04-30 04:56:08'),
 (137, 0, 6, 'Jobs', '<i class=\"fa fa-tasks nav-icon\"></i>', 1, 'sales.create', 'sales.index', 1, '2025-03-22 20:31:30', '2025-04-29 05:03:09'),
-(138, 0, 7, 'Agent Payments', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, 'customer-payments.create', 'customer-payments.index', 1, '2025-03-23 08:47:00', '2025-04-30 05:52:05'),
+(138, 0, 8, 'Agent Payments', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, 'customer-payments.create', 'customer-payments.index', 1, '2025-03-23 08:47:00', '2025-05-25 08:56:34'),
 (139, 0, 12, 'Loan Manage', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 0, '2025-04-09 05:37:41', '2025-04-28 06:21:48'),
 (140, 139, 1, 'Party Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'parties.create', 'parties.index', 1, '2025-04-09 05:39:23', '2025-04-09 05:39:23'),
 (141, 139, 2, 'Loans', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'loans.create', 'loans.index', 1, '2025-04-10 04:25:30', '2025-04-10 04:25:41'),
@@ -1265,7 +1328,8 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (183, 1, 2, 'Investement Info', NULL, 0, NULL, NULL, 0, '2025-04-23 11:00:28', '2025-04-28 06:32:52'),
 (184, 1, 3, 'Bike Info', NULL, 0, NULL, NULL, 0, '2025-04-23 11:01:24', '2025-04-28 06:32:58'),
 (185, 137, 8, 'Add New Item', NULL, 0, NULL, 'sales.add-new-item', 1, '2025-05-24 17:19:20', '2025-05-24 17:19:20'),
-(186, 137, 9, 'Service Status Update', NULL, 0, NULL, 'sales.service-edit', 1, '2025-05-24 17:22:40', '2025-05-24 17:22:40');
+(186, 137, 9, 'Service Status Update', NULL, 0, NULL, 'sales.service-edit', 1, '2025-05-24 17:22:40', '2025-05-24 17:22:40'),
+(187, 0, 7, 'My Jobs', '<i class=\"fa fa-list nav-icon\"></i>', 1, NULL, 'my-jobs.index', 1, '2025-05-25 08:55:14', '2025-05-25 09:05:22');
 
 -- --------------------------------------------------------
 
@@ -1538,11 +1602,8 @@ INSERT INTO `privileges` (`id`, `role_id`, `menu_id`, `created_at`, `updated_at`
 (42, 9, 68, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
 (43, 9, 66, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
 (44, 9, 67, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
-(78, 2, 1, '2025-04-23 11:34:40', '2025-04-23 11:34:40'),
-(79, 2, 183, '2025-04-23 11:34:40', '2025-04-23 11:34:40'),
-(80, 2, 181, '2025-04-23 11:34:40', '2025-04-23 11:34:40'),
-(81, 2, 184, '2025-04-23 11:34:40', '2025-04-23 11:34:40'),
-(82, 2, 48, '2025-04-23 11:34:40', '2025-04-23 11:34:40');
+(83, 2, 1, '2025-05-25 09:15:40', '2025-05-25 09:15:40'),
+(84, 2, 187, '2025-05-25 09:15:40', '2025-05-25 09:15:40');
 
 -- --------------------------------------------------------
 
@@ -1625,6 +1686,7 @@ CREATE TABLE `sales` (
   `account_id` bigint DEFAULT NULL,
   `passenger_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `passenger_passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localhost_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
@@ -1637,7 +1699,7 @@ CREATE TABLE `sales` (
   `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
-  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Complete',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Complete, 3=Refunded, 4=Cancelled',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1648,9 +1710,14 @@ CREATE TABLE `sales` (
 -- Dumping data for table `sales`
 --
 
-INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Shoriful Alom', '12345678', '0000001', '2025-05-24', 12300.00, 0.00, 0, 0.00, 0.00, 12300.00, 12300.00, NULL, NULL, 1, 2, 1, 1, '2025-05-24 17:48:00', '2025-05-24 18:13:30'),
-(2, 1, 1, 'Kamal Hossain', '98723456y', '0000002', '2025-05-25', 8100.00, 0.00, 0, 0.00, 0.00, 8100.00, 8100.00, NULL, NULL, 1, 1, 1, NULL, '2025-05-24 18:16:34', '2025-05-24 18:16:38');
+INSERT INTO `sales` (`id`, `customer_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `localhost_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Shoriful Alom', '12345678', '5743', '0000001', '2025-05-24', 12300.00, 0.00, 0, 0.00, 0.00, 12300.00, 12300.00, NULL, NULL, 1, 2, 1, 1, '2025-05-24 17:48:00', '2025-05-24 18:13:30'),
+(2, 1, 1, 'Kamal Hossain', '98723456y', '4546', '0000002', '2025-05-25', 12300.00, 0.00, 0, 0.00, 0.00, 12300.00, 12300.00, NULL, NULL, 1, 2, 1, 1, '2025-05-24 18:16:34', '2025-05-25 05:56:49'),
+(3, 1, 1, 'Malek Azad', '6789075475', '3244', '0000003', '2025-05-25', 8100.00, 0.00, 0, 0.00, 0.00, 8100.00, 8100.00, NULL, NULL, 1, 2, 1, NULL, '2025-05-25 03:18:00', '2025-05-25 05:07:30'),
+(4, 2, 1, 'Ahsan Ullah', '2598235409', '5434', '0000004', '2025-05-25', 12300.00, 0.00, 0, 0.00, 0.00, 12300.00, 12300.00, NULL, NULL, 1, 2, 1, 1, '2025-05-25 06:17:04', '2025-05-25 06:29:04'),
+(5, 1, NULL, 'Shoriful Alom', '678907547589', '792389', '0000005', '2025-05-25', 9100.00, 0.00, 0, 0.00, 0.00, 9100.00, 9100.00, NULL, NULL, 1, 2, 1, 1, '2025-05-25 07:24:43', '2025-05-25 12:14:26'),
+(6, 1, 1, 'Shoriful Alom', '34567574', '7923434567456', '0000006', '2025-05-25', 9100.00, 0.00, 0, 0.00, 0.00, 9100.00, 9100.00, NULL, NULL, 1, 1, 1, 1, '2025-05-25 12:16:33', '2025-05-25 12:19:23'),
+(7, 1, 1, 'Kamal Hossain Barek', '4567856', '533446', '0000007', '2025-05-25', 9100.00, 0.00, 0, 0.00, 0.00, 9100.00, 9100.00, NULL, NULL, 1, 1, 1, 1, '2025-05-25 12:21:19', '2025-05-25 12:47:02');
 
 -- --------------------------------------------------------
 
@@ -1681,7 +1748,21 @@ INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `p
 (1, 1, 1, '2025-05-24', 8100.00, 8000.00, 100.00, 8100.00, 100.00, 0, '2025-05-24 17:48:00', '2025-05-24 17:48:05'),
 (2, 1, 2, '2025-05-24', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-24 17:53:02', '2025-05-24 17:53:02'),
 (3, 1, 3, '2025-05-24', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-24 17:59:27', '2025-05-24 17:59:27'),
-(4, 2, 1, '2025-05-25', 8100.00, 8000.00, 100.00, 8100.00, 100.00, 0, '2025-05-24 18:16:34', '2025-05-24 18:16:38');
+(4, 2, 1, '2025-05-25', 8100.00, 8000.00, 100.00, 8100.00, 100.00, 0, '2025-05-24 18:16:34', '2025-05-24 18:16:38'),
+(5, 3, 1, '2025-05-25', 8100.00, 8000.00, 100.00, 8100.00, 100.00, 0, '2025-05-25 03:18:00', '2025-05-25 03:18:04'),
+(6, 2, 3, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(7, 2, 2, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 05:55:59', '2025-05-25 05:55:59'),
+(8, 4, 1, '2025-05-25', 8100.00, 7000.00, 1100.00, 8100.00, 1100.00, 0, '2025-05-25 06:17:04', '2025-05-25 06:21:59'),
+(9, 4, 2, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(10, 4, 3, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 06:21:59', '2025-05-25 06:21:59'),
+(11, 5, 1, '2025-05-25', 7000.00, 7000.00, 0.00, 7000.00, 0.00, 0, '2025-05-25 07:24:43', '2025-05-25 07:25:36'),
+(12, 5, 81, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(13, 5, 2, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 10:39:20', '2025-05-25 10:39:20'),
+(14, 6, 1, '2025-05-25', 7000.00, 7000.00, 0.00, 7000.00, 0.00, 0, '2025-05-25 12:16:33', '2025-05-25 12:16:36'),
+(15, 6, 2, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 12:19:23', '2025-05-25 12:19:23'),
+(16, 6, 81, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-05-25 12:20:49', '2025-05-25 12:20:49'),
+(17, 7, 1, '2025-05-25', 7000.00, 7000.00, 0.00, 7000.00, 0.00, 0, '2025-05-25 12:21:19', '2025-05-25 12:21:23'),
+(18, 7, 2, '2025-05-25', 2100.00, 2000.00, 100.00, 2100.00, 100.00, 0, '2025-05-25 12:47:02', '2025-05-25 12:47:02');
 
 -- --------------------------------------------------------
 
@@ -1715,6 +1796,7 @@ CREATE TABLE `status_lists` (
   `item_id` int NOT NULL,
   `srl` int NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_for_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status_state` tinyint NOT NULL DEFAULT '0' COMMENT '0=Initial State, 1=Middle State, 2=Final State',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
@@ -1726,34 +1808,34 @@ CREATE TABLE `status_lists` (
 -- Dumping data for table `status_lists`
 --
 
-INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `color_code`, `status_state`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
-(2, 1, 2, 'Medical Completed', '#17a2b8', 1, 1, NULL, NULL),
-(3, 1, 3, 'Waiting For Medical Result', '#17a2b8', 1, 1, NULL, NULL),
-(4, 1, 4, 'Unfit & Processing For Refund', '#17a2b8', 1, 1, NULL, NULL),
-(5, 1, 6, 'Refund Completed', '#212529', 2, 1, NULL, NULL),
-(6, 1, 7, 'Result Published', '#28a745', 2, 1, NULL, NULL),
-(7, 2, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
-(8, 2, 2, 'Requested For Settlement', '#17a2b8', 1, 1, NULL, NULL),
-(9, 2, 3, 'Settlement Processing', '#17a2b8', 1, 1, NULL, NULL),
-(10, 2, 4, 'Settlement Completed', '#28a745', 2, 1, NULL, NULL),
-(11, 3, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
-(12, 3, 2, 'Requested For Slip', '#17a2b8', 1, 1, NULL, NULL),
-(13, 3, 3, 'Processing', '#17a2b8', 1, 1, NULL, NULL),
-(14, 3, 4, 'Slip Received', '#17a2b8', 1, 1, NULL, NULL),
-(15, 3, 5, 'Slip Submission Done', '#17a2b8', 1, 1, NULL, NULL),
-(16, 3, 6, 'Online Fit On WAFID', '#28a745', 2, 1, NULL, NULL),
-(17, 4, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
-(18, 4, 2, 'Requested For MOFA', '#17a2b8', 1, 1, NULL, NULL),
-(19, 4, 3, 'MOFA Received', '#17a2b8', 1, 1, NULL, NULL),
-(20, 4, 4, 'MOFA Processing', '#17a2b8', 1, 1, NULL, NULL),
-(21, 4, 5, 'MOFA Updated On Visa Platform', '#28a745', 2, 1, NULL, NULL),
-(22, 5, 1, 'Pending', '#dc3545', 0, 1, NULL, NULL),
-(23, 5, 2, 'Requested For Fit Card', '#17a2b8', 1, 1, NULL, NULL),
-(24, 5, 3, 'Fit Card Processing', '#17a2b8', 1, 1, NULL, NULL),
-(25, 5, 4, 'Fit Card Ready For Delivery', '#17a2b8', 1, 1, NULL, NULL),
-(26, 5, 5, 'Delivery Done', '#28a745', 2, 1, NULL, NULL),
-(27, 1, 5, 'Refund Received', '#17a2b8', 1, 1, NULL, NULL);
+INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `name_for_agent`, `color_code`, `status_state`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Pending', NULL, '#dc3545', 0, 1, NULL, NULL),
+(2, 1, 2, 'Medical Completed', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(3, 1, 3, 'Waiting For Medical Result', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(4, 1, 4, 'Unfit & Processing For Refund', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(5, 1, 6, 'Refund Completed', NULL, '#212529', 2, 1, NULL, NULL),
+(6, 1, 7, 'Result Published', NULL, '#28a745', 2, 1, NULL, NULL),
+(7, 2, 1, 'Pending', NULL, '#dc3545', 0, 1, NULL, NULL),
+(8, 2, 2, 'Requested For Settlement', 'Request For Settlement', '#17a2b8', 1, 1, NULL, NULL),
+(9, 2, 3, 'Settlement Processing', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(10, 2, 4, 'Settlement Completed', NULL, '#28a745', 2, 1, NULL, NULL),
+(11, 3, 1, 'Pending', NULL, '#dc3545', 0, 1, NULL, NULL),
+(12, 3, 2, 'Requested For Slip', 'Request For Slip', '#17a2b8', 1, 1, NULL, NULL),
+(13, 3, 3, 'Processing', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(14, 3, 4, 'Slip Received', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(15, 3, 5, 'Slip Submission Done', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(16, 3, 6, 'Online Fit On WAFID', NULL, '#28a745', 2, 1, NULL, NULL),
+(17, 4, 1, 'Pending', NULL, '#dc3545', 0, 1, NULL, NULL),
+(18, 4, 2, 'Requested For MOFA', 'Request For MOFA', '#17a2b8', 1, 1, NULL, NULL),
+(19, 4, 3, 'MOFA Received', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(20, 4, 4, 'MOFA Processing', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(21, 4, 5, 'MOFA Updated On Visa Platform', NULL, '#28a745', 2, 1, NULL, NULL),
+(22, 5, 1, 'Pending', NULL, '#dc3545', 0, 1, NULL, NULL),
+(23, 5, 2, 'Requested For Fit Card', 'Request For Fit Card', '#17a2b8', 1, 1, NULL, NULL),
+(24, 5, 3, 'Fit Card Processing', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(25, 5, 4, 'Fit Card Ready For Delivery', NULL, '#17a2b8', 1, 1, NULL, NULL),
+(26, 5, 5, 'Delivery Done', NULL, '#28a745', 2, 1, NULL, NULL),
+(27, 1, 5, 'Refund Received', NULL, '#17a2b8', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2264,7 +2346,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -2384,13 +2466,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2444,13 +2526,13 @@ ALTER TABLE `investor_transactions`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2462,7 +2544,7 @@ ALTER TABLE `medical_centers`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -2510,7 +2592,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -2534,13 +2616,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `sellers`

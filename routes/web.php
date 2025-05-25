@@ -224,6 +224,16 @@ Route::prefix('backend')->group(function () {
                 Route::get('approve/{id}','approve')->name('sales.approve');
             });
 
+            Route::prefix('my-jobs')->controller(MyJobContorller::class)->group(function(){
+                Route::get('','index')->name('my-jobs.index');
+                Route::put('update/{id}','update')->name('my-jobs.update');
+                Route::get('invoice/{id}','inovice')->name('my-jobs.invoice');
+                Route::get('invoice/{id}/{print}','inovice')->name('my-jobs.invoice.print');
+                Route::get('list','list')->name('my-jobs.list');
+                Route::get('service-edit/{saleId?}/{serviceRecordId?}','serviceEdit')->name('my-jobs.service-edit');
+                Route::put('service-update/{serviceRecordId}','serviceUpdate')->name('my-jobs.service-update');
+            });
+
             Route::prefix('customers')->controller(CustomerController::class)->group(function(){
                 Route::get('','index')->name('customers.index');
                 Route::post('store','store')->name('customers.store');
