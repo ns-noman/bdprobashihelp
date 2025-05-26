@@ -19,6 +19,7 @@ class JobServiceRecords extends Model
         'slip_no',
         'mofa_no',
         'is_enabled',
+        'is_complete',
         'is_agent_purchased',
         'status_id',
     ];

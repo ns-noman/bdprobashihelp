@@ -1,8 +1,17 @@
 @extends('layouts.admin.master')
 @section('content')
+@inject('authorization', 'App\Services\AuthorizationService')
 @php
     $roleType = Auth::guard('admin')->user()->type;
     $customer_id = Auth::guard('admin')->user()->agent_id;
+    $edit = $authorization->hasMenuAccess(156) == true ? 1: 0;
+    $delete = $authorization->hasMenuAccess(157) == true ? 1: 0;
+    $approve = $authorization->hasMenuAccess(158) == true ? 1: 0;
+    $view = $authorization->hasMenuAccess(159) == true ? 1: 0;
+    $print = $authorization->hasMenuAccess(160) == true ? 1: 0;
+    $payment = $authorization->hasMenuAccess(161) == true ? 1: 0;
+    $add_new_item = $authorization->hasMenuAccess(185) == true ? 1: 0;
+    $service_status_update = $authorization->hasMenuAccess(186) == true ? 1: 0;
 @endphp
     <style>
         .custom-disabled {
@@ -19,9 +28,11 @@
                         <div class="card">
                             <div class="card-header bg-primary p-1">
                                 <h3 class="card-title">
-                                    <a href="{{ route('sales.create') }}"class="btn btn-light shadow rounded m-0"><i
-                                            class="fas fa-plus"></i>
-                                        <span>Add New</span></i></a>
+                                    @if($authorization->hasMenuAccess(155))
+                                        <a href="{{ route('sales.create') }}"class="btn btn-light shadow rounded m-0"><i
+                                                class="fas fa-plus"></i>
+                                            <span>Add New</span></i></a>
+                                    @endif
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -32,8 +43,7 @@
                                                 <tr>
                                                     <th>Action</th>
                                                     <th>Status</th>
-                                                    <th>PaymentStatus</th>
-                                                    <th style="min-width: 1000px;text-align: center;">Service Availed</th>
+                                                    <th style="min-width: 1200px;text-align: center;">Service Availed</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -102,6 +112,17 @@
 @section('script')
     <script>
         $(document).ready(function(){
+            let customer_id = "{{ $customer_id }}";
+            const hasPermission = {
+                edit: parseInt("{{ $edit }}"),
+                delete: parseInt("{{ $delete }}"),
+                approve: parseInt("{{ $approve }}"),
+                view: parseInt("{{ $view }}"),
+                print: parseInt("{{ $print }}"),
+                payment: parseInt("{{ $payment }}"),
+                add_new_item: parseInt("{{ $add_new_item }}"),
+                service_status_update: parseInt("{{ $service_status_update }}"),
+            };
             $(document).on('click','.pay-now', function(e) {
                 $('#sale_id').val($(this).attr('sale-id'));
                 $('#amount').val(parseFloat($(this).attr('due')).toFixed(2));
@@ -147,22 +168,6 @@
                     const customer_id = $('#customer_id').val();
                     d.customer_id = customer_id || (rollType ==2 ? "{{ $customer_id }}" : 0);
                     d._token = $('meta[name="csrf-token"]').attr('content');
-                },
-                dataSrc: function(json)
-                {
-                    // if (json.data.length) {
-                    //     let brought_forword = parseFloat(json.data[0].current_balance || 0) + parseFloat(json.data[0].debit_amount || 0) - parseFloat(json.data[0].credit_amount || 0);
-                    //     const bfRow = {
-                    //         transaction_date: '',
-                    //         description: 'B/F',
-                    //         reference_number: '',
-                    //         credit_amount: '',
-                    //         debit_amount: '',
-                    //         current_balance: brought_forword,
-                    //     };
-                    //     json.data.unshift(bfRow);
-                    // }
-                    return json.data;
                 }
             },
             columns: [
@@ -176,39 +181,50 @@
                                 let print = `{{ route('sales.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
                                 let view = `{{ route('sales.invoice', [":id"]) }}`.replace(':id', row.id);
                                 let destroy = `{{ route('sales.destroy', ":id") }}`.replace(':id', row.id);
-                                return (` <div>
-                                               
-                                                <a href="${view}" class="btn btn-sm btn-warning">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </a>
-                                                <br>
-                                                <a href="${print}" class="btn btn-sm btn-dark">
-                                                    <i class="fa-solid fa-print"></i>
-                                                </a>
-                                                <br>
-                                                <button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
-                                                            data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
-                                                                ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
-                                                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                                                </button>
-                                                <br>
-                                                 <a href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </a>
-                                                <br>
-                                                <a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                </a>
-                                                <br>
-                                                <form class="delete" action="${destroy}" method="post">
+                                let action = ` <div>`;
+                                    if (hasPermission.view) {
+                                        action += `<a href="${view}" class="btn btn-sm btn-warning">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
+                                                    <br>`;
+                                    }
+                                    if (hasPermission.print) {
+                                        action += `<a href="${print}" class="btn btn-sm btn-dark">
+                                                        <i class="fa-solid fa-print"></i>
+                                                    </a>
+                                                    <br>`;
+                                    }
+                                    if (hasPermission.payment) {
+                                        action +=  `<button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
+                                                                data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
+                                                                    ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
+                                                                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                                                    </button>
+                                                    <br>`;
+                                    }
+                                    if (hasPermission.add_new_item) {
+                                        action += `<a href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </a>
+                                                    <br>`;
+                                    }
+                                    if (hasPermission.edit) {
+                                        action += `<a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                    </a>
+                                                    <br>`;
+                                    }
+                                    if (hasPermission.delete) {
+                                        action +=  `<form class="delete" action="${destroy}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
-                                                </form>
-                                            </div>
-                                        `);
+                                                </form>`;
+                                    }        
+                                    action +=`</div>`;
+                                return action;
                             }
                         },
                         {
@@ -223,10 +239,12 @@
                                 if(row.status == '0'){
                                     color = 'danger';
                                     text = 'Pending';
-                                    eventClass = 'event';
+                                    if (hasPermission.approve) {
+                                        eventClass = 'event';
+                                    }
                                 }else if(row.status == '1'){
                                     color = 'primary';
-                                    text = 'Approved';
+                                    text = 'Processing';
                                 }else if(row.status == '2'){
                                     color = 'success';
                                     text = 'Completed';
@@ -242,25 +260,6 @@
                         },
                         {
                             data: null, 
-                            name: 'sales.payment_status', 
-                            orderable: true, 
-                            searchable: false, 
-                            render: function(data, type, row, meta) {
-                                let color;
-                                let text;
-                                if(row.payment_status == '0'){
-                                    color = 'warning';
-                                    text = 'Unpaid';
-                                }else if(row.payment_status == '1'){
-                                    color = 'info';
-                                    text = 'Paid';
-                                }
-                                return `<span class="badge badge-${color}">${text}</span>`;
-                            }
-                        },
-                       
-                        {
-                            data: null, 
                             name: '', 
                             orderable: false, 
                             searchable: false, 
@@ -272,10 +271,14 @@
                                 let eventClass = '';
                                 let disabled = '';
                                 let table = `<h6>Pending</h6>`;
+                                let remaining_days_obj = {};
                                 if (row.serviceshorts.length) {
                                     row.serviceshorts.forEach(job_service_record => {
                                         let medicalCenterTxt = '';
                                         let serviceNotPurchaseEvent =  '';
+                                        let serviceNamePrefix = '';
+
+
                                         if(job_service_record.medical_centers !=null){
                                             let centersArray = job_service_record.medical_centers.split('|');
                                             centersArray.forEach((center, index)=>{
@@ -286,32 +289,56 @@
                                         statusTxt = job_service_record.servicestatus.name;
                                         statusColor = job_service_record.servicestatus.color_code;
 
-                                        serviceUrl =  `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
-                                        
-                                        if(job_service_record.is_agent_purchased == '1'){
-                                            ServiceColor = 'info';
-                                        }else{
-                                            ServiceColor = 'info';
-                                            serviceUrl =  'javascript:void()';
-                                            serviceNotPurchaseEvent = ' serviceNotPurchaseEvent ';
+                                        if (hasPermission.service_status_update) {
+                                            let status_id = [7,11,17,22];
+                                            if(customer_id && !status_id.includes(job_service_record.status_id)){
+                                                serviceUrl =  'javascript:void(0)';
+                                            }else{
+                                                serviceUrl =  `{{ route('sales.service-edit', [":saleId", ":serviceRId"]) }}`.replace(':saleId', row.id).replace(':serviceRId', job_service_record.id);
+                                            }
                                         }
-                                        ServiceColor = job_service_record.is_enabled == '1' ? 'primary' : ServiceColor;
-                                        let serviceNamePrefix = job_service_record.is_agent_purchased == '0' ? ' <i class="fa fa-ban text-danger"></i> ' : '';
+
+                                        if(job_service_record.is_complete == '1'){
+                                            ServiceColor = 'success';
+                                            serviceUrl =  'javascript:void(0)';
+                                        }else{
+                                            if (job_service_record.is_enabled == '1') {
+                                                ServiceColor = 'primary';
+                                            }else{
+                                                ServiceColor = 'info';
+                                            }
+                                        }
+                                        if(job_service_record.is_agent_purchased == '0'){
+                                            serviceUrl =  'javascript:void(0)';
+                                            serviceNotPurchaseEvent = ' serviceNotPurchaseEvent ';
+                                            serviceNamePrefix = '<i class="fa fa-ban text-danger"></i>&nbsp;';
+                                        }
+                                        remaining_days_obj = remaining_days({expire_date: job_service_record.expire_date,is_complete: job_service_record.is_complete,item_id: job_service_record.item_id});
                                         tr+=`<tr>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;">
-                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled})} btn btn-sm btn-${ServiceColor} m-0${serviceNotPurchaseEvent}" aria-disabled="true">${serviceNamePrefix}${job_service_record.items.name}</a>
+                                                    <a ${disabled} style="width: 100%;" href="${serviceUrl}" class="${btnControl({is_enabled : job_service_record.is_enabled, is_complete : job_service_record.is_complete})} btn btn-sm btn-${ServiceColor} m-0${serviceNotPurchaseEvent}" aria-disabled="true">${serviceNamePrefix}${job_service_record.items.name}</a>
                                                 </td>
                                                 <td class="p-0" style="vertical-align: middle;width: auto;text-align: center;">
-                                                    <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg">${statusTxt}</span>
+                                                    <span style="background-color:${statusColor};color:white;width: 100%;" class="badge badge-lg text-light">${statusTxt}</span>
                                                 </td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.entry_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
-                                                <td style="vertical-align: middle;width: auto;">${(job_service_record.expire_date  !=null) ? getDateDifferenceInDays(new Date(), job_service_record.expire_date) : ''}</td>
+                                                <td style="vertical-align: middle;width: auto;background-color: ${remaining_days_obj.hasExpireDate && (remaining_days_obj.remaining_days!=null && remaining_days_obj.remaining_days>=0) ? getColorFromPercentage(remaining_days_obj.maxRemainingDays, remaining_days_obj.remaining_days) : ''}">${remaining_days_obj.remaining_days_label}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.slip_no || job_service_record.mofa_no || ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
                                             </tr>`;
                                     });
+                                        let paymentStatusColor;
+                                        let paymentText;
+                                        if(row.payment_status == '0'){
+                                            paymentStatusColor = 'warning';
+                                            paymentText = 'Unpaid';
+                                        }else if(row.payment_status == '1'){
+                                            paymentStatusColor = 'success';
+                                            paymentText = 'Paid';
+                                        }
+
                                         table = `
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
@@ -325,17 +352,18 @@
                                                     <tr class="bg-light">
                                                         <th class="text-center" colspan="2">Date: ${row.date}</th>
                                                         <th class="text-center" colspan="3"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
-                                                        <th class="text-center" colspan="3">Note: ${row.note ?? ''}</th>
+                                                        <th class="text-center" colspan="2">Payment Status: ${`<span class="badge badge-${paymentStatusColor}">${paymentText}</span>`}</th>
+                                                        <th class="text-center" colspan="1">Note: ${row.note ?? ''}</th>
                                                     </tr>
                                                     <tr>
-                                                        <th class="text-center" style="width: 100px;">ServiceName</th>
+                                                        <th class="text-center" style="width: 150px;">ServiceName</th>
                                                         <th class="text-center" style="width: 150px;">Status</th>
                                                         <th class="text-center" style="width: 80px;">EntryDate</th>
                                                         <th class="text-center" style="width: 80px;">ExpireDate</th>
                                                         <th class="text-center" style="width: 30px;">R.Day</th>
-                                                        <th class="text-center" style="width: 150px;">Centers</th>
+                                                        <th class="text-center" style="width: 200px;">Centers</th>
                                                         <th class="text-center" style="width: 150px;">Slip/MOFA_No</th>
-                                                        <th class="text-center" style="width: 300px;">Results/Remarks</th>
+                                                        <th class="text-center" style="width: 350px;">Results/Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -426,7 +454,40 @@
             return diffInDays;
         }
         function btnControl(input){
-            return !(input.is_enabled) ? ' disabled custom-disabled ' : ''; 
+            return input.is_complete == '0' && input.is_enabled == '0' ? ' disabled custom-disabled ' : ''; 
+        }
+        function getColorFromPercentage(range, actualValue) {
+            if (range === 0) {
+                console.warn("Range cannot be zero. Returning a default white color.");
+                return "rgb(255, 255, 255)";
+            }
+            let percentage = (actualValue / range) * 100;
+            percentage = Math.max(0, Math.min(100, percentage));
+            const hue = percentage * 1.2;
+            const saturation = 100;
+            const lightness = 50;
+
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+        function remaining_days(input) {
+            const obj = {remaining_days: null, remaining_days_label: '', hasExpireDate: false, maxRemainingDays: 0};
+            if(input.expire_date!=null){
+                obj.hasExpireDate = true;
+                obj.maxRemainingDays = [1,2,3].includes(input.item_id) ? 25 : input.item_id == 4 ? 55 : 0;
+
+                if (input.is_complete == '1') {
+                    obj.remaining_days_label = '<span class="badge badge-success">Done</span>';
+                }else{
+                    let remaining_days = getDateDifferenceInDays(new Date(), input.expire_date);
+                    if(remaining_days>=0){
+                        obj.remaining_days = remaining_days;
+                        obj.remaining_days_label = remaining_days;
+                    }else{
+                        obj.remaining_days_label = '<span class="badge badge-danger">Expired</span>';
+                    }
+                }
+            }
+            return obj;
         }
 
     </script>

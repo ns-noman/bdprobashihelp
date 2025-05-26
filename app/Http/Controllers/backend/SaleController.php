@@ -192,7 +192,8 @@ class SaleController extends Controller
 
     public function serviceEdit($saleId, $serviceRecordId)
     {
-
+        $roleType = Auth::guard('admin')->user()->type;
+        $customer_id = Auth::guard('admin')->user()->agent_id;
         
         $data['title'] = 'Edit';
         $data['sale'] = Sale::find($saleId)->toArray();
@@ -201,7 +202,12 @@ class SaleController extends Controller
                                 ->select(['job_service_records.*','items.id as item_id','items.name as item_name'])
                                 ->first()->toArray();
         $data['customer_name'] = Customer::find($data['sale']['customer_id'])->name;
-        $data['statusList'] = StatusList::where('item_id',$data['jobServiceRecord']['item_id'])->orderBy('srl', 'asc')->get()->toArray();
+        $data['statusList'] = StatusList::where('item_id',$data['jobServiceRecord']['item_id']);
+        if($customer_id != null){
+            $data['statusList'] = $data['statusList']->whereNotNull('name_for_agent');
+        }
+        $data['statusList'] = $data['statusList']->orderBy('srl', 'asc')->get()->toArray();
+
         $data['centers'] = MedicalCenter::where('status',1)->orderBy('name','asc')->get()->toArray();
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.sales.service-info',compact('data'));
@@ -477,7 +483,8 @@ class SaleController extends Controller
     {
         $current_job_item = JobServiceRecords::find($job_service_record_id);
         if(in_array($status, [5,6,10,16,21,26])){
-            $current_job_item->is_enabled = 0;
+            $current_job_item->is_enabled = 1;
+            $current_job_item->is_complete = 1;
             $current_job_item->save();
             if($status != 5) {
                 $next_item_id = Item::find($current_job_item->item_id)->next_item_id;

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slip_no')->nullable();
             $table->string('mofa_no')->nullable();
             $table->tinyInteger('is_enabled')->default(0);
+            $table->tinyInteger('is_complete')->default(0);
             $table->tinyInteger('is_agent_purchased')->default(0);
             $table->integer('status_id');
             $table->timestamps();
