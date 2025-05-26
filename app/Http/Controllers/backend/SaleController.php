@@ -679,7 +679,6 @@ class SaleController extends Controller
         [
             'sales.id',
             'customers.name as customer_name',
-            'customers.phone as customer_contact',
             'admins.name as creator_name',
             'sales.customer_id',
             'sales.passenger_name',
@@ -695,17 +694,32 @@ class SaleController extends Controller
             'sales.note',
             'sales.payment_status',
             'sales.status',
-            'sales.created_by_id',
-            'sales.updated_by_id',
         ];
+
         $query = Sale::with(['serviceshorts'])->join('customers', 'customers.id', '=', 'sales.customer_id')
                             ->join('admins', 'admins.id', '=', 'sales.created_by_id');
-        if(!$request->has('order')){
-            $query = $query->orderBy('sales.status','asc')->orderBy('sales.id','desc');
-        }
+
+
         if($request->has('customer_id') && $request->customer_id != 0){
             $query = $query->where('customer_id', $request->customer_id);
         }
+
+        if ($request->remaining_days !== null) {
+            $days = (int) $request->remaining_days;
+            $query = $query->whereHas('serviceshorts', function ($sq) use ($days) {
+                $sq->where('is_complete', 0)
+                ->whereNotNull('expire_date');
+
+                if ($days >= 0) {
+                    $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) BETWEEN 0 AND ?', [$days]);
+                } else {
+                    $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) < 0');
+                }
+            });
+        }
+
+        if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.status','asc')->orderBy('sales.id','desc');
+        
         $query = $query->select($select);
         return DataTables::of($query)
                 ->filter(function ($query) use ($request) {
@@ -731,7 +745,7 @@ class SaleController extends Controller
                             }
                             $statusMap = [
                                 'pending'   => 0,
-                                'approve'   => 1,
+                                'proccessing'=> 1,
                                 'complete'  => 2,
                                 'cancelled' => 3,
                                 'refunded'  => 4,

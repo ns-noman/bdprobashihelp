@@ -139,9 +139,9 @@
             var table = $('#dataTable').DataTable({initComplete: function () {
                 const filterContainer = $('.dataTables_filter').parent();
                 let rollType = "{{ $roleType }}";
-                let colmd = rollType != 1 ? 6 : 4;
+                let colmd = rollType != 1 ? 4 : 3;
                 filterContainer.before(`
-                    <div class="col-sm-12 col-md-${colmd}"${rollType !=1 ? 'hidden' : null}>
+                    <div class="col-md-${colmd}"${rollType !=1 ? 'hidden' : null}>
                         <div class="dataTables_filter" style="display: flex; align-items: center; justify-content: center;">
                             <label style="font-weight: normal; white-space: nowrap; display: flex; align-items: center;margin-bottom: .5rem;">
                                 Agents:
@@ -150,6 +150,26 @@
                                     @foreach ($data['customers'] as $customers)
                                         <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">{{ $customers['name'] }}</option>
                                     @endforeach
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                `); 
+                filterContainer.before(`
+                    <div class="col-md-${colmd}">
+                        <div class="dataTables_filter" style="display: flex; align-items: center; justify-content: center;">
+                            <label style="font-weight: normal; white-space: nowrap; display: flex; align-items: center;margin-bottom: .5rem;">
+                                Remaining Days:
+                                <select data-column="1" class="form-control form-control-sm filter select2" id="remaining_days" name="remaining_days" style="margin-left: 10px;">
+                                    <option value="">Any</option>
+                                    <option value="0">Today Expiring</option>
+                                    <option value="-1">Expired</option>
+                                    <option value="5">0-5</option>
+                                    <option value="10">0-10</option>
+                                    <option value="20">0-20</option>
+                                    <option value="30">0-30</option>
+                                    <option value="40">0-40</option>
+                                    <option value="55">0-55</option>
                                 </select>
                             </label>
                         </div>
@@ -166,7 +186,9 @@
                 data: function(d) {
                     let rollType = "{{ $roleType }}";
                     const customer_id = $('#customer_id').val();
+                    const remaining_days = $('#remaining_days').val();
                     d.customer_id = customer_id || (rollType ==2 ? "{{ $customer_id }}" : 0);
+                    d.remaining_days = remaining_days || null;
                     d._token = $('meta[name="csrf-token"]').attr('content');
                 }
             },
