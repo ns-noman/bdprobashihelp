@@ -42,28 +42,10 @@ class Controller extends BaseController
             'accounts.account_no',
             'accounts.balance',
         ])
-        ->get()->toArray();
+        ->get()
+        ->toArray();
     }
 
-
-    public function investorTransaction($data)
-    {
-        try {
-            DB::beginTransaction();
-            $data['credit_amount'] = $data['credit_amount'] ?? null;
-            $data['debit_amount'] = $data['debit_amount'] ?? null;
-            $currentBalance = InvestorTransaction::where(['status'=>1,'investor_id'=>$data['investor_id']])->latest()->pluck('current_balance')->first() ?? 0;
-            $newcurrentBalance = $currentBalance + $data['credit_amount'] - $data['debit_amount'];
-            $data['current_balance'] = $newcurrentBalance;
-            $data['status'] = 1;
-            InvestorTransaction::create($data);
-            Investor::find($data['investor_id'])->update(['balance'=>$newcurrentBalance]);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-    }
 
     public function supplierLedgerTransction($data)
     {
@@ -122,6 +104,7 @@ class Controller extends BaseController
         }
     }
 
+    
     public function accountTransaction($data)
     {
         try {

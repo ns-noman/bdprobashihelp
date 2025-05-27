@@ -28,7 +28,7 @@ class AccountController extends Controller
             $data['title'] = 'Create';
         }
         $data['breadcrumb'] = $this->breadcrumb;
-        $data['paymentMethods'] = PaymentMethod::where('status', 1)->select('id','name')->get()->toArray();
+        $data['paymentMethods'] = PaymentMethod::where(['status'=>1, 'is_virtual'=> 0])->select('id','name')->get()->toArray();
         return view('backend.accounts.create-or-edit',compact('data'));
     }
 
@@ -50,10 +50,14 @@ class AccountController extends Controller
     
     public function list(Request $request)
     {
+        $accountTotal = Account::join('payment_methods', 'payment_methods.id', '=', 'accounts.payment_method_id')
+            ->where('payment_methods.is_virtual', 0)->sum('balance');
+
+
         $query = Account::join('payment_methods', 'payment_methods.id', '=', 'accounts.payment_method_id');
         if(!$request->has('order')) $query = $query->orderBy('id','desc');
-        $query = $query->select('accounts.*', 'payment_methods.name as payment_method');
-        return DataTables::of($query)->make(true);
+        $query = $query->where('payment_methods.is_virtual', 0)->select('accounts.*', 'payment_methods.name as payment_method','payment_methods.is_virtual');
+        return DataTables::of($query)->with(['totalAccountBalance'=>$accountTotal])->make(true);
     }
 
 }

@@ -29,7 +29,7 @@
                                                    <th>Date</th>
                                                    <th>Expense Type</th>
                                                    <th>Notes</th>
-                                                   <th>Amount (BDT)</th>
+                                                   <th>Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

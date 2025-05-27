@@ -6,7 +6,12 @@
         td:nth-child(7) {
             text-align: right !important;
         }
+
     </style>
+    @php
+        $roleType = Auth::guard('admin')->user()->type;
+        $investor_id = Auth::guard('admin')->user()->investor_id;
+    @endphp
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
         <section class="content">
@@ -33,7 +38,7 @@
                                                    <th>Reference No</th>
                                                    <th>Deposit</th>
                                                    <th>Withdrawal</th>
-                                                   <th>Balance</th>
+                                                   <th>Available Balance</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -61,7 +66,7 @@
 <script>
     $(document).ready(function(){
         loadAssetData();
-        $(document).on('change', '#account_id', function () {
+        $(document).on('change', '#investor_id', function () {
         if (!$.fn.DataTable.isDataTable('#dataTable')) {
             loadAssetData();
         } else {
@@ -72,25 +77,25 @@
     function loadAssetData() {
         var table = $('#dataTable').DataTable({initComplete: function () {
             const filterContainer = $('.dataTables_filter').parent();
-            const colmd = 3;
-            $('#dataTable_length').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
-            $('#dataTable_filter').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
+            let rollType = "{{ $roleType }}";
+            let colmd = rollType !=1 ? 4 : 3;
             filterContainer.before(`
-                <div class="col-sm-12 col-md-${colmd}">
+                <div class="col-sm-12 col-md-${colmd}"${rollType !=1 ? 'hidden' : null}>
                     <div class="dataTables_filter" style="display: flex; align-items: center; justify-content: center;">
                         <label style="font-weight: normal; white-space: nowrap; display: flex; align-items: center;margin-bottom: .5rem;">
-                            Accounts:
-                            <select data-column="1" class="form-control form-control-sm filter" id="account_id" name="account_id" style="margin-left: 10px;">
-                                @foreach ($data['paymentMethods'] as $paymentMethod)
-                                    <option account-bal="{{ $paymentMethod['balance'] }}" 
-                                        @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id'])
-                                        value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] }} &#2547;)</option>
+                            Investor:
+                            <select data-column="1" class="form-control form-control-sm filter select2" id="investor_id" name="investor_id" style="margin-left: 10px;">
+                                    @foreach ($data['investors'] as $investors)
+                                    <option @selected(Auth::guard('admin')->user()->investor_id == $investors['id']) value="{{ $investors['id'] }}">{{ $investors['name'] }}</option>
                                 @endforeach
                             </select>
                         </label>
                     </div>
                 </div>
             `);
+            $('#dataTable_length').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
+            $('#dataTable_filter').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
+
             filterContainer.before(`
                 <div class="col-sm-12 col-md-${colmd}">
                     <div id="dataTable_filter" class="dataTables_filter" style="text-align: center;">
@@ -104,33 +109,31 @@
         processing: false,
         serverSide: true,
         ajax: {
-            url: '{{ route("reports.account-ledger") }}',
+            url: '{{ route("reports.investor-ledger") }}',
             type: 'post',
             data: function(d) {
-                const account_id = $('#account_id').val();
+                const investor_id = $('#investor_id').val();
                 const date = $('#date').val();
                 d.date = date || "{{ date('Y-m') }}";
-                d.account_id = account_id || 1;
+                d.investor_id = investor_id || "{{ $investor_id }}";
                 d._token = $('meta[name="csrf-token"]').attr('content');
             },
             dataSrc: function(json) {
                 if (json.data.length) {
-                    let current_balance = parseFloat(json.data[0].current_balance || 0);
-                    let debit_amount = parseFloat(json.data[0].debit_amount || 0);
-                    let credit_amount = parseFloat(json.data[0].credit_amount || 0);
-                    let brought_forword = current_balance + debit_amount - credit_amount;
+                    let brought_forword = parseFloat(json.data[0].current_balance || 0) + parseFloat(json.data[0].debit_amount || 0) - parseFloat(json.data[0].credit_amount || 0);
                     const bfRow = {
                         transaction_date: '',
-                        description: 'B/F',
+                        particular: 'B/F',
                         reference_number: '',
                         credit_amount: '',
                         debit_amount: '',
                         current_balance: brought_forword,
                     };
                     json.data.unshift(bfRow);
+
                 }
-                let total_deposit = parseFloat(json.accountLedgerSummery.total_deposit || 0);
-                let total_withdrawal = parseFloat(json.accountLedgerSummery.total_withdrawal || 0);
+                let total_deposit = parseFloat(json.investorLedgerSummery.total_deposit || 0);
+                let total_withdrawal = parseFloat(json.investorLedgerSummery.total_withdrawal || 0);
 
                 $('#total_deposit').html(formatNumber(total_deposit));
                 $('#total_withdrawal').html(formatNumber(total_withdrawal));
@@ -140,12 +143,12 @@
         },
         columns: [
                     { data: null, orderable: false, searchable: false },
-                    { data: 'transaction_date', name: 'account_ledgers.transaction_date', orderable: false},
-                    { data: 'description', name: 'account_ledgers.description', orderable: false},
-                    { data: 'reference_number', name: 'account_ledgers.reference_number', orderable: false},
+                    { data: 'transaction_date', name: 'investor_ledgers.transaction_date', orderable: false},
+                    { data: 'particular', name: 'investor_ledgers.particular', orderable: false},
+                    { data: 'reference_number', name: 'investor_ledgers.reference_number', orderable: false},
                     {
                         data: null, 
-                        name: 'account_ledgers.credit_amount', 
+                        name: 'investor_ledgers.credit_amount', 
                         orderable: false, 
                         searchable: false, 
                         render: function(data, type, row, meta) {
@@ -154,7 +157,7 @@
                     },
                     {
                         data: null, 
-                        name: 'account_ledgers.debit_amount', 
+                        name: 'investor_ledgers.debit_amount', 
                         orderable: false, 
                         searchable: false, 
                         render: function(data, type, row, meta) {
@@ -163,7 +166,7 @@
                     },
                     {
                         data: null, 
-                        name: 'account_ledgers.current_balance', 
+                        name: 'investor_ledgers.current_balance', 
                         orderable: false, 
                         searchable: false, 
                         render: function(data, type, row, meta) {
@@ -185,8 +188,8 @@
     }
     function print() {
         let date = $('#date').val() || '';
-        let account_id = $('#account_id option:selected').val() || '';
-        window.open(`?&print=true&date=${date}&account_id=${account_id}`, '_blank');
+        let investor_id = $('#investor_id option:selected').val() || '';
+        window.open(`?&print=true&date=${date}&investor_id=${investor_id}`, '_blank');
     }
 </script>
 @endsection

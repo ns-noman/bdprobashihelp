@@ -7,23 +7,11 @@ TRUNCATE `admins`;
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1, null, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-31 01:03:44', '2024-12-31 23:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7');
 
-TRUNCATE `agents`;
-UPDATE `agents` SET `balance`=0.00 WHERE 1;
-INSERT INTO `agents` (`id`, `name`, `email`, `contact`, `address`, `dob`, `nid`, `balance`, `is_self`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES (1, 'Investor', 'investor@gmail.com', '62', '', '1982-08-26', 98, 0.00, 0, 1, 1, 1, '2025-04-16 10:20:15', '2025-04-23 09:48:51');
+
 
 UPDATE `accounts` SET `balance`=0.00 WHERE 1;
 TRUNCATE `account_ledgers`;
 TRUNCATE `fund_transfer_histories`;
-
-TRUNCATE `bike_purchases`;
-TRUNCATE `bike_sales`;
-TRUNCATE `bike_service_records`;
-TRUNCATE `bike_service_record_details`;
-TRUNCATE `bike_profits`;
-TRUNCATE `bike_profit_share_records`;
-TRUNCATE `sellers`;
-TRUNCATE `buyers`;
-TRUNCATE `bikes`;
 
 
 -- Expenses
@@ -104,6 +92,7 @@ VALUES
 (5,4,'Fit Card Ready For Delivery','#17a2b8',1,1),
 (5,5,'Delivery Done','#17a2b8',2,1);
 
+TRUNCATE `medical_centers`;
 INSERT INTO `medical_centers`(`name`, `code`, `status`)
 VALUES
 ('Center-1','c-1',1),
@@ -111,3 +100,8 @@ VALUES
 ('Center-3','c-3',1),
 ('Center-4','c-4',1),
 ('Center-5','c-5',1);
+('Center-6','c-6',1);
+('Center-7','c-7',1);
+('Center-8','c-8',1);
+('Center-9','c-9',1);
+('Center-10','c-10',1);

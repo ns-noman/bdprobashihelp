@@ -1,15 +1,5 @@
 @extends('layouts.admin.master')
 @section('content')
-<style>
-    td:nth-child(4),
-    td:nth-child(5) ,
-    td:nth-child(6) {
-        text-align: right !important;
-    }
-    th{
-        text-align: center;
-    }
-</style>
   <div class="content-wrapper">
       @include('layouts.admin.content-header')
       <section class="content">
@@ -27,87 +17,75 @@
                               </div>
                           </div>
                           <div class="row invoice-info" style="margin-top: 100px;">
-                              <div class="col-sm-6 invoice-col">
-                                  <strong>Report Name: </strong>Item Stock History <br>
-                                  <strong>Item Name: </strong>{{ count($data['lists']) > 0 ? $data['lists'][0]['item_name'] : null }}<br>
+                              <div class="col-sm-4 invoice-col">
+                                  <strong>Report Name: </strong>Investment Report<br>
+                                  <strong>Investor Info: </strong>{{ $data['investor_info']['name'] }}<br>
                                   <strong>Period: </strong>{{ \Carbon\Carbon::parse($data['date'])->format('F Y') }}
-
                               </div>
-                              <div class="col-sm-6 invoice-col">
+                              <div class="col-sm-4 invoice-col">
                               </div>
                               <div class="col-sm-4 invoice-col">
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-12 table-responsive">
-                                  <table class="table table-sm table-striped table-bordered table-centre">
-                                        <thead>
+                                  <table class="table table-striped">
+                                      <thead>
                                             <tr>
                                                 <th>SN</th>
                                                 <th>Date</th>
                                                 <th>Particular</th>
-                                                <th>InQty</th>
-                                                <th>OutQty</th>
+                                                <th>Reference No</th>
+                                                <th>Deposit</th>
+                                                <th>Withdrawal</th>
                                                 <th>Balance</th>
-                                            </tr>
+                                            </tr>  
                                         </thead>
                                         <tbody>
                                             @php
-                                                $inQty = 0;
-                                                $outQty = 0;
-                                                $balance = 0;
-                                                
                                                 if (count($data['lists'])) {
-                                                    $brought_forword = $data['lists'][0]['current_stock'] - $data['lists'][0]['stock_in_qty'] + $data['lists'][0]['stock_out_qty'];
-                                                    $bfRow = [
-                                                        'date'=> '',
-                                                        'particular'=> 'B/F',
-                                                        'stock_in_qty'=> $brought_forword,
-                                                        'stock_out_qty'=> null,
-                                                        'current_stock'=> $brought_forword,
-                                                        'unit_name'=> $data['lists'][0]['unit_name'],
+                                                    $brought_forword = $data['lists'][0]['current_balance'] + $data['lists'][0]['debit_amount'] - $data['lists'][0]['credit_amount'];
+                                                    $bfRow =
+                                                    [ 
+                                                        'transaction_date'=> '',
+                                                        'description'=> 'B/F',
+                                                        'reference_number'=> '',
+                                                        'credit_amount'=> '',
+                                                        'debit_amount'=> '',
+                                                        'current_balance'=> $brought_forword,
                                                     ];
                                                     array_unshift($data['lists'], $bfRow);
                                                 }
                                             @endphp
-
                                             @foreach ($data['lists'] as $list)
-                                                @php
-                                                    $inQty += $list['stock_out_qty'] ?? 0;
-                                                    $outQty += $list['stock_out_qty'] ?? 0;
-                                                    $balance = $inQty - $outQty;
-                                                @endphp
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $list['date'] }}</td>
-                                                    <td>{{ $list['particular'] }}</td>
+                                                    <td>{{ $list['transaction_date'] }}</td>
+                                                    <td>{{ $list['description'] }}</td>
+                                                    <td>{{ $list['reference_number'] }}</td>
                                                     <td>
-                                                        @if($list['stock_in_qty'])
-                                                            +{{ $list['stock_in_qty'] }} {{ $list['unit_name'] }}
+                                                        @if($list['credit_amount'])
+                                                            {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['credit_amount'], 2) }}
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($list['stock_out_qty'])
-                                                            -{{ $list['stock_out_qty'] }} {{ $list['unit_name'] }}
+                                                        @if($list['debit_amount'])
+                                                            {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['debit_amount'], 2) }}
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ $list['current_stock'] }} {{ $list['unit_name'] }}
+                                                        {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['current_balance'], 2) }}
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                            @if(count($data['lists']))
-                                                <tr>
-                                                    <td colspan="3"><b>Total:</b></td>
-                                                    <td @style('text-align: right')><b id="totalInQty">+{{ $inQty }} {{ $list['unit_name'] }}</b></td>
-                                                    <td @style('text-align: right')><b id="totalOutQty">-{{ $outQty }} {{ $list['unit_name'] }}</b></td>
-                                                    <td @style('text-align: right')><b id="balanceQty">{{ $balance }} {{ $list['unit_name'] }}</b></td>
-                                                </tr>
-                                            @endif
                                         </tbody>
-                                        <tfoot>
-                                        </tfoot>
                                   </table>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-6">
+                              </div>
+                              <div class="col-6">
                               </div>
                           </div>
                           <div class="row no-print">

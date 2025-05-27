@@ -19,6 +19,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="row">
+                                                <input type="hidden" name="is_saleable" value="1">
                                                 <div class="form-group col-sm-12 col-md col-lg" hidden>
                                                     <label>Item Type*</label>
                                                     <select name="item_type" id="item_type" class="form-control" required>

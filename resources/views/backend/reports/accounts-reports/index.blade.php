@@ -74,13 +74,7 @@
                 d._token = $('meta[name="csrf-token"]').attr('content');
             },
             dataSrc: function(json) {
-                let allAccountsBalance = 0;
-                if (json.data.length) {
-                    for (let index = 0; index < json.data.length; index++) {
-                        allAccountsBalance += parseFloat(json.data[index].balance);
-                    }
-                }
-                document.getElementById('allAccountsBalance').innerHTML = formatNumber(allAccountsBalance);
+                document.getElementById('allAccountsBalance').innerHTML = formatNumber(json.totalAllAccountBalance || 0);
                 return json.data;
             }
         },
@@ -95,7 +89,7 @@
                         orderable: false, 
                         searchable: false, 
                         render: function(data, type, row, meta) {
-                            return formatNumber(row.balance);
+                            return formatNumber(row.balance || 0);
                         }
                     },
                 ],

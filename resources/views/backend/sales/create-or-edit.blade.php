@@ -38,7 +38,8 @@
                                     <div class="row">
                                         <div class="form-group col-sm-2 col-md-2 col-lg-2">
                                             <label>Agents *</label>
-                                            <select name="customer_id" id="customer_id" class="form-control form-control-sm select2">
+                                            <select name="customer_id" id="customer_id" class="form-control form-control-sm select2" required>
+                                                <option value="">Select Agent</option>
                                                 @foreach ($data['customers'] as $customer)
                                                     <option {{ isset($data['item']) ? ($customer->id == $data['item']->customer_id) ? 'selected' : null : null }} value="{{ $customer->id }}">
                                                         {{ $customer->name }}
@@ -139,7 +140,7 @@
                                             <select class="form-control form-control-sm" name="account_id" id="account_id">
                                                 <option selected value=''>Select Payment Methods</option>
                                                 @foreach ($data['paymentMethods'] as $paymentMethod)
-                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
+                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

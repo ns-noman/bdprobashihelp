@@ -18,7 +18,8 @@
                           </div>
                           <div class="row invoice-info" style="margin-top: 100px;">
                               <div class="col-sm-4 invoice-col">
-                                  <strong>Report Name: </strong>Monthly Bike Sales Report <br>
+                                  <strong>Report Name: </strong>Investor Ledger Report<br>
+                                  <strong>Investor Info: </strong>{{ $data['investor_info']['name'] }}<br>
                                   <strong>Period: </strong>{{ \Carbon\Carbon::parse($data['date'])->format('F Y') }}
                               </div>
                               <div class="col-sm-4 invoice-col">
@@ -30,26 +31,51 @@
                               <div class="col-12 table-responsive">
                                   <table class="table table-striped">
                                       <thead>
-                                        <tr>
-                                            <th>SN</th>
-                                            <th>Bike Model</th>
-                                            <th>Purchase Price (BDT)</th>
-                                            <th>Repair Cost (BDT)</th>
-                                            <th>Total Cost (BDT)</th>
-                                            <th>Selling Price(BDT)</th>
-                                            <th>Status</th>
-                                        </tr>
+                                            <tr>
+                                                <th>SN</th>
+                                                <th>Date</th>
+                                                <th>Particular</th>
+                                                <th>Reference No</th>
+                                                <th>Deposit</th>
+                                                <th>Withdrawal</th>
+                                                <th>Available Balance</th>
+                                            </tr>  
                                         </thead>
                                         <tbody>
+                                            @php
+                                                if (count($data['lists'])) {
+                                                    $brought_forword = $data['lists'][0]['current_balance'] + $data['lists'][0]['debit_amount'] - $data['lists'][0]['credit_amount'];
+                                                    $bfRow =
+                                                    [ 
+                                                        'transaction_date'=> '',
+                                                        'particular'=> 'B/F',
+                                                        'reference_number'=> '',
+                                                        'credit_amount'=> '',
+                                                        'debit_amount'=> '',
+                                                        'current_balance'=> $brought_forword,
+                                                    ];
+                                                    array_unshift($data['lists'], $bfRow);
+                                                }
+                                            @endphp
                                             @foreach ($data['lists'] as $list)
-                                                <tr>
+                                                <tr style="text-align: center">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $list['model_name'] }}</td>
-                                                    <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['purchase_price'], 2) }}</td>
-                                                    <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['servicing_cost'], 2) }}</td>
-                                                    <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['total_cost'], 2) }}</td>
-                                                    <td>{{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['sale_price'], 2) }}</td>
-                                                    <td>{{ $list['selling_status'] == '0' ? 'Available' : 'Sold' }}</td>
+                                                    <td>{{ $list['transaction_date'] }}</td>
+                                                    <td>{{ $list['particular'] }}</td>
+                                                    <td>{{ $list['reference_number'] }}</td>
+                                                    <td>
+                                                        @if($list['credit_amount'])
+                                                            {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['credit_amount'], 2) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($list['debit_amount'])
+                                                            {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['debit_amount'], 2) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        {{ $data['basicInfo']['currency_symbol'] }} {{ number_format($list['current_balance'], 2) }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -58,23 +84,6 @@
                           </div>
                           <div class="row">
                               <div class="col-6">
-                                <h4>Summary: </h4>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tr>
-                                            <th style="width:50%">Total Bikes in Inventory:</th>
-                                            <td>{{ $data['totalBikes'] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Sold Bikes in: </th>
-                                            <td>{{ $data['soldBikesInDate'] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Unsold Bikes: </th>
-                                            <td>{{ $data['unsoldBikes'] }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
                               </div>
                               <div class="col-6">
                               </div>

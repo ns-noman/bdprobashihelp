@@ -46,7 +46,7 @@ class PaymentMethodController extends Controller
  
     public function list(Request $request)
     {
-        $query = PaymentMethod::query();
+        $query = PaymentMethod::where('is_virtual', 0);
         if(!$request->has('order')) $query = $query->orderBy('id','desc');
         return DataTables::of($query)->make(true);
     }

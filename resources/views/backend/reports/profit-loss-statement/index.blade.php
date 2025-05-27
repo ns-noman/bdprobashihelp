@@ -34,7 +34,7 @@
                                                     <thead>
                                                         <tr>
                                                            <th>Description</th>
-                                                           <th>Amount (BDT)</th>
+                                                           <th>Amount</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -42,16 +42,8 @@
                                                             <th colspan="2" style="text-align: center;"><h5><b>Income</b></h5></th>
                                                         </tr>
                                                         <tr>
-                                                            <th>Bike Sale Profit</th>
-                                                            <td id="bike_sale_profit"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Regular Sale Profit</th>
+                                                            <th>Service Sale Profit</th>
                                                             <td id="regular_sale"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Service Sales</th>
-                                                            <td id="service_sales"></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Total Profit:</th>
@@ -100,9 +92,7 @@
                 dataType: 'JSON',
                 success: function(res){
 
-                    $('#bike_sale_profit').html(formatNumber(res.bike_sales || 0));
                     $('#regular_sale').html(formatNumber(res.regular_sales || 0));
-                    $('#service_sales').html(formatNumber(res.service_sales || 0));
                     $('#total_sale_revenew').html(formatNumber(res.total_incomes || 0));
                     let tr = ``;
                     res.expenses.forEach(item => {

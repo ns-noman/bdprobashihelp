@@ -61,8 +61,9 @@ class SaleController extends Controller
 
         $items = Item::where('items.status', 1)
                 ->whereNotNull('items.item_type')
-                ->orderBy('items.item_type', 'desc')
+                ->where('is_saleable', 1)
                 ->orderBy('items.name', 'asc')
+                ->orderBy('items.item_type', 'desc')
                 ->select('items.id', 'items.name', 'items.sale_price as price', 'items.item_type')
                 ->get()
                 ->toArray();

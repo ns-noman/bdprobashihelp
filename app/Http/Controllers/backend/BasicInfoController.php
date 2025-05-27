@@ -10,7 +10,7 @@ use Auth;
 class BasicInfoController extends Controller
 {  
     protected $breadcrumb;
-    public function __construct(){$this->breadcrumb = ['title'=>'Basic Info'];}
+    public function __construct(){$this->breadcrumb = ['title'=>'Settings'];}
     public function index()
     {
         $data['basicInfo'] = BasicInfo::first();
@@ -50,7 +50,7 @@ class BasicInfoController extends Controller
         }else unset($data['favicon']);
 
         $basicInfo->update($data);
-        return redirect()->route('basic-infos.index')->with('alert',['messageType'=>'warning','message'=>'Data Updated Successfully!']);
+        return redirect()->route('basic-infos.index')->with('alert',['messageType'=>'success','message'=>'Data Updated Successfully!']);
 
     }
 

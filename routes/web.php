@@ -85,8 +85,6 @@ Route::namespace('App\Http\Controllers\backend\expense')->group(function(){
             Route::delete('delete/{id}','destroy')->name('expenses.destroy');
             Route::get('list','list')->name('expenses.list');
             Route::get('approve/{id}','approve')->name('expenses.approve');
-
-            // Route::match(['get','post'],'report','report')->name('expenses.report');
         });
         Route::prefix('reports')->controller(ExpenseController::class)->group(function(){
             Route::match(['get','post'],'','reports')->name('expenses.reports');
@@ -145,14 +143,14 @@ Route::prefix('backend')->group(function () {
         Route::middleware('admin')->group(function (){
 
             Route::prefix('reports')->controller(ReportController::class)->group(function(){
-                Route::match(['get', 'post'],'monthly-bike-sales','monthlyBikeSales')->name('reports.monthly-bike-sales');
-                Route::match(['get', 'post'],'bike-inventory','bikeInventory')->name('reports.bike-inventory');
                 Route::match(['get', 'post'],'monthly-expenses','monthlyExpense')->name('reports.monthly-expenses');
                 Route::match(['get', 'post'],'profit-loss-statement','profitLossStatement')->name('reports.profit-loss-statement');
                 Route::match(['get', 'post'],'account-ledger','accountLedger')->name('reports.account-ledger');
                 Route::match(['get', 'post'],'accounts-reports','accountReport')->name('reports.accounts-reports');
                 Route::match(['get', 'post'],'stock-reports','stockReport')->name('reports.stock-reports');
                 Route::match(['get', 'post'],'stock-histories','stockHistory')->name('reports.stock-histories');
+                Route::match(['get', 'post'],'investment','investment')->name('reports.investment');
+                Route::match(['get', 'post'],'investor-ledger-report','investorLedgerReport')->name('reports.investor-ledger');
             });
 
 
@@ -224,16 +222,6 @@ Route::prefix('backend')->group(function () {
                 Route::get('approve/{id}','approve')->name('sales.approve');
             });
 
-            Route::prefix('my-jobs')->controller(MyJobContorller::class)->group(function(){
-                Route::get('','index')->name('my-jobs.index');
-                Route::put('update/{id}','update')->name('my-jobs.update');
-                Route::get('invoice/{id}','inovice')->name('my-jobs.invoice');
-                Route::get('invoice/{id}/{print}','inovice')->name('my-jobs.invoice.print');
-                Route::get('list','list')->name('my-jobs.list');
-                Route::get('service-edit/{saleId?}/{serviceRecordId?}','serviceEdit')->name('my-jobs.service-edit');
-                Route::put('service-update/{serviceRecordId}','serviceUpdate')->name('my-jobs.service-update');
-            });
-
             Route::prefix('customers')->controller(CustomerController::class)->group(function(){
                 Route::get('','index')->name('customers.index');
                 Route::post('store','store')->name('customers.store');
@@ -244,118 +232,10 @@ Route::prefix('backend')->group(function () {
             });
 
 
-            Route::prefix('customer-service-records')->controller(BikeServiceRecordController::class)->group(function(){
-                Route::get('','index')->name('customer-service-records.index');
-                Route::get('create','createOrEdit')->name('customer-service-records.create');
-                Route::get('edit/{id?}','createOrEdit')->name('customer-service-records.edit');
-                Route::post('store','store')->name('customer-service-records.store');
-                Route::put('update/{id}','update')->name('customer-service-records.update');
-                Route::delete('delete/{id}','destroy')->name('customer-service-records.destroy');
-                Route::get('list','list')->name('customer-service-records.list');
-                Route::get('approve/{id}','approve')->name('customer-service-records.approve');
-            });
-            Route::prefix('bike-service-records')->controller(BikeServiceRecordController::class)->group(function(){
-                Route::get('','index')->name('bike-service-records.index');
-                Route::get('create','createOrEdit')->name('bike-service-records.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-service-records.edit');
-                Route::get('view/{id?}','view')->name('bike-service-records.view');
-                Route::get('view/{id}/{print}','view')->name('bike-service-records.print');
-                Route::post('store','store')->name('bike-service-records.store');
-                Route::put('update/{id}','update')->name('bike-service-records.update');
-                Route::delete('delete/{id}','destroy')->name('bike-service-records.destroy');
-                Route::get('list','list')->name('bike-service-records.list');
-                Route::get('approve/{id}','approve')->name('bike-service-records.approve');
-            });
-
-            
-            Route::prefix('bike-services')->controller(BikeServiceController::class)->group(function(){
-                Route::get('','index')->name('bike-services.index');
-                Route::get('create','createOrEdit')->name('bike-services.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-services.edit');
-                Route::post('store','store')->name('bike-services.store');
-                Route::put('update/{id}','update')->name('bike-services.update');
-                Route::delete('delete/{id}','destroy')->name('bike-services.destroy');
-                Route::get('list','list')->name('bike-services.list');
-            });
 
 
 
-            Route::prefix('bike-service-categories')->controller(BikeServiceCategoryController::class)->group(function(){
-                Route::get('','index')->name('bike-service-categories.index');
-                Route::get('create','createOrEdit')->name('bike-service-categories.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-service-categories.edit');
-                Route::post('store','store')->name('bike-service-categories.store');
-                Route::put('update/{id}','update')->name('bike-service-categories.update');
-                Route::delete('delete/{id}','destroy')->name('bike-service-categories.destroy');
-                Route::get('list','list')->name('bike-service-categories.list');
-            });
 
-            Route::prefix('bike-sales')->controller(BikeSaleController::class)->group(function(){
-                Route::get('','index')->name('bike-sales.index');
-                Route::get('create','createOrEdit')->name('bike-sales.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-sales.edit');
-                Route::get('invoice/{id?}','invoice')->name('bike-service-records.invoice');
-                Route::get('invoice/{id}/{print}','invoice')->name('bike-service-records.invoice.print');
-                Route::post('store','store')->name('bike-sales.store');
-                Route::put('update/{id}','update')->name('bike-sales.update');
-                Route::delete('delete/{id}','destroy')->name('bike-sales.destroy');                        
-                Route::get('list','list')->name('bike-sales.list');
-                Route::get('approve/{id}','approve')->name('bike-sales.approve'); 
-                Route::get('name-transfers/{id}/{date}','nameTransfer')->name('bike-sales.name-transfers'); 
-                Route::get('models/{brand_id}','models')->name('bike-sales.models');
-                Route::get('buyer-search','buyerSearch')->name('bike-sales.buyer-search');
-                Route::get('broker-search','brokerSearch')->name('bike-sales.broker-search');
-                Route::get('bike-search','bikeSearch')->name('bike-sales.bike-search');
-            });
-
-
-            Route::prefix('bike-purchases')->controller(BikePurchaseController::class)->group(function(){
-                Route::get('','index')->name('bike-purchases.index');
-                Route::get('create','createOrEdit')->name('bike-purchases.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-purchases.edit');
-                Route::get('repurchase/{id?}/{repurchase_id?}','createOrEdit')->name('bike-purchases.repurchase');
-                Route::get('invoice/{id?}','invoice')->name('bike-purchases.invoice');
-                Route::get('invoice/{id}/{print}','invoice')->name('bike-purchases.invoice.print');
-                Route::post('store','store')->name('bike-purchases.store');
-                Route::put('update/{id}','update')->name('bike-purchases.update');
-                Route::delete('delete/{id}','destroy')->name('bike-purchases.destroy');                        
-                Route::get('list','list')->name('bike-purchases.list');
-                Route::get('approve/{id}','approve')->name('bike-purchases.approve'); 
-                Route::get('models/{brand_id}','models')->name('bike-purchases.models');
-                Route::get('seller-search','sellerSearch')->name('bike-purchases.seller-search');
-                Route::get('broker-search','brokerSearch')->name('bike-purchases.broker-search');
-                Route::get('bike-search','bikeSearch')->name('bike-purchases.bike-search');
-            });
-
-            Route::prefix('colors')->controller(ColorController::class)->group(function(){
-                Route::get('','index')->name('colors.index');
-                Route::get('create','createOrEdit')->name('colors.create');
-                Route::get('edit/{id?}','createOrEdit')->name('colors.edit');
-                Route::post('store','store')->name('colors.store');
-                Route::put('update/{id}','update')->name('colors.update');
-                Route::delete('delete/{id}','destroy')->name('colors.destroy');
-                Route::get('list','list')->name('colors.list');
-            });
-
-
-            Route::prefix('bike-models')->controller(BikeModelController::class)->group(function(){
-                Route::get('','index')->name('bike-models.index');
-                Route::get('create','createOrEdit')->name('bike-models.create');
-                Route::get('edit/{id?}','createOrEdit')->name('bike-models.edit');
-                Route::post('store','store')->name('bike-models.store');
-                Route::put('update/{id}','update')->name('bike-models.update');
-                Route::delete('delete/{id}','destroy')->name('bike-models.destroy');
-                Route::get('list','list')->name('bike-models.list');
-            });
-            Route::prefix('brands')->controller(BrandController::class)->group(function(){
-                Route::get('','index')->name('brands.index');
-                Route::get('create','createOrEdit')->name('brands.create');
-                Route::get('edit/{id?}','createOrEdit')->name('brands.edit');
-                Route::post('store','store')->name('brands.store');
-                Route::put('update/{id}','update')->name('brands.update');
-                Route::delete('delete/{id}','destroy')->name('brands.destroy');
-                Route::get('list','list')->name('brands.list');
-            });
 
             Route::prefix('accounts')->controller(AccountController::class)->group(function(){
                 Route::get('','index')->name('accounts.index');
@@ -387,44 +267,6 @@ Route::prefix('backend')->group(function () {
                 Route::delete('delete/{id}','destroy')->name('payment-methods.destroy');
                 Route::get('list','list')->name('payment-methods.list');
             });
-
-            Route::prefix('investor-transactions')->controller(InvestorTransactionController::class)->group(function(){
-                Route::get('','index')->name('investor-transactions.index');
-                Route::get('create','createOrEdit')->name('investor-transactions.create');
-                Route::get('edit/{id?}','createOrEdit')->name('investor-transactions.edit');
-                Route::post('store','store')->name('investor-transactions.store');
-                Route::put('update/{id}','update')->name('investor-transactions.update');
-                Route::delete('delete/{id}','destroy')->name('investor-transactions.destroy');
-                Route::get('list','list')->name('investor-transactions.list');
-                Route::get('approve/{id}','approve')->name('investor-transactions.approve');
-            });
-
-            Route::prefix('bike-profits')->controller(BikeProfitController::class)->group(function(){
-                Route::get('','index')->name('bike-profits.index');
-                Route::get('share-records/{id}','shareRecords')->name('bike-profits.share-records');
-                Route::get('share-records/{bp_id}/create','createOrEdit')->name('bike-profits.share-records.create');
-                Route::get('share-records/{bp_id}/edit/{bpsr_id}','createOrEdit')->name('bike-profits.share-records.edit');
-                Route::get('share-records/approve/{bf_id}/{bfsr_id}','approve')->name('bike-profits.share-records.approve');
-                Route::get('share-records-list','shareRecordsList')->name('bike-profits.share-records-list');
-
-                Route::post('store','store')->name('bike-profits.store');
-                Route::put('update/{id}','update')->name('bike-profits.update');
-                Route::delete('delete/{id}','destroy')->name('bike-profits.share-records.destroy');
-
-                Route::get('list','list')->name('bike-profits.list');
-                Route::get('change-status/{id}','changeStatus')->name('bike-profits.change-status');
-            });
-            
-            Route::prefix('agents')->controller(AgentController::class)->group(function(){
-                Route::get('','index')->name('agents.index');
-                Route::get('create','createOrEdit')->name('agents.create');
-                Route::get('edit/{id?}','createOrEdit')->name('agents.edit');
-                Route::post('store','store')->name('agents.store');
-                Route::put('update/{id}','update')->name('agents.update');
-                Route::delete('delete/{id}','destroy')->name('agents.destroy');
-                Route::get('list','list')->name('agents.list');
-            });
-
 
 
             Route::prefix('menus')->controller(MenuController::class)->group(function(){

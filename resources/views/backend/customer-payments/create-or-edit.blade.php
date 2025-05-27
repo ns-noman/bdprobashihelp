@@ -19,7 +19,7 @@
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Payment Date *</label>
                                             <input value="{{ date('Y-m-d') }}" type="date" class="form-control"
-                                                name="date" id="date" placeholder="0.00">
+                                                name="date" id="date" placeholder="0.00" required>
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Agents *</label>
@@ -32,10 +32,10 @@
                                         </div>
                                         <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Payment Methods *</label>
-                                            <select class="form-control" name="account_id" id="account_id">
+                                            <select class="form-control" name="account_id" id="account_id" required>
                                                 <option selected value=''>Select Payment Methods</option>
                                                 @foreach ($data['paymentMethods'] as $paymentMethod)
-                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] . ' (Bal: ' . $paymentMethod['balance'] }} &#2547;)</option>
+                                                    <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no']  }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

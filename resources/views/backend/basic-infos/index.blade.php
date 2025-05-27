@@ -17,11 +17,11 @@
                                                     <th>Title</th>
                                                     <td>{{ $data['basicInfo']->title }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Meta Keywords</th>
                                                     <td>{{ $data['basicInfo']->meta_keywords }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Meta Description</th>
                                                     <td>{{ $data['basicInfo']->meta_description }}</td>
                                                 </tr>
@@ -29,11 +29,11 @@
                                                     <th>Phone</th>
                                                     <td>{{ $data['basicInfo']->phone }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Telephone</th>
                                                     <td>{{ $data['basicInfo']->telephone }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Fax</th>
                                                     <td>{{ $data['basicInfo']->fax }}</td>
                                                 </tr>
@@ -41,7 +41,7 @@
                                                     <th>Email</th>
                                                     <td>{{ $data['basicInfo']->email }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Location</th>
                                                     <td>{{ $data['basicInfo']->location }}</td>
                                                 </tr>
@@ -65,52 +65,56 @@
                                                         @endif
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Web Link</th>
                                                     <td>{{ $data['basicInfo']->web_link }}</td>
-                                                </tr> <tr>
+                                                </tr>
+                                                <tr hidden>
                                                     <th>Facebook Link</th>
                                                     <td>{{ $data['basicInfo']->facebook_link }}</td>
-                                                </tr> <tr>
+                                                </tr>
+                                                <tr hidden>
                                                     <th>Twitter Link</th>
                                                     <td>{{ $data['basicInfo']->twitter_link }}</td>
-                                                </tr> <tr>
+                                                </tr>
+                                                <tr hidden>
                                                     <th>Linkedin Link</th>
                                                     <td>{{ $data['basicInfo']->linkedin_link }}</td>
-                                                </tr> <tr>
+                                                </tr>
+                                                <tr hidden>
                                                     <th>Youtube Link</th>
                                                     <td>{{ $data['basicInfo']->youtube_link }}</td>
                                                 </tr>
 
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Assets value</th>
                                                     <td>{{ $data['basicInfo']->assets_value }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Total employees</th>
                                                     <td>{{ $data['basicInfo']->total_employees }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Total companies</th>
                                                     <td>{{ $data['basicInfo']->total_companies }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Start year</th>
                                                     <td>{{ $data['basicInfo']->start_year }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Map embed</th>
                                                     <td>{{ $data['basicInfo']->map_embed }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Video One</th>
                                                     <td>{{ $data['basicInfo']->video_embed_1 }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Video Two</th>
                                                     <td>{{ $data['basicInfo']->video_embed_2 }}</td>
                                                 </tr>
-                                                <tr>
+                                                <tr hidden>
                                                     <th>Video Three</th>
                                                     <td>{{ $data['basicInfo']->video_embed_3 }}</td>
                                                 </tr>

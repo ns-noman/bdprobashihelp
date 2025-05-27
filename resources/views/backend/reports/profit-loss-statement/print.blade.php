@@ -38,7 +38,7 @@
                                     <thead>
                                         <tr>
                                            <th>Description</th>
-                                           <th>Amount (BDT)</th>
+                                           <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,16 +46,8 @@
                                             <th colspan="2" style="text-align: center;"><h5><b>Income</b></h5></th>
                                         </tr>
                                         <tr>
-                                            <th>Bike Sale Profit</th>
-                                            <td id="bike_sale_profit">{{ $data['basicInfo']['currency_symbol'] }} {{ $data['lists']['bike_sales'] ?? 0 }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Regular Sales</th>
+                                            <th>Service Sale Profit</th>
                                             <td id="regular_sale">{{ $data['basicInfo']['currency_symbol'] }} {{ number_format(($data['lists']['regular_sales'] ?? 0), 2) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Service Sales</th>
-                                            <td id="service_sales">{{ $data['basicInfo']['currency_symbol'] }} {{ number_format(($data['lists']['service_sales'] ?? 0), 2) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Total Sale Revenew:</th>

@@ -36,8 +36,8 @@
                                                 <th>Date</th>
                                                 <th>Particular</th>
                                                 <th>Reference No</th>
-                                                <th>Deposit(BTD)</th>
-                                                <th>Withdrawal(BTD)</th>
+                                                <th>Deposit</th>
+                                                <th>Withdrawal</th>
                                                 <th>Balance</th>
                                             </tr>  
                                         </thead>
