@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\File;
 use Auth;
 use Hash;
 
@@ -80,11 +79,8 @@ class AdminController extends Controller
                 $image = 'admin-'. time().'.'.$data['image']->getClientOriginalExtension();
                 $data['image']->move(public_path('uploads/admin'), $image);
                 $data['image'] = $image;
-                if (Auth::guard('admin')->user()->image) {
-                    $oldFile = public_path('uploads/admin/' . Auth::guard('admin')->user()->image);
-                    if (!empty(Auth::guard('admin')->user()->image) && File::exists($oldFile)) {
-                        File::delete($oldFile);
-                    }
+                if(Auth::guard('admin')->user()->image){
+                    unlink(public_path('uploads/admin/').Auth::guard('admin')->user()->image);
                 }
             }
             Admin::find($id)->update($data);
