@@ -51,7 +51,7 @@
 <h2>🚀 Getting Started</h2>
 
 <h4>1️⃣ Clone the Repository</h4>
-<pre><code>git clone https://github.com/your-username/your-repo.git
+<pre><code>git clone https://github.com/ns-noman/bdprobashihelp.git
 cd your-repo</code></pre>
 
 <h4>2️⃣ Install Dependencies</h4>
