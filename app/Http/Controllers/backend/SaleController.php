@@ -5,21 +5,21 @@ namespace App\Http\Controllers\backend;
 use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\BasicInfo;
-use App\Models\PaymentMethod;
 use App\Models\CustomerPayment;
 use App\Models\Customer;
 use App\Models\Item;
-use App\Models\BikeService;
-use App\Models\CustomerLedger;
 use App\Models\JobServiceRecords;
 use App\Models\MedicalCenter;
 use App\Models\StatusList;
+use App\Models\Country;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\File;
+
 use Auth;
-use Carbon\Carbon;
 
 class SaleController extends Controller
 {
@@ -70,6 +70,9 @@ class SaleController extends Controller
     
         $data['items'] = $items;
         $data['breadcrumb'] = $this->breadcrumb;
+        $data['is_agent'] = Auth::guard('admin')->user()->agent_id ? true : false;
+        $data['agent_id'] = Auth::guard('admin')->user()->agent_id;
+        $data['countries'] = Country::where('status', '=', 1)->get();
         return view('backend.sales.create-or-edit',compact('data'));
     }
     public function addNewItem($id=null)
@@ -100,9 +103,6 @@ class SaleController extends Controller
             $account_id = $request->account_id;
             $date = $request->date;
             $total_pice = $request->total_price;
-            $vat_tax = $request->vat_tax ?? 0;
-            $discount_method = $request->discount_method;
-            $discount_rate = $request->discount_rate ?? 0;
             $discount = $request->discount ?? 0;
             $total_payable = $request->total_payable;
             $paid_amount = $request->paid_amount;
@@ -298,39 +298,54 @@ class SaleController extends Controller
 
         return redirect()->route('customer-payments.index')->with('alert',['messageType'=>'success','message'=>'Data Inserted Successfully!']);
     }
-
+        public function documentUpload($doc)
+    {
+        $doc_name = 'doc-'. Str::uuid().'.'.$doc->getClientOriginalExtension();
+        $doc->move(public_path('uploads/'. 'passports'), $doc_name);
+        return $doc_name;
+    }
 
 
     public function store(Request $request)
     {
         DB::beginTransaction();
         try {
+
+
             $customer_id = $request->customer_id;
-            $account_id = $request->account_id;
+            $country_id = $request->country_id;
+            $account_id = $request->account_id ?? null;
             $passenger_name = $request->passenger_name;
             $passenger_passport_no = $request->passenger_passport_no;
             $localhost_no = $request->localhost_no;
             $date = $request->date;
-            $total_pice = $request->total_price;
+            $total_pice = $request->total_price ?? 0;
             $vat_tax = $request->vat_tax ?? 0;
-            $discount_method = $request->discount_method;
+            $discount_method = $request->discount_method ?? 0;
             $discount_rate = $request->discount_rate ?? 0;
             $discount = $request->discount ?? 0;
-            $total_payable = $request->total_payable;
-            $paid_amount = $request->paid_amount;
+            $total_payable = $request->total_payable ?? 0;
+            $paid_amount = $request->paid_amount ?? 0;
             $note = $request->note;
-            $reference_number = $request->reference_number;
-    
-            $item_id = $request->item_id;
+            $reference_number = $request->reference_number ?? null;
+            $item_id = $request->item_id ?? [];
             $unit_price = $request->unit_price;
-    
+
+            $passport_img = $request->passport_img;
+
+            if(isset($passport_img)){
+                $passport_img = $this->documentUpload($passport_img);
+            }
+
             $invoice_no = $this->formatNumber(Sale::latest()->limit(1)->max('invoice_no') + 1);
             $created_by_id = Auth::guard('admin')->user()->id;
             // Sale creation
             $sale = new Sale();
             $sale->customer_id = $customer_id;
+            $sale->country_id = $country_id;
             $sale->passenger_name = $passenger_name;
             $sale->passenger_passport_no = $passenger_passport_no;
+            $sale->passport_img = $passport_img;
             $sale->localhost_no = $localhost_no;
             $sale->account_id = $account_id;
             $sale->invoice_no = $invoice_no;
@@ -348,6 +363,7 @@ class SaleController extends Controller
             $sale->status = 0;
             $sale->created_by_id = $created_by_id;
             $sale->save();
+
             for ($i = 0; $i < count($item_id); $i++) {
                 $saleDetails = new SaleDetails();
                 $saleDetails->sale_id = $sale->id;
@@ -381,25 +397,43 @@ class SaleController extends Controller
         DB::beginTransaction();
         try {
             $customer_id = $request->customer_id;
-            $account_id = $request->account_id;
+            $country_id = $request->country_id;
+            $account_id = $request->account_id ?? null;
+            $passenger_name = $request->passenger_name;
+            $passenger_passport_no = $request->passenger_passport_no;
+            $localhost_no = $request->localhost_no;
             $date = $request->date;
-            $total_pice = $request->total_price;
+            $total_pice = $request->total_price ?? 0;
             $vat_tax = $request->vat_tax ?? 0;
-            $discount_method = $request->discount_method;
+            $discount_method = $request->discount_method ?? 0;
             $discount_rate = $request->discount_rate ?? 0;
             $discount = $request->discount ?? 0;
-            $total_payable = $request->total_payable;
-            $paid_amount = $request->paid_amount;
+            $total_payable = $request->total_payable ?? 0;
+            $paid_amount = $request->paid_amount ?? 0;
             $note = $request->note;
-            $reference_number = $request->reference_number;
-    
-            $item_id = $request->item_id;
+            $reference_number = $request->reference_number ?? null;
+            $item_id = $request->item_id ?? [];
             $unit_price = $request->unit_price;
+
+            $passport_img = $request->passport_img;
+         
     
             $updated_by_id = Auth::guard('admin')->user()->id;
             $sale = Sale::find($id);
+            if (isset($passport_img)) {
+                $oldFile = public_path('uploads/passports/' . $sale->passport_img);
+                if (!empty($sale->passport_img) && File::exists($oldFile)) {
+                    File::delete($oldFile);
+                }
+                $passport_img = $this->documentUpload($passport_img);
+            }
             $sale->customer_id = $customer_id;
+            $sale->country_id = $country_id;
             $sale->account_id = $account_id;
+            $sale->passenger_name = $passenger_name;
+            $sale->passenger_passport_no = $passenger_passport_no;
+            $sale->passport_img = $passport_img;
+            $sale->localhost_no = $localhost_no;
             $sale->date = $date;
             $sale->total_price = $total_pice;
             $sale->vat_tax = $vat_tax;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 27, 2025 at 06:34 AM
+-- Generation Time: Jun 17, 2025 at 12:18 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `id` bigint UNSIGNED NOT NULL,
   `payment_method_id` bigint NOT NULL,
-  `account_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `holder_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `holder_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `balance` decimal(20,2) NOT NULL DEFAULT '0.00',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
   `created_by_id` bigint DEFAULT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '0.00', 1, 1, 1, NULL, NULL),
+(1, 1, 'Hand Cash', 'Self', '32500.00', 1, 1, 1, NULL, '2025-06-17 06:29:29'),
 (2, 2, 'Investment Capital', 'Self', '0.00', 1, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -60,12 +60,35 @@ CREATE TABLE `account_ledgers` (
   `debit_amount` double(20,2) DEFAULT NULL COMMENT 'Withdrawal',
   `credit_amount` double(20,2) DEFAULT NULL COMMENT 'Deposit',
   `current_balance` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `transaction_date` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `account_ledgers`
+--
+
+INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `description`, `transaction_date`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, 7000.00, 7000.00, NULL, 'Sale Payment', '2025-05-22', '2025-05-27 07:35:11', '2025-05-27 07:35:11'),
+(2, 1, NULL, 5000.00, 12000.00, NULL, 'Sale Payment', '2025-05-27', '2025-05-27 07:47:36', '2025-05-27 07:47:36'),
+(3, 1, NULL, 7000.00, 19000.00, NULL, 'Sale Payment', '2025-05-22', '2025-05-27 07:50:44', '2025-05-27 07:50:44'),
+(4, 1, NULL, 1000.00, 20000.00, NULL, 'Sale Payment', '2025-05-27', '2025-05-27 07:52:29', '2025-05-27 07:52:29'),
+(5, 1, NULL, 2000.00, 22000.00, NULL, 'Sale Payment', '2025-05-28', '2025-05-27 18:20:37', '2025-05-27 18:20:37'),
+(6, 1, 14000.00, NULL, 8000.00, NULL, 'Expenses', '2025-05-22', '2025-05-29 19:26:22', '2025-05-29 19:26:22'),
+(7, 1, NULL, 6500.00, 14500.00, NULL, 'Sale Payment', '2025-05-29', '2025-06-09 11:59:47', '2025-06-09 11:59:47'),
+(8, 1, NULL, 2000.00, 16500.00, NULL, 'Sale Payment', '2025-05-20', '2025-06-09 12:13:09', '2025-06-09 12:13:09'),
+(9, 1, NULL, 2000.00, 18500.00, NULL, 'Sale Payment', '2025-05-29', '2025-06-09 12:24:45', '2025-06-09 12:24:45'),
+(10, 1, NULL, 2000.00, 20500.00, NULL, 'Sale Payment', '2025-06-09', '2025-06-09 12:40:45', '2025-06-09 12:40:45'),
+(11, 1, NULL, 2000.00, 22500.00, NULL, 'Sale Payment', '2025-06-01', '2025-06-09 12:55:53', '2025-06-09 12:55:53'),
+(12, 1, NULL, 2000.00, 24500.00, NULL, 'Sale Payment', '2025-06-01', '2025-06-09 13:09:06', '2025-06-09 13:09:06'),
+(13, 1, NULL, 2000.00, 26500.00, NULL, 'Sale Payment', '2025-06-01', '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
+(14, 1, 10000.00, NULL, 16500.00, NULL, 'Expenses', '2025-06-04', '2025-06-13 17:48:16', '2025-06-13 17:48:16'),
+(15, 1, NULL, 2000.00, 18500.00, NULL, 'Sale Payment', '2025-05-01', '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
+(16, 1, NULL, 7000.00, 25500.00, NULL, 'Sale Payment', '2025-06-17', '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
+(17, 1, NULL, 7000.00, 32500.00, NULL, 'Sale Payment', '2025-06-17', '2025-06-17 06:29:29', '2025-06-17 06:29:29');
 
 -- --------------------------------------------------------
 
@@ -76,17 +99,17 @@ CREATE TABLE `account_ledgers` (
 CREATE TABLE `admins` (
   `id` bigint UNSIGNED NOT NULL,
   `agent_id` int DEFAULT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` int NOT NULL,
-  `mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -94,7 +117,14 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
-(1, NULL, 'Super Admin', NULL, 1, '01800000000', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1725091483.jpeg', 1, '2024-08-30 19:03:44', '2024-12-31 17:48:55', 'Um2Jcvw02yBR23NOaES9QUhOnRaRZJYH72qYnfoan5KjcDkCGPv1vb7f1Hx7');
+(1, NULL, 'Super Admin', NULL, 1, '01717171223', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1750138827.png', 1, '2024-08-30 19:03:44', '2025-06-17 05:40:27', 'vdCFSuVWdMgFpOADpiU5LH0XefBCNFRA09uFYztIYQlZFo6MyfexGG2F9UIp'),
+(2, 1, 'Jannat-AAI', NULL, 2, '8801893291015', 'jannati-aai@gmail.com', '$2y$10$n7vaM10g4JadX7tp1e97wucWWexL4h8rDJpGUJkVHnDGesKL9MzVm', NULL, 1, '2025-05-27 07:30:04', '2025-05-27 07:32:44', NULL),
+(3, 2, 'Emam Hossain-AEHB', NULL, 2, '8801712556088', 'imamair2021@gmail.com', '$2y$10$p4UBo7Qz9ZraZ0ZGNfLGueF9fiF8o9HxdyFLRq561YYXd/Q3Nnzpa', NULL, 1, '2025-05-27 18:12:01', '2025-05-27 18:12:58', 'lUjW2YYTOp6Iaj4x6YZn0FtKXpMgV47qG4saMR7s5dIdyxGAIBpRNVkZ8dM3'),
+(4, 3, 'SUHEL AHMED/SAAS', NULL, 2, '01736621425', 'saairservicekanaighat@gmail.com', '$2y$10$lPynkjtMdjZMQdy2hqI2JOADLS9JcV.bGEakiGTFKsR/ORwt3GXFG', NULL, 1, '2025-05-29 15:05:15', '2025-06-01 06:59:17', NULL),
+(5, 4, 'Tazul Islam (TABOM)', NULL, 2, '8801863550621', 'tazult937@gmail.com', '$2y$10$cp/ECH9KSy2YjIsYv3aCOOf14I1Jg6IErGdM1Owpy48bbw0GZ1S7e', NULL, 1, '2025-05-31 09:44:02', '2025-06-09 13:24:43', NULL),
+(6, NULL, 'Raihan', NULL, 3, '01839317038', 'rayanc430@gmail.com', '$2y$10$BFsTCUky8SYs5oiTYnCOquRDmT7WId7mVzJ0fnnnO6m3FRFDuxxGa', 'admin-1750073550.jpg', 1, '2025-06-01 06:58:47', '2025-06-16 11:32:30', 'GJcjN3jW29RlbiRHG8JRC11yBAaBEMLBptfPUJzFm9YzZ1znjW4mVUgKGSPf'),
+(7, 5, 'Mr. Shihab (AINT)', NULL, 2, '8801756733986', 'shihabbdph@gmail.com', '$2y$10$.mP.VKBNEDd/OPipz.S0IumXjHFzlC1OvgaKvoYVGKXDZ7sGkvUV6', NULL, 1, '2025-06-15 08:55:55', '2025-06-16 06:32:22', 'jddo7IqRDLJK18VbiKbubYlN2sXf69aa7m1C5N58CXsAuxTMG9S6EYv4pkdc'),
+(8, 6, 'Mr. Shakil (ISTAI)', NULL, 2, '8801941356122', 'istair.intl@gmail.com', '$2y$10$n0fPk17JIlhAMtZ0bp28geNG0ATse1VXLw/h/QxWl0BJzdeJvmzmi', NULL, 1, '2025-06-15 09:14:29', '2025-06-17 05:46:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,31 +134,31 @@ INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `e
 
 CREATE TABLE `basic_infos` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fax` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `web_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `facebook_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `twitter_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `linkedin_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `youtube_link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` longtext COLLATE utf8mb4_unicode_ci,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `favicon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `web_link` text COLLATE utf8mb4_unicode_ci,
+  `facebook_link` text COLLATE utf8mb4_unicode_ci,
+  `twitter_link` text COLLATE utf8mb4_unicode_ci,
+  `linkedin_link` text COLLATE utf8mb4_unicode_ci,
+  `youtube_link` text COLLATE utf8mb4_unicode_ci,
   `assets_value` int NOT NULL,
   `total_employees` int NOT NULL,
   `total_companies` int NOT NULL,
   `start_year` int NOT NULL,
-  `map_embed` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_1` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_2` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_embed_3` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_symbol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `map_embed` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_1` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_2` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_embed_3` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_symbol` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -138,7 +168,7 @@ CREATE TABLE `basic_infos` (
 --
 
 INSERT INTO `basic_infos` (`id`, `title`, `meta_keywords`, `meta_description`, `logo`, `favicon`, `phone`, `telephone`, `fax`, `email`, `location`, `address`, `web_link`, `facebook_link`, `twitter_link`, `linkedin_link`, `youtube_link`, `assets_value`, `total_employees`, `total_companies`, `start_year`, `map_embed`, `video_embed_1`, `video_embed_2`, `video_embed_3`, `currency_symbol`, `created_at`, `updated_at`) VALUES
-(1, 'BD Probashi Help', 'Sit pariatur Numqua', 'Voluptatem cumque q', 'logo-1745820941.png', 'favicon-1745820941.png', '+1 (653) 832-8175', '+1 (691) 538-1161', '+1 (708) 916-5628', 'kewinev@mailinator.com', 'Soluta eos nihil en', 'Quia numquam odit qu', 'Excepturi cupiditate', 'Et non nihil commodi', 'Cillum officia debit', 'Consectetur eum temp', 'Eligendi cupiditate', 87, 78, 100, 1981, 'Maxime voluptatem r', 'Voluptates iusto pro', 'Suscipit labore sit', 'Dignissimos eum est', '৳', NULL, '2025-05-04 03:51:37');
+(1, 'BD Probashi Help', 'Sit pariatur Numqua', 'Voluptatem cumque q', 'logo-1745820941.png', 'favicon-1745820941.png', '+8801717171223', '+1 (691) 538-1161', '+1 (708) 916-5628', 'support@bdprobashihelp.com', 'Soluta eos nihil en', '=বিডি প্রবাসী হেল্প =  অফিস নং- ক-২,তিন তলা, লিফট-২, Rupayan FPAB Tower,( পল্টন টাওয়ার এর ১ টা বিল্ডিং পূর্ব পার্শ্বে), জামান টাওয়ার এর উল্টা পাশে , কালভার্ট  রোড , ঢাকা-১০০০।', 'Excepturi cupiditate', 'Et non nihil commodi', 'Cillum officia debit', 'Consectetur eum temp', 'Eligendi cupiditate', 87, 78, 100, 1981, 'Maxime voluptatem r', 'Voluptates iusto pro', 'Suscipit labore sit', 'Dignissimos eum est', '৳', NULL, '2025-05-27 15:31:28');
 
 -- --------------------------------------------------------
 
@@ -150,8 +180,8 @@ CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_cat_id` int NOT NULL DEFAULT '0',
   `cat_type_id` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -194,7 +224,7 @@ INSERT INTO `categories` (`id`, `parent_cat_id`, `cat_type_id`, `title`, `image`
 
 CREATE TABLE `category_types` (
   `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -210,23 +240,302 @@ INSERT INTO `category_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` int NOT NULL,
+  `country_code` varchar(2) NOT NULL DEFAULT '',
+  `country_name` varchar(100) NOT NULL DEFAULT '',
+  `status` int NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `country_code`, `country_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'AF', 'Afghanistan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'AL', 'Albania', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'DZ', 'Algeria', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'AS', 'American Samoa', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'AD', 'Andorra', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'AO', 'Angola', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 'AI', 'Anguilla', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 'AQ', 'Antarctica', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 'AG', 'Antigua and Barbuda', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'AR', 'Argentina', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'AM', 'Armenia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'AW', 'Aruba', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'AU', 'Australia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'AT', 'Austria', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'AZ', 'Azerbaijan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'BS', 'Bahamas', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'BH', 'Bahrain', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 'BD', 'Bangladesh', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 'BB', 'Barbados', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 'BY', 'Belarus', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(21, 'BE', 'Belgium', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 'BZ', 'Belize', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 'BJ', 'Benin', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(24, 'BM', 'Bermuda', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 'BT', 'Bhutan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(26, 'BO', 'Bolivia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(27, 'BA', 'Bosnia and Herzegovina', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(28, 'BW', 'Botswana', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(29, 'BV', 'Bouvet Island', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(30, 'BR', 'Brazil', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(31, 'IO', 'British Indian Ocean Territory', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(32, 'BN', 'Brunei Darussalam', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(33, 'BG', 'Bulgaria', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(34, 'BF', 'Burkina Faso', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 'BI', 'Burundi', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 'KH', 'Cambodia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 'CM', 'Cameroon', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(38, 'CA', 'Canada', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(39, 'CV', 'Cape Verde', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(40, 'KY', 'Cayman Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(41, 'CF', 'Central African Republic', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(42, 'TD', 'Chad', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(43, 'CL', 'Chile', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(44, 'CN', 'China', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(45, 'CX', 'Christmas Island', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(46, 'CC', 'Cocos (Keeling) Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(47, 'CO', 'Colombia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(48, 'KM', 'Comoros', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(49, 'CD', 'Democratic Republic of the Congo', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(50, 'CG', 'Republic of Congo', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(51, 'CK', 'Cook Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(52, 'CR', 'Costa Rica', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(53, 'HR', 'Croatia (Hrvatska)', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(54, 'CU', 'Cuba', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(55, 'CY', 'Cyprus', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(56, 'CZ', 'Czech Republic', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(57, 'DK', 'Denmark', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(58, 'DJ', 'Djibouti', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(59, 'DM', 'Dominica', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(60, 'DO', 'Dominican Republic', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(61, 'TL', 'East Timor', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(62, 'EC', 'Ecuador', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(63, 'EG', 'Egypt', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(64, 'SV', 'El Salvador', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(65, 'GQ', 'Equatorial Guinea', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(66, 'ER', 'Eritrea', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(67, 'EE', 'Estonia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(68, 'ET', 'Ethiopia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(69, 'FK', 'Falkland Islands (Malvinas)', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(70, 'FO', 'Faroe Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(71, 'FJ', 'Fiji', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(72, 'FI', 'Finland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(73, 'FR', 'France', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(74, 'FX', 'France, Metropolitan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(75, 'GF', 'French Guiana', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(76, 'PF', 'French Polynesia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(77, 'TF', 'French Southern Territories', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(78, 'GA', 'Gabon', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(79, 'GM', 'Gambia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(80, 'GE', 'Georgia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(81, 'DE', 'Germany', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(82, 'GH', 'Ghana', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(83, 'GI', 'Gibraltar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(84, 'GG', 'Guernsey', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(85, 'GR', 'Greece', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(86, 'GL', 'Greenland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(87, 'GD', 'Grenada', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(88, 'GP', 'Guadeloupe', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(89, 'GU', 'Guam', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(90, 'GT', 'Guatemala', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(91, 'GN', 'Guinea', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(92, 'GW', 'Guinea-Bissau', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(93, 'GY', 'Guyana', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(94, 'HT', 'Haiti', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(95, 'HM', 'Heard and Mc Donald Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(96, 'HN', 'Honduras', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(97, 'HK', 'Hong Kong', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(98, 'HU', 'Hungary', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(99, 'IS', 'Iceland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(100, 'IN', 'India', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(101, 'IM', 'Isle of Man', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(102, 'ID', 'Indonesia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(103, 'IR', 'Iran (Islamic Republic of)', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(104, 'IQ', 'Iraq', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(105, 'IE', 'Ireland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(106, 'IL', 'Israel', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(107, 'IT', 'Italy', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(108, 'CI', 'Ivory Coast', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(109, 'JE', 'Jersey', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(110, 'JM', 'Jamaica', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(111, 'JP', 'Japan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(112, 'JO', 'Jordan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(113, 'KZ', 'Kazakhstan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(114, 'KE', 'Kenya', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(115, 'KI', 'Kiribati', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(116, 'KP', 'Korea, Democratic People\'s Republic of', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(117, 'KR', 'Korea, Republic of', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(118, 'XK', 'Kosovo', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(119, 'KW', 'Kuwait', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(120, 'KG', 'Kyrgyzstan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(121, 'LA', 'Lao People\'s Democratic Republic', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(122, 'LV', 'Latvia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(123, 'LB', 'Lebanon', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(124, 'LS', 'Lesotho', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(125, 'LR', 'Liberia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(126, 'LY', 'Libyan Arab Jamahiriya', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(127, 'LI', 'Liechtenstein', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(128, 'LT', 'Lithuania', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(129, 'LU', 'Luxembourg', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(130, 'MO', 'Macau', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(131, 'MK', 'North Macedonia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(132, 'MG', 'Madagascar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(133, 'MW', 'Malawi', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(134, 'MY', 'Malaysia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(135, 'MV', 'Maldives', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(136, 'ML', 'Mali', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(137, 'MT', 'Malta', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(138, 'MH', 'Marshall Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(139, 'MQ', 'Martinique', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(140, 'MR', 'Mauritania', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(141, 'MU', 'Mauritius', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(142, 'YT', 'Mayotte', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(143, 'MX', 'Mexico', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(144, 'FM', 'Micronesia, Federated States of', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(145, 'MD', 'Moldova, Republic of', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(146, 'MC', 'Monaco', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(147, 'MN', 'Mongolia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(148, 'ME', 'Montenegro', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(149, 'MS', 'Montserrat', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(150, 'MA', 'Morocco', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(151, 'MZ', 'Mozambique', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(152, 'MM', 'Myanmar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(153, 'NA', 'Namibia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(154, 'NR', 'Nauru', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(155, 'NP', 'Nepal', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(156, 'NL', 'Netherlands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(157, 'AN', 'Netherlands Antilles', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(158, 'NC', 'New Caledonia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(159, 'NZ', 'New Zealand', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(160, 'NI', 'Nicaragua', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(161, 'NE', 'Niger', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(162, 'NG', 'Nigeria', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(163, 'NU', 'Niue', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(164, 'NF', 'Norfolk Island', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(165, 'MP', 'Northern Mariana Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(166, 'NO', 'Norway', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(167, 'OM', 'Oman', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(168, 'PK', 'Pakistan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(169, 'PW', 'Palau', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(170, 'PS', 'Palestine', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(171, 'PA', 'Panama', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(172, 'PG', 'Papua New Guinea', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(173, 'PY', 'Paraguay', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(174, 'PE', 'Peru', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(175, 'PH', 'Philippines', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(176, 'PN', 'Pitcairn', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(177, 'PL', 'Poland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(178, 'PT', 'Portugal', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(179, 'PR', 'Puerto Rico', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(180, 'QA', 'Qatar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(181, 'RE', 'Reunion', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(182, 'RO', 'Romania', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(183, 'RU', 'Russian Federation', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(184, 'RW', 'Rwanda', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(185, 'KN', 'Saint Kitts and Nevis', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(186, 'LC', 'Saint Lucia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(187, 'VC', 'Saint Vincent and the Grenadines', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(188, 'WS', 'Samoa', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(189, 'SM', 'San Marino', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(190, 'ST', 'Sao Tome and Principe', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(191, 'SA', 'Saudi Arabia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(192, 'SN', 'Senegal', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(193, 'RS', 'Serbia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(194, 'SC', 'Seychelles', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(195, 'SL', 'Sierra Leone', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(196, 'SG', 'Singapore', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(197, 'SK', 'Slovakia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(198, 'SI', 'Slovenia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(199, 'SB', 'Solomon Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(200, 'SO', 'Somalia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(201, 'ZA', 'South Africa', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(202, 'GS', 'South Georgia South Sandwich Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(203, 'SS', 'South Sudan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(204, 'ES', 'Spain', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(205, 'LK', 'Sri Lanka', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(206, 'SH', 'St. Helena', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(207, 'PM', 'St. Pierre and Miquelon', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(208, 'SD', 'Sudan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(209, 'SR', 'Suriname', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(210, 'SJ', 'Svalbard and Jan Mayen Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(211, 'SZ', 'Eswatini', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(212, 'SE', 'Sweden', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(213, 'CH', 'Switzerland', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(214, 'SY', 'Syrian Arab Republic', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(215, 'TW', 'Taiwan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(216, 'TJ', 'Tajikistan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(217, 'TZ', 'Tanzania, United Republic of', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(218, 'TH', 'Thailand', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(219, 'TG', 'Togo', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(220, 'TK', 'Tokelau', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(221, 'TO', 'Tonga', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(222, 'TT', 'Trinidad and Tobago', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(223, 'TN', 'Tunisia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(224, 'TR', 'Turkey', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(225, 'TM', 'Turkmenistan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(226, 'TC', 'Turks and Caicos Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(227, 'TV', 'Tuvalu', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(228, 'UG', 'Uganda', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(229, 'UA', 'Ukraine', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(230, 'AE', 'United Arab Emirates', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(231, 'GB', 'United Kingdom', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(232, 'US', 'United States', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(233, 'UM', 'United States minor outlying islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(234, 'UY', 'Uruguay', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(235, 'UZ', 'Uzbekistan', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(236, 'VU', 'Vanuatu', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(237, 'VA', 'Vatican City State', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(238, 'VE', 'Venezuela', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(239, 'VN', 'Vietnam', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(240, 'VG', 'Virgin Islands (British)', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(241, 'VI', 'Virgin Islands (U.S.)', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(242, 'WF', 'Wallis and Futuna Islands', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(243, 'EH', 'Western Sahara', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(244, 'YE', 'Yemen', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(245, 'ZM', 'Zambia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(246, 'ZW', 'Zimbabwe', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customers`
 --
 
 CREATE TABLE `customers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 'Jannat-AAI', 'jannati-aai@gmail.com', '8801893291015', '37/2, Zaman Tower (2nd Floor), Purana Paltan, Dhaka-1000', 'Anifa air international', 4000.00, '1', 1, NULL, '2025-05-27 07:30:04', '2025-05-27 07:52:29'),
+(2, 'Emam Hossain-AEHB', 'imamair2021@gmail.com', '8801712556088', '118 DIT Ext. Road, Fokirapul, Dhaka-1000', 'Bismillah Telecom', 0.00, '1', 1, NULL, '2025-05-27 18:12:01', '2025-05-27 18:20:37'),
+(3, 'SUHEL AHMED/SAAS', 'saairservicekanaighat@gmail.com', '01736621425', 'AZIZ COMPLEX, KANAIGHAT UTTAR BAZAR', 'SA AIR SERVICE', 0.00, '1', 1, NULL, '2025-05-29 15:05:15', '2025-05-29 15:05:15'),
+(4, 'Tazul Islam (TABOM)', 'tazult937@gmail.com', '8801863550621', 'Palton, Dhaka, Bangladesh', 'Tazul overseas international', 0.00, '1', 1, NULL, '2025-05-31 09:44:02', '2025-06-09 13:17:19'),
+(5, 'Mr. Shihab (AINT)', 'abdullahaircervice@gmail.com', '8801756733986', 'Nur Travels, নিচ তলা, Rupayan FPAB Tower, জামান টাওয়ার এর উল্টা পাশে , কালভার্ট রোড , ঢাকা-১০০০।', 'Abdullah air International', 0.00, '1', 1, NULL, '2025-06-15 08:55:55', '2025-06-16 06:30:43'),
+(6, 'Mr. Shakil (ISTAI)', 'istair.intl@gmail.com', '8801941356122', 'KR Plaza, 31 Purana Paltan, Dhaka-1000. , Dhaka, Bangladesh', 'IST Air International', 0.00, '1', 1, NULL, '2025-06-15 09:14:29', '2025-06-17 06:29:29');
 
 -- --------------------------------------------------------
 
@@ -240,18 +549,174 @@ CREATE TABLE `customer_ledgers` (
   `sale_id` int DEFAULT NULL,
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_ledgers`
+--
+
+INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `account_id`, `particular`, `date`, `debit_amount`, `credit_amount`, `current_balance`, `reference_number`, `note`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, 'Sale', '2025-05-22', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-05-27 07:35:11', '2025-05-27 07:35:11'),
+(2, 1, NULL, 1, 1, 'Payment', '2025-05-22', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-27 07:35:11', '2025-05-27 07:35:11'),
+(3, 1, 1, NULL, NULL, 'Sale', '2025-05-27', NULL, '5000.00', '5000.00', NULL, NULL, 1, NULL, '2025-05-27 07:47:36', '2025-05-27 07:47:36'),
+(4, 1, NULL, 2, 1, 'Payment', '2025-05-27', '5000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-27 07:47:36', '2025-05-27 07:47:36'),
+(5, 1, 2, NULL, NULL, 'Sale', '2025-05-22', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-05-27 07:50:44', '2025-05-27 07:50:44'),
+(6, 1, NULL, 3, 1, 'Payment', '2025-05-22', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-27 07:50:44', '2025-05-27 07:50:44'),
+(7, 1, 2, NULL, NULL, 'Sale', '2025-05-27', NULL, '5000.00', '5000.00', NULL, NULL, 1, NULL, '2025-05-27 07:52:29', '2025-05-27 07:52:29'),
+(8, 1, NULL, 4, 1, 'Payment', '2025-05-27', '1000.00', NULL, '4000.00', NULL, NULL, 1, NULL, '2025-05-27 07:52:29', '2025-05-27 07:52:29'),
+(9, 2, 3, NULL, NULL, 'Sale', '2025-04-16', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-05-27 18:18:15', '2025-05-27 18:18:15'),
+(10, 2, 3, NULL, NULL, 'Sale', '2025-05-28', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-05-27 18:20:37', '2025-05-27 18:20:37'),
+(11, 2, NULL, 5, 1, 'Payment', '2025-05-28', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-05-27 18:20:37', '2025-05-27 18:20:37'),
+(12, 2, 3, NULL, NULL, 'Sale', '2025-05-28', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-05-27 18:22:18', '2025-05-27 18:22:18'),
+(13, 3, 4, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-01 06:56:07', '2025-06-01 06:56:07'),
+(14, 3, 5, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-01 06:57:32', '2025-06-01 06:57:32'),
+(15, 3, 6, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-01 08:53:24', '2025-06-01 08:53:24'),
+(16, 3, 7, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-01 08:53:26', '2025-06-01 08:53:26'),
+(17, 4, 12, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-02 14:36:04', '2025-06-02 14:36:04'),
+(18, 3, 8, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-02 14:36:16', '2025-06-02 14:36:16'),
+(19, 4, 11, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-02 14:36:21', '2025-06-02 14:36:21'),
+(20, 3, 9, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-02 14:36:28', '2025-06-02 14:36:28'),
+(21, 3, 10, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-02 14:36:38', '2025-06-02 14:36:38'),
+(22, 4, 13, NULL, NULL, 'Sale', '2025-05-06', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 11:54:59', '2025-06-09 11:54:59'),
+(23, 4, 13, NULL, NULL, 'Sale', '2025-05-29', NULL, '6500.00', '6500.00', NULL, NULL, 1, NULL, '2025-06-09 11:59:47', '2025-06-09 11:59:47'),
+(24, 4, NULL, 6, 1, 'Payment', '2025-05-29', '6500.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 11:59:47', '2025-06-09 11:59:47'),
+(25, 4, 13, NULL, NULL, 'Sale', '2025-05-29', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:02:18', '2025-06-09 12:02:18'),
+(26, 4, 14, NULL, NULL, 'Sale', '2025-05-14', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:08:11', '2025-06-09 12:08:11'),
+(27, 4, 14, NULL, NULL, 'Sale', '2025-05-20', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 12:13:09', '2025-06-09 12:13:09'),
+(28, 4, NULL, 7, 1, 'Payment', '2025-05-20', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:13:09', '2025-06-09 12:13:09'),
+(29, 4, 14, NULL, NULL, 'Sale', '2025-05-22', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:14:10', '2025-06-09 12:14:10'),
+(30, 4, 15, NULL, NULL, 'Sale', '2025-05-25', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:21:17', '2025-06-09 12:21:17'),
+(31, 4, 15, NULL, NULL, 'Sale', '2025-05-29', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 12:24:45', '2025-06-09 12:24:45'),
+(32, 4, NULL, 8, 1, 'Payment', '2025-05-29', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:24:45', '2025-06-09 12:24:45'),
+(33, 4, 15, NULL, NULL, 'Sale', '2025-05-29', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:25:53', '2025-06-09 12:25:53'),
+(34, 4, 16, NULL, NULL, 'Sale', '2025-05-25', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:31:36', '2025-06-09 12:31:36'),
+(35, 4, 17, NULL, NULL, 'Sale', '2025-05-25', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:35:51', '2025-06-09 12:35:51'),
+(36, 4, 17, NULL, NULL, 'Sale', '2025-06-09', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 12:40:45', '2025-06-09 12:40:45'),
+(37, 4, NULL, 9, 1, 'Payment', '2025-06-09', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:40:45', '2025-06-09 12:40:45'),
+(38, 4, 17, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:49:29', '2025-06-09 12:49:29'),
+(39, 4, 18, NULL, NULL, 'Sale', '2025-05-25', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:53:43', '2025-06-09 12:53:43'),
+(40, 4, 18, NULL, NULL, 'Sale', '2025-06-01', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 12:55:53', '2025-06-09 12:55:53'),
+(41, 4, NULL, 10, 1, 'Payment', '2025-06-01', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:55:53', '2025-06-09 12:55:53'),
+(42, 4, 18, NULL, NULL, 'Sale', '2025-05-31', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 12:57:22', '2025-06-09 12:57:22'),
+(43, 4, 19, NULL, NULL, 'Sale', '2025-05-26', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:03:56', '2025-06-09 13:03:56'),
+(44, 4, 19, NULL, NULL, 'Sale', '2025-06-01', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 13:09:06', '2025-06-09 13:09:06'),
+(45, 4, NULL, 11, 1, 'Payment', '2025-06-01', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:09:06', '2025-06-09 13:09:06'),
+(46, 4, 19, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:10:04', '2025-06-09 13:10:04'),
+(47, 4, 20, NULL, NULL, 'Sale', '2025-05-26', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:14:30', '2025-06-09 13:14:30'),
+(48, 4, 20, NULL, NULL, 'Sale', '2025-06-01', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
+(49, 4, NULL, 12, 1, 'Payment', '2025-06-01', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
+(50, 4, 20, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-09 13:18:09', '2025-06-09 13:18:09'),
+(51, 3, 21, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:09:41', '2025-06-15 05:09:41'),
+(52, 3, 22, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:09:43', '2025-06-15 05:09:43'),
+(53, 3, 26, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:09:47', '2025-06-15 05:09:47'),
+(54, 3, 25, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:09:58', '2025-06-15 05:09:58'),
+(55, 3, 24, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:10:10', '2025-06-15 05:10:10'),
+(56, 3, 23, NULL, NULL, 'Sale', '2025-06-01', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 05:10:15', '2025-06-15 05:10:15'),
+(57, 2, 35, NULL, NULL, 'Sale', '2025-05-31', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:52:34', '2025-06-15 07:52:34'),
+(58, 2, 34, NULL, NULL, 'Sale', '2025-05-28', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:04', '2025-06-15 07:53:04'),
+(59, 2, 33, NULL, NULL, 'Sale', '2025-05-27', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:15', '2025-06-15 07:53:15'),
+(60, 2, 32, NULL, NULL, 'Sale', '2025-05-19', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:24', '2025-06-15 07:53:24'),
+(61, 2, 31, NULL, NULL, 'Sale', '2025-05-18', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:31', '2025-06-15 07:53:31'),
+(62, 2, 30, NULL, NULL, 'Sale', '2025-05-18', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:43', '2025-06-15 07:53:43'),
+(63, 2, 29, NULL, NULL, 'Sale', '2025-05-18', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:53', '2025-06-15 07:53:53'),
+(64, 4, 28, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:53:59', '2025-06-15 07:53:59'),
+(65, 4, 27, NULL, NULL, 'Sale', '2025-06-02', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 07:54:10', '2025-06-15 07:54:10'),
+(66, 5, 40, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 09:56:02', '2025-06-15 09:56:02'),
+(67, 5, 79, NULL, NULL, 'Sale', '2025-04-16', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:33:06', '2025-06-15 11:33:06'),
+(68, 5, 78, NULL, NULL, 'Sale', '2025-04-16', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:33:21', '2025-06-15 11:33:21'),
+(69, 5, 78, NULL, NULL, 'Sale', '2025-05-01', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
+(70, 5, NULL, 13, 1, 'Payment', '2025-05-01', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
+(71, 6, 85, NULL, NULL, 'Sale', '2025-05-22', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:18', '2025-06-15 11:57:18'),
+(72, 6, 84, NULL, NULL, 'Sale', '2025-05-20', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:24', '2025-06-15 11:57:24'),
+(73, 6, 83, NULL, NULL, 'Sale', '2025-05-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:29', '2025-06-15 11:57:29'),
+(74, 6, 83, NULL, NULL, 'Sale', '2025-05-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:31', '2025-06-15 11:57:31'),
+(75, 6, 82, NULL, NULL, 'Sale', '2025-05-06', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:34', '2025-06-15 11:57:34'),
+(76, 6, 82, NULL, NULL, 'Sale', '2025-05-06', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:36', '2025-06-15 11:57:36'),
+(77, 6, 81, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:39', '2025-06-15 11:57:39'),
+(78, 6, 81, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:41', '2025-06-15 11:57:41'),
+(79, 6, 80, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:43', '2025-06-15 11:57:43'),
+(80, 5, 77, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:47', '2025-06-15 11:57:47'),
+(81, 5, 76, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:51', '2025-06-15 11:57:51'),
+(82, 5, 76, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:53', '2025-06-15 11:57:53'),
+(83, 5, 75, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:56', '2025-06-15 11:57:56'),
+(84, 5, 75, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:57:58', '2025-06-15 11:57:58'),
+(85, 5, 74, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:01', '2025-06-15 11:58:01'),
+(86, 5, 74, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:03', '2025-06-15 11:58:03'),
+(87, 5, 73, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:06', '2025-06-15 11:58:06'),
+(88, 5, 72, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:09', '2025-06-15 11:58:09'),
+(89, 5, 72, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:11', '2025-06-15 11:58:11'),
+(90, 5, 71, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:13', '2025-06-15 11:58:13'),
+(91, 5, 71, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:15', '2025-06-15 11:58:15'),
+(92, 5, 70, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:17', '2025-06-15 11:58:17'),
+(93, 5, 70, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:19', '2025-06-15 11:58:19'),
+(94, 5, 69, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:24', '2025-06-15 11:58:24'),
+(95, 5, 69, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:24', '2025-06-15 11:58:24'),
+(96, 5, 69, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:26', '2025-06-15 11:58:26'),
+(97, 5, 68, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:28', '2025-06-15 11:58:28'),
+(98, 5, 68, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:29', '2025-06-15 11:58:29'),
+(99, 5, 67, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:34', '2025-06-15 11:58:34'),
+(100, 5, 67, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:35', '2025-06-15 11:58:35'),
+(101, 5, 67, NULL, NULL, 'Sale', '2025-04-15', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:36', '2025-06-15 11:58:36'),
+(102, 5, 66, NULL, NULL, 'Sale', '2025-04-13', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:40', '2025-06-15 11:58:40'),
+(103, 5, 66, NULL, NULL, 'Sale', '2025-04-13', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:41', '2025-06-15 11:58:41'),
+(104, 5, 65, NULL, NULL, 'Sale', '2025-04-13', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:44', '2025-06-15 11:58:44'),
+(105, 5, 65, NULL, NULL, 'Sale', '2025-04-13', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:46', '2025-06-15 11:58:46'),
+(106, 5, 64, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:49', '2025-06-15 11:58:49'),
+(107, 5, 64, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:51', '2025-06-15 11:58:51'),
+(108, 5, 63, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:54', '2025-06-15 11:58:54'),
+(109, 5, 63, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:55', '2025-06-15 11:58:55'),
+(110, 5, 62, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:58:59', '2025-06-15 11:58:59'),
+(111, 5, 62, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:01', '2025-06-15 11:59:01'),
+(112, 5, 61, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:04', '2025-06-15 11:59:04'),
+(113, 5, 61, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:05', '2025-06-15 11:59:05'),
+(114, 5, 60, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:07', '2025-06-15 11:59:07'),
+(115, 5, 60, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:09', '2025-06-15 11:59:09'),
+(116, 5, 59, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:12', '2025-06-15 11:59:12'),
+(117, 5, 59, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:14', '2025-06-15 11:59:14'),
+(118, 5, 58, NULL, NULL, 'Sale', '2025-04-12', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:16', '2025-06-15 11:59:16'),
+(119, 5, 57, NULL, NULL, 'Sale', '2025-04-10', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:18', '2025-06-15 11:59:18'),
+(120, 5, 57, NULL, NULL, 'Sale', '2025-04-10', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:20', '2025-06-15 11:59:20'),
+(121, 5, 56, NULL, NULL, 'Sale', '2025-04-09', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:25', '2025-06-15 11:59:25'),
+(122, 5, 55, NULL, NULL, 'Sale', '2025-04-09', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:30', '2025-06-15 11:59:30'),
+(123, 5, 54, NULL, NULL, 'Sale', '2025-04-09', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:38', '2025-06-15 11:59:38'),
+(124, 5, 53, NULL, NULL, 'Sale', '2025-04-09', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:42', '2025-06-15 11:59:42'),
+(125, 5, 52, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:53', '2025-06-15 11:59:53'),
+(126, 5, 51, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 11:59:58', '2025-06-15 11:59:58'),
+(127, 5, 50, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:00:03', '2025-06-15 12:00:03'),
+(128, 5, 49, NULL, NULL, 'Sale', '2025-04-08', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:00:10', '2025-06-15 12:00:10'),
+(129, 5, 48, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:00:16', '2025-06-15 12:00:16'),
+(130, 5, 47, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:00:23', '2025-06-15 12:00:23'),
+(131, 5, 46, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:08', '2025-06-15 12:01:08'),
+(132, 5, 45, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:15', '2025-06-15 12:01:15'),
+(133, 5, 44, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:23', '2025-06-15 12:01:23'),
+(134, 5, 43, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:29', '2025-06-15 12:01:29'),
+(135, 5, 42, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:36', '2025-06-15 12:01:36'),
+(136, 5, 41, NULL, NULL, 'Sale', '2025-04-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:01:46', '2025-06-15 12:01:46'),
+(137, 5, 39, NULL, NULL, 'Sale', '2025-04-06', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:02:08', '2025-06-15 12:02:08'),
+(138, 5, 38, NULL, NULL, 'Sale', '2025-04-06', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:02:17', '2025-06-15 12:02:17'),
+(139, 5, 37, NULL, NULL, 'Sale', '2025-04-05', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:02:44', '2025-06-15 12:02:44'),
+(140, 5, 36, NULL, NULL, 'Sale', '2025-05-07', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-15 12:02:52', '2025-06-15 12:02:52'),
+(141, 5, 86, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-16 14:15:43', '2025-06-16 14:15:43'),
+(142, 5, 87, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-16 14:17:01', '2025-06-16 14:17:01'),
+(143, 5, 88, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-16 14:18:08', '2025-06-16 14:18:08'),
+(144, 3, 89, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-16 14:19:17', '2025-06-16 14:19:17'),
+(145, 6, 95, NULL, NULL, 'Sale', '2025-06-17', NULL, '0.00', '0.00', NULL, NULL, 8, NULL, '2025-06-17 06:11:32', '2025-06-17 06:11:32'),
+(146, 6, 95, NULL, NULL, 'Sale', '2025-06-17', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
+(147, 6, NULL, 14, 1, 'Payment', '2025-06-17', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
+(148, 6, 96, NULL, NULL, 'Sale', '2025-06-17', NULL, '7000.00', '7000.00', NULL, NULL, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
+(149, 6, NULL, 15, 1, 'Payment', '2025-06-17', '7000.00', NULL, '0.00', NULL, NULL, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
+(150, 5, 93, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-17 06:49:21', '2025-06-17 06:49:21');
 
 -- --------------------------------------------------------
 
@@ -266,14 +731,35 @@ CREATE TABLE `customer_payments` (
   `sale_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_payments`
+--
+
+INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `date`, `amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '2025-05-22', 7000.00, NULL, NULL, 1, 1, NULL, '2025-05-27 07:35:11', '2025-05-27 07:35:11'),
+(2, 1, 1, 1, '2025-05-27', 5000.00, NULL, NULL, 1, 1, NULL, '2025-05-27 07:47:36', '2025-05-27 07:47:36'),
+(3, 1, 1, 2, '2025-05-22', 7000.00, NULL, NULL, 1, 1, NULL, '2025-05-27 07:50:44', '2025-05-27 07:50:44'),
+(4, 1, 1, 2, '2025-05-27', 1000.00, NULL, NULL, 1, 1, NULL, '2025-05-27 07:52:29', '2025-05-27 07:52:29'),
+(5, 2, 1, 3, '2025-05-28', 2000.00, NULL, NULL, 1, 1, NULL, '2025-05-27 18:20:37', '2025-05-27 18:20:37'),
+(6, 4, 1, 13, '2025-05-29', 6500.00, NULL, NULL, 1, 1, NULL, '2025-06-09 11:59:47', '2025-06-09 11:59:47'),
+(7, 4, 1, 14, '2025-05-20', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 12:13:09', '2025-06-09 12:13:09'),
+(8, 4, 1, 15, '2025-05-29', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 12:24:45', '2025-06-09 12:24:45'),
+(9, 4, 1, 17, '2025-06-09', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 12:40:45', '2025-06-09 12:40:45'),
+(10, 4, 1, 18, '2025-06-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 12:55:53', '2025-06-09 12:55:53'),
+(11, 4, 1, 19, '2025-06-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 13:09:06', '2025-06-09 13:09:06'),
+(12, 4, 1, 20, '2025-06-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
+(13, 5, 1, 78, '2025-05-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
+(14, 6, 1, 95, '2025-06-17', 7000.00, NULL, NULL, 1, 1, NULL, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
+(15, 6, 1, 96, '2025-06-17', 7000.00, NULL, NULL, 1, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29');
 
 -- --------------------------------------------------------
 
@@ -284,17 +770,25 @@ CREATE TABLE `customer_payments` (
 CREATE TABLE `expenses` (
   `id` bigint UNSIGNED NOT NULL,
   `account_id` bigint NOT NULL,
-  `expense_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expense_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_amount` decimal(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`id`, `account_id`, `expense_no`, `date`, `total_amount`, `reference_number`, `note`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '0000001', '2025-05-22', '14000.00', NULL, 'Pre-Medical Fee', 1, 1, 1, '2025-05-29 19:26:08', '2025-05-29 19:26:22'),
+(2, 1, '0000002', '2025-06-04', '10000.00', NULL, '5000Tk.  due ..have to pay after vacation', 1, 1, 1, '2025-06-13 17:48:05', '2025-06-13 17:48:16');
 
 -- --------------------------------------------------------
 
@@ -304,11 +798,20 @@ CREATE TABLE `expenses` (
 
 CREATE TABLE `expense_categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `cat_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cat_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expense_categories`
+--
+
+INSERT INTO `expense_categories` (`id`, `cat_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Rent', 1, '2025-05-29 16:28:48', '2025-05-29 16:28:48'),
+(2, 'Salary', 1, '2025-05-29 16:29:03', '2025-05-29 16:29:03'),
+(3, 'Purchase', 1, '2025-05-29 16:29:23', '2025-05-29 16:29:23');
 
 -- --------------------------------------------------------
 
@@ -322,10 +825,18 @@ CREATE TABLE `expense_details` (
   `expense_head_id` int NOT NULL,
   `amount` decimal(20,2) NOT NULL,
   `quantity` decimal(10,2) NOT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expense_details`
+--
+
+INSERT INTO `expense_details` (`id`, `expense_id`, `expense_head_id`, `amount`, `quantity`, `note`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, '7000.00', '2.00', NULL, '2025-05-29 19:26:08', '2025-05-29 19:26:08'),
+(2, 2, 2, '10000.00', '1.00', NULL, '2025-06-13 17:48:05', '2025-06-13 17:48:05');
 
 -- --------------------------------------------------------
 
@@ -336,14 +847,24 @@ CREATE TABLE `expense_details` (
 CREATE TABLE `expense_heads` (
   `id` bigint UNSIGNED NOT NULL,
   `expense_category_id` bigint NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expense_heads`
+--
+
+INSERT INTO `expense_heads` (`id`, `expense_category_id`, `title`, `code`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Office Rent', NULL, 1, 1, NULL, '2025-05-29 16:29:51', '2025-05-29 16:29:51'),
+(2, 2, 'Staff Salary', NULL, 1, 1, NULL, '2025-05-29 16:30:04', '2025-05-29 16:30:04'),
+(3, 3, 'Service Purchase', NULL, 1, 1, NULL, '2025-05-29 16:30:19', '2025-05-29 16:30:19'),
+(4, 3, 'Slip', NULL, 1, 1, NULL, '2025-05-29 19:27:28', '2025-05-29 19:27:28');
 
 -- --------------------------------------------------------
 
@@ -353,11 +874,11 @@ CREATE TABLE `expense_heads` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -371,8 +892,8 @@ CREATE TABLE `frontend_menus` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_id` int NOT NULL DEFAULT '0',
   `srln` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_in_menus` tinyint NOT NULL DEFAULT '1',
   `is_in_pages` tinyint NOT NULL DEFAULT '0',
   `status` tinyint NOT NULL DEFAULT '1',
@@ -394,8 +915,8 @@ CREATE TABLE `fund_transfer_histories` (
   `from_account_id` bigint UNSIGNED NOT NULL,
   `to_account_id` bigint UNSIGNED NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` bigint UNSIGNED DEFAULT NULL,
   `updated_by_id` bigint UNSIGNED DEFAULT NULL,
@@ -416,10 +937,10 @@ CREATE TABLE `investor_transactions` (
   `debit_amount` decimal(20,2) DEFAULT NULL COMMENT 'Withdrawal',
   `credit_amount` decimal(20,2) DEFAULT NULL COMMENT 'Deposit',
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `transaction_date` date NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved, 2=Cancelled',
   `created_by_id` bigint DEFAULT NULL,
   `updated_by_id` bigint DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -438,8 +959,8 @@ CREATE TABLE `items` (
   `package_id` int DEFAULT NULL,
   `package_item_id` int DEFAULT NULL,
   `srl` int DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
   `purchase_price` double(20,2) NOT NULL DEFAULT '0.00',
   `sale_price` double(20,2) NOT NULL DEFAULT '0.00',
   `next_item_id` int DEFAULT NULL COMMENT 'for service works order',
@@ -455,13 +976,33 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `item_type`, `package_id`, `package_item_id`, `srl`, `name`, `description`, `purchase_price`, `sale_price`, `next_item_id`, `vat`, `is_saleable`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 7000.00, 7000.00, 2, 0.00, 1, 1, '2025-05-04 21:25:44', '2025-05-25 00:19:12'),
-(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2000.00, 2100.00, 3, 0.00, 1, 1, '2025-05-04 21:26:53', '2025-05-04 21:26:53'),
-(3, 0, NULL, NULL, 3, 'Slip Proccess', NULL, 2000.00, 2100.00, 4, 0.00, 1, 1, '2025-05-04 21:27:42', '2025-05-04 21:27:42'),
+(1, 0, NULL, NULL, 1, 'Pre Medical', NULL, 0.00, 0.00, 2, 0.00, 1, 1, '2025-05-04 21:25:44', '2025-05-27 15:35:16'),
+(2, 0, NULL, NULL, 2, 'Settlement', NULL, 2500.00, 3000.00, 3, 0.00, 1, 1, '2025-05-04 21:26:53', '2025-06-17 05:41:29'),
+(3, 0, NULL, NULL, 3, 'Slip Process', NULL, 2000.00, 2500.00, 4, 0.00, 1, 1, '2025-05-04 21:27:42', '2025-06-17 05:41:38'),
 (4, 0, NULL, NULL, 4, 'MOFA', NULL, 0.00, 0.00, 5, 0.00, 0, 1, '2025-05-04 21:28:02', '2025-05-04 21:28:02'),
 (5, 0, NULL, NULL, 5, 'Fit Card', NULL, 0.00, 0.00, 0, 0.00, 0, 1, '2025-05-04 22:41:34', '2025-05-04 22:41:34'),
 (6, 1, NULL, NULL, NULL, 'Slip Process Self', NULL, 0.00, 0.00, NULL, 0.00, 1, 1, '2025-05-27 06:23:54', '2025-05-27 06:23:54'),
-(7, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 06:23:54', '2025-05-27 06:23:54');
+(7, NULL, 6, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 06:23:54', '2025-05-27 06:23:54'),
+(8, 1, NULL, NULL, NULL, 'Standard PKG-1 ( Satelment, Slip, MOFA,FIT Card)', NULL, 3000.00, 5000.00, NULL, 0.00, 1, 1, '2025-05-27 07:46:30', '2025-05-27 07:46:30'),
+(13, 1, NULL, NULL, NULL, 'Satelment- P1-2K', NULL, 1500.00, 2000.00, NULL, 0.00, 1, 1, '2025-05-27 15:38:04', '2025-05-27 15:57:26'),
+(18, NULL, 8, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:55:25', '2025-05-27 15:55:25'),
+(19, NULL, 8, 3, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:55:25', '2025-05-27 15:55:25'),
+(20, NULL, 8, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:55:25', '2025-05-27 15:55:25'),
+(21, NULL, 8, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:55:25', '2025-05-27 15:55:25'),
+(22, NULL, 13, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:57:26', '2025-05-27 15:57:26'),
+(23, NULL, 13, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:57:26', '2025-05-27 15:57:26'),
+(24, NULL, 13, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:57:26', '2025-05-27 15:57:26'),
+(25, NULL, 13, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:57:26', '2025-05-27 15:57:26'),
+(26, 1, NULL, NULL, NULL, 'Satelment- P2-4K', NULL, 3500.00, 4000.00, NULL, 0.00, 1, 1, '2025-05-27 15:58:28', '2025-05-27 15:58:28'),
+(27, NULL, 26, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:58:28', '2025-05-27 15:58:28'),
+(28, NULL, 26, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:58:28', '2025-05-27 15:58:28'),
+(29, NULL, 26, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:58:28', '2025-05-27 15:58:28'),
+(30, NULL, 26, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:58:28', '2025-05-27 15:58:28'),
+(31, 1, NULL, NULL, NULL, 'Satelment- P3-6.5K', NULL, 6000.00, 6500.00, NULL, 0.00, 1, 1, '2025-05-27 15:59:13', '2025-05-27 15:59:13'),
+(32, NULL, 31, 1, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:59:13', '2025-05-27 15:59:13'),
+(33, NULL, 31, 2, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:59:13', '2025-05-27 15:59:13'),
+(34, NULL, 31, 4, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:59:13', '2025-05-27 15:59:13'),
+(35, NULL, 31, 5, NULL, '', NULL, 0.00, 0.00, NULL, 0.00, NULL, 1, '2025-05-27 15:59:13', '2025-05-27 15:59:13');
 
 -- --------------------------------------------------------
 
@@ -475,10 +1016,10 @@ CREATE TABLE `job_service_records` (
   `item_id` int NOT NULL,
   `entry_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
-  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `medical_centers` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slip_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mofa_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remarks` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `medical_centers` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slip_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mofa_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_enabled` tinyint NOT NULL DEFAULT '0',
   `is_complete` tinyint NOT NULL DEFAULT '0',
   `is_agent_purchased` tinyint NOT NULL DEFAULT '0' COMMENT '1=Yes, 0=No',
@@ -486,6 +1027,508 @@ CREATE TABLE `job_service_records` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `job_service_records`
+--
+
+INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `medical_centers`, `slip_no`, `mofa_no`, `is_enabled`, `is_complete`, `is_agent_purchased`, `status_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2025-05-22', '2025-06-16', 'Held-Up TBIL:1.8', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5', NULL, NULL, 1, 1, 1, 6, '2025-05-27 07:34:50', '2025-05-27 07:37:44'),
+(2, 1, 2, NULL, '2025-06-16', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-05-27 07:34:50', '2025-05-27 07:48:02'),
+(3, 1, 3, NULL, '2025-06-16', NULL, NULL, NULL, NULL, 1, 1, 1, 16, '2025-05-27 07:34:50', '2025-05-29 15:37:26'),
+(4, 1, 4, NULL, '2025-07-22', NULL, NULL, NULL, NULL, 1, 0, 1, 17, '2025-05-27 07:34:50', '2025-05-29 15:37:26'),
+(5, 1, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-05-27 07:34:50', '2025-05-27 07:35:11'),
+(6, 2, 1, '2025-05-22', '2025-06-16', 'Auto FIT', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5', NULL, NULL, 1, 1, 1, 6, '2025-05-27 07:50:39', '2025-05-27 07:51:56'),
+(7, 2, 2, NULL, '2025-06-16', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-05-27 07:50:39', '2025-05-27 07:52:41'),
+(8, 2, 3, '2025-05-27', '2025-06-16', NULL, '4:Center-4:c-4', '92605202572693749', NULL, 1, 1, 1, 16, '2025-05-27 07:50:39', '2025-05-29 15:24:49'),
+(9, 2, 4, NULL, '2025-07-21', NULL, '4:Center-4:c-4', NULL, NULL, 1, 0, 1, 17, '2025-05-27 07:50:39', '2025-05-29 15:24:49'),
+(10, 2, 5, NULL, NULL, NULL, '4:Center-4:c-4', NULL, NULL, 0, 0, 1, 22, '2025-05-27 07:50:39', '2025-05-27 07:54:04'),
+(11, 3, 1, '2025-04-16', '2025-05-11', 'CHEST X-RAY:Fibrosis With Calcification', '1:Center-1:c-1|4:Center-4:c-4', NULL, NULL, 1, 1, 1, 6, '2025-05-27 18:18:05', '2025-05-27 18:19:49'),
+(12, 3, 2, NULL, '2025-05-11', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-05-27 18:18:05', '2025-05-27 18:20:50'),
+(13, 3, 3, '2025-05-28', '2025-05-11', NULL, '6:Center-6:c-6', '91105202572354717', NULL, 1, 1, 1, 16, '2025-05-27 18:18:05', '2025-05-27 18:24:40'),
+(14, 3, 4, '2025-05-28', '2025-07-07', NULL, '6:Center-6:c-6', NULL, 'E793661965', 1, 1, 1, 21, '2025-05-27 18:18:05', '2025-05-27 18:26:12'),
+(15, 3, 5, '2025-05-28', NULL, NULL, '6:Center-6:c-6', NULL, NULL, 1, 1, 1, 26, '2025-05-27 18:18:05', '2025-05-27 18:26:35'),
+(16, 4, 1, '2025-06-01', '2025-06-26', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-01 06:55:55', '2025-06-01 09:01:34'),
+(17, 4, 2, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-01 06:55:55', '2025-06-01 09:01:34'),
+(18, 4, 3, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-01 06:55:55', '2025-06-01 09:01:34'),
+(19, 4, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-01 06:55:55', '2025-06-01 06:56:07'),
+(20, 4, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-01 06:55:55', '2025-06-01 06:56:07'),
+(21, 5, 1, '2025-06-01', '2025-06-26', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-01 06:57:28', '2025-06-01 09:01:04'),
+(22, 5, 2, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-01 06:57:28', '2025-06-01 09:01:04'),
+(23, 5, 3, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-01 06:57:28', '2025-06-01 09:01:04'),
+(24, 5, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-01 06:57:28', '2025-06-01 06:57:32'),
+(25, 5, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-01 06:57:28', '2025-06-01 06:57:32'),
+(26, 6, 1, '2025-06-01', '2025-06-26', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-01 07:35:29', '2025-06-01 09:00:52'),
+(27, 6, 2, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-01 07:35:29', '2025-06-01 09:00:52'),
+(28, 6, 3, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-01 07:35:29', '2025-06-01 09:00:52'),
+(29, 6, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-01 07:35:29', '2025-06-01 08:53:24'),
+(30, 6, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-01 07:35:29', '2025-06-01 08:53:24'),
+(31, 7, 1, '2025-06-01', '2025-06-26', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-01 07:39:13', '2025-06-01 09:00:36'),
+(32, 7, 2, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-01 07:39:13', '2025-06-01 09:00:36'),
+(33, 7, 3, NULL, '2025-06-26', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-01 07:39:13', '2025-06-01 09:00:36'),
+(34, 7, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-01 07:39:13', '2025-06-01 08:53:26'),
+(35, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-01 07:39:13', '2025-06-01 08:53:26'),
+(36, 8, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-02 10:42:53', '2025-06-02 14:36:16'),
+(37, 8, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-02 10:42:53', '2025-06-02 10:42:53'),
+(38, 8, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-02 10:42:53', '2025-06-02 10:42:53'),
+(39, 8, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-02 10:42:53', '2025-06-02 14:36:16'),
+(40, 8, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-02 10:42:53', '2025-06-02 14:36:16'),
+(41, 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-02 10:45:29', '2025-06-02 14:36:28'),
+(42, 9, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-02 10:45:29', '2025-06-02 10:45:29'),
+(43, 9, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-02 10:45:29', '2025-06-02 10:45:29'),
+(44, 9, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-02 10:45:29', '2025-06-02 14:36:28'),
+(45, 9, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-02 10:45:29', '2025-06-02 14:36:28'),
+(46, 10, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-02 10:46:16', '2025-06-02 14:36:38'),
+(47, 10, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-02 10:46:16', '2025-06-02 10:46:16'),
+(48, 10, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-02 10:46:16', '2025-06-02 10:46:16'),
+(49, 10, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-02 10:46:16', '2025-06-02 14:36:38'),
+(50, 10, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-02 10:46:16', '2025-06-02 14:36:38'),
+(51, 11, 1, '2025-06-02', '2025-06-27', NULL, NULL, NULL, NULL, 1, 0, 1, 3, '2025-06-02 10:47:17', '2025-06-09 13:22:15'),
+(52, 11, 2, NULL, '2025-06-27', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-02 10:47:17', '2025-06-09 11:50:53'),
+(53, 11, 3, NULL, '2025-06-27', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-02 10:47:17', '2025-06-09 11:50:53'),
+(54, 11, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-02 10:47:17', '2025-06-02 14:36:21'),
+(55, 11, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-02 10:47:17', '2025-06-02 14:36:21'),
+(56, 12, 1, '2025-06-02', '2025-06-27', NULL, NULL, NULL, NULL, 1, 0, 1, 3, '2025-06-02 10:50:22', '2025-06-09 13:21:41'),
+(57, 12, 2, NULL, '2025-06-27', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-02 10:50:22', '2025-06-09 11:50:00'),
+(58, 12, 3, NULL, '2025-06-27', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-02 10:50:22', '2025-06-09 11:50:00'),
+(59, 12, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-02 10:50:22', '2025-06-02 14:36:04'),
+(60, 12, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-02 10:50:22', '2025-06-02 14:36:04'),
+(61, 13, 1, '2025-05-06', '2025-05-31', 'Tumor in rt shoulder ,CHEST X-RAY:Scoliosis', '1:Center-1:c-1|6:Center-6:c-6|7:Center-7:c-7', NULL, NULL, 1, 1, 1, 6, '2025-06-09 11:54:45', '2025-06-09 11:57:26'),
+(62, 13, 2, NULL, '2025-05-31', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 11:54:45', '2025-06-09 12:01:01'),
+(63, 13, 3, '2025-06-09', '2025-05-31', NULL, '6:Center-6:c-6', '91805202572503396', NULL, 1, 1, 1, 16, '2025-06-09 11:54:45', '2025-06-09 12:06:02'),
+(64, 13, 4, NULL, '2025-07-14', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 11:54:45', '2025-06-09 12:06:02'),
+(65, 13, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 11:54:45', '2025-06-09 12:04:00'),
+(66, 14, 1, '2025-05-14', '2025-06-08', 'Auto FIT', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 12:08:02', '2025-06-09 12:11:48'),
+(67, 14, 2, NULL, '2025-06-08', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 12:08:02', '2025-06-09 12:13:34'),
+(68, 14, 3, '2025-06-09', '2025-06-08', NULL, '6:Center-6:c-6', '92105202572585442', NULL, 1, 1, 1, 16, '2025-06-09 12:08:02', '2025-06-09 12:17:18'),
+(69, 14, 4, NULL, '2025-07-21', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 12:08:02', '2025-06-09 12:17:18'),
+(70, 14, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 12:08:02', '2025-06-09 12:15:37'),
+(71, 15, 1, '2025-05-25', '2025-06-19', 'Auto FIT', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 12:21:08', '2025-06-09 12:24:01'),
+(72, 15, 2, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 12:21:08', '2025-06-09 12:25:18'),
+(73, 15, 3, '2025-06-09', '2025-06-19', NULL, '6:Center-6:c-6', '93005202572767950', NULL, 1, 1, 1, 16, '2025-06-09 12:21:08', '2025-06-09 12:28:18'),
+(74, 15, 4, NULL, '2025-07-25', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 12:21:08', '2025-06-09 12:28:18'),
+(75, 15, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 12:21:08', '2025-06-09 12:26:59'),
+(76, 16, 1, '2025-05-25', '2025-06-19', NULL, NULL, NULL, NULL, 1, 0, 1, 3, '2025-06-09 12:31:27', '2025-06-09 12:33:36'),
+(77, 16, 2, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-09 12:31:27', '2025-06-09 12:32:06'),
+(78, 16, 3, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-09 12:31:27', '2025-06-09 12:32:06'),
+(79, 16, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-09 12:31:27', '2025-06-09 12:31:36'),
+(80, 16, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-09 12:31:27', '2025-06-09 12:31:36'),
+(81, 17, 1, '2025-05-25', '2025-06-19', 'Infected psoriasis', '1:Center-1:c-1|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 12:35:40', '2025-06-09 12:38:05'),
+(82, 17, 2, '2025-06-09', '2025-06-19', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 12:35:40', '2025-06-09 12:48:41'),
+(83, 17, 3, '2025-06-09', '2025-06-19', NULL, '6:Center-6:c-6', '93005202572768036', NULL, 1, 1, 1, 16, '2025-06-09 12:35:40', '2025-06-09 12:51:52'),
+(84, 17, 4, NULL, '2025-07-25', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 12:35:40', '2025-06-09 12:51:52'),
+(85, 17, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 12:35:40', '2025-06-09 12:50:41'),
+(86, 18, 1, '2025-05-25', '2025-06-19', 'Auto FIT', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 12:53:33', '2025-06-09 12:55:07'),
+(87, 18, 2, NULL, '2025-06-19', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 12:53:33', '2025-06-09 12:56:35'),
+(88, 18, 3, '2025-06-09', '2025-06-19', NULL, '6:Center-6:c-6', '93005202572767979', NULL, 1, 1, 1, 16, '2025-06-09 12:53:33', '2025-06-09 12:59:23'),
+(89, 18, 4, NULL, '2025-07-27', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 12:53:33', '2025-06-09 12:59:23'),
+(90, 18, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 12:53:33', '2025-06-09 12:58:33'),
+(91, 19, 1, '2025-05-26', '2025-06-20', 'CHEST X-RAY:Calcification', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 13:03:47', '2025-06-09 13:06:33'),
+(92, 19, 2, NULL, '2025-06-20', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 13:03:47', '2025-06-09 13:09:39'),
+(93, 19, 3, '2025-06-09', '2025-06-20', NULL, '6:Center-6:c-6', '93005202572768008', NULL, 1, 1, 1, 16, '2025-06-09 13:03:47', '2025-06-09 13:12:36'),
+(94, 19, 4, NULL, '2025-07-28', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 13:03:47', '2025-06-09 13:12:36'),
+(95, 19, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 13:03:47', '2025-06-09 13:11:12'),
+(96, 20, 1, '2025-05-26', '2025-06-20', 'CHEST X-RAY:Left Hilar Calcification', '1:Center-1:c-1|2:Center-2:c-2|4:Center-4:c-4|5:Center-5:c-5|6:Center-6:c-6', NULL, NULL, 1, 1, 1, 6, '2025-06-09 13:14:20', '2025-06-09 13:16:40'),
+(97, 20, 2, NULL, '2025-06-20', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-09 13:14:20', '2025-06-09 13:17:42'),
+(98, 20, 3, '2025-06-09', '2025-06-20', NULL, '6:Center-6:c-6', '93105202572783329', NULL, 1, 1, 1, 16, '2025-06-09 13:14:20', '2025-06-09 13:19:38'),
+(99, 20, 4, NULL, '2025-07-27', NULL, '6:Center-6:c-6', NULL, NULL, 1, 0, 1, 17, '2025-06-09 13:14:20', '2025-06-09 13:19:38'),
+(100, 20, 5, NULL, NULL, NULL, '6:Center-6:c-6', NULL, NULL, 0, 0, 1, 22, '2025-06-09 13:14:20', '2025-06-09 13:19:01'),
+(101, 21, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:01:10', '2025-06-15 05:09:41'),
+(102, 21, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:01:10', '2025-06-15 05:01:10'),
+(103, 21, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:01:10', '2025-06-15 05:01:10'),
+(104, 21, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:01:10', '2025-06-15 05:09:41'),
+(105, 21, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:01:10', '2025-06-15 05:09:41'),
+(106, 22, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:03:21', '2025-06-15 05:09:43'),
+(107, 22, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:03:21', '2025-06-15 05:03:21'),
+(108, 22, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:03:21', '2025-06-15 05:03:21'),
+(109, 22, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:03:21', '2025-06-15 05:09:43'),
+(110, 22, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:03:21', '2025-06-15 05:09:43'),
+(111, 23, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:05:14', '2025-06-15 05:10:15'),
+(112, 23, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:05:14', '2025-06-15 05:05:14'),
+(113, 23, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:05:14', '2025-06-15 05:05:14'),
+(114, 23, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:05:14', '2025-06-15 05:10:15'),
+(115, 23, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:05:14', '2025-06-15 05:10:15'),
+(116, 24, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:06:38', '2025-06-15 05:10:10'),
+(117, 24, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:06:38', '2025-06-15 05:06:38'),
+(118, 24, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:06:38', '2025-06-15 05:06:38'),
+(119, 24, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:06:38', '2025-06-15 05:10:10'),
+(120, 24, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:06:38', '2025-06-15 05:10:10'),
+(121, 25, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:07:45', '2025-06-15 05:09:58'),
+(122, 25, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:07:45', '2025-06-15 05:07:45'),
+(123, 25, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:07:45', '2025-06-15 05:07:45'),
+(124, 25, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:07:45', '2025-06-15 05:09:58'),
+(125, 25, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:07:45', '2025-06-15 05:09:58'),
+(126, 26, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:09:36', '2025-06-15 05:09:47'),
+(127, 26, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:09:36', '2025-06-15 05:09:36'),
+(128, 26, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:09:36', '2025-06-15 05:09:36'),
+(129, 26, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:09:36', '2025-06-15 05:09:47'),
+(130, 26, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:09:36', '2025-06-15 05:09:47'),
+(131, 27, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:15:01', '2025-06-15 07:54:10'),
+(132, 27, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:15:01', '2025-06-15 05:15:01'),
+(133, 27, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:15:01', '2025-06-15 05:15:01'),
+(134, 27, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:15:01', '2025-06-15 07:54:10'),
+(135, 27, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:15:01', '2025-06-15 07:54:10'),
+(136, 28, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:16:03', '2025-06-15 07:53:59'),
+(137, 28, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:16:03', '2025-06-15 05:16:03'),
+(138, 28, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:16:03', '2025-06-15 05:16:03'),
+(139, 28, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:16:03', '2025-06-15 07:53:59'),
+(140, 28, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:16:03', '2025-06-15 07:53:59'),
+(141, 29, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
+(142, 29, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:18:39', '2025-06-15 05:18:39'),
+(143, 29, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:18:39', '2025-06-15 05:18:39'),
+(144, 29, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
+(145, 29, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
+(146, 30, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
+(147, 30, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:19:40', '2025-06-15 05:19:40'),
+(148, 30, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:19:40', '2025-06-15 05:19:40'),
+(149, 30, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
+(150, 30, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
+(151, 31, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
+(152, 31, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:21:15', '2025-06-15 05:21:15'),
+(153, 31, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:21:15', '2025-06-15 05:21:15'),
+(154, 31, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
+(155, 31, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
+(156, 32, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(157, 32, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:22:46', '2025-06-15 05:22:46'),
+(158, 32, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:22:46', '2025-06-15 05:22:46'),
+(159, 32, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(160, 32, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(161, 33, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
+(162, 33, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:24:29', '2025-06-15 05:24:29'),
+(163, 33, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:24:29', '2025-06-15 05:24:29'),
+(164, 33, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
+(165, 33, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
+(166, 34, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
+(167, 34, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:25:32', '2025-06-15 05:25:32'),
+(168, 34, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:25:32', '2025-06-15 05:25:32'),
+(169, 34, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
+(170, 34, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
+(171, 35, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
+(172, 35, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:26:56', '2025-06-15 05:26:56'),
+(173, 35, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:26:56', '2025-06-15 05:26:56'),
+(174, 35, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
+(175, 35, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
+(176, 36, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:10:41', '2025-06-15 12:02:52'),
+(177, 36, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:10:41', '2025-06-15 09:10:41'),
+(178, 36, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:10:41', '2025-06-15 09:10:41'),
+(179, 36, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:10:41', '2025-06-15 12:02:52'),
+(180, 36, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:10:41', '2025-06-15 12:02:52'),
+(181, 37, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:12:52', '2025-06-15 12:02:44'),
+(182, 37, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:12:52', '2025-06-15 09:12:52'),
+(183, 37, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:12:52', '2025-06-15 09:12:52'),
+(184, 37, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:12:52', '2025-06-15 12:02:44'),
+(185, 37, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:12:52', '2025-06-15 12:02:44'),
+(186, 38, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:13:55', '2025-06-15 12:02:17'),
+(187, 38, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:13:55', '2025-06-15 09:13:55'),
+(188, 38, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:13:55', '2025-06-15 09:13:55'),
+(189, 38, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:13:55', '2025-06-15 12:02:17'),
+(190, 38, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:13:55', '2025-06-15 12:02:17'),
+(191, 39, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:30:51', '2025-06-15 12:02:08'),
+(192, 39, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:30:51', '2025-06-15 09:30:51'),
+(193, 39, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:30:51', '2025-06-15 09:30:51'),
+(194, 39, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:30:51', '2025-06-15 12:02:08'),
+(195, 39, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:30:51', '2025-06-15 12:02:08'),
+(196, 40, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:33:19', '2025-06-15 09:56:02'),
+(197, 40, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:33:19', '2025-06-15 09:33:19'),
+(198, 40, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:33:19', '2025-06-15 09:33:19'),
+(199, 40, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:33:19', '2025-06-15 09:56:02'),
+(200, 40, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:33:19', '2025-06-15 09:56:02'),
+(201, 41, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:56:38', '2025-06-15 12:01:46'),
+(202, 41, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:56:38', '2025-06-15 09:56:38'),
+(203, 41, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:56:38', '2025-06-15 09:56:38'),
+(204, 41, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:56:38', '2025-06-15 12:01:46'),
+(205, 41, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:56:38', '2025-06-15 12:01:46'),
+(206, 42, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:58:08', '2025-06-15 12:01:36'),
+(207, 42, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:58:08', '2025-06-15 09:58:08'),
+(208, 42, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:58:08', '2025-06-15 09:58:08'),
+(209, 42, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:58:08', '2025-06-15 12:01:36'),
+(210, 42, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:58:08', '2025-06-15 12:01:36'),
+(211, 43, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 09:59:19', '2025-06-15 12:01:29'),
+(212, 43, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 09:59:19', '2025-06-15 09:59:19'),
+(213, 43, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 09:59:19', '2025-06-15 09:59:19'),
+(214, 43, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 09:59:19', '2025-06-15 12:01:29'),
+(215, 43, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 09:59:19', '2025-06-15 12:01:29'),
+(216, 44, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:06:59', '2025-06-15 12:01:23'),
+(217, 44, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:06:59', '2025-06-15 10:06:59'),
+(218, 44, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:06:59', '2025-06-15 10:06:59'),
+(219, 44, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:06:59', '2025-06-15 12:01:23'),
+(220, 44, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:06:59', '2025-06-15 12:01:23'),
+(221, 45, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:08:59', '2025-06-15 12:01:15'),
+(222, 45, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:08:59', '2025-06-15 10:08:59'),
+(223, 45, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:08:59', '2025-06-15 10:08:59'),
+(224, 45, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:08:59', '2025-06-15 12:01:15'),
+(225, 45, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:08:59', '2025-06-15 12:01:15'),
+(226, 46, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:09:51', '2025-06-15 12:01:08'),
+(227, 46, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:09:51', '2025-06-15 10:09:51'),
+(228, 46, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:09:51', '2025-06-15 10:09:51'),
+(229, 46, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:09:51', '2025-06-15 12:01:08'),
+(230, 46, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:09:51', '2025-06-15 12:01:08'),
+(231, 47, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:13:25', '2025-06-15 12:00:23'),
+(232, 47, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:13:25', '2025-06-15 10:13:25'),
+(233, 47, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:13:25', '2025-06-15 10:13:25'),
+(234, 47, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:13:25', '2025-06-15 12:00:23'),
+(235, 47, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:13:25', '2025-06-15 12:00:23'),
+(236, 48, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:15:18', '2025-06-15 12:00:16'),
+(237, 48, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:15:18', '2025-06-15 10:15:18'),
+(238, 48, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:15:18', '2025-06-15 10:15:18'),
+(239, 48, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:15:18', '2025-06-15 12:00:16'),
+(240, 48, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:15:18', '2025-06-15 12:00:16'),
+(241, 49, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:16:25', '2025-06-15 12:00:10'),
+(242, 49, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:16:25', '2025-06-15 10:16:25'),
+(243, 49, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:16:25', '2025-06-15 10:16:25'),
+(244, 49, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:16:25', '2025-06-15 12:00:10'),
+(245, 49, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:16:25', '2025-06-15 12:00:10'),
+(246, 50, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:17:17', '2025-06-15 12:00:03'),
+(247, 50, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:17:17', '2025-06-15 10:17:17'),
+(248, 50, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:17:17', '2025-06-15 10:17:17'),
+(249, 50, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:17:17', '2025-06-15 12:00:03'),
+(250, 50, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:17:17', '2025-06-15 12:00:03'),
+(251, 51, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:18:19', '2025-06-15 11:59:58'),
+(252, 51, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:18:19', '2025-06-15 10:18:19'),
+(253, 51, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:18:19', '2025-06-15 10:18:19'),
+(254, 51, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:18:19', '2025-06-15 11:59:58'),
+(255, 51, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:18:19', '2025-06-15 11:59:58'),
+(256, 52, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:19:20', '2025-06-15 11:59:53'),
+(257, 52, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:19:20', '2025-06-15 10:19:20'),
+(258, 52, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:19:20', '2025-06-15 10:19:20'),
+(259, 52, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:19:20', '2025-06-15 11:59:53'),
+(260, 52, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:19:20', '2025-06-15 11:59:53'),
+(261, 53, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:20:50', '2025-06-15 11:59:42'),
+(262, 53, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:20:50', '2025-06-15 10:20:50'),
+(263, 53, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:20:50', '2025-06-15 10:20:50'),
+(264, 53, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:20:50', '2025-06-15 11:59:42'),
+(265, 53, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:20:50', '2025-06-15 11:59:42'),
+(266, 54, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:22:37', '2025-06-15 11:59:38'),
+(267, 54, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:22:37', '2025-06-15 10:22:37'),
+(268, 54, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:22:37', '2025-06-15 10:22:37'),
+(269, 54, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:22:37', '2025-06-15 11:59:38'),
+(270, 54, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:22:37', '2025-06-15 11:59:38'),
+(271, 55, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:24:14', '2025-06-15 11:59:30'),
+(272, 55, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:24:14', '2025-06-15 10:24:14'),
+(273, 55, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:24:14', '2025-06-15 10:24:14'),
+(274, 55, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:24:14', '2025-06-15 11:59:30'),
+(275, 55, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:24:14', '2025-06-15 11:59:30'),
+(276, 56, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:25:02', '2025-06-15 11:59:25'),
+(277, 56, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:25:02', '2025-06-15 10:25:02'),
+(278, 56, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:25:02', '2025-06-15 10:25:02'),
+(279, 56, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:25:02', '2025-06-15 11:59:25'),
+(280, 56, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:25:02', '2025-06-15 11:59:25'),
+(281, 57, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:29:20', '2025-06-15 11:59:20'),
+(282, 57, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:29:20', '2025-06-15 10:29:20'),
+(283, 57, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:29:20', '2025-06-15 10:29:20'),
+(284, 57, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:29:20', '2025-06-15 11:59:18'),
+(285, 57, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:29:20', '2025-06-15 11:59:18'),
+(286, 58, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:30:19', '2025-06-15 11:59:16'),
+(287, 58, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:30:19', '2025-06-15 10:30:19'),
+(288, 58, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:30:19', '2025-06-15 10:30:19'),
+(289, 58, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:30:19', '2025-06-15 11:59:16'),
+(290, 58, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:30:19', '2025-06-15 11:59:16'),
+(291, 59, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:31:56', '2025-06-15 11:59:14'),
+(292, 59, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:31:56', '2025-06-15 10:31:56'),
+(293, 59, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:31:56', '2025-06-15 10:31:56'),
+(294, 59, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:31:56', '2025-06-15 11:59:12'),
+(295, 59, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:31:56', '2025-06-15 11:59:12'),
+(296, 60, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:33:27', '2025-06-15 11:59:09'),
+(297, 60, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:33:27', '2025-06-15 10:33:27'),
+(298, 60, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:33:27', '2025-06-15 10:33:27'),
+(299, 60, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:33:27', '2025-06-15 11:59:07'),
+(300, 60, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:33:27', '2025-06-15 11:59:07'),
+(301, 61, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:34:30', '2025-06-15 11:59:05'),
+(302, 61, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:34:30', '2025-06-15 10:34:30'),
+(303, 61, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:34:30', '2025-06-15 10:34:30'),
+(304, 61, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:34:30', '2025-06-15 11:59:04'),
+(305, 61, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:34:30', '2025-06-15 11:59:04'),
+(306, 62, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:35:42', '2025-06-15 11:59:01'),
+(307, 62, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:35:42', '2025-06-15 10:35:42'),
+(308, 62, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:35:42', '2025-06-15 10:35:42'),
+(309, 62, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:35:42', '2025-06-15 11:58:59'),
+(310, 62, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:35:42', '2025-06-15 11:58:59'),
+(311, 63, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:36:48', '2025-06-15 11:58:55'),
+(312, 63, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:36:48', '2025-06-15 10:36:48'),
+(313, 63, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:36:48', '2025-06-15 10:36:48'),
+(314, 63, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:36:48', '2025-06-15 11:58:54'),
+(315, 63, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:36:48', '2025-06-15 11:58:54'),
+(316, 64, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:38:24', '2025-06-15 11:58:51'),
+(317, 64, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:38:24', '2025-06-15 10:38:24'),
+(318, 64, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:38:24', '2025-06-15 10:38:24'),
+(319, 64, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:38:24', '2025-06-15 11:58:49'),
+(320, 64, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:38:24', '2025-06-15 11:58:49'),
+(321, 65, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:39:28', '2025-06-15 11:58:46'),
+(322, 65, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:39:28', '2025-06-15 10:39:28'),
+(323, 65, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:39:28', '2025-06-15 10:39:28'),
+(324, 65, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:39:28', '2025-06-15 11:58:44'),
+(325, 65, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:39:28', '2025-06-15 11:58:44'),
+(326, 66, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:41:13', '2025-06-15 11:58:41'),
+(327, 66, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:41:13', '2025-06-15 10:41:13'),
+(328, 66, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:41:13', '2025-06-15 10:41:13'),
+(329, 66, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:41:13', '2025-06-15 11:58:40'),
+(330, 66, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:41:13', '2025-06-15 11:58:40'),
+(331, 67, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:42:13', '2025-06-15 11:58:36'),
+(332, 67, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:42:13', '2025-06-15 10:42:13'),
+(333, 67, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:42:13', '2025-06-15 10:42:13'),
+(334, 67, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:42:13', '2025-06-15 11:58:34'),
+(335, 67, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:42:13', '2025-06-15 11:58:34'),
+(336, 68, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:43:07', '2025-06-15 11:58:29'),
+(337, 68, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:43:07', '2025-06-15 10:43:07'),
+(338, 68, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:43:07', '2025-06-15 10:43:07'),
+(339, 68, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:43:07', '2025-06-15 11:58:28'),
+(340, 68, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:43:07', '2025-06-15 11:58:28'),
+(341, 69, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:44:30', '2025-06-15 11:58:26'),
+(342, 69, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:44:30', '2025-06-15 10:44:30'),
+(343, 69, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:44:30', '2025-06-15 10:44:30'),
+(344, 69, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:44:30', '2025-06-15 11:58:24'),
+(345, 69, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:44:30', '2025-06-15 11:58:24'),
+(346, 70, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:45:30', '2025-06-15 11:58:19'),
+(347, 70, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:45:30', '2025-06-15 10:45:30'),
+(348, 70, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:45:30', '2025-06-15 10:45:30'),
+(349, 70, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:45:30', '2025-06-15 11:58:18'),
+(350, 70, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:45:30', '2025-06-15 11:58:18'),
+(351, 71, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:46:12', '2025-06-15 11:58:15'),
+(352, 71, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:46:12', '2025-06-15 10:46:12'),
+(353, 71, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:46:12', '2025-06-15 10:46:12'),
+(354, 71, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:46:12', '2025-06-15 11:58:13'),
+(355, 71, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:46:12', '2025-06-15 11:58:13'),
+(356, 72, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:48:33', '2025-06-15 11:58:11'),
+(357, 72, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:48:33', '2025-06-15 10:48:33'),
+(358, 72, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:48:33', '2025-06-15 10:48:33'),
+(359, 72, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:48:33', '2025-06-15 11:58:09'),
+(360, 72, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:48:33', '2025-06-15 11:58:09'),
+(361, 73, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:49:38', '2025-06-15 11:58:06'),
+(362, 73, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:49:38', '2025-06-15 10:49:38'),
+(363, 73, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:49:38', '2025-06-15 10:49:38'),
+(364, 73, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:49:38', '2025-06-15 11:58:06'),
+(365, 73, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:49:38', '2025-06-15 11:58:06'),
+(366, 74, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:50:42', '2025-06-15 11:58:03'),
+(367, 74, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:50:42', '2025-06-15 10:50:42'),
+(368, 74, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:50:42', '2025-06-15 10:50:42'),
+(369, 74, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:50:42', '2025-06-15 11:58:01'),
+(370, 74, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:50:42', '2025-06-15 11:58:01'),
+(371, 75, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:52:34', '2025-06-15 11:57:58'),
+(372, 75, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:52:34', '2025-06-15 10:52:34'),
+(373, 75, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:52:34', '2025-06-15 10:52:34'),
+(374, 75, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:52:34', '2025-06-15 11:57:56'),
+(375, 75, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:52:34', '2025-06-15 11:57:56'),
+(376, 76, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:53:28', '2025-06-15 11:57:53'),
+(377, 76, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:53:28', '2025-06-15 10:53:28'),
+(378, 76, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:53:28', '2025-06-15 10:53:28'),
+(379, 76, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:53:28', '2025-06-15 11:57:51'),
+(380, 76, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:53:28', '2025-06-15 11:57:51'),
+(381, 77, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 10:54:12', '2025-06-15 11:57:47'),
+(382, 77, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:54:12', '2025-06-15 10:54:12'),
+(383, 77, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:54:12', '2025-06-15 10:54:12'),
+(384, 77, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:54:12', '2025-06-15 11:57:47'),
+(385, 77, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:54:12', '2025-06-15 11:57:47'),
+(386, 78, 1, '2025-04-16', '2025-05-11', 'H/o Fructure in rt hand ,CHEST X-RAY:Fibrosis With Calcification', '1:Center-1:c-1', NULL, NULL, 1, 1, 1, 6, '2025-06-15 10:54:58', '2025-06-15 11:36:57'),
+(387, 78, 2, NULL, '2025-05-11', NULL, NULL, NULL, NULL, 1, 0, 1, 7, '2025-06-15 10:54:58', '2025-06-15 11:38:02'),
+(388, 78, 3, NULL, '2025-05-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:54:58', '2025-06-15 11:34:32'),
+(389, 78, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:54:58', '2025-06-15 11:33:21'),
+(390, 78, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:54:58', '2025-06-15 11:33:21'),
+(391, 79, 1, '2025-04-16', '2025-05-11', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-15 10:56:19', '2025-06-15 17:41:52'),
+(392, 79, 2, NULL, '2025-05-11', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 10:56:19', '2025-06-15 17:44:23'),
+(393, 79, 3, NULL, '2025-05-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 10:56:19', '2025-06-15 17:44:23'),
+(394, 79, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 10:56:19', '2025-06-15 11:33:06'),
+(395, 79, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 10:56:19', '2025-06-15 11:33:06'),
+(396, 80, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:01:56', '2025-06-15 11:57:43'),
+(397, 80, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:01:56', '2025-06-15 11:01:56'),
+(398, 80, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:01:56', '2025-06-15 11:01:56'),
+(399, 80, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:01:56', '2025-06-15 11:57:43'),
+(400, 80, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:01:56', '2025-06-15 11:57:43'),
+(401, 81, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:03:15', '2025-06-15 11:57:41'),
+(402, 81, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:03:15', '2025-06-15 11:03:15'),
+(403, 81, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:03:15', '2025-06-15 11:03:15'),
+(404, 81, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:03:15', '2025-06-15 11:57:39'),
+(405, 81, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:03:15', '2025-06-15 11:57:39'),
+(406, 82, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:04:35', '2025-06-15 11:57:36'),
+(407, 82, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:04:35', '2025-06-15 11:04:35'),
+(408, 82, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:04:35', '2025-06-15 11:04:35'),
+(409, 82, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:04:35', '2025-06-15 11:57:34'),
+(410, 82, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:04:35', '2025-06-15 11:57:34'),
+(411, 83, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:05:13', '2025-06-15 11:57:31'),
+(412, 83, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:05:13', '2025-06-15 11:05:13'),
+(413, 83, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:05:13', '2025-06-15 11:05:13'),
+(414, 83, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:05:13', '2025-06-15 11:57:29'),
+(415, 83, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:05:13', '2025-06-15 11:57:29'),
+(416, 84, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:06:16', '2025-06-15 11:57:24'),
+(417, 84, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:06:16', '2025-06-15 11:06:16'),
+(418, 84, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:06:16', '2025-06-15 11:06:16'),
+(419, 84, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:06:16', '2025-06-15 11:57:24'),
+(420, 84, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:06:16', '2025-06-15 11:57:24'),
+(421, 85, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 11:07:49', '2025-06-15 11:57:18'),
+(422, 85, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 11:07:49', '2025-06-15 11:07:49'),
+(423, 85, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 11:07:49', '2025-06-15 11:07:49'),
+(424, 85, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 11:07:49', '2025-06-15 11:57:18'),
+(425, 85, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 11:07:49', '2025-06-15 11:57:18'),
+(426, 86, 1, '2025-06-16', '2025-07-11', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-16 14:15:38', '2025-06-16 14:15:56'),
+(427, 86, 2, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-16 14:15:38', '2025-06-16 14:15:56'),
+(428, 86, 3, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-16 14:15:38', '2025-06-16 14:15:56'),
+(429, 86, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-16 14:15:38', '2025-06-16 14:15:43'),
+(430, 86, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-16 14:15:38', '2025-06-16 14:15:43'),
+(431, 87, 1, '2025-06-16', '2025-07-11', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-16 14:16:56', '2025-06-16 14:17:09'),
+(432, 87, 2, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-16 14:16:56', '2025-06-16 14:17:09'),
+(433, 87, 3, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-16 14:16:56', '2025-06-16 14:17:09'),
+(434, 87, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-16 14:16:56', '2025-06-16 14:17:01'),
+(435, 87, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-16 14:16:56', '2025-06-16 14:17:01'),
+(436, 88, 1, '2025-06-16', '2025-07-11', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-16 14:18:02', '2025-06-16 14:18:16'),
+(437, 88, 2, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-16 14:18:02', '2025-06-16 14:18:16'),
+(438, 88, 3, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-16 14:18:02', '2025-06-16 14:18:16'),
+(439, 88, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-16 14:18:02', '2025-06-16 14:18:08'),
+(440, 88, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-16 14:18:02', '2025-06-16 14:18:08'),
+(441, 89, 1, '2025-06-16', '2025-07-11', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-16 14:19:12', '2025-06-16 14:19:25'),
+(442, 89, 2, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-16 14:19:12', '2025-06-16 14:19:25'),
+(443, 89, 3, NULL, '2025-07-11', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-16 14:19:12', '2025-06-16 14:19:25'),
+(444, 89, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-16 14:19:12', '2025-06-16 14:19:17'),
+(445, 89, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-16 14:19:12', '2025-06-16 14:19:17'),
+(446, 90, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(447, 90, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 04:18:38', '2025-06-17 04:18:38');
+INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `expire_date`, `remarks`, `medical_centers`, `slip_no`, `mofa_no`, `is_enabled`, `is_complete`, `is_agent_purchased`, `status_id`, `created_at`, `updated_at`) VALUES
+(448, 90, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(449, 90, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(450, 90, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(451, 91, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(452, 91, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(453, 91, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(454, 91, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(455, 91, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(456, 92, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(457, 92, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(458, 92, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(459, 92, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(460, 92, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(461, 93, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
+(462, 93, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 04:24:12', '2025-06-17 04:24:12'),
+(463, 93, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 04:24:12', '2025-06-17 04:24:12'),
+(464, 93, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
+(465, 93, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
+(466, 94, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
+(467, 94, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
+(468, 94, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
+(469, 94, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
+(470, 94, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
+(471, 95, 1, '2025-06-15', '2025-07-10', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
+(472, 95, 2, NULL, '2025-07-10', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
+(473, 95, 3, NULL, '2025-07-10', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
+(474, 95, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 06:07:34', '2025-06-17 06:11:32'),
+(475, 95, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 06:07:34', '2025-06-17 06:11:32'),
+(476, 96, 1, '2025-06-17', '2025-07-12', 'hjfjgfghdfgdf', '1:Center-1:c-1|10:Center-10:c-10|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-17 06:27:39', '2025-06-17 06:33:13'),
+(477, 96, 2, NULL, '2025-07-12', NULL, NULL, NULL, NULL, 1, 0, 0, 7, '2025-06-17 06:27:39', '2025-06-17 06:33:13'),
+(478, 96, 3, NULL, '2025-07-12', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:27:39', '2025-06-17 06:32:07'),
+(479, 96, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
+(480, 96, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
+(481, 97, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(482, 97, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(483, 97, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(484, 97, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(485, 97, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(486, 98, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
+(487, 98, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
+(488, 98, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
+(489, 98, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
+(490, 98, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
+(491, 99, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(492, 99, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(493, 99, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(494, 99, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(495, 99, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
 
 -- --------------------------------------------------------
 
@@ -495,8 +1538,8 @@ CREATE TABLE `job_service_records` (
 
 CREATE TABLE `medical_centers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -528,11 +1571,11 @@ CREATE TABLE `menus` (
   `id` bigint UNSIGNED NOT NULL,
   `parent_id` int NOT NULL DEFAULT '0',
   `srln` int NOT NULL DEFAULT '1',
-  `menu_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `navicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menu_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `navicon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_side_menu` tinyint NOT NULL DEFAULT '0',
-  `create_route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `create_route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -586,7 +1629,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (51, 43, 3, 'Designation', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'designations.create', 'designations.index', 1, '2025-01-19 18:29:53', '2025-01-19 18:32:16'),
 (52, 0, 13, 'All Reports', '<i class=\"nav-icon fas fa-file-alt\"></i>', 1, NULL, NULL, 1, '2025-01-29 04:26:54', '2025-04-28 06:21:56'),
 (56, 52, 4, 'Monthly Expense', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.monthly-expenses', 0, '2025-01-29 04:33:07', '2025-05-27 06:30:24'),
-(57, 52, 5, 'Profit Loss Statement', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.profit-loss-statement', 0, '2025-01-29 04:36:00', '2025-05-27 06:29:40'),
+(57, 52, 5, 'Profit Loss Statement', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.profit-loss-statement', 1, '2025-01-29 04:36:00', '2025-05-27 11:48:39'),
 (58, 52, 6, 'Accounts Ledger', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.account-ledger', 1, '2025-01-29 04:36:22', '2025-04-16 04:37:51'),
 (63, 0, 4, 'Investors', '<i class=\"nav-icon fas fa-user-tie\"></i>', 0, NULL, NULL, 0, '2025-02-19 07:06:17', '2025-04-30 04:55:41'),
 (64, 167, 2, 'Investor Transaction', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'investor-transactions.create', 'investor-transactions.index', 1, '2025-02-20 04:28:14', '2025-04-21 07:08:53'),
@@ -629,7 +1672,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 (102, 84, 4, 'Approve', NULL, 0, NULL, 'bike-sales.approve', 1, '2025-03-11 08:50:23', '2025-03-11 08:50:23'),
 (103, 85, 1, 'Edit', NULL, 0, NULL, 'bike-profits.edit', 1, '2025-03-11 08:51:17', '2025-03-11 08:51:17'),
 (104, 85, 2, 'Close', NULL, 0, NULL, 'bike-profits.change-status', 1, '2025-03-11 08:51:37', '2025-03-14 20:05:47'),
-(105, 0, 10, 'Expense Manage', '<i class=\"nav-icon fa-solid fa-money-bill-wave\"></i>', 1, NULL, NULL, 0, '2025-03-12 03:50:17', '2025-04-28 06:21:38'),
+(105, 0, 10, 'Expense Manage', '<i class=\"nav-icon fa-solid fa-money-bill-wave\"></i>', 1, NULL, NULL, 1, '2025-03-12 03:50:17', '2025-05-29 16:27:37'),
 (106, 105, 1, 'Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expense-categories.create', 'expense-categories.index', 1, '2025-03-12 03:50:17', '2025-03-12 04:32:03'),
 (107, 106, 1, 'Add', NULL, 0, 'expense-categories.create', 'expense-categories.create', 1, '2025-03-12 04:32:22', '2025-03-12 04:33:55'),
 (108, 106, 2, 'Edit', NULL, 0, NULL, 'expense-categories.edit', 1, '2025-03-12 04:33:32', '2025-03-12 04:33:32'),
@@ -720,7 +1763,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -765,7 +1808,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (153, '2025_05_04_123429_create_medical_centers_table', 62),
 (154, '2025_04_30_171205_create_job_service_records_table', 63),
 (155, '2023_12_26_170202_create_items_table', 64),
-(156, '2025_05_04_103031_create_status_lists_table', 65);
+(156, '2025_05_04_103031_create_status_lists_table', 65),
+(157, '2024_04_21_174416_create_purchases_table', 66),
+(158, '2025_02_20_100226_create_investor_transactions_table', 67),
+(159, '2025_06_17_161858_add_passport_img_to_sales_table', 67),
+(160, '2025_06_17_170313_add_country_to_sales_table', 68);
 
 -- --------------------------------------------------------
 
@@ -775,14 +1822,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `parties` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `nid_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `nid_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -811,13 +1858,13 @@ CREATE TABLE `party_ledgers` (
   `loan_type` tinyint NOT NULL COMMENT '0 = loan_given, 1 = loan_taken',
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -834,17 +1881,17 @@ CREATE TABLE `party_loans` (
   `id` bigint UNSIGNED NOT NULL,
   `party_id` bigint UNSIGNED NOT NULL,
   `account_id` bigint UNSIGNED DEFAULT NULL,
-  `loan_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `loan_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `loan_type` tinyint NOT NULL COMMENT '0 = loan_given, 1 = loan_taken',
   `amount` double(20,2) NOT NULL,
   `loan_date` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
   `last_payment_date` date DEFAULT NULL,
   `paid_amount` double(20,2) NOT NULL DEFAULT '0.00',
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int UNSIGNED DEFAULT NULL,
   `updated_by_id` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -865,8 +1912,8 @@ CREATE TABLE `party_payments` (
   `loan_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -881,8 +1928,8 @@ CREATE TABLE `party_payments` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -894,7 +1941,7 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `payment_methods` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_virtual` int NOT NULL DEFAULT '0' COMMENT '0=not virtual, 1=virtual',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -917,11 +1964,11 @@ INSERT INTO `payment_methods` (`id`, `name`, `is_virtual`, `status`, `created_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -960,12 +2007,21 @@ INSERT INTO `privileges` (`id`, `role_id`, `menu_id`, `created_at`, `updated_at`
 (42, 9, 68, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
 (43, 9, 66, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
 (44, 9, 67, '2025-02-26 12:18:38', '2025-02-26 12:18:38'),
-(96, 2, 1, '2025-05-26 07:34:58', '2025-05-26 07:34:58'),
-(97, 2, 137, '2025-05-26 07:34:58', '2025-05-26 07:34:58'),
-(98, 2, 159, '2025-05-26 07:34:58', '2025-05-26 07:34:58'),
-(99, 2, 160, '2025-05-26 07:34:58', '2025-05-26 07:34:58'),
-(100, 2, 186, '2025-05-26 07:34:58', '2025-05-26 07:34:58'),
-(101, 2, 187, '2025-05-26 07:34:58', '2025-05-26 07:34:58');
+(113, 3, 1, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(114, 3, 137, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(115, 3, 155, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(116, 3, 158, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(117, 3, 159, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(118, 3, 160, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(119, 3, 161, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(120, 3, 186, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
+(121, 2, 1, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(122, 2, 137, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(123, 2, 155, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(124, 2, 156, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(125, 2, 159, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(126, 2, 160, '2025-06-17 05:47:51', '2025-06-17 05:47:51'),
+(127, 2, 186, '2025-06-17 05:47:51', '2025-06-17 05:47:51');
 
 -- --------------------------------------------------------
 
@@ -977,7 +2033,7 @@ CREATE TABLE `purchases` (
   `id` bigint UNSIGNED NOT NULL,
   `supplier_id` int NOT NULL,
   `account_id` bigint DEFAULT NULL,
-  `vouchar_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vouchar_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
   `vat_tax` double(20,2) DEFAULT '0.00',
@@ -986,10 +2042,10 @@ CREATE TABLE `purchases` (
   `discount` double(20,2) NOT NULL,
   `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
+  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1022,7 +2078,7 @@ CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
   `is_superadmin` tinyint NOT NULL DEFAULT '0',
   `created_by` int DEFAULT NULL,
-  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_default` tinyint DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1034,7 +2090,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `is_superadmin`, `created_by`, `role`, `is_default`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'Super Admin', 1, NULL, NULL),
-(2, 0, 1, 'Agent', 1, NULL, NULL);
+(2, 0, 1, 'Agent', 1, NULL, NULL),
+(3, 0, 1, 'Manager', 0, '2025-05-27 15:34:26', '2025-05-27 15:34:26');
 
 -- --------------------------------------------------------
 
@@ -1045,11 +2102,13 @@ INSERT INTO `roles` (`id`, `is_superadmin`, `created_by`, `role`, `is_default`, 
 CREATE TABLE `sales` (
   `id` bigint UNSIGNED NOT NULL,
   `customer_id` int NOT NULL,
+  `country_id` bigint DEFAULT NULL,
   `account_id` bigint DEFAULT NULL,
-  `passenger_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `passenger_passport_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passenger_passport_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `passport_img` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `localhost_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `invoice_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `total_price` double(20,2) NOT NULL,
   `vat_tax` double(20,2) DEFAULT '0.00',
@@ -1058,8 +2117,8 @@ CREATE TABLE `sales` (
   `discount` double(20,2) NOT NULL,
   `total_payable` double(20,2) NOT NULL,
   `paid_amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `payment_status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = pending, -1 = partial, 1 = paid',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Processing, 2=Complete, 3=Refunded, 4=Cancelled',
   `created_by_id` int DEFAULT NULL,
@@ -1067,6 +2126,110 @@ CREATE TABLE `sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `customer_id`, `country_id`, `account_id`, `passenger_name`, `passenger_passport_no`, `passport_img`, `localhost_no`, `invoice_no`, `date`, `total_price`, `vat_tax`, `discount_method`, `discount_rate`, `discount`, `total_payable`, `paid_amount`, `reference_number`, `note`, `payment_status`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, 1, 'Md Shameem Hossain', 'EM0800520', NULL, 'SRD05645030', '0000001', '2025-05-22', 12000.00, 0.00, 0, 0.00, 0.00, 12000.00, 12000.00, NULL, NULL, 1, 1, 1, 1, '2025-05-27 07:34:50', '2025-05-27 07:47:36'),
+(2, 1, NULL, 1, 'Md Nazrul Islam', 'A17279680', NULL, 'SRD05130689', '0000002', '2025-05-22', 12000.00, 0.00, 0, 0.00, 0.00, 12000.00, 8000.00, NULL, NULL, 0, 1, 1, 1, '2025-05-27 07:50:39', '2025-05-27 07:52:29'),
+(3, 2, NULL, 1, 'Ibrahim Khalil', 'A11166679', NULL, 'SRD04593063', '0000003', '2025-04-16', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 2, 1, 1, '2025-05-27 18:18:05', '2025-05-27 18:26:35'),
+(4, 3, NULL, 1, 'Sazal Chowdhury', 'A03820990', NULL, 'SRD06715669', '0000004', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-01 06:55:55', '2025-06-01 06:56:07'),
+(5, 3, NULL, 1, 'Md Forid Uddin', 'A18721832', NULL, 'SRD06433967', '0000005', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-01 06:57:28', '2025-06-01 06:57:32'),
+(6, 3, NULL, 1, 'MD FORID UDDIN', 'A18721832', NULL, 'SRD06433967', '0000006', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-01 07:35:29', '2025-06-01 08:53:24'),
+(7, 3, NULL, 1, 'SAZAL CHOWDHURY', 'A03820990', NULL, 'SRD06715669', '0000007', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-01 07:39:13', '2025-06-01 08:53:26'),
+(8, 3, NULL, 1, 'Md Shahibur Rahman', 'A13810751', NULL, 'SRD06902779', '0000008', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-02 10:42:53', '2025-06-02 14:36:16'),
+(9, 3, NULL, 1, 'Md Monir Ahmed', 'EM0533193', NULL, 'SRD06737931', '0000009', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-02 10:45:29', '2025-06-02 14:36:28'),
+(10, 3, NULL, 1, 'Md Monir Ahmed', 'EM0533193', NULL, 'SRD06737931', '0000010', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-02 10:46:16', '2025-06-02 14:36:38'),
+(11, 4, NULL, 1, 'Shaful Islam', 'A15376150', NULL, 'SRD06605496', '0000011', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-02 10:47:17', '2025-06-02 14:36:21'),
+(12, 4, NULL, 1, 'Delowar Hossain', 'A14902002', NULL, 'SRD06900059', '0000012', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-02 10:50:22', '2025-06-02 14:36:04'),
+(13, 4, NULL, 1, 'Akash Sheikh', 'A17020936', NULL, 'SRD05895070', '0000013', '2025-05-06', 6500.00, 0.00, 0, 0.00, 0.00, 6500.00, 6500.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 11:54:45', '2025-06-09 11:59:47'),
+(14, 4, NULL, 1, 'Mohammed Yeasin', 'EJ0651295', NULL, 'SRD05532324', '0000014', '2025-05-14', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 12:08:02', '2025-06-09 12:13:09'),
+(15, 4, NULL, 1, 'Daudul Islam', 'A15499580', NULL, 'SRD05873552', '0000015', '2025-05-25', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 12:21:08', '2025-06-09 12:24:45'),
+(16, 4, NULL, 1, 'Md Abdul', 'A17536053', NULL, 'SRD05949520', '0000016', '2025-05-25', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-09 12:31:27', '2025-06-09 12:31:36'),
+(17, 4, NULL, 1, 'Md Sujan', 'A06935606', NULL, 'SRD05196516', '0000017', '2025-05-25', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 12:35:40', '2025-06-09 12:40:45'),
+(18, 4, NULL, 1, 'Sheik Saiful', 'A14052431', NULL, 'SRD05026683', '0000018', '2025-05-25', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 12:53:33', '2025-06-09 12:55:53'),
+(19, 4, NULL, 1, 'Mohammed Ali', 'A04056165', NULL, 'SRD05330163', '0000019', '2025-05-26', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 13:03:47', '2025-06-09 13:09:06'),
+(20, 4, NULL, 1, 'Delwar Hossain', 'A07589798', NULL, 'SRD05726876', '0000020', '2025-05-26', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-09 13:14:20', '2025-06-09 13:17:19'),
+(21, 3, NULL, 1, 'Sazal Chowdhury', 'A03820990', NULL, 'SRD06715669', '0000021', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:01:10', '2025-06-15 05:09:41'),
+(22, 3, NULL, 1, 'Md Shahibur Rahman', 'A13810751', NULL, 'SRD06902779', '0000022', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:03:21', '2025-06-15 05:09:43'),
+(23, 3, NULL, 1, 'Md Forid Uddin', 'A18721832', NULL, 'SRD06433967', '0000023', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:05:14', '2025-06-15 05:10:15'),
+(24, 3, NULL, 1, 'Md Monir Ahmed', 'EM0533193', NULL, 'SRD06737931', '0000024', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:06:38', '2025-06-15 05:10:10'),
+(25, 3, NULL, 1, 'Parbej Ahmed', 'A18555191', NULL, 'SRD06661652', '0000025', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:07:45', '2025-06-15 05:09:58'),
+(26, 3, NULL, 1, 'Nazim Uddin', 'A16512721', NULL, 'SRD06103743', '0000026', '2025-06-01', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:09:36', '2025-06-15 05:09:47'),
+(27, 4, NULL, 1, 'Shaful Islam', 'A15376150', NULL, 'SRD06605496', '0000027', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:15:01', '2025-06-15 07:54:10'),
+(28, 4, NULL, 1, 'Delowar Hossain', 'A14902002', NULL, 'SRD06900059', '0000028', '2025-06-02', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:16:03', '2025-06-15 07:53:59'),
+(29, 2, NULL, 1, 'Md Rayhan Sarkar', 'A16670279', NULL, 'SRD05985123', '0000029', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
+(30, 2, NULL, 1, 'Md. Milon Babu', 'A08911843', NULL, 'SRD05812912', '0000030', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
+(31, 2, NULL, 1, 'Md Razwanul Kobir', 'A05896961', NULL, 'SRD05411412', '0000031', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
+(32, 2, NULL, 1, 'Rukhan Mia', 'EK0503169', NULL, 'SRD05824278', '0000032', '2025-05-19', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(33, 2, NULL, 1, 'Md Mosthofa', 'A18019062', NULL, 'SRD05935577', '0000033', '2025-05-27', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
+(34, 2, NULL, 1, 'Md Sadek Mia', 'A11640654', NULL, 'SRD05194466', '0000034', '2025-05-28', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
+(35, 2, NULL, 1, 'Md Razu', 'A17124153', NULL, 'SRD05360807', '0000035', '2025-05-31', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
+(36, 5, NULL, 1, 'Sojib Mia', 'A14932501', NULL, 'SRD05295303', '0000036', '2025-05-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:10:41', '2025-06-15 12:02:52'),
+(37, 5, NULL, 1, 'Md Shagor Miah', 'A17588297', NULL, 'SRD04152824', '0000037', '2025-04-05', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:12:52', '2025-06-15 12:02:44'),
+(38, 5, NULL, 1, 'Belayet Hossen', 'EM0694632', NULL, 'SRD04658379', '0000038', '2025-04-06', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:13:55', '2025-06-15 12:02:17'),
+(39, 5, NULL, 1, 'Md Sohag', 'A03889773', NULL, 'SRD04749196', '0000039', '2025-04-06', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:30:51', '2025-06-15 12:02:08'),
+(40, 5, NULL, 1, 'Md Shawon', 'B00621721', NULL, 'SRD04779848', '0000040', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:33:19', '2025-06-15 09:56:02'),
+(41, 5, NULL, 1, 'Bayzid Ahmed', 'A15963441', NULL, 'SRD04034390', '0000041', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:56:38', '2025-06-15 12:01:46'),
+(42, 5, NULL, 1, 'Fahim Mia', 'A16442316', NULL, 'SRD04672725', '0000042', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:58:08', '2025-06-15 12:01:36'),
+(43, 5, NULL, 1, 'Mohammad Nazmul', 'EJ0660651', NULL, 'SRD04255248', '0000043', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 09:59:19', '2025-06-15 12:01:29'),
+(44, 5, NULL, 1, 'Shaheda Akter', 'A05953427', NULL, 'SRD04689446', '0000044', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:06:59', '2025-06-15 12:01:23'),
+(45, 5, NULL, 1, 'Md Maruf', 'A17822001', NULL, 'SRD04208938', '0000045', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:08:59', '2025-06-15 12:01:15'),
+(46, 5, NULL, 1, 'Kazi Emran', 'A17851330', NULL, 'SRD04397722', '0000046', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:09:51', '2025-06-15 12:01:08'),
+(47, 5, NULL, 1, 'Ponir Hossan', 'A18221336', NULL, 'SRD04108308', '0000047', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:13:25', '2025-06-15 12:00:23'),
+(48, 5, NULL, 1, 'Md Saidul Hasan', 'A16077000', NULL, 'SRD04657082', '0000048', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:15:18', '2025-06-15 12:00:16'),
+(49, 5, NULL, 1, 'Hafijul Haque', 'A16559381', NULL, 'SRD04676597', '0000049', '2025-04-08', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:16:25', '2025-06-15 12:00:10'),
+(50, 5, NULL, 1, 'Abdur Rahim', 'EJ0692185', NULL, 'SRD04379158', '0000050', '2025-04-08', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:17:17', '2025-06-15 12:00:03'),
+(51, 5, NULL, 1, 'Md Zahirul Islam', 'A16383157', NULL, 'SRD04605469', '0000051', '2025-04-08', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:18:19', '2025-06-15 11:59:58'),
+(52, 5, NULL, 1, 'Limon', 'A08833819', NULL, 'SRD04814210', '0000052', '2025-04-08', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:19:20', '2025-06-15 11:59:53'),
+(53, 5, NULL, 1, 'Md Sowad Hossain', 'A18265050', NULL, 'SRD04622172', '0000053', '2025-04-09', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:20:50', '2025-06-15 11:59:42'),
+(54, 5, NULL, 1, 'Mohd Masiur Rahman', 'A16733509', NULL, 'SRD04939618', '0000054', '2025-04-09', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:22:37', '2025-06-15 11:59:38'),
+(55, 5, NULL, 1, 'Md Sheber Ali', 'A17310405', NULL, 'SRD04746585', '0000055', '2025-04-09', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:24:14', '2025-06-15 11:59:30'),
+(56, 5, NULL, 1, 'Md Moslim', 'EK0098309', NULL, 'SRD04832468', '0000056', '2025-04-09', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:25:02', '2025-06-15 11:59:25'),
+(57, 5, NULL, 1, 'Md Naeem', 'B00565008', NULL, 'SRD04834143', '0000057', '2025-04-10', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:29:20', '2025-06-15 11:59:18'),
+(58, 5, NULL, 1, 'Siam Bepari', 'A11354451', NULL, 'SRD04491754', '0000058', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:30:19', '2025-06-15 11:59:16'),
+(59, 5, NULL, 1, 'Shahadat Hossain', 'A08943709', NULL, 'SRD04234365', '0000059', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:31:56', '2025-06-15 11:59:12'),
+(60, 5, NULL, 1, 'Md Tarak Chokidar', 'A18309839', NULL, 'SRD04689591', '0000060', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:33:27', '2025-06-15 11:59:07'),
+(61, 5, NULL, 1, 'Dipon Paul', 'A17610848', NULL, 'SRD04464075', '0000061', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:34:30', '2025-06-15 11:59:04'),
+(62, 5, NULL, 1, 'Md Rezaul Hasab', 'A07927042', NULL, 'SRD04452776', '0000062', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:35:42', '2025-06-15 11:58:59'),
+(63, 5, NULL, 1, 'Md Abu Taher Kholifa', 'A14561678', NULL, 'SRD04287216', '0000063', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:36:48', '2025-06-15 11:58:54'),
+(64, 5, NULL, 1, 'Md Israfil Hossain', 'A09054990', NULL, 'SRD04425626', '0000064', '2025-04-12', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:38:24', '2025-06-15 11:58:49'),
+(65, 5, NULL, 1, 'Fazle Rabbi Sakib', 'A06976275', NULL, 'SRD04295310', '0000065', '2025-04-13', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:39:28', '2025-06-15 11:58:44'),
+(66, 5, NULL, 1, 'Md Shihab', 'A08296866', NULL, 'SRD04594061', '0000066', '2025-04-13', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:41:13', '2025-06-15 11:58:40'),
+(67, 5, NULL, 1, 'Md Forkhan Hosan', 'A09213453', NULL, 'SRD04863272', '0000067', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:42:13', '2025-06-15 11:58:34'),
+(68, 5, NULL, 1, 'Md Shanto', 'A07812265', NULL, 'SRD04218586', '0000068', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:43:07', '2025-06-15 11:58:28'),
+(69, 5, NULL, 1, 'Md Jubayer Hossain', 'A15310225', NULL, 'SRD04257732', '0000069', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:44:30', '2025-06-15 11:58:24'),
+(70, 5, NULL, 1, 'Md Regun Hossain', 'A15515305', NULL, 'SRD04203789', '0000070', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:45:30', '2025-06-15 11:58:17'),
+(71, 5, NULL, 1, 'Abu Taher', 'A03277712', NULL, 'SRD04299495', '0000071', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:46:12', '2025-06-15 11:58:13'),
+(72, 5, NULL, 1, 'Md Shiblu Pramanik', 'A11661767', NULL, 'SRD04149080', '0000072', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:48:32', '2025-06-15 11:58:09'),
+(73, 5, NULL, 1, 'Arman Hosshen', 'A03656043', NULL, 'SRD04440588', '0000073', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:49:38', '2025-06-15 11:58:06'),
+(74, 5, NULL, 1, 'Md Omar Faruk', 'A15033539', NULL, 'SRD04036158', '0000074', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:50:42', '2025-06-15 11:58:01'),
+(75, 5, NULL, 1, 'Abdur Razzak Akash', 'A08684962', NULL, 'SRD04599415', '0000075', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:52:34', '2025-06-15 11:57:56'),
+(76, 5, NULL, 1, 'Md Hasan Sheikh', 'A16088719', NULL, 'SRD04025974', '0000076', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:53:28', '2025-06-15 11:57:51'),
+(77, 5, NULL, 1, 'Md Yasin', 'A08943946', NULL, 'SRD04921083', '0000077', '2025-04-15', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:54:12', '2025-06-15 11:57:47'),
+(78, 5, NULL, 1, 'Meraz Gazi', 'A18088325', NULL, 'SRD04265457', '0000078', '2025-04-16', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 6, 1, '2025-06-15 10:54:58', '2025-06-15 11:38:02'),
+(79, 5, NULL, 1, 'Md Labu Ukil', 'A16663991', NULL, 'SRD04673906', '0000079', '2025-04-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 10:56:19', '2025-06-15 11:33:06'),
+(80, 6, NULL, 1, 'Md Al Amin', 'A08386067', NULL, 'SRD04115598', '0000080', '2025-04-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:01:56', '2025-06-15 11:57:43'),
+(81, 6, NULL, 1, 'Sabbir Mia', 'A11037240', NULL, 'SRD04717129', '0000081', '2025-04-08', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:03:15', '2025-06-15 11:57:39'),
+(82, 6, NULL, 1, 'Md Jahid Hossen', 'A12269628', NULL, 'SRD05176199', '0000082', '2025-05-06', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:04:35', '2025-06-15 11:57:34'),
+(83, 6, NULL, 1, 'Rejaul Houque Choudury', 'A16664488', NULL, 'SRD05277730', '0000083', '2025-05-07', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:05:13', '2025-06-15 11:57:29'),
+(84, 6, NULL, 1, 'Abu Nayeem', 'EK0422480', NULL, 'SRD05048572', '0000084', '2025-05-20', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:06:16', '2025-06-15 11:57:24'),
+(85, 6, NULL, 1, 'Khairuzaman', 'A12221607', NULL, 'SRD05155041', '0000085', '2025-05-22', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 11:07:49', '2025-06-15 11:57:18'),
+(86, 5, NULL, 1, 'Md Muktar Hossain', 'A18841836', NULL, 'SRD06803994', '0000086', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-16 14:15:38', '2025-06-16 14:15:43'),
+(87, 5, NULL, NULL, 'Samsul Haque', 'A13311448', NULL, 'SRD06548029', '0000087', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-16 14:16:56', '2025-06-16 14:17:01'),
+(88, 5, NULL, 1, 'Atikur Rahman Sourav', 'A04478402', NULL, 'SRD06194450', '0000088', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-16 14:18:02', '2025-06-16 14:18:08'),
+(89, 3, NULL, NULL, 'Md Shiblu Miah', 'A15953817', NULL, 'SRD06644491', '0000089', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-16 14:19:12', '2025-06-16 14:19:17'),
+(90, 3, NULL, 1, 'Md Shiblu Miah', 'A15953817', NULL, 'SRD06644491', '0000090', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 6, NULL, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(91, 5, NULL, 1, 'Md Muktar Hossain', 'A18841836', NULL, 'SRD06803994', '0000091', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 6, NULL, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(92, 5, NULL, 1, 'Samsul Haque', 'A13311448', NULL, 'SRD06548029', '0000092', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 6, NULL, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(93, 5, NULL, 1, 'Atikur Rahman Sourav', 'A04478402', NULL, 'SRD06194450', '0000093', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
+(95, 6, NULL, NULL, '3456789', '8765432456789', NULL, NULL, '0000095', '2025-06-17', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:07:34', '2025-06-17 06:14:56'),
+(96, 6, NULL, 1, '9876542345678', '65098765443567', NULL, '456789', '0000096', '2025-06-17', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
+(97, 6, NULL, NULL, 'Shoriful Alom', '34567890', NULL, NULL, '0000097', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 8, NULL, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(98, 2, NULL, 1, '9876542345678', '65098765443567', 'doc-07f66962-595d-424f-97dc-285df7370b06.png', '456789', '0000098', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, 1, '2025-06-17 10:57:53', '2025-06-17 11:32:52'),
+(99, 3, 191, NULL, '9876542345678', '65098765443567', 'doc-cdd9cf3c-060f-40b3-8145-e33757e3091d.png', '456789', '0000099', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, NULL, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
 
 -- --------------------------------------------------------
 
@@ -1089,6 +2252,128 @@ CREATE TABLE `sale_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `sale_details`
+--
+
+INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `purchase_price`, `profit`, `net_sale_price`, `net_profit`, `is_service_generated`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2025-05-22', 7000.00, 7000.00, 0.00, 7000.00, 0.00, 0, '2025-05-27 07:34:50', '2025-05-27 07:35:11'),
+(2, 1, 8, '2025-05-22', 5000.00, 3000.00, 2000.00, 5000.00, 2000.00, 0, '2025-05-27 07:47:36', '2025-05-27 07:47:36'),
+(3, 2, 1, '2025-05-22', 7000.00, 7000.00, 0.00, 7000.00, 0.00, 0, '2025-05-27 07:50:39', '2025-05-27 07:50:44'),
+(4, 2, 8, '2025-05-22', 5000.00, 3000.00, 2000.00, 5000.00, 2000.00, 0, '2025-05-27 07:52:29', '2025-05-27 07:52:29'),
+(5, 3, 1, '2025-04-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-05-27 18:18:05', '2025-05-27 18:18:15'),
+(6, 3, 13, '2025-04-16', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-05-27 18:20:37', '2025-05-27 18:20:37'),
+(7, 3, 6, '2025-04-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-05-27 18:22:18', '2025-05-27 18:22:18'),
+(8, 4, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-01 06:55:55', '2025-06-01 06:56:07'),
+(9, 5, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-01 06:57:28', '2025-06-01 06:57:32'),
+(10, 6, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-01 07:35:29', '2025-06-01 08:53:24'),
+(11, 7, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-01 07:39:13', '2025-06-01 08:53:26'),
+(12, 8, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-02 10:42:53', '2025-06-02 14:36:16'),
+(13, 9, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-02 10:45:29', '2025-06-02 14:36:28'),
+(14, 10, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-02 10:46:16', '2025-06-02 14:36:38'),
+(15, 11, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-02 10:47:17', '2025-06-02 14:36:21'),
+(16, 12, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-02 10:50:22', '2025-06-02 14:36:04'),
+(17, 13, 1, '2025-05-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 11:54:45', '2025-06-09 11:54:59'),
+(18, 13, 31, '2025-05-06', 6500.00, 6000.00, 500.00, 6500.00, 500.00, 0, '2025-06-09 11:59:47', '2025-06-09 11:59:47'),
+(19, 13, 6, '2025-05-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:02:18', '2025-06-09 12:02:18'),
+(20, 14, 1, '2025-05-14', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:08:02', '2025-06-09 12:08:11'),
+(21, 14, 13, '2025-05-14', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 12:13:09', '2025-06-09 12:13:09'),
+(22, 14, 6, '2025-05-14', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:14:10', '2025-06-09 12:14:10'),
+(23, 15, 1, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:21:08', '2025-06-09 12:21:17'),
+(24, 15, 13, '2025-05-25', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 12:24:45', '2025-06-09 12:24:45'),
+(25, 15, 6, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:25:53', '2025-06-09 12:25:53'),
+(26, 16, 1, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:31:27', '2025-06-09 12:31:36'),
+(27, 17, 1, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:35:40', '2025-06-09 12:35:51'),
+(28, 17, 13, '2025-05-25', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 12:40:45', '2025-06-09 12:40:45'),
+(29, 17, 6, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:49:29', '2025-06-09 12:49:29'),
+(30, 18, 1, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:53:33', '2025-06-09 12:53:43'),
+(31, 18, 13, '2025-05-25', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 12:55:53', '2025-06-09 12:55:53'),
+(32, 18, 6, '2025-05-25', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 12:57:22', '2025-06-09 12:57:22'),
+(33, 19, 1, '2025-05-26', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 13:03:47', '2025-06-09 13:03:56'),
+(34, 19, 13, '2025-05-26', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 13:09:06', '2025-06-09 13:09:06'),
+(35, 19, 6, '2025-05-26', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 13:10:04', '2025-06-09 13:10:04'),
+(36, 20, 1, '2025-05-26', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 13:14:20', '2025-06-09 13:14:30'),
+(37, 20, 13, '2025-05-26', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
+(38, 20, 6, '2025-05-26', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-09 13:18:09', '2025-06-09 13:18:09'),
+(39, 21, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:01:10', '2025-06-15 05:09:41'),
+(40, 22, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:03:21', '2025-06-15 05:09:43'),
+(41, 23, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:05:14', '2025-06-15 05:10:15'),
+(42, 24, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:06:38', '2025-06-15 05:10:10'),
+(43, 25, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:07:45', '2025-06-15 05:09:58'),
+(44, 26, 1, '2025-06-01', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:09:36', '2025-06-15 05:09:47'),
+(45, 27, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:15:01', '2025-06-15 07:54:10'),
+(46, 28, 1, '2025-06-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:16:03', '2025-06-15 07:53:59'),
+(47, 29, 1, '2025-05-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
+(48, 30, 1, '2025-05-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
+(49, 31, 1, '2025-05-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
+(50, 32, 1, '2025-05-19', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(51, 33, 1, '2025-05-27', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
+(52, 34, 1, '2025-05-28', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
+(53, 35, 1, '2025-05-31', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
+(54, 36, 1, '2025-05-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:10:41', '2025-06-15 12:02:52'),
+(55, 37, 1, '2025-04-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:12:52', '2025-06-15 12:02:44'),
+(56, 38, 1, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:13:55', '2025-06-15 12:02:17'),
+(57, 39, 1, '2025-04-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:30:51', '2025-06-15 12:02:08'),
+(58, 40, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:33:19', '2025-06-15 09:56:02'),
+(59, 41, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:56:38', '2025-06-15 12:01:46'),
+(60, 42, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:58:08', '2025-06-15 12:01:36'),
+(61, 43, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 09:59:19', '2025-06-15 12:01:29'),
+(62, 44, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:06:59', '2025-06-15 12:01:23'),
+(63, 45, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:08:59', '2025-06-15 12:01:15'),
+(64, 46, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:09:51', '2025-06-15 12:01:08'),
+(65, 47, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:13:25', '2025-06-15 12:00:23'),
+(66, 48, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:15:18', '2025-06-15 12:00:16'),
+(67, 49, 1, '2025-04-08', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:16:25', '2025-06-15 12:00:10'),
+(68, 50, 1, '2025-04-08', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:17:17', '2025-06-15 12:00:03'),
+(69, 51, 1, '2025-04-08', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:18:19', '2025-06-15 11:59:58'),
+(70, 52, 1, '2025-04-08', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:19:20', '2025-06-15 11:59:53'),
+(71, 53, 1, '2025-04-09', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:20:50', '2025-06-15 11:59:42'),
+(72, 54, 1, '2025-04-09', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:22:37', '2025-06-15 11:59:38'),
+(73, 55, 1, '2025-04-09', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:24:14', '2025-06-15 11:59:30'),
+(74, 56, 1, '2025-04-09', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:25:02', '2025-06-15 11:59:25'),
+(75, 57, 1, '2025-04-10', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:29:20', '2025-06-15 11:59:18'),
+(76, 58, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:30:19', '2025-06-15 11:59:16'),
+(77, 59, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:31:56', '2025-06-15 11:59:12'),
+(78, 60, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:33:27', '2025-06-15 11:59:07'),
+(79, 61, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:34:30', '2025-06-15 11:59:04'),
+(80, 62, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:35:42', '2025-06-15 11:58:59'),
+(81, 63, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:36:48', '2025-06-15 11:58:54'),
+(82, 64, 1, '2025-04-12', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:38:24', '2025-06-15 11:58:49'),
+(83, 65, 1, '2025-04-13', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:39:28', '2025-06-15 11:58:44'),
+(84, 66, 1, '2025-04-13', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:41:13', '2025-06-15 11:58:40'),
+(85, 67, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:42:13', '2025-06-15 11:58:34'),
+(86, 68, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:43:07', '2025-06-15 11:58:28'),
+(87, 69, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:44:30', '2025-06-15 11:58:24'),
+(88, 70, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:45:30', '2025-06-15 11:58:17'),
+(89, 71, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:46:12', '2025-06-15 11:58:13'),
+(90, 72, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:48:32', '2025-06-15 11:58:09'),
+(91, 73, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:49:38', '2025-06-15 11:58:06'),
+(92, 74, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:50:42', '2025-06-15 11:58:01'),
+(93, 75, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:52:34', '2025-06-15 11:57:56'),
+(94, 76, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:53:28', '2025-06-15 11:57:51'),
+(95, 77, 1, '2025-04-15', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:54:12', '2025-06-15 11:57:47'),
+(96, 78, 1, '2025-04-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:54:58', '2025-06-15 11:33:21'),
+(97, 79, 1, '2025-04-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 10:56:19', '2025-06-15 11:33:06'),
+(98, 80, 1, '2025-04-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:01:56', '2025-06-15 11:57:43'),
+(99, 81, 1, '2025-04-08', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:03:15', '2025-06-15 11:57:39'),
+(100, 82, 1, '2025-05-06', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:04:35', '2025-06-15 11:57:34'),
+(101, 83, 1, '2025-05-07', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:05:13', '2025-06-15 11:57:29'),
+(102, 84, 1, '2025-05-20', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:06:16', '2025-06-15 11:57:24'),
+(103, 85, 1, '2025-05-22', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-15 11:07:49', '2025-06-15 11:57:18'),
+(104, 78, 13, '2025-04-16', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
+(105, 86, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-16 14:15:38', '2025-06-16 14:15:43'),
+(106, 87, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-16 14:16:56', '2025-06-16 14:17:01'),
+(107, 88, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-16 14:18:02', '2025-06-16 14:18:08'),
+(108, 89, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-16 14:19:12', '2025-06-16 14:19:17'),
+(109, 90, 1, '2025-06-16', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 04:18:38', '2025-06-17 04:18:38'),
+(110, 91, 1, '2025-06-16', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
+(111, 92, 1, '2025-06-16', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
+(112, 93, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
+(113, 95, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
+(114, 96, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:29:12', '2025-06-17 06:29:29'),
+(118, 98, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 11:32:52', '2025-06-17 11:32:52'),
+(119, 99, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
+
 -- --------------------------------------------------------
 
 --
@@ -1099,9 +2384,9 @@ CREATE TABLE `status_lists` (
   `id` bigint UNSIGNED NOT NULL,
   `item_id` int NOT NULL,
   `srl` int NOT NULL DEFAULT '0',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name_for_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status_state` tinyint NOT NULL DEFAULT '0' COMMENT '0=Initial State, 1=Middle State, 2=Final State',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Inactive, 1=Active',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1149,15 +2434,15 @@ INSERT INTO `status_lists` (`id`, `item_id`, `srl`, `name`, `name_for_agent`, `c
 
 CREATE TABLE `suppliers` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `organization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `opening_payable` double(20,2) NOT NULL DEFAULT '0.00',
   `opening_receivable` double(20,2) NOT NULL DEFAULT '0.00',
   `current_balance` double(20,2) NOT NULL DEFAULT '0.00',
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1176,13 +2461,13 @@ CREATE TABLE `supplier_ledgers` (
   `purchase_id` int DEFAULT NULL,
   `payment_id` int DEFAULT NULL,
   `account_id` int DEFAULT NULL,
-  `particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
   `debit_amount` decimal(20,2) DEFAULT NULL,
   `credit_amount` decimal(20,2) DEFAULT NULL,
   `current_balance` decimal(20,2) NOT NULL,
-  `reference_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` text COLLATE utf8mb4_unicode_ci,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1202,8 +2487,8 @@ CREATE TABLE `supplier_payments` (
   `purchase_id` bigint DEFAULT NULL,
   `date` date NOT NULL,
   `amount` double(20,2) NOT NULL,
-  `reference_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0=Pending, 1=Approved',
   `created_by_id` int DEFAULT NULL,
   `updated_by_id` int DEFAULT NULL,
@@ -1219,16 +2504,16 @@ CREATE TABLE `supplier_payments` (
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `google_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `facebook_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `default_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `default_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1266,6 +2551,12 @@ ALTER TABLE `categories`
 -- Indexes for table `category_types`
 --
 ALTER TABLE `category_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1481,13 +2772,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `basic_infos`
@@ -1508,46 +2799,52 @@ ALTER TABLE `category_types`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
+
+--
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `expense_categories`
 --
 ALTER TABLE `expense_categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `expense_details`
 --
 ALTER TABLE `expense_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `expense_heads`
 --
 ALTER TABLE `expense_heads`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1577,13 +2874,13 @@ ALTER TABLE `investor_transactions`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -1601,7 +2898,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `parties`
@@ -1637,7 +2934,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -1655,19 +2952,19 @@ ALTER TABLE `purchase_details`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `status_lists`

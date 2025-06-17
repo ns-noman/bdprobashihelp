@@ -36,36 +36,59 @@
                                 @endif 
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="form-group col-sm-2 col-md-2 col-lg-2">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-3" {{ $data['is_agent'] ? 'hidden' : '' }}>
                                             <label>Agents *</label>
                                             <select name="customer_id" id="customer_id" class="form-control form-control-sm select2" required>
                                                 <option value="">Select Agent</option>
                                                 @foreach ($data['customers'] as $customer)
-                                                    <option {{ isset($data['item']) ? ($customer->id == $data['item']->customer_id) ? 'selected' : null : null }} value="{{ $customer->id }}">
+                                                    <option value="{{ $customer->id }}"
+                                                        @if(isset($data['item']) && $customer->id == $data['item']->customer_id)
+                                                            selected
+                                                        @elseif($data['is_agent'] && $customer->id == $data['agent_id'])
+                                                            selected
+                                                        @endif
+                                                    >
                                                         {{ $customer->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-2">
+
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
                                             <label>Passenger Name *</label>
                                             <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control form-control-sm" placeholder="Passenger Name" required>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
                                             <label>Passport No *</label>
                                             <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control form-control-sm" placeholder="0123456789" required>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                                            <label>Localhost No *</label>
-                                            <input name="localhost_no" id="localhost_no" type="text" value="{{ isset($data['item']) ? $data['item']->localhost_no : null }}" class="form-control form-control-sm" placeholder="0123456789" required>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
+                                            <label>Passport Img *</label>
+                                            <input class="form-control form-control-sm" id="passport_img" name="passport_img" type="file" accept="application/pdf,image/*">
                                         </div>
-                                        <div class="form-group col-sm-2 col-md-2 col-lg-2">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '2' }} ">
+                                            <label>Country</label>
+                                            <select class="form-control form-control-sm select2" id="country_id" name="country_id">
+                                                <option value="">Select Country</option>
+                                                @foreach($data['countries'] as $key => $country)
+                                                    <option value="{{ $country->id }}" @selected(isset($data['item']) && $country->id == $data['item']->country_id)>{{ $country->country_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @if(!$data['is_agent'])
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                                            <label>Localhost No</label>
+                                            <input name="localhost_no" id="localhost_no" type="text" value="{{ isset($data['item']) ? $data['item']->localhost_no : null }}" class="form-control form-control-sm" placeholder="0123456789">
+                                        </div>
+                                        @endif
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-3" {{ $data['is_agent'] ? 'hidden' : '' }}>
                                             <label>Date *</label>
                                             <input name="date" id="date" type="date"
                                                 value="{{ isset($data['item']) ? $data['item']->date : date('Y-m-d') }}"
                                                 class="form-control form-control-sm" required>
                                         </div>
-                                        <div class="form-group col-sm-4 col-md-4 col-lg-2">
+                                        @if(!$data['is_agent'])
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Service Item</label>
                                             <select class="form-control form-control-sm select2" id="item_id_temp">
                                                 <option value="" selected disabled>Select Service Item</option>
@@ -162,6 +185,7 @@
                                                 class="form-control form-control-sm" type="text" name="note" id="note"
                                                 placeholder="Note">
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -215,20 +239,22 @@
                 calculate();
             });
         });
-        $('#form-submit').submit(function(e) {
-            if (!$('input[name="item_id[]"]').length) {
-                e.preventDefault();
-                Swal.fire("Please Insert Item!");
-            }
-            if(parseFloat($('#paid_amount').val())>parseFloat($('#total_payable').val())){
-                e.preventDefault();
-                Swal.fire("Couldn't be pay more then payable!");
-            }
-            if(parseFloat($('#paid_amount').val())>0 && !$('#account_id option:selected').val()){
-                e.preventDefault();
-                Swal.fire("Please Select Payment Method");
-            }
-        });
+        @if(!$data['is_agent'])
+            $('#form-submit').submit(function(e) {
+                if (!$('input[name="item_id[]"]').length) {
+                    e.preventDefault();
+                    Swal.fire("Please Insert Item!");
+                }
+                if(parseFloat($('#paid_amount').val())>parseFloat($('#total_payable').val())){
+                    e.preventDefault();
+                    Swal.fire("Couldn't be pay more then payable!");
+                }
+                if(parseFloat($('#paid_amount').val())>0 && !$('#account_id option:selected').val()){
+                    e.preventDefault();
+                    Swal.fire("Please Select Payment Method");
+                }
+            });
+        @endif
         $('#discount_rate').on('keyup', function(e) {
             calculate();
         });

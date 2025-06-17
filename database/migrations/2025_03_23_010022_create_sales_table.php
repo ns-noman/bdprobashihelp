@@ -11,9 +11,12 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
+            $table->bigInteger('country_id')->nullable();
             $table->bigInteger('account_id')->nullable();
             $table->string('passenger_name');
             $table->string('passenger_passport_no');
+            $table->string('passport_img')->nullable();
+            $table->bigInteger('country_id')->nullable();
             $table->string('localhost_no');
             $table->string('invoice_no');
             $table->date('date');
