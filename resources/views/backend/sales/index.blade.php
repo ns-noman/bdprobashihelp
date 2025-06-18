@@ -360,7 +360,7 @@
                                             paymentStatusColor = 'success';
                                             paymentText = 'Paid';
                                         }
-
+                                        let img_src = row.passport_img !=null ? `{{ asset('public/uploads/passports/:file') }}`.replace(':file', row.passport_img) : '';
                                         table = `
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
@@ -368,13 +368,16 @@
                                                         <th class="text-center" style="width: 100px;" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
                                                         <th class="text-center" style="width: 200px;" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}</th>
                                                         <th class="text-center" style="width: 150px;" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Passport No: </span><br>${row.passenger_passport_no}</th>
+                                                        <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no}
+                                                        ${row.passport_img !=null ? `<a href="javascript:void(0)"  class="btn btn-sm btn-dark p-1 m-0" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download"></i></a>` : ''}
+                                                        </th>
                                                         <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Localhost No: </span><br>${row.localhost_no}</th>
                                                     </tr>
                                                     <tr class="bg-light">
                                                         <th class="text-center" colspan="2">Date: ${row.date}</th>
                                                         <th class="text-center" colspan="3"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
-                                                        <th class="text-center" colspan="2">Payment Status: ${`<span class="badge badge-${paymentStatusColor}">${paymentText}</span>`}</th>
+                                                        <th class="text-center" colspan="1">Payment Status: ${`<span class="badge badge-${paymentStatusColor}">${paymentText}</span>`}</th>
+                                                        <th class="text-center" colspan="1">CC:- ${row.country_code ?? ''}</th>
                                                         <th class="text-center" colspan="1">Note: ${row.note ?? ''}</th>
                                                     </tr>
                                                     <tr>
@@ -510,6 +513,14 @@
                 }
             }
             return obj;
+        }
+        function downloadImage(url){
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = url.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
     </script>

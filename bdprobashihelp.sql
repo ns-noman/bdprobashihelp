@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 17, 2025 at 12:18 PM
+-- Generation Time: Jun 18, 2025 at 12:31 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '32500.00', 1, 1, 1, NULL, '2025-06-17 06:29:29'),
+(1, 1, 'Hand Cash', 'Self', '48000.00', 1, 1, 1, NULL, '2025-06-18 12:25:18'),
 (2, 2, 'Investment Capital', 'Self', '0.00', 1, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -88,7 +88,11 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (14, 1, 10000.00, NULL, 16500.00, NULL, 'Expenses', '2025-06-04', '2025-06-13 17:48:16', '2025-06-13 17:48:16'),
 (15, 1, NULL, 2000.00, 18500.00, NULL, 'Sale Payment', '2025-05-01', '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
 (16, 1, NULL, 7000.00, 25500.00, NULL, 'Sale Payment', '2025-06-17', '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
-(17, 1, NULL, 7000.00, 32500.00, NULL, 'Sale Payment', '2025-06-17', '2025-06-17 06:29:29', '2025-06-17 06:29:29');
+(17, 1, NULL, 7000.00, 32500.00, NULL, 'Sale Payment', '2025-06-17', '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
+(18, 1, NULL, 2000.00, 34500.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
+(19, 1, NULL, 2500.00, 37000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
+(20, 1, NULL, 7000.00, 44000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
+(21, 1, NULL, 4000.00, 48000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 12:25:18', '2025-06-18 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -117,14 +121,14 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
-(1, NULL, 'Super Admin', NULL, 1, '01717171223', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1750138827.png', 1, '2024-08-30 19:03:44', '2025-06-17 05:40:27', 'vdCFSuVWdMgFpOADpiU5LH0XefBCNFRA09uFYztIYQlZFo6MyfexGG2F9UIp'),
+(1, NULL, 'Super Admin', NULL, 1, '01717171223', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1750138827.png', 1, '2024-08-30 19:03:44', '2025-06-17 05:40:27', 'JWM7qTWEFbvlGharTZSHnE2KH7DSy9C1Hu1bmlSSQrzYCnLEki04qxnr315l'),
 (2, 1, 'Jannat-AAI', NULL, 2, '8801893291015', 'jannati-aai@gmail.com', '$2y$10$n7vaM10g4JadX7tp1e97wucWWexL4h8rDJpGUJkVHnDGesKL9MzVm', NULL, 1, '2025-05-27 07:30:04', '2025-05-27 07:32:44', NULL),
 (3, 2, 'Emam Hossain-AEHB', NULL, 2, '8801712556088', 'imamair2021@gmail.com', '$2y$10$p4UBo7Qz9ZraZ0ZGNfLGueF9fiF8o9HxdyFLRq561YYXd/Q3Nnzpa', NULL, 1, '2025-05-27 18:12:01', '2025-05-27 18:12:58', 'lUjW2YYTOp6Iaj4x6YZn0FtKXpMgV47qG4saMR7s5dIdyxGAIBpRNVkZ8dM3'),
 (4, 3, 'SUHEL AHMED/SAAS', NULL, 2, '01736621425', 'saairservicekanaighat@gmail.com', '$2y$10$lPynkjtMdjZMQdy2hqI2JOADLS9JcV.bGEakiGTFKsR/ORwt3GXFG', NULL, 1, '2025-05-29 15:05:15', '2025-06-01 06:59:17', NULL),
 (5, 4, 'Tazul Islam (TABOM)', NULL, 2, '8801863550621', 'tazult937@gmail.com', '$2y$10$cp/ECH9KSy2YjIsYv3aCOOf14I1Jg6IErGdM1Owpy48bbw0GZ1S7e', NULL, 1, '2025-05-31 09:44:02', '2025-06-09 13:24:43', NULL),
 (6, NULL, 'Raihan', NULL, 3, '01839317038', 'rayanc430@gmail.com', '$2y$10$BFsTCUky8SYs5oiTYnCOquRDmT7WId7mVzJ0fnnnO6m3FRFDuxxGa', 'admin-1750073550.jpg', 1, '2025-06-01 06:58:47', '2025-06-16 11:32:30', 'GJcjN3jW29RlbiRHG8JRC11yBAaBEMLBptfPUJzFm9YzZ1znjW4mVUgKGSPf'),
 (7, 5, 'Mr. Shihab (AINT)', NULL, 2, '8801756733986', 'shihabbdph@gmail.com', '$2y$10$.mP.VKBNEDd/OPipz.S0IumXjHFzlC1OvgaKvoYVGKXDZ7sGkvUV6', NULL, 1, '2025-06-15 08:55:55', '2025-06-16 06:32:22', 'jddo7IqRDLJK18VbiKbubYlN2sXf69aa7m1C5N58CXsAuxTMG9S6EYv4pkdc'),
-(8, 6, 'Mr. Shakil (ISTAI)', NULL, 2, '8801941356122', 'istair.intl@gmail.com', '$2y$10$n0fPk17JIlhAMtZ0bp28geNG0ATse1VXLw/h/QxWl0BJzdeJvmzmi', NULL, 1, '2025-06-15 09:14:29', '2025-06-17 05:46:26', NULL);
+(8, 6, 'Mr. Shakil (ISTAI)', NULL, 2, '8801941356122', 'istair.intl@gmail.com', '$2y$10$n0fPk17JIlhAMtZ0bp28geNG0ATse1VXLw/h/QxWl0BJzdeJvmzmi', NULL, 1, '2025-06-15 09:14:29', '2025-06-17 05:46:26', 'B1jGxV1GpSY9J3r8vZRaeBFbocX27Pqza6fjxhAkkPYBKTGUX8B9I3SSoigm');
 
 -- --------------------------------------------------------
 
@@ -531,11 +535,11 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 'Jannat-AAI', 'jannati-aai@gmail.com', '8801893291015', '37/2, Zaman Tower (2nd Floor), Purana Paltan, Dhaka-1000', 'Anifa air international', 4000.00, '1', 1, NULL, '2025-05-27 07:30:04', '2025-05-27 07:52:29'),
-(2, 'Emam Hossain-AEHB', 'imamair2021@gmail.com', '8801712556088', '118 DIT Ext. Road, Fokirapul, Dhaka-1000', 'Bismillah Telecom', 0.00, '1', 1, NULL, '2025-05-27 18:12:01', '2025-05-27 18:20:37'),
+(2, 'Emam Hossain-AEHB', 'imamair2021@gmail.com', '8801712556088', '118 DIT Ext. Road, Fokirapul, Dhaka-1000', 'Bismillah Telecom', 0.00, '1', 1, NULL, '2025-05-27 18:12:01', '2025-06-18 12:25:18'),
 (3, 'SUHEL AHMED/SAAS', 'saairservicekanaighat@gmail.com', '01736621425', 'AZIZ COMPLEX, KANAIGHAT UTTAR BAZAR', 'SA AIR SERVICE', 0.00, '1', 1, NULL, '2025-05-29 15:05:15', '2025-05-29 15:05:15'),
 (4, 'Tazul Islam (TABOM)', 'tazult937@gmail.com', '8801863550621', 'Palton, Dhaka, Bangladesh', 'Tazul overseas international', 0.00, '1', 1, NULL, '2025-05-31 09:44:02', '2025-06-09 13:17:19'),
 (5, 'Mr. Shihab (AINT)', 'abdullahaircervice@gmail.com', '8801756733986', 'Nur Travels, নিচ তলা, Rupayan FPAB Tower, জামান টাওয়ার এর উল্টা পাশে , কালভার্ট রোড , ঢাকা-১০০০।', 'Abdullah air International', 0.00, '1', 1, NULL, '2025-06-15 08:55:55', '2025-06-16 06:30:43'),
-(6, 'Mr. Shakil (ISTAI)', 'istair.intl@gmail.com', '8801941356122', 'KR Plaza, 31 Purana Paltan, Dhaka-1000. , Dhaka, Bangladesh', 'IST Air International', 0.00, '1', 1, NULL, '2025-06-15 09:14:29', '2025-06-17 06:29:29');
+(6, 'Mr. Shakil (ISTAI)', 'istair.intl@gmail.com', '8801941356122', 'KR Plaza, 31 Purana Paltan, Dhaka-1000. , Dhaka, Bangladesh', 'IST Air International', 0.00, '1', 1, NULL, '2025-06-15 09:14:29', '2025-06-18 08:50:37');
 
 -- --------------------------------------------------------
 
@@ -716,7 +720,17 @@ INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `a
 (147, 6, NULL, 14, 1, 'Payment', '2025-06-17', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
 (148, 6, 96, NULL, NULL, 'Sale', '2025-06-17', NULL, '7000.00', '7000.00', NULL, NULL, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
 (149, 6, NULL, 15, 1, 'Payment', '2025-06-17', '7000.00', NULL, '0.00', NULL, NULL, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
-(150, 5, 93, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-17 06:49:21', '2025-06-17 06:49:21');
+(150, 5, 93, NULL, NULL, 'Sale', '2025-06-16', NULL, '0.00', '0.00', NULL, NULL, 6, NULL, '2025-06-17 06:49:21', '2025-06-17 06:49:21'),
+(151, 6, 95, NULL, NULL, 'Sale', '2025-06-18', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
+(152, 6, NULL, 16, 1, 'Payment', '2025-06-18', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
+(153, 6, 95, NULL, NULL, 'Sale', '2025-06-18', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-18 08:51:59', '2025-06-18 08:51:59'),
+(154, 2, 100, NULL, NULL, 'Sale', '2025-06-18', NULL, '2500.00', '2500.00', NULL, NULL, 1, NULL, '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
+(155, 2, NULL, 17, 1, 'Payment', '2025-06-18', '2500.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
+(156, 6, 101, NULL, NULL, 'Sale', '2025-06-18', NULL, '0.00', '0.00', NULL, NULL, 8, NULL, '2025-06-18 10:25:34', '2025-06-18 10:25:34'),
+(157, 2, 102, NULL, NULL, 'Sale', '2025-06-18', NULL, '7000.00', '7000.00', NULL, NULL, 1, NULL, '2025-06-18 11:08:45', '2025-06-18 11:08:45'),
+(158, 2, NULL, 18, 1, 'Payment', '2025-06-18', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
+(159, 2, 100, NULL, NULL, 'Sale', '2025-06-18', NULL, '4000.00', '4000.00', NULL, NULL, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
+(160, 2, NULL, 19, 1, 'Payment', '2025-06-18', '4000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -759,7 +773,11 @@ INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `
 (12, 4, 1, 20, '2025-06-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-09 13:17:19', '2025-06-09 13:17:19'),
 (13, 5, 1, 78, '2025-05-01', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-15 11:38:02', '2025-06-15 11:38:02'),
 (14, 6, 1, 95, '2025-06-17', 7000.00, NULL, NULL, 1, 1, NULL, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
-(15, 6, 1, 96, '2025-06-17', 7000.00, NULL, NULL, 1, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29');
+(15, 6, 1, 96, '2025-06-17', 7000.00, NULL, NULL, 1, 8, NULL, '2025-06-17 06:29:29', '2025-06-17 06:29:29'),
+(16, 6, 1, 95, '2025-06-18', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
+(17, 2, 1, 100, '2025-06-18', 2500.00, NULL, NULL, 1, 1, NULL, '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
+(18, 2, 1, 102, '2025-06-18', 7000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
+(19, 2, 1, 100, '2025-06-18', 4000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -1504,11 +1522,11 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 (468, 94, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
 (469, 94, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
 (470, 94, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 06:05:55', '2025-06-17 06:05:55'),
-(471, 95, 1, '2025-06-15', '2025-07-10', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
-(472, 95, 2, NULL, '2025-07-10', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
-(473, 95, 3, NULL, '2025-07-10', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:07:34', '2025-06-17 06:15:25'),
-(474, 95, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 06:07:34', '2025-06-17 06:11:32'),
-(475, 95, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 06:07:34', '2025-06-17 06:11:32'),
+(471, 95, 1, '2025-06-15', '2025-07-10', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:c-1|10:Center-10:c-10|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-17 06:07:34', '2025-06-18 08:49:50'),
+(472, 95, 2, NULL, '2025-07-10', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-17 06:07:34', '2025-06-18 08:51:45'),
+(473, 95, 3, '2025-06-18', '2025-07-10', NULL, '1:Center-1:c-1', '23456897655678', NULL, 1, 1, 1, 16, '2025-06-17 06:07:34', '2025-06-18 12:27:54'),
+(474, 95, 4, '2025-06-18', '2025-08-12', NULL, '1:Center-1:c-1', NULL, '23456789', 1, 1, 1, 21, '2025-06-17 06:07:34', '2025-06-18 12:29:07'),
+(475, 95, 5, '2025-06-18', NULL, NULL, '1:Center-1:c-1', NULL, NULL, 1, 0, 1, 23, '2025-06-17 06:07:34', '2025-06-18 12:29:29'),
 (476, 96, 1, '2025-06-17', '2025-07-12', 'hjfjgfghdfgdf', '1:Center-1:c-1|10:Center-10:c-10|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-17 06:27:39', '2025-06-17 06:33:13'),
 (477, 96, 2, NULL, '2025-07-12', NULL, NULL, NULL, NULL, 1, 0, 0, 7, '2025-06-17 06:27:39', '2025-06-17 06:33:13'),
 (478, 96, 3, NULL, '2025-07-12', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:27:39', '2025-06-17 06:32:07'),
@@ -1528,7 +1546,27 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 (492, 99, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
 (493, 99, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
 (494, 99, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
-(495, 99, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
+(495, 99, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(496, 100, 1, '2025-06-18', '2025-07-13', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:c-1|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-18 09:20:57', '2025-06-18 12:24:59'),
+(497, 100, 2, '2025-06-18', '2025-07-13', NULL, NULL, NULL, NULL, 1, 0, 1, 8, '2025-06-18 09:20:57', '2025-06-18 12:25:37'),
+(498, 100, 3, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 1, 11, '2025-06-18 09:20:57', '2025-06-18 09:25:49'),
+(499, 100, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
+(500, 100, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
+(501, 101, 1, NULL, NULL, NULL, '1:Center-1:c-1', NULL, NULL, 1, 0, 0, 1, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
+(502, 101, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 10:23:31', '2025-06-18 10:23:31'),
+(503, 101, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 10:23:31', '2025-06-18 10:23:31'),
+(504, 101, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
+(505, 101, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
+(506, 102, 1, '2025-06-18', '2025-07-13', NULL, '10:Center-10:c-10|2:Center-2:c-2|4:Center-4:c-4', NULL, NULL, 1, 0, 1, 2, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
+(507, 102, 2, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
+(508, 102, 3, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
+(509, 102, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
+(510, 102, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
+(511, 103, 1, NULL, NULL, NULL, '2:Center-2:c-2', NULL, NULL, 0, 0, 0, 1, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
+(512, 103, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
+(513, 103, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
+(514, 103, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
+(515, 103, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-18 11:26:46', '2025-06-18 11:26:46');
 
 -- --------------------------------------------------------
 
@@ -2225,11 +2263,15 @@ INSERT INTO `sales` (`id`, `customer_id`, `country_id`, `account_id`, `passenger
 (91, 5, NULL, 1, 'Md Muktar Hossain', 'A18841836', NULL, 'SRD06803994', '0000091', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 6, NULL, '2025-06-17 04:22:06', '2025-06-17 04:22:06'),
 (92, 5, NULL, 1, 'Samsul Haque', 'A13311448', NULL, 'SRD06548029', '0000092', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 6, NULL, '2025-06-17 04:23:08', '2025-06-17 04:23:08'),
 (93, 5, NULL, 1, 'Atikur Rahman Sourav', 'A04478402', NULL, 'SRD06194450', '0000093', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
-(95, 6, NULL, NULL, '3456789', '8765432456789', NULL, NULL, '0000095', '2025-06-17', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:07:34', '2025-06-17 06:14:56'),
+(95, 6, NULL, NULL, '3456789', '8765432456789', NULL, NULL, '0000095', '2025-06-17', 9000.00, 0.00, 0, 0.00, 0.00, 9000.00, 9000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:07:34', '2025-06-18 08:50:37'),
 (96, 6, NULL, 1, '9876542345678', '65098765443567', NULL, '456789', '0000096', '2025-06-17', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
 (97, 6, NULL, NULL, 'Shoriful Alom', '34567890', NULL, NULL, '0000097', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 8, NULL, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
 (98, 2, NULL, 1, '9876542345678', '65098765443567', 'doc-07f66962-595d-424f-97dc-285df7370b06.png', '456789', '0000098', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, 1, '2025-06-17 10:57:53', '2025-06-17 11:32:52'),
-(99, 3, 191, NULL, '9876542345678', '65098765443567', 'doc-cdd9cf3c-060f-40b3-8145-e33757e3091d.png', '456789', '0000099', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, NULL, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
+(99, 3, 191, NULL, '9876542345678', '65098765443567', 'doc-cdd9cf3c-060f-40b3-8145-e33757e3091d.png', '456789', '0000099', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, NULL, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(100, 2, 18, 1, 'Nowab Shorif', '5678934', 'doc-2599bbfb-5d51-48a0-b840-c5b84a95a022.jpg', '7923434567', '0000100', '2025-06-18', 6500.00, 0.00, 0, 0.00, 0.00, 6500.00, 6500.00, NULL, NULL, 1, 1, 1, 1, '2025-06-18 09:20:57', '2025-06-18 12:25:18'),
+(101, 6, 191, NULL, 'Kawa Kader', '123456789', 'doc-8edaee34-d8d6-4723-8664-dd4a704c3a9e.png', NULL, '0000101', '2025-06-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 8, NULL, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
+(102, 2, 191, 1, 'Malek Azad', '36456dfgdfg', 'doc-d5b38a8f-daa3-4cfe-a91b-e9086f014a6d.png', '7923434567', '0000102', '2025-06-18', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
+(103, 2, 1, NULL, 'Malek Azad', '36456dfgdfg', NULL, '7923434567', '0000103', '2025-06-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, 1, '2025-06-18 11:26:46', '2025-06-18 11:28:49');
 
 -- --------------------------------------------------------
 
@@ -2372,7 +2414,14 @@ INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `p
 (113, 95, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
 (114, 96, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:29:12', '2025-06-17 06:29:29'),
 (118, 98, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 11:32:52', '2025-06-17 11:32:52'),
-(119, 99, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 12:00:26', '2025-06-17 12:00:26');
+(119, 99, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(120, 95, 13, '2025-06-17', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
+(121, 95, 6, '2025-06-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-18 08:51:59', '2025-06-18 08:52:00'),
+(122, 100, 3, '2025-06-18', 2500.00, 2000.00, 500.00, 2500.00, 500.00, 0, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
+(123, 100, 1, '2025-06-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
+(124, 102, 1, '2025-06-18', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-18 11:06:10', '2025-06-18 11:08:45'),
+(126, 103, 1, '2025-06-18', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-18 11:28:49', '2025-06-18 11:28:49'),
+(127, 100, 26, '2025-06-18', 4000.00, 3500.00, 500.00, 4000.00, 500.00, 0, '2025-06-18 12:25:18', '2025-06-18 12:25:18');
 
 -- --------------------------------------------------------
 
@@ -2772,7 +2821,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -2814,13 +2863,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2880,7 +2929,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=516;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2958,13 +3007,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `status_lists`

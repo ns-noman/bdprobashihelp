@@ -4,9 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\BasicInfo;
 use App\Models\BikePurchase;
-use App\Models\Expense;
 use App\Models\Sale;
-use App\Models\BikeProfitShareRecords;
+use App\Models\JobServiceRecords;
 use App\Models\InvestorTransaction;
 use App\Models\Agent;
 use App\Http\Controllers\Controller;
@@ -27,12 +26,49 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $agent_id = Auth::guard('admin')->user()->agent_id;
         $data['breadcrumb'] = $this->breadcrumb;
 
-        // $data['basicInfo'] = BasicInfo::first()->toArray();
+        $data['basicInfo'] = BasicInfo::first()->toArray();
 
-        // $data['bike_stock'] = BikePurchase::where('purchase_status', 1)
-        //                         ->where('selling_status', 0)
+        $data['total_pending_job'] = Sale::where('status', 0)
+            ->when($agent_id, fn($q) => $q->where('customer_id', $agent_id))
+            ->count();
+        $data['total_processing_job'] = Sale::where('status', 1)
+            ->when($agent_id, fn($q) => $q->where('customer_id', $agent_id))
+            ->count();
+        $data['total_completed_job'] = Sale::where('status', 2)
+            ->when($agent_id, fn($q) => $q->where('customer_id', $agent_id))
+            ->count();
+        $data['total_refunded_job'] = Sale::where('status', 3)
+            ->when($agent_id, fn($q) => $q->where('customer_id', $agent_id))
+            ->count();
+        $data['total_cancelled_job'] = Sale::where('status', 4)
+            ->when($agent_id, fn($q) => $q->where('customer_id', $agent_id))
+            ->count();
+
+        $data['request_for_settlement'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
+                ->where(['status_id'=>8, 'sales.status'=> 1])
+                ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
+                ->count();
+        $data['request_for_slip'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
+                ->where(['status_id'=>12, 'sales.status'=> 1])
+                ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
+                ->count();
+        $data['request_for_mofa'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
+                ->where(['status_id'=>18, 'sales.status'=> 1])
+                ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
+                ->count();
+        $data['request_for_fitcard'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
+                ->where(['status_id'=>23, 'sales.status'=> 1])
+                ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
+                ->count();
+
+
+      
+
+
+        // $data['total_pending_job'] = Job::where('status', 1)
         //                         ->count();
         
         // $data['investor_bike'] = BikePurchase::where('purchase_status', 1)

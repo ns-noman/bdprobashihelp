@@ -54,19 +54,19 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '4' : '3' }} ">
                                             <label>Passenger Name *</label>
                                             <input name="passenger_name" id="passenger_name" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_name : null }}" class="form-control form-control-sm" placeholder="Passenger Name" required>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '4' : '3' }} ">
                                             <label>Passport No *</label>
                                             <input name="passenger_passport_no" id="passenger_passport_no" type="text" value="{{ isset($data['item']) ? $data['item']->passenger_passport_no : null }}" class="form-control form-control-sm" placeholder="0123456789" required>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }} ">
-                                            <label>Passport Img *</label>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '4' : '3' }} ">
+                                            <label>Passport Img</label>
                                             <input class="form-control form-control-sm" id="passport_img" name="passport_img" type="file" accept="application/pdf,image/*">
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '2' }} ">
+                                        <div class="form-group col-sm-2 col-md-2 col-lg-{{ $data['is_agent'] ? '6' : '2' }} ">
                                             <label>Country</label>
                                             <select class="form-control form-control-sm select2" id="country_id" name="country_id">
                                                 <option value="">Select Country</option>
@@ -75,20 +75,31 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }}" id="medical_center_ids_div">
+                                            <div class="form-group">
+                                                <label id="medical_center_ids_label">Medical Centers</label>
+                                                <select class="form-control form-control-sm select2" name="medical_center_ids[]" id="medical_center_ids" multiple="multiple" data-placeholder="Select Package Items" style="width: 100%;" @readonly(true)>
+                                                    @foreach ($data['centers'] as $center)
+                                                        <option value="{{ $center['id'] }}"
+                                                        >{{ $center['name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         @if(!$data['is_agent'])
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                                        <div class="form-group col-sm-2 col-md-2 col-lg-{{ $data['is_agent'] ? '6' : '2' }}">
                                             <label>Localhost No</label>
                                             <input name="localhost_no" id="localhost_no" type="text" value="{{ isset($data['item']) ? $data['item']->localhost_no : null }}" class="form-control form-control-sm" placeholder="0123456789">
                                         </div>
                                         @endif
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3" {{ $data['is_agent'] ? 'hidden' : '' }}>
+                                        <div class="form-group col-sm-2 col-md-2 col-lg-{{ $data['is_agent'] ? '6' : '2' }}" {{ $data['is_agent'] ? 'hidden' : '' }}>
                                             <label>Date *</label>
                                             <input name="date" id="date" type="date"
                                                 value="{{ isset($data['item']) ? $data['item']->date : date('Y-m-d') }}"
                                                 class="form-control form-control-sm" required>
                                         </div>
                                         @if(!$data['is_agent'])
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }}">
                                             <label>Service Item</label>
                                             <select class="form-control form-control-sm select2" id="item_id_temp">
                                                 <option value="" selected disabled>Select Service Item</option>

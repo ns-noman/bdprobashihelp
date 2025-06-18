@@ -73,6 +73,7 @@ class SaleController extends Controller
         $data['is_agent'] = Auth::guard('admin')->user()->agent_id ? true : false;
         $data['agent_id'] = Auth::guard('admin')->user()->agent_id;
         $data['countries'] = Country::where('status', '=', 1)->get();
+        $data['centers'] = MedicalCenter::where('status',1)->orderBy('id','asc')->get()->toArray();
         return view('backend.sales.create-or-edit',compact('data'));
     }
     public function addNewItem($id=null)
@@ -330,6 +331,7 @@ class SaleController extends Controller
             $reference_number = $request->reference_number ?? null;
             $item_id = $request->item_id ?? [];
             $unit_price = $request->unit_price;
+            $medical_center_ids = $request->medical_center_ids ?? [];
 
             $passport_img = $request->passport_img;
 
@@ -372,7 +374,7 @@ class SaleController extends Controller
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
             }
-            $this->generateJobServiceItem($sale->id);
+            $this->generateJobServiceItem($sale->id, $medical_center_ids);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
@@ -382,13 +384,24 @@ class SaleController extends Controller
         }
     }
 
-    public function generateJobServiceItem($saleId)
+    public function generateJobServiceItem($saleId, $medical_center_ids)
     {
         $item_ids = Item::where('item_type',0)->pluck('id');
         foreach ($item_ids as $key => $item_id) {
             $initialStatusId = StatusList::where(['item_id'=> $item_id,'status_state'=>0])->first()->id;
             $jobserviceRecordData = ['job_id'=>$saleId,'item_id'=>$item_id,'status_id'=>$initialStatusId,'is_enabled'=>0];
             JobServiceRecords::create($jobserviceRecordData);
+        }
+        
+        if($medical_center_ids){
+            if(isset($medical_center_ids) && count($medical_center_ids)){
+                $medicalCenterTxt = '';
+                foreach ($medical_center_ids as $key => $medical_center_id) {
+                    $medicalCenter = MedicalCenter::find($medical_center_id);
+                    $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($medical_center_ids) ? '|' : null);
+                }
+                JobServiceRecords::where(['item_id'=> 1, 'job_id'=> $saleId])->update(['medical_centers'=> $medicalCenterTxt]);
+            }
         }
     }
 
@@ -492,7 +505,7 @@ class SaleController extends Controller
                 $this->btnControl($id, $data['status_id']);
                 
                 if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
-                        $medicalCenterTxt = '';
+                    $medicalCenterTxt = '';
                     foreach ($data['medical_center_ids'] as $key => $medical_center_id) {
                         $medicalCenter = MedicalCenter::find($medical_center_id);
                         $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($data['medical_center_ids']) ? '|' : null);
@@ -513,6 +526,17 @@ class SaleController extends Controller
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
+    // public function addMedical($data)
+    // {
+    //     if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
+    //         $medicalCenterTxt = '';
+    //         foreach ($data['medical_center_ids'] as $key => $medical_center_id) {
+    //             $medicalCenter = MedicalCenter::find($medical_center_id);
+    //             $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($data['medical_center_ids']) ? '|' : null);
+    //         }
+    //         $data['medical_centers'] = $medicalCenterTxt;
+    //     }
+    // }
 
     public function btnControl($job_service_record_id, $status)
     {
@@ -715,9 +739,11 @@ class SaleController extends Controller
             'sales.id',
             'customers.name as customer_name',
             'admins.name as creator_name',
+            'countries.country_code',
             'sales.customer_id',
             'sales.passenger_name',
             'sales.passenger_passport_no',
+            'sales.passport_img',
             'sales.localhost_no',
             'sales.invoice_no',
             'sales.date',
@@ -731,8 +757,10 @@ class SaleController extends Controller
             'sales.status',
         ];
 
-        $query = Sale::with(['serviceshorts'])->join('customers', 'customers.id', '=', 'sales.customer_id')
-                            ->join('admins', 'admins.id', '=', 'sales.created_by_id');
+        $query = Sale::with(['serviceshorts'])
+                    ->leftJoin('countries', 'countries.id', '=', 'sales.country_id')
+                    ->join('customers', 'customers.id', '=', 'sales.customer_id')
+                    ->join('admins', 'admins.id', '=', 'sales.created_by_id');
 
 
         if($request->has('customer_id') && $request->customer_id != 0){
@@ -753,7 +781,7 @@ class SaleController extends Controller
             });
         }
 
-        if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.status','asc')->orderBy('sales.id','desc');
+        if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.id','desc')->orderBy('sales.status','asc');
         
         $query = $query->select($select);
         return DataTables::of($query)
