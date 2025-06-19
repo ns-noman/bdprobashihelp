@@ -17,11 +17,15 @@
                                 @endif
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Name *</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->name : null }}" type="text" class="form-control" name="name" placeholder="Name" required>
                                         </div>
-                                        <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                                            <label>Code *</label>
+                                            <input value="{{ isset($data['item']) ? $data['item']->code : null }}" type="text" class="form-control" name="code" placeholder="Cdoe" required>
+                                        </div>
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
                                             <label>Phone *</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->phone : null }}" type="number" class="form-control" name="phone" placeholder="+8801XXXXXXXXX" required>
                                         </div>

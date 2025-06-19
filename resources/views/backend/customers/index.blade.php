@@ -22,6 +22,7 @@
                                                 <tr>
                                                     <th>SN</th>
                                                     <th>Agent Name</th>
+                                                    <th>Agent Code</th>
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>Address</th>
@@ -36,6 +37,7 @@
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $customer->name }}</td>
+                                                        <td>{{ $customer->code }}</td>
                                                         <td>{{ $customer->phone }}</td>
                                                         <td>{{ $customer->email }}</td>
                                                         <td>{{ $customer->address }}</td>

@@ -11,6 +11,7 @@
     $print = $authorization->hasMenuAccess(160) == true ? 1: 0;
     $payment = $authorization->hasMenuAccess(161) == true ? 1: 0;
     $add_new_item = $authorization->hasMenuAccess(185) == true ? 1: 0;
+    $token = $authorization->hasMenuAccess(188) == true ? 1: 0;
     $service_status_update = $authorization->hasMenuAccess(186) == true ? 1: 0;
 @endphp
     <style>
@@ -38,7 +39,7 @@
                             <div class="card-body">
                                 <div class="bootstrap-data-table-panel">
                                     <div class="table-responsive">
-                                        <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center">
+                                        <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center d-flex-justify-contenent">
                                             <thead>
                                                 <tr>
                                                     <th>Action</th>
@@ -122,6 +123,7 @@
                 payment: parseInt("{{ $payment }}"),
                 add_new_item: parseInt("{{ $add_new_item }}"),
                 service_status_update: parseInt("{{ $service_status_update }}"),
+                token: parseInt("{{ $token }}"),
             };
             $(document).on('click','.pay-now', function(e) {
                 $('#sale_id').val($(this).attr('sale-id'));
@@ -201,23 +203,30 @@
                                 let addNewItem = `{{ route('sales.add-new-item', ":id") }}`.replace(':id', row.id);
                                 let edit = `{{ route('sales.edit', ":id") }}`.replace(':id', row.id);
                                 let print = `{{ route('sales.invoice.print', [":id", "print"]) }}`.replace(':id', row.id);
+                                let token = `{{ route('sales.token.print', [":id", "print"]) }}`.replace(':id', row.id);
                                 let view = `{{ route('sales.invoice', [":id"]) }}`.replace(':id', row.id);
                                 let destroy = `{{ route('sales.destroy', ":id") }}`.replace(':id', row.id);
                                 let action = ` <div>`;
+                                    if (hasPermission.token) {
+                                        action += `<a style="width: 35px;width: 35px;" href="${token}" class="btn btn-sm btn-secondary">
+                                                        <i class="fa-solid fa-receipt"></i>
+                                                    </a>
+                                                    <br>`;
+                                    }
                                     if (hasPermission.view) {
-                                        action += `<a href="${view}" class="btn btn-sm btn-warning">
+                                        action += `<a style="width: 35px;width: 35px;" href="${view}" class="btn btn-sm btn-warning">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
                                                     <br>`;
                                     }
                                     if (hasPermission.print) {
-                                        action += `<a href="${print}" class="btn btn-sm btn-dark">
+                                        action += `<a style="width: 35px;width: 35px;" href="${print}" class="btn btn-sm btn-dark">
                                                         <i class="fa-solid fa-print"></i>
                                                     </a>
                                                     <br>`;
                                     }
                                     if (hasPermission.payment) {
-                                        action +=  `<button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
+                                        action +=  `<button style="width: 35px;width: 35px;" due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
                                                                 data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
                                                                     ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
                                                                     <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -225,13 +234,13 @@
                                                     <br>`;
                                     }
                                     if (hasPermission.add_new_item) {
-                                        action += `<a href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
+                                        action += `<a style="width: 35px;width: 35px;" href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
                                                         <i class="fa-solid fa-plus"></i>
                                                     </a>
                                                     <br>`;
                                     }
                                     if (hasPermission.edit) {
-                                        action += `<a href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
+                                        action += `<a style="width: 35px;width: 35px;" href="${edit}" class="btn btn-sm btn-info ${row.status != '0' ? 'disabled' : null}">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                     </a>
                                                     <br>`;
@@ -240,7 +249,7 @@
                                         action +=  `<form class="delete" action="${destroy}" method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
+                                                    <button style="width: 35px;width: 35px;" type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </form>`;
@@ -365,19 +374,20 @@
                                             <table class="table table-sm table-striped table-info table-center rounded m-0">
                                                 <thead>
                                                     <tr class="bg-info">
-                                                        <th class="text-center" style="width: 100px;" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
-                                                        <th class="text-center" style="width: 200px;" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
-                                                        <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no}
-                                                        ${row.passport_img !=null ? `<a href="javascript:void(0)"  class="btn btn-sm btn-dark p-1 m-0" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download"></i></a>` : ''}
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}</th>
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
+                                                        <th class="text-center" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no}
+                                                        ${row.passport_img !=null ? `<a href="javascript:void(0)" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download text-danger shadow"></i></a>` : ''}
                                                         </th>
-                                                        <th class="text-center" style="width: 150px;" colspan="1"><span style="color: black;">Localhost No: </span><br>${row.localhost_no}</th>
+                                                        <th class="text-center" colspan="1"><span style="color: black;">Localhost No: </span><br>${row.localhost_no ?? '-'}</th>
                                                     </tr>
                                                     <tr class="bg-light">
-                                                        <th class="text-center" colspan="2">Date: ${row.date}</th>
-                                                        <th class="text-center" colspan="3"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
-                                                        <th class="text-center" colspan="1">Payment Status: ${`<span class="badge badge-${paymentStatusColor}">${paymentText}</span>`}</th>
+                                                        <th class="text-center" colspan="1">Date: ${row.date}</th>
+                                                        <th class="text-center" colspan="1"><div class="text-center">Paid: <span class="text-success fw-bold"><b>${row.paid_amount}</b></span> | Due: <span class="text-danger fw-bold"><b>${row.total_payable - row.paid_amount}</b></span></div></th>
+                                                        <th class="text-center" colspan="2">Payment Status: ${`<span class="badge badge-${paymentStatusColor}">${paymentText}</span>`}</th>
                                                         <th class="text-center" colspan="1">CC:- ${row.country_code ?? ''}</th>
+                                                        <th class="text-center" colspan="2">MC:- ${row.medical_name ?? ''}</th>
                                                         <th class="text-center" colspan="1">Note: ${row.note ?? ''}</th>
                                                     </tr>
                                                     <tr>
@@ -385,7 +395,7 @@
                                                         <th class="text-center" style="width: 150px;">Status</th>
                                                         <th class="text-center" style="width: 80px;">EntryDate</th>
                                                         <th class="text-center" style="width: 80px;">ExpireDate</th>
-                                                        <th class="text-center" style="width: 30px;">R.Day</th>
+                                                        <th class="text-center" style="width: 80px;">R.Day</th>
                                                         <th class="text-center" style="width: 200px;">Centers</th>
                                                         <th class="text-center" style="width: 150px;">Slip/MOFA_No</th>
                                                         <th class="text-center" style="width: 350px;">Results/Remarks</th>

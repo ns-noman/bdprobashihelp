@@ -11,11 +11,12 @@ class Sale extends Model
     protected $fillable = 
     [
         'customer_id',
+        'medical_id',
+        'country_id',
         'account_id',
         'passenger_name',
         'passenger_passport_no',
         'passport_img',
-        'country_id',
         'localhost_no',
         'invoice_no',
         'date',

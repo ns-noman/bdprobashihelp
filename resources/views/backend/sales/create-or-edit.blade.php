@@ -75,16 +75,14 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }}" id="medical_center_ids_div">
-                                            <div class="form-group">
-                                                <label id="medical_center_ids_label">Medical Centers</label>
-                                                <select class="form-control form-control-sm select2" name="medical_center_ids[]" id="medical_center_ids" multiple="multiple" data-placeholder="Select Package Items" style="width: 100%;" @readonly(true)>
-                                                    @foreach ($data['centers'] as $center)
-                                                        <option value="{{ $center['id'] }}"
-                                                        >{{ $center['name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                        <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }}">
+                                            <label>Medical Centers *</label>
+                                            <select class="form-control form-control-sm select2" name="medical_id" id="medical_id" required>
+                                                <option value="">Select Medical</option>
+                                                @foreach ($data['centers'] as $center)
+                                                    <option value="{{$center['id'] }}" @selected(isset($data['item']) && $center['id'] == $data['item']->medical_id)>{{ $center['name'] }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         @if(!$data['is_agent'])
                                         <div class="form-group col-sm-2 col-md-2 col-lg-{{ $data['is_agent'] ? '6' : '2' }}">

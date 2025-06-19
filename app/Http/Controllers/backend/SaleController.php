@@ -73,7 +73,7 @@ class SaleController extends Controller
         $data['is_agent'] = Auth::guard('admin')->user()->agent_id ? true : false;
         $data['agent_id'] = Auth::guard('admin')->user()->agent_id;
         $data['countries'] = Country::where('status', '=', 1)->get();
-        $data['centers'] = MedicalCenter::where('status',1)->orderBy('id','asc')->get()->toArray();
+        $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>1])->orderBy('id','asc')->get()->toArray();
         return view('backend.sales.create-or-edit',compact('data'));
     }
     public function addNewItem($id=null)
@@ -210,12 +210,12 @@ class SaleController extends Controller
         }
         $data['statusList'] = $data['statusList']->orderBy('srl', 'asc')->get()->toArray();
 
-        $data['centers'] = MedicalCenter::where('status',1)->orderBy('name','asc')->get()->toArray();
+        $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>0])->orderBy('name','asc')->get()->toArray();
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.sales.service-info',compact('data'));
     }
 
-    public function inovice($id, $print=null)
+    public function invoice($id, $print=null)
     {
         $data['breadcrumb'] = $this->breadcrumb;
         $data['print'] = $print;
@@ -273,6 +273,30 @@ class SaleController extends Controller
                             ->toArray();
         return view('backend.sales.invoice',compact('data'));
     }
+    public function token($id, $print=null)
+    {
+        $data['breadcrumb'] = $this->breadcrumb;
+        $data['print'] = $print;
+
+       $select = 
+        [
+            'sales.passenger_name',
+            'sales.passenger_passport_no',
+            'customers.code as agent_code',
+            'countries.country_name',
+            'medical_centers.name as medical_name',
+            'medical_centers.address as medical_address',
+        ];
+        $data['basicInfo'] = BasicInfo::first()->toArray();
+        
+
+        $data['master'] = Sale::where('sales.id', $id)->leftjoin('medical_centers', 'medical_centers.id', '=', 'sales.medical_id')
+                    ->leftJoin('countries', 'countries.id', '=', 'sales.country_id')
+                    ->join('customers', 'customers.id', '=', 'sales.customer_id')
+                    ->select($select)
+                    ->first();
+        return view('backend.sales.token',compact('data'));
+    }
     public function payment(Request $request)
     {
         $sale_id = $request->sale_id;
@@ -314,6 +338,7 @@ class SaleController extends Controller
 
 
             $customer_id = $request->customer_id;
+            $medical_id = $request->medical_id;
             $country_id = $request->country_id;
             $account_id = $request->account_id ?? null;
             $passenger_name = $request->passenger_name;
@@ -344,6 +369,7 @@ class SaleController extends Controller
             // Sale creation
             $sale = new Sale();
             $sale->customer_id = $customer_id;
+            $sale->medical_id = $medical_id;
             $sale->country_id = $country_id;
             $sale->passenger_name = $passenger_name;
             $sale->passenger_passport_no = $passenger_passport_no;
@@ -374,7 +400,7 @@ class SaleController extends Controller
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
             }
-            $this->generateJobServiceItem($sale->id, $medical_center_ids);
+            $this->generateJobServiceItem($sale->id);
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
@@ -384,24 +410,13 @@ class SaleController extends Controller
         }
     }
 
-    public function generateJobServiceItem($saleId, $medical_center_ids)
+    public function generateJobServiceItem($saleId)
     {
         $item_ids = Item::where('item_type',0)->pluck('id');
         foreach ($item_ids as $key => $item_id) {
             $initialStatusId = StatusList::where(['item_id'=> $item_id,'status_state'=>0])->first()->id;
             $jobserviceRecordData = ['job_id'=>$saleId,'item_id'=>$item_id,'status_id'=>$initialStatusId,'is_enabled'=>0];
             JobServiceRecords::create($jobserviceRecordData);
-        }
-        
-        if($medical_center_ids){
-            if(isset($medical_center_ids) && count($medical_center_ids)){
-                $medicalCenterTxt = '';
-                foreach ($medical_center_ids as $key => $medical_center_id) {
-                    $medicalCenter = MedicalCenter::find($medical_center_id);
-                    $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($medical_center_ids) ? '|' : null);
-                }
-                JobServiceRecords::where(['item_id'=> 1, 'job_id'=> $saleId])->update(['medical_centers'=> $medicalCenterTxt]);
-            }
         }
     }
 
@@ -410,6 +425,7 @@ class SaleController extends Controller
         DB::beginTransaction();
         try {
             $customer_id = $request->customer_id;
+            $medical_id = $request->medical_id;
             $country_id = $request->country_id;
             $account_id = $request->account_id ?? null;
             $passenger_name = $request->passenger_name;
@@ -441,6 +457,7 @@ class SaleController extends Controller
                 $passport_img = $this->documentUpload($passport_img);
             }
             $sale->customer_id = $customer_id;
+            $sale->medical_id = $medical_id;
             $sale->country_id = $country_id;
             $sale->account_id = $account_id;
             $sale->passenger_name = $passenger_name;
@@ -526,17 +543,6 @@ class SaleController extends Controller
             return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
-    // public function addMedical($data)
-    // {
-    //     if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
-    //         $medicalCenterTxt = '';
-    //         foreach ($data['medical_center_ids'] as $key => $medical_center_id) {
-    //             $medicalCenter = MedicalCenter::find($medical_center_id);
-    //             $medicalCenterTxt .= $medicalCenter->id . ':' . $medicalCenter->name . ':' . $medicalCenter->code . (($key+1) < count($data['medical_center_ids']) ? '|' : null);
-    //         }
-    //         $data['medical_centers'] = $medicalCenterTxt;
-    //     }
-    // }
 
     public function btnControl($job_service_record_id, $status)
     {
@@ -740,6 +746,7 @@ class SaleController extends Controller
             'customers.name as customer_name',
             'admins.name as creator_name',
             'countries.country_code',
+            'medical_centers.name as medical_name',
             'sales.customer_id',
             'sales.passenger_name',
             'sales.passenger_passport_no',
@@ -758,6 +765,7 @@ class SaleController extends Controller
         ];
 
         $query = Sale::with(['serviceshorts'])
+                    ->leftjoin('medical_centers', 'medical_centers.id', '=', 'sales.medical_id')
                     ->leftJoin('countries', 'countries.id', '=', 'sales.country_id')
                     ->join('customers', 'customers.id', '=', 'sales.customer_id')
                     ->join('admins', 'admins.id', '=', 'sales.created_by_id');

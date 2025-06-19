@@ -209,8 +209,9 @@ Route::prefix('backend')->group(function () {
                 Route::post('store','store')->name('sales.store');
                 Route::put('update/{id}','update')->name('sales.update');
                 Route::get('create','createOrEdit')->name('sales.create');
-                Route::get('invoice/{id}','inovice')->name('sales.invoice');
-                Route::get('invoice/{id}/{print}','inovice')->name('sales.invoice.print');
+                Route::get('invoice/{id}','invoice')->name('sales.invoice');
+                Route::get('invoice/{id}/{print}','invoice')->name('sales.invoice.print');
+                Route::get('token/{id}/{print}','token')->name('sales.token.print');
                 Route::post('payment/store','payment')->name('sales.payment.store');
                 Route::get('list','list')->name('sales.list');
                 Route::get('edit/{id?}','createOrEdit')->name('sales.edit');
