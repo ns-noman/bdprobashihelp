@@ -9,37 +9,37 @@
                     <div class="invoice p-3 mb-3" id="my-invoice">
                         <div class="row mt-3">
                             <div class="col-4">
-                                <h4>
+                                <!-- <h4>
                                     <img style="height: 150px;"
                                         src="{{ asset('public/uploads/basic-info/' . $data['basicInfo']['logo']) }}"
                                         alt="Logo" />
-                                </h4>
+                                </h4> -->
                             </div>
                             <div class="col-4 text-center">
                                 <h1>Pre-Medical Token</h1>
                             </div>
                             <div class="col-4 text-right">
 
-                                <address>
+                                <!-- <address>
                                     {{ $data['basicInfo']['address'] }}<br>
                                     মোবাইল: {{ $data['basicInfo']['phone'] }}<br>
                                     ই-মেইল: {{ $data['basicInfo']['email'] }}
-                                </address>
+                                </address> -->
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 150px!important;">
+                        <div class="row" style="margin-top: 50px!important;">
                             <div class="col-sm-12 invoice-col">
-                                <b>Passenger Name: {{ $data['master']['passenger_name'] }}</b><br>
+                                <b>Passenger Name: </b>{{ $data['master']['passenger_name'] }}<br>
                                 <br>
-                                <b>Passport No: {{ $data['master']['passenger_passport_no'] }}</b><br>
+                                <b>Passport No: </b>{{ $data['master']['passenger_passport_no'] }}<br>
                                 <br>
-                                <b>Travel To: {{ $data['master']['country_name'] }}</b><br>
+                                <b>Travel To: </b>{{ $data['master']['country_name'] }}<br>
                                 <br>
-                                <b>Agent Code: HASHOST-{{ $data['master']['agent_code'] }}</b><br>
+                                <b>Agent Code: </b>HASHOST-{{ $data['master']['agent_code'] }}<br>
                                 <br>
-                                <b>Medical Name: {{ $data['master']['medical_name'] }}</b><br>
+                                <b>Medical Name: </b>{{ $data['master']['medical_name'] }}<br>
                                 <br>
-                                <b>Medical Address: {{ $data['master']['medical_address'] }}</b><br>
+                                <b>Medical Address: </b>{{ $data['master']['medical_address'] }}<br>
                                 <br>
                             </div>
                         </div>

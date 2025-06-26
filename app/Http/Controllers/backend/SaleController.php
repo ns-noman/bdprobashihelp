@@ -32,7 +32,7 @@ class SaleController extends Controller
         $data['paymentMethods'] = $this->paymentMethods();
         $data['breadcrumb'] = $this->breadcrumb;
         $data['customers'] = Customer::where('status',1)->orderBy('name','asc')->get();
-        return view('backend.sales.index', compact('data'));
+        return view('backend.jobs.index', compact('data'));
     }
 
     public function createOrEdit($id=null)
@@ -74,7 +74,7 @@ class SaleController extends Controller
         $data['agent_id'] = Auth::guard('admin')->user()->agent_id;
         $data['countries'] = Country::where('status', '=', 1)->get();
         $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>1])->orderBy('id','asc')->get()->toArray();
-        return view('backend.sales.create-or-edit',compact('data'));
+        return view('backend.jobs.create-or-edit',compact('data'));
     }
     public function addNewItem($id=null)
     {
@@ -94,7 +94,7 @@ class SaleController extends Controller
     
         $data['items'] = $items;
         $data['breadcrumb'] = $this->breadcrumb;
-        return view('backend.sales.add-new-item',compact('data'));
+        return view('backend.jobs.add-new-item',compact('data'));
     }
     public function newStore(Request $request,$id)
     {
@@ -212,7 +212,7 @@ class SaleController extends Controller
 
         $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>0])->orderBy('name','asc')->get()->toArray();
         $data['breadcrumb'] = $this->breadcrumb;
-        return view('backend.sales.service-info',compact('data'));
+        return view('backend.jobs.service-info',compact('data'));
     }
 
     public function invoice($id, $print=null)
@@ -271,7 +271,7 @@ class SaleController extends Controller
                             ->select($selectDetails)
                             ->get()
                             ->toArray();
-        return view('backend.sales.invoice',compact('data'));
+        return view('backend.jobs.invoice',compact('data'));
     }
     public function token($id, $print=null)
     {
@@ -295,7 +295,7 @@ class SaleController extends Controller
                     ->join('customers', 'customers.id', '=', 'sales.customer_id')
                     ->select($select)
                     ->first();
-        return view('backend.sales.token',compact('data'));
+        return view('backend.jobs.pre-medical-token',compact('data'));
     }
     public function payment(Request $request)
     {
@@ -740,10 +740,13 @@ class SaleController extends Controller
 
     public function list(Request $request)
     {
+        $status_filter_type = $request->input('status_filter_type');
+        $status_filter_value = $request->input('status_filter_value');
         $select = 
         [
             'sales.id',
             'customers.name as customer_name',
+            'customers.code as customer_code',
             'admins.name as creator_name',
             'countries.country_code',
             'medical_centers.name as medical_name',
@@ -775,19 +778,29 @@ class SaleController extends Controller
             $query = $query->where('customer_id', $request->customer_id);
         }
 
-        if ($request->remaining_days !== null) {
-            $days = (int) $request->remaining_days;
-            $query = $query->whereHas('serviceshorts', function ($sq) use ($days) {
-                $sq->where('is_complete', 0)
-                ->whereNotNull('expire_date');
+        if($status_filter_type == 'job_status'){
+            $query = $query->where('sales.status', $status_filter_value);
+        }
 
-                if ($days >= 0) {
-                    $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) BETWEEN 0 AND ?', [$days]);
-                } else {
-                    $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) < 0');
+        if ($request->remaining_days !== null || $status_filter_type == 'service_status') {
+            $days = (int) $request->remaining_days;
+            $query = $query->whereHas('serviceshorts', function ($sq) use ($days, $status_filter_type, $status_filter_value, $request) {
+                $sq->where('is_complete', 0);
+                if ($request->remaining_days !== null) {
+                    $sq->whereNotNull('expire_date');
+                    if ($days >= 0) {
+                        $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) BETWEEN 0 AND ?', [$days]);
+                    } else {
+                        $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) < 0');
+                    }
+                }
+
+                if ($status_filter_type == 'service_status') {
+                    $sq->where('status_id', $status_filter_value);
                 }
             });
         }
+
 
         if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.id','desc')->orderBy('sales.status','asc');
         

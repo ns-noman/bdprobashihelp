@@ -28,30 +28,74 @@
                     <section class="col-lg-12">
                         <div class="card">
                             <div class="card-header bg-primary p-1">
-                                <h3 class="card-title">
+                                <div class="card-title">
                                     @if($authorization->hasMenuAccess(155))
                                         <a href="{{ route('sales.create') }}"class="btn btn-light shadow rounded m-0"><i
                                                 class="fas fa-plus"></i>
                                             <span>Add New</span></i></a>
                                     @endif
-                                </h3>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <div class="bootstrap-data-table-panel">
-                                    <div class="table-responsive">
-                                        <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center d-flex-justify-contenent">
-                                            <thead>
-                                                <tr>
-                                                    <th>Action</th>
-                                                    <th>Status</th>
-                                                    <th style="min-width: 1200px;text-align: center;">Service Availed</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label>Agents *</label>
+                                        <select class="form-control form-control-sm filter select2" id="customer_id" name="customer_id">
+                                            <option value="0">All Agents</option>
+                                            @foreach ($data['customers'] as $customers)
+                                                <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">{{ $customers['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label>Status Filter *</label>
+                                        <select class="form-control form-control-sm filter select2" id="status_filter" name="status_filter">
+                                            <option value="">Any</option>
+                                            <option value="job_status.0">Pending Job</option>
+                                            <option value="job_status.1">Procesing Job</option>
+                                            <option value="job_status.2">Completed Job</option>
+                                            <option value="job_status.3">Refunded Job</option>
+                                            <option value="job_status.4">Cancelled Job</option>
+                                            <option value="service_status.8">Settlement Requests</option>
+                                            <option value="service_status.12">Slip Request</option>
+                                            <option value="service_status.18">MOFA Request</option>
+                                            <option value="service_status.23">Fit Card Request</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label>Remaining Days *</label>
+                                        <select class="form-control form-control-sm filter select2" id="remaining_days" name="remaining_days">
+                                            <option value="">Any</option>
+                                            <option value="0">Today Expiring</option>
+                                            <option value="-1">Expired</option>
+                                            <option value="5">0-5</option>
+                                            <option value="10">0-10</option>
+                                            <option value="20">0-20</option>
+                                            <option value="30">0-30</option>
+                                            <option value="40">0-40</option>
+                                            <option value="55">0-55</option>
+                                        </select>
                                     </div>
                                 </div>
+                               <div class="row">
+                                    <div class="col-12">
+                                         <div class="bootstrap-data-table-panel">
+                                            <div class="table-responsive">
+                                                <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center d-flex-justify-contenent">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Action</th>
+                                                            <th>Status</th>
+                                                            <th style="min-width: 1200px;text-align: center;">Service Availed</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
                             </div>
                         </div>
                     </section>
@@ -112,6 +156,14 @@
 @endsection
 @section('script')
     <script>
+
+        $('#status_filter').on('change', function(){
+            const url = new URL(window.location.href);
+            url.searchParams.delete('status_filter_type');
+            url.searchParams.delete('status_filter_value');
+            window.history.pushState({}, '', url);
+
+        });
         $(document).ready(function(){
             let customer_id = "{{ $customer_id }}";
             const hasPermission = {
@@ -138,59 +190,45 @@
                     Swal.fire("Couldn't be pay more then payable!");
                 }
             });
-            var table = $('#dataTable').DataTable({initComplete: function () {
-                const filterContainer = $('.dataTables_filter').parent();
-                let rollType = "{{ $roleType }}";
-                let colmd = rollType != 1 ? 4 : 3;
-                filterContainer.before(`
-                    <div class="col-md-${colmd}"${rollType !=1 ? 'hidden' : null}>
-                        <div class="dataTables_filter" style="display: flex; align-items: center; justify-content: center;">
-                            <label style="font-weight: normal; white-space: nowrap; display: flex; align-items: center;margin-bottom: .5rem;">
-                                Agents:
-                                <select data-column="1" class="form-control form-control-sm filter select2" id="customer_id" name="customer_id" style="margin-left: 10px;">
-                                    <option value="0">All Agents</option>
-                                    @foreach ($data['customers'] as $customers)
-                                        <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">{{ $customers['name'] }}</option>
-                                    @endforeach
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                `); 
-                filterContainer.before(`
-                    <div class="col-md-${colmd}">
-                        <div class="dataTables_filter" style="display: flex; align-items: center; justify-content: center;">
-                            <label style="font-weight: normal; white-space: nowrap; display: flex; align-items: center;margin-bottom: .5rem;">
-                                Remaining Days:
-                                <select data-column="1" class="form-control form-control-sm filter select2" id="remaining_days" name="remaining_days" style="margin-left: 10px;">
-                                    <option value="">Any</option>
-                                    <option value="0">Today Expiring</option>
-                                    <option value="-1">Expired</option>
-                                    <option value="5">0-5</option>
-                                    <option value="10">0-10</option>
-                                    <option value="20">0-20</option>
-                                    <option value="30">0-30</option>
-                                    <option value="40">0-40</option>
-                                    <option value="55">0-55</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-                `);
-                $('#dataTable_length').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
-                $('#dataTable_filter').parent().removeClass('col-md-6').addClass(`col-md-${colmd}`);
-            },
+   
+        
+            
+            var table = $('#dataTable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
                 url: '{{ route("sales.list") }}',
                 type: 'GET',
                 data: function(d) {
+                    let status_filter_type = null;
+                    let status_filter_value = null;
+                    let params = new URLSearchParams(window.location.search);
+                    status_filter_type = (params.has('status_filter_type') && params.get('status_filter_type')) || null;
+                    status_filter_value = (params.has('status_filter_value') && params.get('status_filter_value')) || null;
+                    console.log(params.has('status_filter_type'));
+                    
+                    if(params.has('status_filter_type') && params.has('status_filter_value')){
+                        $('#status_filter').val(status_filter_type+'.'+status_filter_value).trigger('change.select2');
+                    }else{
+                        const status_filter = $('#status_filter option:selected').val() || null;
+                        if(status_filter!=null)
+                        {
+                            const status_filter_arr = status_filter.split('.');
+                            status_filter_type = status_filter_arr[0];
+                            status_filter_value = status_filter_arr[1];
+                        }else{
+                            status_filter_type = null;
+                            status_filter_value = null;
+                        }
+                    }
                     let rollType = "{{ $roleType }}";
                     const customer_id = $('#customer_id').val();
                     const remaining_days = $('#remaining_days').val();
+                    
                     d.customer_id = customer_id || (rollType ==2 ? "{{ $customer_id }}" : 0);
                     d.remaining_days = remaining_days || null;
+                    d.status_filter_type = status_filter_type;
+                    d.status_filter_value = status_filter_value;
                     d._token = $('meta[name="csrf-token"]').attr('content');
                 }
             },
@@ -375,7 +413,7 @@
                                                 <thead>
                                                     <tr class="bg-info">
                                                         <th class="text-center" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ":id") }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
-                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}</th>
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}(${row.customer_code})</th>
                                                         <th class="text-center" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
                                                         <th class="text-center" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no}
                                                         ${row.passport_img !=null ? `<a href="javascript:void(0)" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download text-danger shadow"></i></a>` : ''}

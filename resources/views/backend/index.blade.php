@@ -46,13 +46,13 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    {{-- @if($authorization->hasMenuAccess(182)) --}}
+                    @if($authorization->hasMenuAccess(182))
                         <div class="col-lg-12">
                             <h5 class="mb-2">Job Status</h5>
                             <div class="row">
                                 <div class="col" {{ !$authorization->hasMenuAccess(170) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 0]) }}">
                                         <span class="info-box-icon bg-success elevation-1">
                                             <i class="fa fa-shopping-cart"></i>
                                         </span>
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col" {{ !$authorization->hasMenuAccess(171) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 1]) }}">
                                         <span class="info-box-icon bg-primary elevation-1">
                                             <i class="fa fa-tools"></i>
                                         </span>
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 3]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
                                             <i class="fa fa-cogs"></i>
                                         </span>
@@ -92,9 +92,9 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(178) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 2]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
                                             <i class="fa fa-cogs"></i>
                                         </span>
@@ -106,9 +106,9 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(169) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 4]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
                                             <i class="fa fa-cogs"></i>
                                         </span>
@@ -122,14 +122,14 @@
                                 </div>
                             </div>
                         </div>
-                    {{-- @endif --}}
-                    {{-- @if($authorization->hasMenuAccess(182)) --}}
+                    @endif
+                    @if($authorization->hasMenuAccess(183))
                         <div class="col-lg-12">
                             <h5 class="mb-2">All Request</h5>
                             <div class="row">
-                                <div class="col" {{ !$authorization->hasMenuAccess(170) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(173) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 8]) }}">
                                         <span class="info-box-icon bg-success elevation-1">
                                             <i class="fa fa-shopping-cart"></i>
                                         </span>
@@ -141,9 +141,9 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col" {{ !$authorization->hasMenuAccess(171) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(174) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 12]) }}">
                                         <span class="info-box-icon bg-primary elevation-1">
                                             <i class="fa fa-tools"></i>
                                         </span>
@@ -155,9 +155,9 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(175) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 18]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
                                             <i class="fa fa-cogs"></i>
                                         </span>
@@ -169,9 +169,9 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
+                                <div class="col" {{ !$authorization->hasMenuAccess(180) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
-                                        href="{{ route('sales.index') }}">
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 23]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
                                             <i class="fa fa-cogs"></i>
                                         </span>
@@ -185,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{-- @endif --}}
+                    @endif
             </div>
         </section>
     </div>

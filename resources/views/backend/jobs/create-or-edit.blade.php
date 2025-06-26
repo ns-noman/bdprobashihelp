@@ -48,7 +48,7 @@
                                                             selected
                                                         @endif
                                                     >
-                                                        {{ $customer->name }}
+                                                        {{ $customer->name . '('.$customer->code.')' }}
                                                     </option>
                                                 @endforeach
                                             </select>
