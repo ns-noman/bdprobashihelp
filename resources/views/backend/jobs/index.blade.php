@@ -398,7 +398,9 @@
                                         }
                                     }
 
-                                    if (job_service_record.is_complete == '1') {
+                                    if (job_service_record.is_complete == '1' && rollType == 1) {
+                                        ServiceColor = 'success';
+                                    } else if (job_service_record.is_complete == '1' && rollType != 1) {
                                         ServiceColor = 'success';
                                         serviceUrl = 'javascript:void(0)';
                                     } else {
