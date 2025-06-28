@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3" {{ $data['is_agent'] ? 'hidden' : '' }}>
                                             <label>Agents *</label>
-                                            <select name="customer_id" id="customer_id" class="form-control form-control-sm select2" required>
+                                            <select name="customer_id" id="customer_id" class="form-control form-control-sm select2" required  @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                                 <option value="">Select Agent</option>
                                                 @foreach ($data['customers'] as $customer)
                                                     <option value="{{ $customer->id }}"
@@ -99,7 +99,7 @@
                                         @if(!$data['is_agent'])
                                         <div class="form-group col-sm-3 col-md-3 col-lg-{{ $data['is_agent'] ? '6' : '3' }}">
                                             <label>Service Item</label>
-                                            <select class="form-control form-control-sm select2" id="item_id_temp">
+                                            <select class="form-control form-control-sm select2" id="item_id_temp" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                                 <option value="" selected disabled>Select Service Item</option>
                                                 @foreach ($data['items'] as $key => $item)
                                                     <option value="{{ $item['id'] }}"
@@ -129,10 +129,10 @@
                                                                 <tr>
                                                                     <td class="serial">{{ $loop->iteration }}</td>
                                                                     <td class="text-left">{{ $sd['item_name'] }}
-                                                                        <input type="hidden" value="{{ $sd['item_id'] ? $sd['item_id'] : $sd['service_id'] }}" name="item_id[]">
+                                                                        <input type="hidden" value="{{ $sd['item_id'] ? $sd['item_id'] : $sd['service_id'] }}" name="item_id[]" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                                                     </td>
-                                                                    <td><input type="number" value="{{ $sd['unit_price'] }}" class="form-control form-control-sm calculate" name="unit_price[]" placeholder="0.00" required></td>
-                                                                    <td><button class="btn btn-sm btn-danger btn-del" type="button"><i class="fa-solid fa-trash btn-del"></i></button></td>
+                                                                    <td><input type="number" value="{{ $sd['unit_price'] }}" class="form-control form-control-sm calculate" name="unit_price[]" placeholder="0.00" required  @disabled(isset($data['item']) && $data['item']['status'] != 0)></td>
+                                                                    <td><button class="btn btn-sm btn-danger btn-del" type="button"  @disabled(isset($data['item']) && $data['item']['status'] != 0)><i class="fa-solid fa-trash btn-del"></i></button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endisset
@@ -142,18 +142,18 @@
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Method</label>
-                                            <select name="discount_method" id="discount_method" class="form-control form-control-sm">
+                                            <select name="discount_method" id="discount_method" class="form-control form-control-sm" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                                 <option @selected(isset($data['item']) && $data['item']['discount_method'] == 0) selected value="0" >In Percentage</option>
                                                 <option @selected(isset($data['item']) && $data['item']['discount_method'] == 1) value="1">Solid Amount</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Rate</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount_rate : null }}" step="0.01" type="number" class="form-control form-control-sm" name="discount_rate" id="discount_rate" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->discount_rate : null }}" step="0.01" type="number" class="form-control form-control-sm" name="discount_rate" id="discount_rate" placeholder="0.00" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Discount Amount</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->discount : null }}" readonly type="number" class="form-control form-control-sm" name="discount" id="discount" placeholder="0.00">
+                                            <input value="{{ isset($data['item']) ? $data['item']->discount : null }}" readonly type="number" class="form-control form-control-sm" name="discount" id="discount" placeholder="0.00" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Total</label>
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="form-group col-sm-3 col-md-3 col-lg-3">
                                             <label>Payment Methods *</label>
-                                            <select class="form-control form-control-sm" name="account_id" id="account_id">
+                                            <select class="form-control form-control-sm" name="account_id" id="account_id" @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                                 <option selected value=''>Select Payment Methods</option>
                                                 @foreach ($data['paymentMethods'] as $paymentMethod)
                                                     <option account-bal="{{ $paymentMethod['balance'] }}" @selected(isset($data['item']) && $data['item']['account_id'] == $paymentMethod['id']) value="{{ $paymentMethod['id'] }}">{{ $paymentMethod['name'] .' : '. $paymentMethod['account_no'] }}</option>
@@ -180,9 +180,9 @@
                                             <label>Paid Amount</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->paid_amount : null }}" value="0.00" step="0.01" type="number" 
                                                 class="form-control form-control-sm" name="paid_amount"
-                                                id="paid_amount" placeholder="0.00">
+                                                id="paid_amount" placeholder="0.00"  @disabled(isset($data['item']) && $data['item']['status'] != 0)>
                                         </div>
-                                        <div class="form-group col-sm-4 col-md-4 col-lg-4">
+                                        <div class="form-group col-sm-4 col-md-4 col-lg-4"> 
                                             <label>Refference Number</label>
                                             <input value="{{ isset($data['item']) ? $data['item']->reference_number : null }}"
                                                 class="form-control form-control-sm" type="text" name="reference_number" id="reference_number"

@@ -424,71 +424,52 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
         try {
-            $customer_id = $request->customer_id;
-            $medical_id = $request->medical_id;
-            $country_id = $request->country_id;
-            $account_id = $request->account_id ?? null;
-            $passenger_name = $request->passenger_name;
-            $passenger_passport_no = $request->passenger_passport_no;
-            $localhost_no = $request->localhost_no;
-            $date = $request->date;
-            $total_pice = $request->total_price ?? 0;
-            $vat_tax = $request->vat_tax ?? 0;
-            $discount_method = $request->discount_method ?? 0;
-            $discount_rate = $request->discount_rate ?? 0;
-            $discount = $request->discount ?? 0;
-            $total_payable = $request->total_payable ?? 0;
-            $paid_amount = $request->paid_amount ?? 0;
-            $note = $request->note;
-            $reference_number = $request->reference_number ?? null;
-            $item_id = $request->item_id ?? [];
-            $unit_price = $request->unit_price;
-
-            $passport_img = $request->passport_img;
-         
-    
-            $updated_by_id = Auth::guard('admin')->user()->id;
+            if($request->has('customer_id')) $jobMaster['customer_id'] = $request->input('customer_id');
+            if($request->has('medical_id')) $jobMaster['medical_id'] = $request->input('medical_id');
+            if($request->has('country_id')) $jobMaster['country_id'] = $request->input('country_id');
+            if($request->has('account_id')) $jobMaster['account_id'] = $request->input('account_id');
+            if($request->has('passenger_name')) $jobMaster['passenger_name'] = $request->input('passenger_name');
+            if($request->has('passenger_passport_no')) $jobMaster['passenger_passport_no'] = $request->input('passenger_passport_no');
+            if($request->has('localhost_no')) $jobMaster['localhost_no'] = $request->input('localhost_no');
+            if($request->has('date')) $jobMaster['date'] = $request->input('date');
+            if($request->has('total_price')) $jobMaster['total_pice'] = $request->input('total_price');
+            if($request->has('vat_tax')) $jobMaster['vat_tax'] = $request->input('vat_tax');
+            if($request->has('discount_method')) $jobMaster['discount_method'] = $request->input('discount_method');
+            if($request->has('discount_rate')) $jobMaster['discount_rate'] = $request->input('discount_rate');
+            if($request->has('discount')) $jobMaster['discount'] = $request->input('discount');
+            if($request->has('total_payable')) $jobMaster['total_payable'] = $request->input('total_payable');
+            if($request->has('paid_amount')) $jobMaster['paid_amount'] = $request->input('paid_amount');
+            if($request->has('note')) $jobMaster['note'] = $request->input('note');
+            if($request->has('reference_number')) $jobMaster['reference_number'] = $request->input('reference_number');
+            if($request->has('passport_img')) $jobMaster['passport_img'] = $request->input('passport_img');
+            if($request->has('total_payable') && $request->has('paid_amount')) $jobMaster['payment_status'] = ($jobMaster['total_payable'] == $jobMaster['paid_amount']) ? 1 : 0;
+            $jobMaster['updated_by_id'] = Auth::guard('admin')->user()->id;
             $sale = Sale::find($id);
-            if (isset($passport_img)) {
+            if (isset($jobMaster['passport_img'])) {
                 $oldFile = public_path('uploads/passports/' . $sale->passport_img);
                 if (!empty($sale->passport_img) && File::exists($oldFile)) {
                     File::delete($oldFile);
                 }
-                $passport_img = $this->documentUpload($passport_img);
+                $jobMaster['passport_img'] = $this->documentUpload($jobMaster['passport_img']);
             }
-            $sale->customer_id = $customer_id;
-            $sale->medical_id = $medical_id;
-            $sale->country_id = $country_id;
-            $sale->account_id = $account_id;
-            $sale->passenger_name = $passenger_name;
-            $sale->passenger_passport_no = $passenger_passport_no;
-            $sale->passport_img = $passport_img;
-            $sale->localhost_no = $localhost_no;
-            $sale->date = $date;
-            $sale->total_price = $total_pice;
-            $sale->vat_tax = $vat_tax;
-            $sale->discount_method = $discount_method;
-            $sale->discount_rate = $discount_rate;
-            $sale->discount = $discount;
-            $sale->total_payable = $total_payable;
-            $sale->paid_amount = $paid_amount;
-            $sale->reference_number = $reference_number;
-            $sale->note = $note;
-            $sale->payment_status = ($total_payable == $paid_amount) ? 1 : 0;
-            $sale->status = 0;
-            $sale->updated_by_id = $updated_by_id;
-            $sale->save();
-            SaleDetails::where('sale_id', $id)->delete();
-            for ($i = 0; $i < count($item_id); $i++) {
-                $saleDetails = new SaleDetails();
-                $saleDetails->sale_id = $sale->id;
-                $saleDetails->item_id = $item_id[$i];
-                $saleDetails->date = $sale->date;
-                $saleDetails->unit_price = $unit_price[$i];
-                $saleDetails->save();
+            $sale->update($jobMaster);
+
+            if($request->has('item_id')){
+                $item_id = $request->input('item_id');
+                $unit_price = $request->input('unit_price');
+                SaleDetails::where('sale_id', $id)->delete();
+                for ($i = 0; $i < count($item_id); $i++) {
+                    $saleDetails = new SaleDetails();
+                    $saleDetails->sale_id = $sale->id;
+                    $saleDetails->item_id = $item_id[$i];
+                    $saleDetails->date = $sale->date;
+                    $saleDetails->unit_price = $unit_price[$i];
+                    $saleDetails->save();
+                }
             }
+
             DB::commit();
-            return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
+            return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Updated Successfully!']);
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);
