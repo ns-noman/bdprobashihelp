@@ -82,6 +82,9 @@
 		if("{{ session('alert')['messageType'] == 'warning' }}"){
 			toastr.warning("{{ session('alert')['message'] }}", "Warning!");
 		}
+		if("{{ session('alert')['messageType'] == 'danger' }}"){
+			toastr.warning("{{ session('alert')['message'] }}", "Danger!");
+		}
     @endif
 </script>
 

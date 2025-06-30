@@ -35,7 +35,7 @@ class Controller extends BaseController
     public function paymentMethods()
     {
         return PaymentMethod::join('accounts', 'accounts.payment_method_id', '=','payment_methods.id')
-        ->where(['payment_methods.status'=>1, 'accounts.status'=>1])
+        ->where(['payment_methods.status'=>1, 'payment_methods.is_virtual'=>0,  'accounts.status'=>1])
         ->select([
             'accounts.id',
             'payment_methods.name',

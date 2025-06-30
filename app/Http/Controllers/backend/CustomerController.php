@@ -4,10 +4,10 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\Customer;
 use App\Models\BasicInfo;
-use App\Models\CustomerLedger;
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 use Auth;
 use Hash;
 
@@ -37,17 +37,17 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        //Customer Create**********
+        DB::beginTransaction();
         $data = $request->all();
         $data['created_by_id'] = Auth::guard('admin')->user()->id;
-        $customer = Customer::create($data);
-        //End
-
+        
         $admin = Admin::where('email',$data['email'])->first();
-        if($admin){
+        $customer = Customer::where('email',$data['email'])->first();
+        if($customer || $admin){
             return redirect()->back()->with('alert',['messageType'=>'danger','message'=>'This email is already exists!']);
         }
-
+        
+        $customer = Customer::create($data);
         $admins['agent_id'] = $customer->id;
         $admins['password'] = Hash::make('12345');
         $admins['name'] = $data['name'];
@@ -56,9 +56,7 @@ class CustomerController extends Controller
         $admins['email'] = $data['email'];
         $admins['status'] = 0;
         Admin::create($admins);
-
-
-        //Customer Ledger Payment Create**********
+        
         if(isset($data['opening_payable']) && $data['opening_payable'])
         {
             $customerLedgerData['customer_id'] = $customer->id;
@@ -79,6 +77,7 @@ class CustomerController extends Controller
             $customerLedgerData['created_by_id'] = Auth::guard('admin')->user()->id;
             $this->customerLedgerTransction($customerLedgerData);
         }
+        DB::commit();
         //End
         return redirect()->route('customers.index')->with('alert',['messageType'=>'success','message'=>'Data Inserted Successfully!']);
     }
@@ -95,9 +94,9 @@ class CustomerController extends Controller
     
     public function destroy($id)
     {
-        $customer = Customer::find($id);
-        if(count($data)) return redirect()->back()->with('alert',['messageType'=>'warning','message'=>'Data Deletion Failed!']);
-        $customer->delete();
-        return redirect()->back()->with('alert',['messageType'=>'success','message'=>'Data Deleted Successfully!']);
+        // $customer = Customer::find($id);
+        // if(count($data)) return redirect()->back()->with('alert',['messageType'=>'warning','message'=>'Data Deletion Failed!']);
+        // $customer->delete();
+        // return redirect()->back()->with('alert',['messageType'=>'success','message'=>'Data Deleted Successfully!']);
     }
 }

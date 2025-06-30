@@ -41,8 +41,7 @@
                                 <div class="row">
                                     <div class="form-group col-sm-12 col-md-{{ $colSize }} col-lg-{{ $colSize }}" {{ $roleType == 2 ? 'hidden' : null }}>
                                         <label>Agents *</label>
-                                        <select class="form-control form-control-sm filter select2" id="customer_id"
-                                            name="customer_id">
+                                        <select class="form-control form-control-sm filter select2" id="customer_id" name="customer_id">
                                             <option value="0">All Agents</option>
                                             @foreach ($data['customers'] as $customers)
                                                 <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">
