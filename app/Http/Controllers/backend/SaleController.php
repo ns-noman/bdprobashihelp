@@ -516,7 +516,8 @@ class SaleController extends Controller
                         ->update(['medical_centers'=> $medicalCenterTxt]);
                     }
                 }
-                $jobServiceRecord->update($data);
+            $jobServiceRecord->update($data);
+            Sale::find($jobServiceRecord->job_id)->touch();
             DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
@@ -783,7 +784,7 @@ class SaleController extends Controller
         }
 
 
-        if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.id','desc')->orderBy('sales.status','asc');
+        if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.updated_at','desc')->orderBy('sales.status','asc');
         
         $query = $query->select($select);
         return DataTables::of($query)

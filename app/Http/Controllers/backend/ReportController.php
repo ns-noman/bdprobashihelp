@@ -8,13 +8,11 @@ use App\Models\Expense;
 use App\Models\Sale;
 use App\Models\Account;
 use App\Models\AccountLedger;
-use App\Models\CategoryType;
-use App\Models\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -177,6 +175,64 @@ class ReportController extends Controller
                     ->where('account_ledgers.account_id', $data['account_id'])
                     ->orderBy('account_ledgers.id')
                     ->select($select);
+        return $query;
+    }
+
+    public function settlement(Request $request)
+    {
+        $data['fromDate'] = null;
+        $data['toDate']   = null;
+        $data['breadcrumb'] = ['title' => 'Sales Report'];
+        if ($request->isMethod("POST")) {
+            if($request->input('daterange')){
+                $daterange = explode('-', $request->input('daterange'));
+                $data['fromDate'] = Carbon::createFromFormat('m_d_Y', $daterange[0])->toDateString();
+                $data['toDate']   = Carbon::createFromFormat('m_d_Y', $daterange[1])->toDateString();
+            }
+            $query = $this->settlementQuery($data);
+            return DataTables::of($query)->make(true);
+        }else {
+            $print = $request->input('print');
+            if ($print=='true') {
+                $data['basicInfo'] = BasicInfo::first()->toArray();
+                if($request->input('daterange')){
+                    $daterange = explode('-', $request->input('daterange'));
+                    $data['fromDate'] = Carbon::createFromFormat('m_d_Y', $daterange[0])->toDateString();
+                    $data['toDate']   = Carbon::createFromFormat('m_d_Y', $daterange[1])->toDateString();
+                }
+                $query = $this->settlementQuery($data);
+                $result = $query->get();
+                if(count($result)){
+                    $data['lists'] =  $result->toArray();
+                }else{
+                    $data['lists'] =  [];
+                }
+                return view('backend.reports.settlement-reports.print', compact('data'));
+            }else {
+                return view('backend.reports.settlement-reports.index', compact('data'));
+            }
+        }
+    }
+
+    public function settlementQuery($data)
+    {
+        $select =
+        [
+            'sales.id',
+            'customers.name as agent_name',
+            'sales.passenger_passport_no',
+            'sales.localhost_no',
+        ];
+        $query = Sale::join('customers', 'customers.id', '=', 'sales.customer_id')
+                            ->where('sales.status', 1)
+                            ->join('job_service_records', 'job_service_records.job_id', '=','sales.id')
+                            ->where('job_service_records.status_id', 8);
+        if ($data['fromDate'] && $data['toDate']) {
+            $query = $query->whereBetween('sales.date', [$data['fromDate'], $data['toDate']]);
+        }
+        $query = $query->groupBy('sales.id')
+                ->orderBy('sales.id')
+                ->select($select);
         return $query;
     }
 

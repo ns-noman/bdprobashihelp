@@ -149,8 +149,7 @@ Route::prefix('backend')->group(function () {
                 Route::match(['get', 'post'],'accounts-reports','accountReport')->name('reports.accounts-reports');
                 Route::match(['get', 'post'],'stock-reports','stockReport')->name('reports.stock-reports');
                 Route::match(['get', 'post'],'stock-histories','stockHistory')->name('reports.stock-histories');
-                Route::match(['get', 'post'],'investment','investment')->name('reports.investment');
-                Route::match(['get', 'post'],'investor-ledger-report','investorLedgerReport')->name('reports.investor-ledger');
+                Route::match(['get', 'post'],'settlement','settlement')->name('reports.settlement');
             });
 
 

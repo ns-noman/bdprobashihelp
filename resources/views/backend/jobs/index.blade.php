@@ -92,8 +92,7 @@
                                                         <tr>
                                                             <th>Action</th>
                                                             <th>Status</th>
-                                                            <th style="min-width: 1200px;text-align: center;">Service
-                                                                Availed</th>
+                                                            <th style="min-width: 1200px;text-align: center;">Service Details</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -453,12 +452,12 @@
                                                 <thead>
                                                     <tr class="bg-info">
                                                         <th class="text-center" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ':id') }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
-                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name}(${row.customer_code})</th>
-                                                        <th class="text-center" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name}</th>
-                                                        <th class="text-center" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no}
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name.toUpperCase()}(${row.customer_code.toUpperCase()})</th>
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name.toUpperCase()}</th>
+                                                        <th class="text-center" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no.toUpperCase()}
                                                         ${row.passport_img !=null ? `<a href="javascript:void(0)" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download text-danger shadow"></i></a>` : ''}
                                                         </th>
-                                                        <th class="text-center" colspan="1"><span style="color: black;">Localhost No: </span><br>${row.localhost_no ?? '-'}</th>
+                                                        <th class="text-center" colspan="1"><span style="color: black;">Localhost No: </span><br>${ row.localhost_no ? row.localhost_no.toUpperCase() : '-' }</th>
                                                     </tr>
                                                     <tr class="bg-light">
                                                         <th class="text-center" colspan="1">Date: ${row.date}</th>
