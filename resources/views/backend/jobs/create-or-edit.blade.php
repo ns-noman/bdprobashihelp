@@ -29,7 +29,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">{{ $data['title'] }} Form</h3>
                             </div>
-                            <form id="form-submit" action="{{ isset($data['item']) ? route('sales.update',$data['item']->id) : route('sales.store'); }}" method="POST" enctype="multipart/form-data">
+                            <form id="form-submit" action="{{ isset($data['item']) ? route('sales.update',$data['item']->id) : route('sales.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf()
                                 @if(isset($data['item']))
                                     @method('put')

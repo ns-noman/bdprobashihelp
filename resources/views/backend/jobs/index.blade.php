@@ -20,6 +20,25 @@
             cursor: not-allowed !important;
             pointer-events: none !important;
         }
+        .copy-cell{
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .copy-cell .copy-icon{
+            display: none;
+            color: #000000;
+        }
+        .copy-cell:hover .copy-icon {
+            display: inline;
+        }
+        td:nth-child(1){
+            display: flex!important;
+            justify-content: center!important;
+            align-items: center!important;
+        }
     </style>
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
@@ -213,7 +232,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route('sales.list') }}',
+                    url: '{{ route("sales.list") }}',
                     type: 'GET',
                     data: function(d) {
                         let status_filter_type = null;
@@ -253,68 +272,7 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            let addNewItem = `{{ route('sales.add-new-item', ':id') }}`.replace(
-                                ':id', row.id);
-                            let edit = `{{ route('sales.edit', ':id') }}`.replace(':id', row.id);
-                            let print = `{{ route('sales.invoice.print', [':id', 'print']) }}`
-                                .replace(':id', row.id);
-                            let token = `{{ route('sales.token.print', [':id', 'print']) }}`
-                                .replace(':id', row.id);
-                            let view = `{{ route('sales.invoice', [':id']) }}`.replace(':id', row
-                                .id);
-                            let destroy = `{{ route('sales.destroy', ':id') }}`.replace(':id', row
-                                .id);
-                            let action = ` <div>`;
-                            if (hasPermission.token) {
-                                action += `<a style="width: 35px;width: 35px;" href="${token}" class="btn btn-sm btn-secondary">
-                                                        <i class="fa-solid fa-receipt"></i>
-                                                    </a>
-                                                    <br>`;
-                            }
-                            if (hasPermission.view) {
-                                action += `<a style="width: 35px;width: 35px;" href="${view}" class="btn btn-sm btn-warning">
-                                                        <i class="fa-solid fa-eye"></i>
-                                                    </a>
-                                                    <br>`;
-                            }
-                            if (hasPermission.print) {
-                                action += `<a style="width: 35px;width: 35px;" href="${print}" class="btn btn-sm btn-dark">
-                                                        <i class="fa-solid fa-print"></i>
-                                                    </a>
-                                                    <br>`;
-                            }
-                            if (hasPermission.payment) {
-                                action += `<button style="width: 35px;width: 35px;" due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now"
-                                                                data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" 
-                                                                    ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}>
-                                                                    <i class="fa-solid fa-hand-holding-dollar"></i>
-                                                    </button>
-                                                    <br>`;
-                            }
-                            if (hasPermission.add_new_item) {
-                                action += `<a style="width: 35px;width: 35px;" href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}">
-                                                        <i class="fa-solid fa-plus"></i>
-                                                    </a>
-                                                    <br>`;
-                            }
-                            if (hasPermission.edit) {
-                                
-                                action += `<a style="width: 35px;width: 35px;" href="${edit}" class="btn btn-sm btn-info ${row.status != '0' && rollType != 1 ? 'disabled' : null}">
-                                                            <i class="fa-solid fa-pen-to-square"></i>
-                                                    </a>
-                                                    <br>`;
-                            }
-                            if (hasPermission.delete) {
-                                action += `<form class="delete" action="${destroy}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button style="width: 35px;width: 35px;" type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
-                                                </form>`;
-                            }
-                            action += `</div>`;
-                            return action;
+                            return actionButtons(hasPermission,row,rollType);
                         }
                     },
                     {
@@ -323,29 +281,7 @@
                         orderable: true,
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            let color;
-                            let text;
-                            let eventClass = '';
-                            if (row.status == '0') {
-                                color = 'danger';
-                                text = 'Pending';
-                                if (hasPermission.approve) {
-                                    eventClass = 'event';
-                                }
-                            } else if (row.status == '1') {
-                                color = 'primary';
-                                text = 'Processing';
-                            } else if (row.status == '2') {
-                                color = 'success';
-                                text = 'Completed';
-                            } else if (row.status == '3') {
-                                color = 'dark';
-                                text = 'Refunded';
-                            } else if (row.status == '4') {
-                                color = 'secondary';
-                                text = 'Cancelled';
-                            }
-                            return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+                            return jobSatus(hasPermission, row);
                         }
                     },
                     {
@@ -453,9 +389,30 @@
                                                     <tr class="bg-info">
                                                         <th class="text-center" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ':id') }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
                                                         <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name.toUpperCase()}(${row.customer_code.toUpperCase()})</th>
-                                                        <th class="text-center" colspan="2"><span style="color: black;">Passenger Name: </span><br>${row.passenger_name.toUpperCase()}</th>
-                                                        <th class="text-center" colspan="1"><span style="color: black;">Passport: </span><br>${row.passenger_passport_no.toUpperCase()}
-                                                        ${row.passport_img !=null ? `<a href="javascript:void(0)" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download text-danger shadow"></i></a>` : ''}
+                                                        <th class="text-center" colspan="2">
+                                                            <span style="color: black;">Passenger Name: </span><br>
+                                                            <div class="copy-cell">
+                                                                <span class="copy-icon" data-toggle="tooltip">
+                                                                    <i class="fas fa-copy"></i>
+                                                                </span>
+                                                                <span class="text-to-be-copied">
+                                                                    ${row.passenger_name.toUpperCase()}
+                                                                </span>
+                                                            </div>
+                                                        </th>
+                                                        <th class="text-center" colspan="1">
+                                                            <span style="color: black;">Passport: </span><br>
+                                                            <div class="copy-cell">
+                                                                <span class="copy-icon" data-toggle="tooltip">
+                                                                    <i class="fas fa-copy"></i>
+                                                                </span>
+                                                                <span class="text-to-be-copied">
+                                                                    ${row.passenger_passport_no.toUpperCase()}
+                                                                </span>
+                                                                <span>
+                                                                    ${row.passport_img !=null ? `<a href="javascript:void(0)" onclick="downloadImage('${img_src}')"><i class="fa-solid fa-download text-danger shadow"></i></a>` : ''}
+                                                                </span>
+                                                            </div>
                                                         </th>
                                                         <th class="text-center" colspan="1"><span style="color: black;">Localhost No: </span><br>${ row.localhost_no ? row.localhost_no.toUpperCase() : '-' }</th>
                                                     </tr>
@@ -491,6 +448,20 @@
                 order: [],
                 search: {
                     return: false
+                },
+                drawCallback: function(){
+                    $('[data-toggle="tooltip"]').tooltip();
+                    $('.copy-cell .copy-icon').on('click', function(e){
+                        const textElement = $(this).siblings('.text-to-be-copied');
+                        const text = textElement.text().trim();
+                        console.log(navigator);
+                        navigator.clipboard.writeText(text).then(()=>{
+                            $(this).attr('data-original-title', 'Copied!').tooltip('show');
+                            setTimeout(()=>{
+                                $(this).tooltip('hide').attr('data-original-title', '');
+                            }, 1000);
+                        });
+                    });
                 }
             });
             $(document).on('change', '.filter', function() {
@@ -622,5 +593,58 @@
             link.click();
             document.body.removeChild(link);
         }
+        function jobSatus(hasPermission,row) {
+            let color;
+            let text;
+            let eventClass = '';
+            if (row.status == '0') {
+                color = 'danger';
+                text = 'Pending';
+                if (hasPermission.approve) {
+                    eventClass = 'event';
+                }
+            } else if (row.status == '1') {
+                color = 'primary';
+                text = 'Processing';
+            } else if (row.status == '2') {
+                color = 'success';
+                text = 'Completed';
+            } else if (row.status == '3') {
+                color = 'dark';
+                text = 'Refunded';
+            } else if (row.status == '4') {
+                color = 'secondary';
+                text = 'Cancelled';
+            }
+            return `<button transaction_id=${row.id} type="button" class="btn btn-sm btn-${color} ${eventClass}">${text}</button>`;
+        }
+        function actionButtons(hasPermission,row,rollType) {
+            let addNewItem = `{{ route('sales.add-new-item', ':id') }}`.replace(':id', row.id);
+            let edit = `{{ route('sales.edit', ':id') }}`.replace(':id', row.id);
+            let print = `{{ route('sales.invoice.print', [':id', 'print']) }}`.replace(':id', row.id);
+            let token = `{{ route('sales.token.print', [':id', 'print']) }}`.replace(':id', row.id);
+            let view = `{{ route('sales.invoice', [':id']) }}`.replace(':id', row.id);
+            let destroy = `{{ route('sales.destroy', ':id') }}`.replace(':id', row.id);
+            let action = ` <div>`;
+
+            if (hasPermission.token) action += `<a style="width: 35px;width: 35px;" href="${token}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-receipt"></i></a><br>`;
+            if (hasPermission.view) action += `<a style="width: 35px;width: 35px;" href="${view}" class="btn btn-sm btn-warning"><i class="fa-solid fa-eye"></i></a><br>`;
+            if (hasPermission.print) action += `<a style="width: 35px;width: 35px;" href="${print}" class="btn btn-sm btn-dark"><i class="fa-solid fa-print"></i></a><br>`;
+            if (hasPermission.payment) action += `<button style="width: 35px;width: 35px;" due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}><i class="fa-solid fa-hand-holding-dollar"></i></button><br>`;
+            if (hasPermission.add_new_item) action += `<a style="width: 35px;width: 35px;" href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}"><i class="fa-solid fa-plus"></i></a><br>`;
+            if (hasPermission.edit) action += `<a style="width: 35px;width: 35px;" href="${edit}" class="btn btn-sm btn-info ${row.status != '0' && rollType != 1 ? 'disabled' : null}"><i class="fa-solid fa-pen-to-square"></i></a><br>`;
+            if (hasPermission.delete){
+                action += `<form class="delete" action="${destroy}" method="post">
+                                    @csrf
+                                @method('DELETE')
+                                <button style="width: 35px;width: 35px;" type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                        </form>`;
+            }
+            action += `</div>`;
+            return action;
+        }
+
     </script>
 @endsection

@@ -182,7 +182,7 @@ class ReportController extends Controller
     {
         $data['fromDate'] = null;
         $data['toDate']   = null;
-        $data['breadcrumb'] = ['title' => 'Sales Report'];
+        $data['breadcrumb'] = ['title' => 'Settlement Report'];
         if ($request->isMethod("POST")) {
             if($request->input('daterange')){
                 $daterange = explode('-', $request->input('daterange'));

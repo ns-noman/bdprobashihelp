@@ -23,8 +23,6 @@
 
     </style>
     <div class="sidebar" style="background-color: #0f0e0e">
-    {{-- <div class="sidebar" style="background-color: #000a05"> --}}
-      
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @php

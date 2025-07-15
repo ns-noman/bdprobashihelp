@@ -68,6 +68,7 @@
     </div>
 @endsection
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/barcodes/JsBarcode.code128.min.js"></script>
 <script>
     $(document).ready(function(){
 
@@ -83,7 +84,8 @@
         }
     });
     });
-    function loadAssetData() {
+    function loadAssetData()
+    {
         var table = $('#dataTable').DataTable({
         processing: false,
         serverSide: true,
@@ -117,24 +119,45 @@
                             return row.localhost_no.toUpperCase();
                         }
                     },
-                    { data: 'localhost_no', name: 'sales.localhost_no'},
+                    {
+                        data: 'localhost_no', 
+                        name: 'sales.localhost_no', 
+                        orderable: true, 
+                        searchable: true, 
+                        render: function(data, type, row, meta) {
+                            return `<svg class="barcode" data-barcode="${row.localhost_no.toUpperCase() ?? 'N/A'}">${row.localhost_no.toUpperCase() ?? 'N/A'}</svg>`;
+                        }
+                    },
                     {
                         data: null, 
                         name: null, 
                         orderable: false, 
                         searchable: false, 
                         render: function(data, type, row, meta) {
-                            return '';
+                            return ``;
                         }
                     },
-                                    ],
+                ],
             rowCallback: function(row, data, index) {
                 var pageInfo = table.page.info();
                 var serialNumber = pageInfo.start + index + 1;
                 $('td:eq(0)', row).html(serialNumber);
             },
             order: [],
-            search: {return: false}
+            search: {return: false},
+            drawCallback: function(settings) {
+                console.log(settings);
+                
+                $('.barcode').each(function () {
+                    const value = $(this).data('barcode') || 'N/A';
+                    JsBarcode(this, value, {
+                        format: "CODE128",
+                        width: 1,
+                        height: 30,
+                        displayValue: false,
+                    });
+                });
+            }
         });
         $(document).on('change','.filter',function() {
             table.draw();
@@ -144,5 +167,7 @@
         let daterange = $('#date-range').val().replace(/\//g, '_').replace(/ /g, '');
         window.open(`?&print=true&daterange=${daterange}`, '_blank');
     }
+     
+    
 </script>
 @endsection

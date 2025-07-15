@@ -110,6 +110,16 @@
         });
     });
 
+    $('form').submit(function(e){
+        const $submitBtn = $(this).find('button[type="submit"]');
+        $submitBtn.attr('disabled', true);
+
+        setTimeout(() => {
+            $submitBtn.attr('disabled', false);
+        }, 2000);
+    });
+
+
     // $(document).ready(function(){
     //     $(document).on('click', '.delete button', function(e) {
     //         e.preventDefault();

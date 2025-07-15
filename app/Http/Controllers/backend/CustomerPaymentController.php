@@ -71,7 +71,7 @@ class CustomerPaymentController extends Controller
                 }
             }
         }
-        if($paid_in_advanced)
+        if($paid_in_advanced>0)
         {
             //CustomerPayment Create**********
             $payment = new CustomerPayment();
