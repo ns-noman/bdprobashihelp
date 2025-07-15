@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 19, 2025 at 11:38 AM
+-- Generation Time: Jul 15, 2025 at 07:42 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `payment_method_id`, `account_no`, `holder_name`, `balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Hand Cash', 'Self', '48000.00', 1, 1, 1, NULL, '2025-06-18 12:25:18'),
+(1, 1, 'Hand Cash', 'Self', '66500.00', 1, 1, 1, NULL, '2025-07-15 07:34:40'),
 (2, 2, 'Investment Capital', 'Self', '0.00', 1, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -92,7 +92,12 @@ INSERT INTO `account_ledgers` (`id`, `account_id`, `debit_amount`, `credit_amoun
 (18, 1, NULL, 2000.00, 34500.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
 (19, 1, NULL, 2500.00, 37000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
 (20, 1, NULL, 7000.00, 44000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
-(21, 1, NULL, 4000.00, 48000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 12:25:18', '2025-06-18 12:25:18');
+(21, 1, NULL, 4000.00, 48000.00, NULL, 'Sale Payment', '2025-06-18', '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
+(22, 1, NULL, 2000.00, 50000.00, NULL, 'Sale Payment', '2025-06-26', '2025-06-26 05:58:15', '2025-06-26 05:58:15'),
+(23, 1, NULL, 4000.00, 54000.00, NULL, 'Sale Payment', '2025-07-14', '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(24, 1, NULL, 4000.00, 58000.00, NULL, 'Regular Sale', '2025-07-15', '2025-07-15 07:33:05', '2025-07-15 07:33:05'),
+(25, 1, NULL, 6500.00, 64500.00, NULL, 'Sale Payment', '2025-07-15', '2025-07-15 07:33:50', '2025-07-15 07:33:50'),
+(26, 1, NULL, 2000.00, 66500.00, NULL, 'Regular Sale', '2025-07-15', '2025-07-15 07:34:40', '2025-07-15 07:34:40');
 
 -- --------------------------------------------------------
 
@@ -123,12 +128,17 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `agent_id`, `name`, `username`, `type`, `mobile`, `email`, `password`, `image`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
 (1, NULL, 'Super Admin', NULL, 1, '01717171223', 'admin@gmail.com', '$2y$10$72mM6bhPWEoFlgJKq1WaueJN1g7vMISry0HMa1c5THjRYa7HTISV2', 'admin-1750138827.png', 1, '2024-08-30 19:03:44', '2025-06-17 05:40:27', 'JWM7qTWEFbvlGharTZSHnE2KH7DSy9C1Hu1bmlSSQrzYCnLEki04qxnr315l'),
 (2, 1, 'Jannat-AAI', NULL, 2, '8801893291015', 'jannati-aai@gmail.com', '$2y$10$n7vaM10g4JadX7tp1e97wucWWexL4h8rDJpGUJkVHnDGesKL9MzVm', NULL, 1, '2025-05-27 07:30:04', '2025-05-27 07:32:44', NULL),
-(3, 2, 'Emam Hossain-AEHB', NULL, 2, '8801712556088', 'imamair2021@gmail.com', '$2y$10$p4UBo7Qz9ZraZ0ZGNfLGueF9fiF8o9HxdyFLRq561YYXd/Q3Nnzpa', NULL, 1, '2025-05-27 18:12:01', '2025-05-27 18:12:58', 'lUjW2YYTOp6Iaj4x6YZn0FtKXpMgV47qG4saMR7s5dIdyxGAIBpRNVkZ8dM3'),
+(3, 2, 'Emam Hossain-AEHB', NULL, 2, '8801712556088', 'imamair2021@gmail.com', '$2y$10$Gc98RA8xRZDZME1K2HGn6OLQ6E4V2arbwp07jJYXz3EifeBF10m2.', NULL, 1, '2025-05-27 18:12:01', '2025-06-30 05:10:59', 'lUjW2YYTOp6Iaj4x6YZn0FtKXpMgV47qG4saMR7s5dIdyxGAIBpRNVkZ8dM3'),
 (4, 3, 'SUHEL AHMED/SAAS', NULL, 2, '01736621425', 'saairservicekanaighat@gmail.com', '$2y$10$lPynkjtMdjZMQdy2hqI2JOADLS9JcV.bGEakiGTFKsR/ORwt3GXFG', NULL, 1, '2025-05-29 15:05:15', '2025-06-01 06:59:17', NULL),
 (5, 4, 'Tazul Islam (TABOM)', NULL, 2, '8801863550621', 'tazult937@gmail.com', '$2y$10$cp/ECH9KSy2YjIsYv3aCOOf14I1Jg6IErGdM1Owpy48bbw0GZ1S7e', NULL, 1, '2025-05-31 09:44:02', '2025-06-09 13:24:43', NULL),
 (6, NULL, 'Raihan', NULL, 3, '01839317038', 'rayanc430@gmail.com', '$2y$10$BFsTCUky8SYs5oiTYnCOquRDmT7WId7mVzJ0fnnnO6m3FRFDuxxGa', 'admin-1750073550.jpg', 1, '2025-06-01 06:58:47', '2025-06-16 11:32:30', 'GJcjN3jW29RlbiRHG8JRC11yBAaBEMLBptfPUJzFm9YzZ1znjW4mVUgKGSPf'),
 (7, 5, 'Mr. Shihab (AINT)', NULL, 2, '8801756733986', 'shihabbdph@gmail.com', '$2y$10$.mP.VKBNEDd/OPipz.S0IumXjHFzlC1OvgaKvoYVGKXDZ7sGkvUV6', NULL, 1, '2025-06-15 08:55:55', '2025-06-16 06:32:22', 'jddo7IqRDLJK18VbiKbubYlN2sXf69aa7m1C5N58CXsAuxTMG9S6EYv4pkdc'),
-(8, 6, 'Mr. Shakil (ISTAI)', NULL, 2, '8801941356122', 'istair.intl@gmail.com', '$2y$10$n0fPk17JIlhAMtZ0bp28geNG0ATse1VXLw/h/QxWl0BJzdeJvmzmi', NULL, 1, '2025-06-15 09:14:29', '2025-06-17 05:46:26', 'B1jGxV1GpSY9J3r8vZRaeBFbocX27Pqza6fjxhAkkPYBKTGUX8B9I3SSoigm');
+(8, 6, 'Mr. Shakil (ISTAI)', NULL, 2, '8801941356122', 'istair.intl@gmail.com', '$2y$10$n0fPk17JIlhAMtZ0bp28geNG0ATse1VXLw/h/QxWl0BJzdeJvmzmi', NULL, 1, '2025-06-15 09:14:29', '2025-06-17 05:46:26', 'zoluhrryU4LFunrYBMhXiE4PuPDXhBwbr7QcoiS8QnP1iQ9k30Uum4f9Kgyb'),
+(9, 7, 'Walker Morgan', NULL, 2, '10', 'rogaxehy@mailinator.com', '$2y$10$EhDdCEB.3mZ83PE3k6WQaOZ6.vxvjJK8iwN2/6dt9d/LhK.4vLsv.', NULL, 1, '2025-06-30 05:46:05', '2025-06-30 05:46:21', NULL),
+(10, 8, 'Sybil Potter', NULL, 2, '49', 'tovoj@mailinator.com', '$2y$10$71ido7kDbMRygtVCYH6p1OGfDurWQivEUfRMEcIo850dbUbUz8DRW', NULL, 0, '2025-06-30 05:53:21', '2025-06-30 05:53:21', NULL),
+(11, 9, 'Conan Brennan', NULL, 2, '36', 'wisupodupa@mailinator.com', '$2y$10$V.LiEL3b2FCn3c2OAC9cvO7oKtw09UuX6Hh8CvgcUIuolEfROYpCO', NULL, 0, '2025-07-15 07:29:43', '2025-07-15 07:29:43', NULL),
+(13, 11, 'April Rollins', NULL, 2, '98', 'ruliwifos@mailinator.com', '$2y$10$5cCVUV19BcVIB26.M5BXreMH8qNDJhLIWCaXp8gQaoRk5J8kEGMBS', NULL, 0, '2025-07-15 07:30:38', '2025-07-15 07:30:38', NULL),
+(14, 12, 'Stewart Fletcher', NULL, 2, '54', 'nomaq@mailinator.com', '$2y$10$5jdzshPXPzdQ5IAWG.f6L.6RrzhUDr9w5irAb39INX2a5YCiXkCFu', NULL, 0, '2025-07-15 07:30:45', '2025-07-15 07:30:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -534,11 +544,16 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `name`, `code`, `email`, `phone`, `address`, `organization`, `current_balance`, `status`, `created_by_id`, `updated_by_id`, `created_at`, `updated_at`) VALUES
 (1, 'Jannat(AAI)', 'AAI', 'jannati-aai@gmail.com', '8801893291015', '37/2, Zaman Tower (2nd Floor), Purana Paltan, Dhaka-1000', 'Anifa air international', 4000.00, '1', 1, NULL, '2025-05-27 07:30:04', '2025-06-19 11:20:26'),
-(2, 'Emam Hossain(AEHB)', 'AEHB', 'imamair2021@gmail.com', '8801712556088', '118 DIT Ext. Road, Fokirapul, Dhaka-1000', 'Bismillah Telecom', 0.00, '1', 1, NULL, '2025-05-27 18:12:01', '2025-06-19 11:19:56'),
+(2, 'Emam Hossain(AEHB)', 'AEHB', 'imamair2021@gmail.com', '8801712556088', '118 DIT Ext. Road, Fokirapul, Dhaka-1000', 'Bismillah Telecom', 0.00, '1', 1, NULL, '2025-05-27 18:12:01', '2025-07-15 07:33:50'),
 (3, 'SUHEL AHMED(SAAS)', 'SAAS', 'saairservicekanaighat@gmail.com', '01736621425', 'AZIZ COMPLEX, KANAIGHAT UTTAR BAZAR', 'SA AIR SERVICE', 0.00, '1', 1, NULL, '2025-05-29 15:05:15', '2025-06-19 11:19:37'),
 (4, 'Tazul Islam (TABOM)', 'TABOM', 'tazult937@gmail.com', '8801863550621', 'Palton, Dhaka, Bangladesh', 'Tazul overseas international', 0.00, '1', 1, NULL, '2025-05-31 09:44:02', '2025-06-19 11:19:16'),
 (5, 'Mr. Shihab (AINT)', 'AINT', 'abdullahaircervice@gmail.com', '8801756733986', 'Nur Travels, নিচ তলা, Rupayan FPAB Tower, জামান টাওয়ার এর উল্টা পাশে , কালভার্ট রোড , ঢাকা-১০০০।', 'Abdullah air International', 0.00, '1', 1, NULL, '2025-06-15 08:55:55', '2025-06-19 11:19:01'),
-(6, 'Mr. Shakil (ISTAI)', 'ISTAI', 'istair.intl@gmail.com', '8801941356122', 'KR Plaza, 31 Purana Paltan, Dhaka-1000. , Dhaka, Bangladesh', 'IST Air International', 0.00, '1', 1, NULL, '2025-06-15 09:14:29', '2025-06-18 08:50:37');
+(6, 'Mr. Shakil (ISTAI)', 'ISTAI', 'istair.intl@gmail.com', '8801941356122', 'KR Plaza, 31 Purana Paltan, Dhaka-1000. , Dhaka, Bangladesh', 'IST Air International', 0.00, '1', 1, NULL, '2025-06-15 09:14:29', '2025-07-15 07:34:40'),
+(7, 'Walker Morgan', 'Ut ea enim dolor rat', 'rogaxehy@mailinator.com', '10', 'Debitis esse iste au', 'Patel and Benton Associates', 0.00, '0', 1, NULL, '2025-06-30 05:46:05', '2025-06-30 05:46:05'),
+(8, 'Sybil Potter', 'Sed laboriosam occa', 'tovoj@mailinator.com', '49', 'Soluta cillum nostru', 'Butler Sheppard Traders', 0.00, '1', 1, NULL, '2025-06-30 05:53:21', '2025-06-30 05:53:21'),
+(9, 'Conan Brennan', 'Qui asperiores exerc', 'wisupodupa@mailinator.com', '36', 'Rerum non sed qui qu', 'Pacheco and Wells Trading', 0.00, '0', 1, NULL, '2025-07-15 07:29:43', '2025-07-15 07:29:43'),
+(11, 'April Rollins', 'Adipisci quis fugit', 'ruliwifos@mailinator.com', '98', 'Quia labore corporis', 'Oneil Cleveland Trading', 0.00, '1', 1, NULL, '2025-07-15 07:30:38', '2025-07-15 07:30:38'),
+(12, 'Stewart Fletcher', 'Temporibus deleniti', 'nomaq@mailinator.com', '54', 'Blanditiis ipsa eos', 'Avery and Johns Plc', 0.00, '0', 1, NULL, '2025-07-15 07:30:45', '2025-07-15 07:30:45');
 
 -- --------------------------------------------------------
 
@@ -730,7 +745,22 @@ INSERT INTO `customer_ledgers` (`id`, `customer_id`, `sale_id`, `payment_id`, `a
 (158, 2, NULL, 18, 1, 'Payment', '2025-06-18', '7000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
 (159, 2, 100, NULL, NULL, 'Sale', '2025-06-18', NULL, '4000.00', '4000.00', NULL, NULL, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
 (160, 2, NULL, 19, 1, 'Payment', '2025-06-18', '4000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
-(161, 6, 104, NULL, NULL, 'Sale', '2025-06-19', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-19 07:50:32', '2025-06-19 07:50:32');
+(161, 6, 104, NULL, NULL, 'Sale', '2025-06-19', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-19 07:50:32', '2025-06-19 07:50:32'),
+(162, 6, 104, NULL, NULL, 'Sale', '2025-06-26', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-26 05:58:15', '2025-06-26 05:58:15'),
+(163, 6, NULL, 20, 1, 'Payment', '2025-06-26', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-06-26 05:58:15', '2025-06-26 05:58:15'),
+(164, 6, 104, NULL, NULL, 'Sale', '2025-06-26', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-06-26 05:58:57', '2025-06-26 05:58:57'),
+(165, 6, 101, NULL, NULL, 'Sale', '2025-06-26', NULL, '2000.00', '2000.00', NULL, NULL, 1, NULL, '2025-06-26 10:52:01', '2025-06-26 10:52:01'),
+(166, 2, 102, NULL, NULL, 'Sale', '2025-06-26', NULL, '4000.00', '4000.00', NULL, NULL, 1, NULL, '2025-06-26 10:53:32', '2025-06-26 10:53:32'),
+(167, 2, 103, NULL, NULL, 'Sale', '2025-06-18', NULL, '0.00', '4000.00', NULL, NULL, 1, NULL, '2025-07-14 10:09:54', '2025-07-14 10:09:54'),
+(168, 6, 97, NULL, NULL, 'Sale', '2025-06-17', NULL, '0.00', '2000.00', NULL, NULL, 8, NULL, '2025-07-14 10:10:08', '2025-07-14 10:10:08'),
+(169, 2, 103, NULL, NULL, 'Sale', '2025-07-14', NULL, '4000.00', '8000.00', NULL, NULL, 1, NULL, '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(170, 2, NULL, 23, 1, 'Payment', '2025-07-14', '4000.00', NULL, '4000.00', NULL, NULL, 1, NULL, '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(171, 8, 105, NULL, NULL, 'Sale', '2025-07-14', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-07-14 12:48:35', '2025-07-14 12:48:35'),
+(172, 3, 99, NULL, NULL, 'Sale', '2025-06-17', NULL, '0.00', '0.00', NULL, NULL, 1, NULL, '2025-07-15 03:50:44', '2025-07-15 03:50:44'),
+(173, 2, NULL, 102, 1, 'Payment', '2025-07-15', '4000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-07-15 07:33:05', '2025-07-15 07:33:05'),
+(174, 2, 32, NULL, NULL, 'Sale', '2025-07-15', NULL, '6500.00', '6500.00', NULL, NULL, 1, NULL, '2025-07-15 07:33:50', '2025-07-15 07:33:50'),
+(175, 2, NULL, 27, 1, 'Payment', '2025-07-15', '6500.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-07-15 07:33:50', '2025-07-15 07:33:50'),
+(176, 6, NULL, 101, 1, 'Payment', '2025-07-15', '2000.00', NULL, '0.00', NULL, NULL, 1, NULL, '2025-07-15 07:34:40', '2025-07-15 07:34:40');
 
 -- --------------------------------------------------------
 
@@ -777,7 +807,12 @@ INSERT INTO `customer_payments` (`id`, `customer_id`, `account_id`, `sale_id`, `
 (16, 6, 1, 95, '2025-06-18', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
 (17, 2, 1, 100, '2025-06-18', 2500.00, NULL, NULL, 1, 1, NULL, '2025-06-18 09:23:59', '2025-06-18 09:23:59'),
 (18, 2, 1, 102, '2025-06-18', 7000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 11:08:46', '2025-06-18 11:08:46'),
-(19, 2, 1, 100, '2025-06-18', 4000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18');
+(19, 2, 1, 100, '2025-06-18', 4000.00, NULL, NULL, 1, 1, NULL, '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
+(20, 6, 1, 104, '2025-06-26', 2000.00, NULL, NULL, 1, 1, NULL, '2025-06-26 05:58:15', '2025-06-26 05:58:15'),
+(23, 2, 1, 103, '2025-07-14', 4000.00, NULL, NULL, 1, 1, NULL, '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(26, 2, 1, 102, '2025-07-15', 4000.00, NULL, NULL, 1, 1, NULL, '2025-07-15 07:33:00', '2025-07-15 07:33:05'),
+(27, 2, 1, 32, '2025-07-15', 6500.00, NULL, NULL, 1, 1, NULL, '2025-07-15 07:33:50', '2025-07-15 07:33:50'),
+(28, 6, 1, 101, '2025-07-15', 2000.00, NULL, NULL, 1, 1, NULL, '2025-07-15 07:34:33', '2025-07-15 07:34:40');
 
 -- --------------------------------------------------------
 
@@ -1207,7 +1242,7 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 (154, 31, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
 (155, 31, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
 (156, 32, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
-(157, 32, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-15 05:22:46', '2025-06-15 05:22:46'),
+(157, 32, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 7, '2025-06-15 05:22:46', '2025-07-15 07:33:50'),
 (158, 32, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-15 05:22:46', '2025-06-15 05:22:46'),
 (159, 32, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
 (160, 32, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
@@ -1532,46 +1567,81 @@ INSERT INTO `job_service_records` (`id`, `job_id`, `item_id`, `entry_date`, `exp
 (478, 96, 3, NULL, '2025-07-12', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:27:39', '2025-06-17 06:32:07'),
 (479, 96, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
 (480, 96, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
-(481, 97, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(481, 97, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 1, '2025-06-17 06:52:13', '2025-07-14 10:10:08'),
 (482, 97, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
 (483, 97, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
-(484, 97, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
-(485, 97, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
+(484, 97, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 06:52:13', '2025-07-14 10:10:08'),
+(485, 97, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 06:52:13', '2025-07-14 10:10:08'),
 (486, 98, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
 (487, 98, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
 (488, 98, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
 (489, 98, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
 (490, 98, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 10:57:53', '2025-06-17 10:57:53'),
-(491, 99, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(491, 99, 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 1, 1, '2025-06-17 12:00:26', '2025-07-15 03:50:44'),
 (492, 99, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
 (493, 99, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
-(494, 99, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
-(495, 99, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(494, 99, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-17 12:00:26', '2025-07-15 03:50:44'),
+(495, 99, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-17 12:00:26', '2025-07-15 03:50:44'),
 (496, 100, 1, '2025-06-18', '2025-07-13', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:c-1|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-18 09:20:57', '2025-06-18 12:24:59'),
 (497, 100, 2, '2025-06-18', '2025-07-13', NULL, NULL, NULL, NULL, 1, 0, 1, 8, '2025-06-18 09:20:57', '2025-06-18 12:25:37'),
 (498, 100, 3, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 1, 11, '2025-06-18 09:20:57', '2025-06-18 09:25:49'),
 (499, 100, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
 (500, 100, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
-(501, 101, 1, NULL, NULL, NULL, '1:Center-1:c-1', NULL, NULL, 1, 0, 0, 1, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
-(502, 101, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 10:23:31', '2025-06-18 10:23:31'),
-(503, 101, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 10:23:31', '2025-06-18 10:23:31'),
+(501, 101, 1, '2025-07-14', '2025-08-08', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:c-1|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-18 10:23:31', '2025-07-14 13:01:52'),
+(502, 101, 2, '2025-07-14', '2025-08-08', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-18 10:23:31', '2025-07-15 03:51:30'),
+(503, 101, 3, NULL, '2025-08-08', NULL, NULL, NULL, NULL, 1, 0, 0, 11, '2025-06-18 10:23:31', '2025-07-15 03:51:30'),
 (504, 101, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
 (505, 101, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
-(506, 102, 1, '2025-06-18', '2025-07-13', NULL, '10:Center-10:c-10|2:Center-2:c-2|4:Center-4:c-4', NULL, NULL, 1, 0, 1, 2, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
-(507, 102, 2, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
+(506, 102, 1, '2025-06-18', '2025-07-13', 'Chest-Issues', '10:Center-10:c-10|3:Center-3:c-3', NULL, NULL, 1, 1, 1, 6, '2025-06-18 11:06:10', '2025-07-14 12:53:04'),
+(507, 102, 2, '2025-07-14', '2025-07-13', NULL, NULL, NULL, NULL, 1, 0, 1, 9, '2025-06-18 11:06:10', '2025-07-14 13:01:05'),
 (508, 102, 3, NULL, '2025-07-13', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 11:06:10', '2025-06-18 12:24:41'),
 (509, 102, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
 (510, 102, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
-(511, 103, 1, NULL, NULL, NULL, '2:Center-2:c-2', NULL, NULL, 0, 0, 0, 1, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
-(512, 103, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
-(513, 103, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
-(514, 103, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
-(515, 103, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-06-18 11:26:46', '2025-06-18 11:26:46'),
+(511, 103, 1, '2025-07-14', '2025-08-08', 'L.Eye(D-Un):36 R.Eye(D-Un):36', '1:Center-1:c-1|10:Center-10:c-10', NULL, NULL, 1, 1, 1, 6, '2025-06-18 11:26:46', '2025-07-14 12:46:02'),
+(512, 103, 2, NULL, '2025-08-08', NULL, NULL, NULL, NULL, 1, 0, 1, 7, '2025-06-18 11:26:46', '2025-07-14 12:47:57'),
+(513, 103, 3, NULL, '2025-08-08', NULL, NULL, NULL, NULL, 0, 0, 1, 11, '2025-06-18 11:26:46', '2025-07-14 12:47:57'),
+(514, 103, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-18 11:26:46', '2025-07-14 10:09:54'),
+(515, 103, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-18 11:26:46', '2025-07-14 10:09:54'),
 (516, 104, 1, '2025-06-19', '2025-07-14', 'Chest-Issues', '1:Center-1:c-1|2:Center-2:c-2', NULL, NULL, 1, 1, 1, 6, '2025-06-19 07:25:23', '2025-06-19 07:52:28'),
-(517, 104, 2, NULL, '2025-07-14', NULL, NULL, NULL, NULL, 1, 0, 0, 7, '2025-06-19 07:25:23', '2025-06-19 07:52:28'),
-(518, 104, 3, NULL, '2025-07-14', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-06-19 07:25:23', '2025-06-19 07:52:17'),
-(519, 104, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-06-19 07:25:23', '2025-06-19 07:50:32'),
-(520, 104, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-06-19 07:25:23', '2025-06-19 07:50:32');
+(517, 104, 2, '2025-06-26', '2025-07-14', NULL, NULL, NULL, NULL, 1, 1, 1, 10, '2025-06-19 07:25:23', '2025-06-26 05:58:45'),
+(518, 104, 3, '2025-06-26', '2025-07-14', NULL, '2:Center-2:c-2', '2345689765', NULL, 1, 1, 1, 16, '2025-06-19 07:25:23', '2025-06-26 06:00:19'),
+(519, 104, 4, '2025-06-26', '2025-08-20', NULL, '2:Center-2:c-2', NULL, '1234567890', 1, 1, 1, 21, '2025-06-19 07:25:23', '2025-06-26 06:00:51'),
+(520, 104, 5, '2025-06-26', NULL, NULL, '2:Center-2:c-2', NULL, NULL, 1, 0, 1, 23, '2025-06-19 07:25:23', '2025-06-26 06:00:58'),
+(521, 105, 1, '2025-07-14', '2025-08-08', NULL, NULL, NULL, NULL, 1, 0, 1, 2, '2025-07-14 10:16:30', '2025-07-14 12:48:47'),
+(522, 105, 2, NULL, '2025-08-08', NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-14 10:16:30', '2025-07-14 12:48:47'),
+(523, 105, 3, NULL, '2025-08-08', NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-14 10:16:30', '2025-07-14 12:48:47'),
+(524, 105, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 17, '2025-07-14 10:16:30', '2025-07-14 12:48:35'),
+(525, 105, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 22, '2025-07-14 10:16:30', '2025-07-14 12:48:35'),
+(526, 106, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(527, 106, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(528, 106, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(529, 106, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(530, 106, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(531, 107, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(532, 107, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(533, 107, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(534, 107, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(535, 107, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(536, 108, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(537, 108, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(538, 108, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(539, 108, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(540, 108, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(541, 109, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(542, 109, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(543, 109, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(544, 109, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(545, 109, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(546, 110, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(547, 110, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(548, 110, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(549, 110, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(550, 110, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(551, 111, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '2025-07-15 07:28:37', '2025-07-15 07:28:37'),
+(552, 111, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 7, '2025-07-15 07:28:37', '2025-07-15 07:28:37'),
+(553, 111, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 11, '2025-07-15 07:28:37', '2025-07-15 07:28:37'),
+(554, 111, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 17, '2025-07-15 07:28:37', '2025-07-15 07:28:37'),
+(555, 111, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 22, '2025-07-15 07:28:37', '2025-07-15 07:28:37');
 
 -- --------------------------------------------------------
 
@@ -1633,174 +1703,173 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id`, `parent_id`, `srln`, `menu_name`, `navicon`, `is_side_menu`, `create_route`, `route`, `status`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, 'Dashboard', '<i class=\"nav-icon fas fa-tachometer-alt\"></i>', 1, NULL, 'dashboard.index', 1, '2024-10-26 08:56:54', '2024-10-28 04:37:52'),
-(2, 0, 2, 'Settings', '<i class=\"nav-icon fa-solid fa-gear\"></i>', 1, NULL, 'basic-infos.index', 1, '2024-10-26 09:11:38', '2025-04-28 06:24:07'),
-(3, 0, 3, 'Admin Manage', '<i class=\"nav-icon fa-solid fa-users-line\"></i>', 1, NULL, NULL, 1, '2024-10-26 09:16:45', '2024-11-04 04:01:46'),
-(4, 3, 1, 'Roles', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'roles.create', 'roles.index', 1, '2024-10-26 09:17:46', '2024-10-27 06:44:02'),
-(5, 3, 2, 'Admins', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'admins.create', 'admins.index', 1, '2024-10-26 09:34:05', '2024-10-26 11:40:22'),
-(6, 4, 1, 'Add', NULL, 0, NULL, 'roles.create', 1, '2024-10-26 09:37:12', '2024-10-27 11:12:43'),
-(7, 4, 2, 'Edit', NULL, 0, NULL, 'roles.edit', 1, '2024-10-26 09:37:49', '2024-10-26 09:37:49'),
-(8, 4, 3, 'Delete', NULL, 0, NULL, 'roles.destroy', 1, '2024-10-26 09:38:13', '2024-10-26 09:38:13'),
-(9, 5, 1, 'Add', NULL, 0, NULL, 'admins.create', 1, '2024-10-26 09:47:35', '2024-10-27 10:57:28'),
-(10, 5, 2, 'Edit', NULL, 0, NULL, 'admins.edit', 1, '2024-10-26 09:47:54', '2024-10-27 07:00:26'),
-(11, 5, 3, 'Delete', NULL, 0, NULL, 'admins.destroy', 1, '2024-10-26 09:48:07', '2024-10-27 06:51:02'),
-(12, 0, 4, 'Frontend Menus', '<i class=\"nav-icon fas fa-wrench\"></i>', 1, 'frontend-menus.create', 'frontend-menus.index', 0, '2024-10-27 10:13:54', '2024-12-17 08:49:59'),
-(13, 0, 5, 'Backend Menus', '<i class=\"nav-icon fas fa-clipboard-list\"></i>', 0, 'menus.create', 'menus.index', 1, '2024-10-27 11:17:41', '2025-03-11 04:21:38'),
-(15, 29, 1, 'Payment Methods', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'payment-methods.create', 'payment-methods.index', 1, '2024-10-27 12:09:17', '2025-02-19 12:42:44'),
-(16, 69, 3, 'Colors', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'colors.create', 'colors.index', 1, '2024-10-28 04:25:23', '2025-02-27 12:00:10'),
-(17, 29, 2, 'Accounts', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'accounts.create', 'accounts.index', 1, '2024-10-28 11:21:04', '2025-02-19 12:00:01'),
-(21, 19, 1, 'Add', NULL, 0, NULL, 'service-types.create', 1, '2024-10-31 10:28:22', '2024-10-31 10:31:33'),
-(23, 19, 3, 'Delete', NULL, 0, NULL, 'service-types.destroy', 1, '2024-10-31 10:29:54', '2024-10-31 10:31:16'),
-(24, 16, 1, 'Add', NULL, 0, NULL, 'colors.create', 1, '2024-10-31 10:32:07', '2025-03-11 08:45:06'),
-(25, 16, 2, 'Edit', NULL, 0, NULL, 'colors.edit', 1, '2024-10-31 10:32:22', '2025-03-11 08:45:11'),
-(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 1, '2024-11-03 08:16:54', '2025-05-05 18:08:06'),
-(30, 0, 10, 'Service Manage', '<i class=\"nav-icon fa fa-tools\"></i>', 1, NULL, NULL, 0, '2024-11-03 10:01:16', '2025-04-28 08:45:50'),
-(33, 2, 1, 'Edit', NULL, 0, NULL, 'basic-infos.edit', 1, '2024-11-09 10:07:19', '2024-11-09 10:07:19'),
-(34, 43, 1, 'Branch Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'branches.create', 'branches.index', 1, '2024-12-22 04:37:22', '2025-01-12 11:37:55'),
-(35, 69, 5, 'Bike Purchases', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-purchases.create', 'bike-purchases.index', 1, '2024-12-29 10:40:45', '2025-02-27 12:01:16'),
-(36, 30, 2, 'Services', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, 'bike-services.create', 'bike-services.index', 1, '2024-12-29 11:01:41', '2025-03-08 06:15:52'),
-(37, 20, 1, 'Add', NULL, 0, NULL, 'transfer-requisitions.create', 1, '2024-12-30 12:04:19', '2024-12-30 12:04:19'),
-(38, 20, 2, 'Edit', NULL, 0, NULL, 'transfer-requisitions.edit', 1, '2024-12-30 12:04:54', '2024-12-30 12:04:54'),
-(39, 20, 3, 'Delete', NULL, 0, NULL, 'transfer-requisitions.destroy', 1, '2024-12-30 12:05:24', '2024-12-30 12:05:24'),
-(40, 69, 2, 'Bike Models', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-models.create', 'bike-models.index', 1, '2025-01-04 05:01:10', '2025-02-27 12:00:44'),
-(41, 40, 1, 'Add', '<i class=\"nav-icon fas fa-check-circle\"></i>', 0, NULL, 'assets-statuses.create', 1, '2025-01-04 06:21:56', '2025-01-04 06:21:56'),
-(42, 36, 1, 'Edit', NULL, 0, NULL, 'transfer-requisitions.edit-incoming', 0, '2025-01-06 12:01:59', '2025-02-27 10:44:36'),
-(43, 0, 12, 'Employee Manage', '<i class=\"fas fa-users\"></i>', 1, NULL, NULL, 0, '2025-01-12 11:17:06', '2025-02-19 07:05:07'),
-(44, 43, 1, 'Departments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'departments.create', 'departments.index', 1, '2025-01-12 11:20:43', '2025-01-12 11:22:11'),
-(45, 43, 4, 'Employee', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'employees.create', 'employees.index', 1, '2025-01-12 11:37:35', '2025-01-19 18:31:03'),
-(46, 184, 1, 'Bike Stock', NULL, 0, NULL, NULL, 1, '2025-01-19 08:34:20', '2025-03-19 06:27:09'),
-(47, 184, 2, 'Investors Bike', NULL, 0, NULL, NULL, 1, '2025-01-19 08:34:37', '2025-04-16 10:32:00'),
-(48, 184, 3, 'My Bikes', NULL, 0, NULL, NULL, 1, '2025-01-19 08:34:50', '2025-04-16 10:35:43'),
-(49, 184, 4, 'Total Sold', NULL, 0, NULL, NULL, 1, '2025-01-19 08:35:06', '2025-04-16 10:32:29'),
-(50, 184, 5, 'Today\'s Purchase', NULL, 0, NULL, NULL, 1, '2025-01-19 09:07:13', '2025-04-22 10:22:10'),
-(51, 43, 3, 'Designation', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'designations.create', 'designations.index', 1, '2025-01-19 18:29:53', '2025-01-19 18:32:16'),
-(52, 0, 13, 'All Reports', '<i class=\"nav-icon fas fa-file-alt\"></i>', 1, NULL, NULL, 1, '2025-01-29 04:26:54', '2025-04-28 06:21:56'),
-(56, 52, 4, 'Monthly Expense', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.monthly-expenses', 0, '2025-01-29 04:33:07', '2025-05-27 06:30:24'),
-(57, 52, 5, 'Profit Loss Statement', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.profit-loss-statement', 1, '2025-01-29 04:36:00', '2025-05-27 11:48:39'),
-(58, 52, 6, 'Accounts Ledger', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.account-ledger', 1, '2025-01-29 04:36:22', '2025-04-16 04:37:51'),
-(63, 0, 4, 'Investors', '<i class=\"nav-icon fas fa-user-tie\"></i>', 0, NULL, NULL, 0, '2025-02-19 07:06:17', '2025-04-30 04:55:41'),
-(64, 167, 2, 'Investor Transaction', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'investor-transactions.create', 'investor-transactions.index', 1, '2025-02-20 04:28:14', '2025-04-21 07:08:53'),
-(65, 64, 1, 'Edit', NULL, 0, NULL, 'investor-transactions.edit', 1, '2025-02-26 05:36:31', '2025-02-26 05:36:31'),
-(66, 64, 2, 'Delete', NULL, 0, NULL, 'investor-transactions.destroy', 1, '2025-02-26 05:37:01', '2025-02-26 05:37:01'),
-(67, 64, 3, 'Approve', NULL, 0, NULL, 'investor-transactions.approve', 1, '2025-02-26 05:38:40', '2025-02-26 05:38:40'),
-(68, 64, 1, 'Add', NULL, 0, NULL, 'investor-transactions.create', 1, '2025-02-26 06:09:30', '2025-02-26 06:09:30'),
-(69, 0, 7, 'Bike Manage', '<i class=\"nav-icon fa fa-motorcycle\"></i>', 1, NULL, NULL, 0, '2025-02-27 11:55:21', '2025-04-28 06:20:57'),
-(70, 69, 1, 'Brands', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'brands.create', 'brands.index', 1, '2025-02-27 11:59:49', '2025-02-27 11:59:49'),
-(71, 29, 3, 'Fund Transfer', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'fundtransfers.create', 'fundtransfers.index', 1, '2025-03-03 09:31:14', '2025-04-21 04:32:15'),
-(72, 30, 1, 'Service Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-service-categories.create', 'bike-service-categories.index', 1, '2025-03-05 05:33:32', '2025-03-08 06:15:47'),
-(73, 69, 7, 'Bike Service Records', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-service-records.create', 'bike-service-records.index', 1, '2025-03-05 09:42:01', '2025-03-09 03:35:59'),
-(74, 30, 4, 'Cust Service Records', '<i class=\"far fa-dot-circle nav-icon\"></i>', 0, NULL, NULL, 1, '2025-03-08 06:14:26', '2025-03-11 04:35:03'),
-(75, 72, 2, 'Add', NULL, 0, NULL, 'bike-service-categories.create', 1, '2025-03-08 09:30:58', '2025-03-08 09:31:30'),
-(76, 72, 2, 'Edit', NULL, 0, NULL, 'bike-service-categories.edit', 1, '2025-03-08 09:32:41', '2025-03-08 09:32:41'),
-(77, 36, 1, 'Add', NULL, 0, NULL, 'create-route:- bike-services.create', 1, '2025-03-08 09:34:17', '2025-03-08 09:34:17'),
-(78, 36, 2, 'Edit', NULL, 0, NULL, 'bike-services.edit', 1, '2025-03-08 09:34:53', '2025-03-08 09:34:53'),
-(79, 73, 1, 'Add', NULL, 0, NULL, 'bike-service-records.create', 1, '2025-03-08 09:35:53', '2025-03-08 09:35:53'),
-(80, 73, 2, 'Edit', NULL, 0, NULL, 'bike-service-records.edit', 1, '2025-03-08 09:36:36', '2025-03-08 09:36:36'),
-(81, 73, 3, 'Delete', NULL, 0, NULL, 'bike-service-records.destroy', 1, '2025-03-08 09:37:16', '2025-03-08 09:37:16'),
-(82, 73, 4, 'Approve', NULL, 0, NULL, 'bike-service-records.approve', 1, '2025-03-08 09:38:04', '2025-03-08 09:38:04'),
-(84, 69, 6, 'Bike Sales', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-sales.create', 'bike-sales.index', 1, '2025-03-09 03:36:54', '2025-03-09 03:36:54'),
-(85, 69, 8, 'Bike Profit', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'bike-profits.index', 1, '2025-03-10 07:21:36', '2025-03-10 08:23:41'),
-(86, 63, 1, 'Edit', NULL, 0, NULL, 'agents.edit', 1, '2025-03-11 08:14:15', '2025-04-28 06:39:18'),
-(87, 63, 1, 'Add', NULL, 0, NULL, 'agents.create', 1, '2025-03-11 08:14:52', '2025-04-28 06:38:51'),
-(88, 15, 1, 'Add', NULL, 0, NULL, 'payment-methods.create', 1, '2025-03-11 08:15:34', '2025-03-11 08:15:34'),
-(89, 15, 2, 'Edit', NULL, 0, NULL, 'payment-methods.edit', 1, '2025-03-11 08:15:51', '2025-03-11 08:15:51'),
-(90, 17, 1, 'Add', NULL, 0, NULL, 'accounts.create', 1, '2025-03-11 08:16:27', '2025-03-11 08:16:27'),
-(91, 17, 2, 'Edit', NULL, 0, NULL, 'accounts.edit', 1, '2025-03-11 08:16:42', '2025-03-11 08:16:42'),
-(92, 70, 1, 'Add', NULL, 0, NULL, 'brands.create', 1, '2025-03-11 08:38:46', '2025-03-11 08:38:46'),
-(93, 70, 2, 'Edit', NULL, 0, NULL, 'brands.edit', 1, '2025-03-11 08:38:59', '2025-03-11 08:38:59'),
-(94, 40, 2, 'Edit', NULL, 0, NULL, 'bike-models.edit', 1, '2025-03-11 08:41:05', '2025-03-11 08:41:05'),
-(95, 35, 1, 'Add', NULL, 0, NULL, 'bike-purchases.create', 1, '2025-03-11 08:46:20', '2025-03-18 04:35:27'),
-(96, 35, 2, 'Edit', NULL, 0, NULL, 'bike-purchases.edit', 1, '2025-03-11 08:46:31', '2025-03-18 04:35:31'),
-(97, 35, 3, 'Delete', NULL, 0, NULL, 'bike-purchases.destroy', 1, '2025-03-11 08:47:19', '2025-03-18 04:35:35'),
-(98, 35, 4, 'Approve', NULL, 0, NULL, 'bike-purchases.approve', 1, '2025-03-11 08:48:25', '2025-03-18 04:35:39'),
-(99, 84, 1, 'Add', NULL, 0, NULL, 'bike-sales.create', 1, '2025-03-11 08:49:28', '2025-03-11 08:49:28'),
-(100, 84, 2, 'Edit', NULL, 0, NULL, 'bike-sales.edit', 1, '2025-03-11 08:49:39', '2025-03-11 08:49:39'),
-(101, 84, 3, 'Delete', NULL, 0, NULL, 'bike-sales.destroy', 1, '2025-03-11 08:49:56', '2025-03-11 08:49:56'),
-(102, 84, 4, 'Approve', NULL, 0, NULL, 'bike-sales.approve', 1, '2025-03-11 08:50:23', '2025-03-11 08:50:23'),
-(103, 85, 1, 'Edit', NULL, 0, NULL, 'bike-profits.edit', 1, '2025-03-11 08:51:17', '2025-03-11 08:51:17'),
-(104, 85, 2, 'Close', NULL, 0, NULL, 'bike-profits.change-status', 1, '2025-03-11 08:51:37', '2025-03-14 20:05:47'),
-(105, 0, 10, 'Expense Manage', '<i class=\"nav-icon fa-solid fa-money-bill-wave\"></i>', 1, NULL, NULL, 1, '2025-03-12 03:50:17', '2025-05-29 16:27:37'),
-(106, 105, 1, 'Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expense-categories.create', 'expense-categories.index', 1, '2025-03-12 03:50:17', '2025-03-12 04:32:03'),
-(107, 106, 1, 'Add', NULL, 0, 'expense-categories.create', 'expense-categories.create', 1, '2025-03-12 04:32:22', '2025-03-12 04:33:55'),
-(108, 106, 2, 'Edit', NULL, 0, NULL, 'expense-categories.edit', 1, '2025-03-12 04:33:32', '2025-03-12 04:33:32'),
-(109, 105, 1, 'Expense Heads', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expense-heads.create', 'expense-heads.index', 1, '2025-03-12 05:14:34', '2025-03-12 05:14:34'),
-(110, 105, 3, 'Expenses', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expenses.create', 'expenses.index', 1, '2025-03-12 06:35:41', '2025-03-12 06:35:41'),
-(111, 109, 1, 'Add', NULL, 0, NULL, 'expense-heads.create', 1, '2025-03-12 06:36:37', '2025-03-12 06:36:37'),
-(112, 109, 2, 'Edit', NULL, 0, NULL, 'expense-heads.edit', 1, '2025-03-12 06:36:58', '2025-03-12 06:36:58'),
-(113, 110, 1, 'Add', NULL, 0, NULL, 'expenses.create', 1, '2025-03-12 06:38:33', '2025-03-12 06:38:33'),
-(114, 110, 2, 'Edit', NULL, 0, NULL, 'expenses.edit', 1, '2025-03-12 06:38:50', '2025-03-12 06:38:50'),
-(115, 110, 3, 'Delete', NULL, 0, NULL, 'expenses.destroy', 1, '2025-03-12 06:39:22', '2025-03-12 06:39:22'),
-(116, 110, 4, 'Approve', NULL, 0, NULL, 'expenses.approve', 1, '2025-03-12 06:39:54', '2025-03-12 06:39:54'),
-(117, 73, 5, 'View', NULL, 0, NULL, 'bike-service-records.view', 1, '2025-03-12 09:21:49', '2025-03-20 08:05:57'),
-(118, 110, 5, 'View', NULL, 0, NULL, 'expenses.view', 1, '2025-03-12 09:53:02', '2025-03-12 09:53:02'),
-(119, 85, 3, 'View Records', NULL, 0, NULL, 'bike-profits.share-records', 1, '2025-03-14 20:06:39', '2025-03-14 20:06:39'),
-(120, 119, 1, 'Edit', NULL, 0, NULL, 'bike-profits.share-records.edit', 1, '2025-03-14 20:08:04', '2025-03-14 20:08:04'),
-(121, 119, 2, 'Delete', NULL, 0, NULL, 'bike-profits.share-records.destroy', 1, '2025-03-14 20:08:50', '2025-03-14 20:10:43'),
-(122, 119, 3, 'Approve', NULL, 0, NULL, 'bike-profits.share-records.approve', 1, '2025-03-14 20:09:29', '2025-03-14 20:09:29'),
-(123, 119, 0, 'Create', NULL, 0, NULL, 'bike-profits.share-records.create', 1, '2025-03-14 20:11:31', '2025-03-14 20:11:50'),
-(124, 130, 1, 'Setup', '<i class=\"fa-solid fa-users-gear nav-icon\"></i>', 1, NULL, NULL, 1, '2025-03-15 04:25:16', '2025-03-17 03:32:06'),
-(125, 124, 1, 'Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'categories.create', 'categories.index', 1, '2025-03-15 04:26:40', '2025-03-15 04:37:43'),
-(126, 124, 2, 'Sub Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'sub-categories.create', 'sub-categories.index', 1, '2025-03-15 04:39:29', '2025-03-15 04:39:29'),
-(127, 0, 6, 'Service Items', '<i class=\"nav-icon fas fa-stethoscope\"></i>', 1, 'items.create', 'items.index', 1, '2025-03-15 04:58:29', '2025-04-28 08:59:51'),
-(128, 124, 4, 'Suppliers', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'suppliers.create', 'suppliers.index', 1, '2025-03-15 18:51:51', '2025-03-17 03:49:08'),
-(129, 130, 4, 'Supplier Payments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'payments.create', 'payments.index', 1, '2025-03-15 19:14:30', '2025-03-23 09:39:42'),
-(130, 0, 11, 'Inventory Manage', '<i class=\"nav-icon fas fa-warehouse\"></i>', 1, NULL, NULL, 0, '2025-03-15 19:22:44', '2025-04-28 08:44:48'),
-(131, 130, 2, 'Purchase', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'purchases.create', 'purchases.index', 1, '2025-03-16 09:00:54', '2025-03-23 09:38:41'),
-(132, 84, 5, 'View', '<i class=\"far fa-dot-circle nav-icon\"></i>', 0, NULL, 'bike-service-records.invoice', 1, '2025-03-20 08:04:27', '2025-03-20 08:04:27'),
-(133, 73, 6, 'Print', NULL, 0, NULL, 'bike-service-records.invoice.print', 1, '2025-03-20 08:05:40', '2025-03-20 08:06:27'),
-(134, 35, 5, 'View', NULL, 0, NULL, 'bike-purchases.invoice', 1, '2025-03-20 09:05:09', '2025-03-20 09:05:09'),
-(135, 35, 6, 'Print', NULL, 0, NULL, 'bike-purchases.invoice.print', 1, '2025-03-20 09:05:32', '2025-03-20 09:05:32'),
-(136, 0, 5, 'Agent', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 1, '2025-03-22 19:17:08', '2025-04-30 04:56:08'),
-(137, 0, 6, 'Jobs', '<i class=\"fa fa-tasks nav-icon\"></i>', 1, 'sales.create', 'sales.index', 1, '2025-03-22 20:31:30', '2025-04-29 05:03:09'),
-(138, 0, 8, 'Agent Payments', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, 'customer-payments.create', 'customer-payments.index', 1, '2025-03-23 08:47:00', '2025-05-25 08:56:34'),
-(139, 0, 12, 'Loan Manage', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 0, '2025-04-09 05:37:41', '2025-04-28 06:21:48'),
-(140, 139, 1, 'Party Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'parties.create', 'parties.index', 1, '2025-04-09 05:39:23', '2025-04-09 05:39:23'),
-(141, 139, 2, 'Loans', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'loans.create', 'loans.index', 1, '2025-04-10 04:25:30', '2025-04-10 04:25:41'),
-(142, 139, 3, 'Party Payments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'party-payments.index', 1, '2025-04-10 18:01:23', '2025-04-10 18:03:56'),
-(143, 141, 1, 'Add', NULL, 0, NULL, 'loans.create', 1, '2025-04-11 17:13:03', '2025-04-11 17:13:03'),
-(144, 141, 2, 'Edit', NULL, 0, NULL, 'loans.edit', 1, '2025-04-11 17:15:09', '2025-04-11 17:15:09'),
-(145, 141, 3, 'Delete', NULL, 0, NULL, 'loans.destroy', 1, '2025-04-11 17:15:28', '2025-04-11 17:15:28'),
-(146, 141, 4, 'Approve', NULL, 0, NULL, 'loans.approve', 1, '2025-04-11 17:16:04', '2025-04-11 17:16:04'),
-(147, 141, 5, 'View', NULL, 0, NULL, 'loans.invoice', 1, '2025-04-11 17:17:32', '2025-04-11 17:17:32'),
-(148, 141, 6, 'Print', NULL, 0, NULL, 'loans.invoice.print', 1, '2025-04-11 17:17:58', '2025-04-11 17:17:58'),
-(149, 131, 1, 'Add', NULL, 0, NULL, 'purchases.create', 1, '2025-04-13 07:08:40', '2025-04-13 07:08:40'),
-(150, 131, 2, 'Edit', NULL, 0, NULL, 'purchases.edit', 1, '2025-04-13 07:09:15', '2025-04-13 07:09:15'),
-(151, 131, 3, 'Delete', NULL, 0, NULL, 'purchases.destroy', 1, '2025-04-13 07:09:32', '2025-04-13 07:09:32'),
-(152, 131, 5, 'View', NULL, 0, NULL, 'purchases.vouchar', 1, '2025-04-13 07:11:25', '2025-04-13 07:11:25'),
-(153, 131, 6, 'Print', NULL, 0, NULL, 'purchases.vouchar.print', 1, '2025-04-13 07:11:48', '2025-04-13 07:11:48'),
-(154, 131, 4, 'Add Payment', NULL, 0, NULL, 'purchases.payment.store', 1, '2025-04-13 07:12:31', '2025-04-13 07:13:29'),
-(155, 137, 1, 'Add', NULL, 0, NULL, 'sales.create', 1, '2025-04-13 08:50:15', '2025-04-13 08:50:15'),
-(156, 137, 2, 'Edit', NULL, 0, NULL, 'sales.edit', 1, '2025-04-13 08:50:37', '2025-04-13 08:50:37'),
-(157, 137, 3, 'Delete', NULL, 0, NULL, 'sales.destroy', 1, '2025-04-13 08:50:52', '2025-04-13 08:50:52'),
-(158, 137, 4, 'Approve', NULL, 0, NULL, 'sales.approve', 1, '2025-04-13 08:51:25', '2025-04-13 08:51:25'),
-(159, 137, 5, 'View', NULL, 0, NULL, 'sales.invoice', 1, '2025-04-13 08:52:47', '2025-04-13 08:52:47'),
-(160, 137, 6, 'Print', NULL, 0, NULL, 'sales.invoice.print', 1, '2025-04-13 08:53:16', '2025-04-13 08:53:16'),
-(161, 137, 7, 'Payment', NULL, 0, NULL, 'sales.payment.store', 1, '2025-04-13 08:53:58', '2025-04-13 08:53:58'),
-(162, 35, 8, 'Repurchase', NULL, 0, NULL, 'bike-purchases.repurchase', 1, '2025-04-20 05:24:13', '2025-04-20 05:24:13'),
-(163, 71, 1, 'Add', NULL, 0, NULL, 'fundtransfers.create', 1, '2025-04-21 06:57:36', '2025-04-21 06:57:36'),
-(164, 71, 2, 'Edit', NULL, 0, NULL, 'fundtransfers.edit', 1, '2025-04-21 06:57:55', '2025-04-21 06:57:55'),
-(165, 71, 3, 'Delete', NULL, 0, NULL, 'fundtransfers.destroy', 1, '2025-04-21 06:58:14', '2025-04-21 06:58:14'),
-(166, 71, 4, 'Approve', NULL, 0, NULL, 'fundtransfers.approve', 1, '2025-04-21 06:58:30', '2025-04-21 06:58:30'),
-(167, 0, 5, 'Investor Manage', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, NULL, NULL, 0, '2025-04-21 07:05:14', '2025-04-28 06:38:05'),
-(168, 184, 6, 'Today\'s Sale', NULL, 0, NULL, NULL, 1, '2025-04-22 10:22:35', '2025-04-22 10:22:35'),
-(169, 182, 5, 'Today\'s Expense', NULL, 0, NULL, NULL, 1, '2025-04-22 10:22:53', '2025-04-22 10:22:53'),
-(170, 182, 1, 'Today\'s Accessories Sales', NULL, 0, NULL, NULL, 1, '2025-04-22 10:23:13', '2025-04-22 10:23:30'),
-(171, 182, 2, 'Today\'s Service Sales', NULL, 0, NULL, NULL, 1, '2025-04-22 10:23:49', '2025-04-22 10:23:49'),
-(172, 182, 3, 'Today\'s Spare Parts Sales', NULL, 0, NULL, NULL, 1, '2025-04-22 10:24:04', '2025-04-22 10:24:04'),
-(173, 183, 1, 'Today\'s Investor\'s Profit Payment', NULL, 0, NULL, NULL, 1, '2025-04-22 10:24:26', '2025-04-22 10:24:26'),
-(174, 183, 2, 'Today\'s New Investment', NULL, 0, NULL, NULL, 1, '2025-04-22 10:24:47', '2025-04-22 10:24:47'),
-(175, 183, 3, 'Today\'s Investment Withdraw', NULL, 0, NULL, NULL, 1, '2025-04-22 10:25:10', '2025-04-22 10:25:10'),
-(176, 52, 5, 'Accounts Reports', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'reports.accounts-reports', 1, '2025-04-23 03:17:35', '2025-04-23 03:17:35'),
-(178, 182, 4, 'Total sales and service', NULL, 0, NULL, NULL, 1, '2025-04-23 10:50:23', '2025-04-23 10:50:23'),
-(179, 182, 6, 'Today Inventory Balance', NULL, 0, NULL, NULL, 1, '2025-04-23 10:53:52', '2025-04-23 10:53:52'),
-(180, 183, 4, 'Investors Balance', NULL, 0, NULL, NULL, 1, '2025-04-23 10:56:04', '2025-04-23 10:56:04'),
-(181, 183, 5, 'My Investment', NULL, 0, NULL, NULL, 1, '2025-04-23 10:57:37', '2025-04-23 10:57:37'),
-(182, 1, 1, 'Sales & Expense Info', NULL, 0, NULL, NULL, 0, '2025-04-23 10:58:23', '2025-04-28 06:23:25'),
-(183, 1, 2, 'Investement Info', NULL, 0, NULL, NULL, 0, '2025-04-23 11:00:28', '2025-04-28 06:32:52'),
-(184, 1, 3, 'Bike Info', NULL, 0, NULL, NULL, 0, '2025-04-23 11:01:24', '2025-04-28 06:32:58'),
-(185, 137, 8, 'Add New Item', NULL, 0, NULL, 'sales.add-new-item', 1, '2025-05-24 17:19:20', '2025-05-24 17:19:20'),
-(186, 137, 9, 'Service Status Update', NULL, 0, NULL, 'sales.service-edit', 1, '2025-05-24 17:22:40', '2025-05-24 17:22:40'),
-(188, 137, 10, 'Pre-Medical Token', NULL, 0, NULL, 'sales.token.print', 1, '2025-06-19 11:22:25', '2025-06-19 11:22:25');
+(1, 0, 1, 'Dashboard', '<i class=\"nav-icon fas fa-tachometer-alt\"></i>', 1, NULL, 'dashboard.index', 1, '2024-10-26 02:56:54', '2024-10-27 22:37:52'),
+(2, 0, 2, 'Settings', '<i class=\"nav-icon fa-solid fa-gear\"></i>', 1, NULL, 'basic-infos.index', 1, '2024-10-26 03:11:38', '2025-04-28 00:24:07'),
+(3, 0, 3, 'Admin Manage', '<i class=\"nav-icon fa-solid fa-users-line\"></i>', 1, NULL, NULL, 1, '2024-10-26 03:16:45', '2024-11-03 22:01:46'),
+(4, 3, 1, 'Roles', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'roles.create', 'roles.index', 1, '2024-10-26 03:17:46', '2024-10-27 00:44:02'),
+(5, 3, 2, 'Admins', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'admins.create', 'admins.index', 1, '2024-10-26 03:34:05', '2024-10-26 05:40:22'),
+(6, 4, 1, 'Add', NULL, 0, NULL, 'roles.create', 1, '2024-10-26 03:37:12', '2024-10-27 05:12:43'),
+(7, 4, 2, 'Edit', NULL, 0, NULL, 'roles.edit', 1, '2024-10-26 03:37:49', '2024-10-26 03:37:49'),
+(8, 4, 3, 'Delete', NULL, 0, NULL, 'roles.destroy', 1, '2024-10-26 03:38:13', '2024-10-26 03:38:13'),
+(9, 5, 1, 'Add', NULL, 0, NULL, 'admins.create', 1, '2024-10-26 03:47:35', '2024-10-27 04:57:28'),
+(10, 5, 2, 'Edit', NULL, 0, NULL, 'admins.edit', 1, '2024-10-26 03:47:54', '2024-10-27 01:00:26'),
+(11, 5, 3, 'Delete', NULL, 0, NULL, 'admins.destroy', 1, '2024-10-26 03:48:07', '2024-10-27 00:51:02'),
+(12, 0, 4, 'Frontend Menus', '<i class=\"nav-icon fas fa-wrench\"></i>', 1, 'frontend-menus.create', 'frontend-menus.index', 0, '2024-10-27 04:13:54', '2024-12-17 02:49:59'),
+(13, 0, 5, 'Backend Menus', '<i class=\"nav-icon fas fa-clipboard-list\"></i>', 0, 'menus.create', 'menus.index', 1, '2024-10-27 05:17:41', '2025-03-10 22:21:38'),
+(15, 29, 1, 'Payment Methods', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'payment-methods.create', 'payment-methods.index', 1, '2024-10-27 06:09:17', '2025-02-19 06:42:44'),
+(16, 69, 3, 'Colors', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'colors.create', 'colors.index', 1, '2024-10-27 22:25:23', '2025-02-27 06:00:10'),
+(17, 29, 2, 'Accounts', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'accounts.create', 'accounts.index', 1, '2024-10-28 05:21:04', '2025-02-19 06:00:01'),
+(21, 19, 1, 'Add', NULL, 0, NULL, 'service-types.create', 1, '2024-10-31 04:28:22', '2024-10-31 04:31:33'),
+(23, 19, 3, 'Delete', NULL, 0, NULL, 'service-types.destroy', 1, '2024-10-31 04:29:54', '2024-10-31 04:31:16'),
+(24, 16, 1, 'Add', NULL, 0, NULL, 'colors.create', 1, '2024-10-31 04:32:07', '2025-03-11 02:45:06'),
+(25, 16, 2, 'Edit', NULL, 0, NULL, 'colors.edit', 1, '2024-10-31 04:32:22', '2025-03-11 02:45:11'),
+(29, 0, 6, 'Account Manage', '<i class=\"nav-icon fa fa-credit-card\"></i>', 1, NULL, NULL, 1, '2024-11-03 02:16:54', '2025-05-05 12:08:06'),
+(30, 0, 10, 'Service Manage', '<i class=\"nav-icon fa fa-tools\"></i>', 1, NULL, NULL, 0, '2024-11-03 04:01:16', '2025-04-28 02:45:50'),
+(33, 2, 1, 'Edit', NULL, 0, NULL, 'basic-infos.edit', 1, '2024-11-09 04:07:19', '2024-11-09 04:07:19'),
+(34, 43, 1, 'Branch Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'branches.create', 'branches.index', 1, '2024-12-21 22:37:22', '2025-01-12 05:37:55'),
+(35, 69, 5, 'Bike Purchases', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-purchases.create', 'bike-purchases.index', 1, '2024-12-29 04:40:45', '2025-02-27 06:01:16'),
+(36, 30, 2, 'Services', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, 'bike-services.create', 'bike-services.index', 1, '2024-12-29 05:01:41', '2025-03-08 00:15:52'),
+(37, 20, 1, 'Add', NULL, 0, NULL, 'transfer-requisitions.create', 1, '2024-12-30 06:04:19', '2024-12-30 06:04:19'),
+(38, 20, 2, 'Edit', NULL, 0, NULL, 'transfer-requisitions.edit', 1, '2024-12-30 06:04:54', '2024-12-30 06:04:54'),
+(39, 20, 3, 'Delete', NULL, 0, NULL, 'transfer-requisitions.destroy', 1, '2024-12-30 06:05:24', '2024-12-30 06:05:24'),
+(40, 69, 2, 'Bike Models', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-models.create', 'bike-models.index', 1, '2025-01-03 23:01:10', '2025-02-27 06:00:44'),
+(41, 40, 1, 'Add', '<i class=\"nav-icon fas fa-check-circle\"></i>', 0, NULL, 'assets-statuses.create', 1, '2025-01-04 00:21:56', '2025-01-04 00:21:56'),
+(42, 36, 1, 'Edit', NULL, 0, NULL, 'transfer-requisitions.edit-incoming', 0, '2025-01-06 06:01:59', '2025-02-27 04:44:36'),
+(43, 0, 12, 'Employee Manage', '<i class=\"fas fa-users\"></i>', 1, NULL, NULL, 0, '2025-01-12 05:17:06', '2025-02-19 01:05:07'),
+(44, 43, 1, 'Departments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'departments.create', 'departments.index', 1, '2025-01-12 05:20:43', '2025-01-12 05:22:11'),
+(45, 43, 4, 'Employee', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'employees.create', 'employees.index', 1, '2025-01-12 05:37:35', '2025-01-19 12:31:03'),
+(46, 184, 1, 'Bike Stock', NULL, 0, NULL, NULL, 1, '2025-01-19 02:34:20', '2025-03-19 00:27:09'),
+(47, 184, 2, 'Investors Bike', NULL, 0, NULL, NULL, 1, '2025-01-19 02:34:37', '2025-04-16 04:32:00'),
+(48, 184, 3, 'My Bikes', NULL, 0, NULL, NULL, 1, '2025-01-19 02:34:50', '2025-04-16 04:35:43'),
+(49, 184, 4, 'Total Sold', NULL, 0, NULL, NULL, 1, '2025-01-19 02:35:06', '2025-04-16 04:32:29'),
+(50, 184, 5, 'Today\'s Purchase', NULL, 0, NULL, NULL, 1, '2025-01-19 03:07:13', '2025-04-22 04:22:10'),
+(51, 43, 3, 'Designation', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'designations.create', 'designations.index', 1, '2025-01-19 12:29:53', '2025-01-19 12:32:16'),
+(52, 0, 13, 'All Reports', '<i class=\"nav-icon fas fa-file-alt\"></i>', 1, NULL, NULL, 1, '2025-01-28 22:26:54', '2025-04-28 00:21:56'),
+(56, 52, 4, 'Monthly Expense', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.monthly-expenses', 1, '2025-01-28 22:33:07', '2025-07-14 10:32:47'),
+(57, 52, 5, 'Profit Loss Statement', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.profit-loss-statement', 1, '2025-01-28 22:36:00', '2025-05-27 05:48:39'),
+(58, 52, 6, 'Accounts Ledger', '<i class=\"nav-icon far fa-dot-circle\"></i>', 1, NULL, 'reports.account-ledger', 1, '2025-01-28 22:36:22', '2025-04-15 22:37:51'),
+(63, 0, 4, 'Investors', '<i class=\"nav-icon fas fa-user-tie\"></i>', 0, NULL, NULL, 0, '2025-02-19 01:06:17', '2025-04-29 22:55:41'),
+(64, 167, 2, 'Investor Transaction', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'investor-transactions.create', 'investor-transactions.index', 1, '2025-02-19 22:28:14', '2025-04-21 01:08:53'),
+(65, 64, 1, 'Edit', NULL, 0, NULL, 'investor-transactions.edit', 1, '2025-02-25 23:36:31', '2025-02-25 23:36:31'),
+(66, 64, 2, 'Delete', NULL, 0, NULL, 'investor-transactions.destroy', 1, '2025-02-25 23:37:01', '2025-02-25 23:37:01'),
+(67, 64, 3, 'Approve', NULL, 0, NULL, 'investor-transactions.approve', 1, '2025-02-25 23:38:40', '2025-02-25 23:38:40'),
+(68, 64, 1, 'Add', NULL, 0, NULL, 'investor-transactions.create', 1, '2025-02-26 00:09:30', '2025-02-26 00:09:30'),
+(69, 0, 7, 'Bike Manage', '<i class=\"nav-icon fa fa-motorcycle\"></i>', 1, NULL, NULL, 0, '2025-02-27 05:55:21', '2025-04-28 00:20:57'),
+(70, 69, 1, 'Brands', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'brands.create', 'brands.index', 1, '2025-02-27 05:59:49', '2025-02-27 05:59:49'),
+(71, 29, 3, 'Fund Transfer', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'fundtransfers.create', 'fundtransfers.index', 1, '2025-03-03 03:31:14', '2025-04-20 22:32:15'),
+(72, 30, 1, 'Service Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-service-categories.create', 'bike-service-categories.index', 1, '2025-03-04 23:33:32', '2025-03-08 00:15:47'),
+(73, 69, 7, 'Bike Service Records', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-service-records.create', 'bike-service-records.index', 1, '2025-03-05 03:42:01', '2025-03-08 21:35:59'),
+(74, 30, 4, 'Cust Service Records', '<i class=\"far fa-dot-circle nav-icon\"></i>', 0, NULL, NULL, 1, '2025-03-08 00:14:26', '2025-03-10 22:35:03'),
+(75, 72, 2, 'Add', NULL, 0, NULL, 'bike-service-categories.create', 1, '2025-03-08 03:30:58', '2025-03-08 03:31:30'),
+(76, 72, 2, 'Edit', NULL, 0, NULL, 'bike-service-categories.edit', 1, '2025-03-08 03:32:41', '2025-03-08 03:32:41'),
+(77, 36, 1, 'Add', NULL, 0, NULL, 'create-route:- bike-services.create', 1, '2025-03-08 03:34:17', '2025-03-08 03:34:17'),
+(78, 36, 2, 'Edit', NULL, 0, NULL, 'bike-services.edit', 1, '2025-03-08 03:34:53', '2025-03-08 03:34:53'),
+(79, 73, 1, 'Add', NULL, 0, NULL, 'bike-service-records.create', 1, '2025-03-08 03:35:53', '2025-03-08 03:35:53'),
+(80, 73, 2, 'Edit', NULL, 0, NULL, 'bike-service-records.edit', 1, '2025-03-08 03:36:36', '2025-03-08 03:36:36'),
+(81, 73, 3, 'Delete', NULL, 0, NULL, 'bike-service-records.destroy', 1, '2025-03-08 03:37:16', '2025-03-08 03:37:16'),
+(82, 73, 4, 'Approve', NULL, 0, NULL, 'bike-service-records.approve', 1, '2025-03-08 03:38:04', '2025-03-08 03:38:04'),
+(84, 69, 6, 'Bike Sales', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'bike-sales.create', 'bike-sales.index', 1, '2025-03-08 21:36:54', '2025-03-08 21:36:54'),
+(85, 69, 8, 'Bike Profit', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'bike-profits.index', 1, '2025-03-10 01:21:36', '2025-03-10 02:23:41'),
+(86, 63, 1, 'Edit', NULL, 0, NULL, 'agents.edit', 1, '2025-03-11 02:14:15', '2025-04-28 00:39:18'),
+(87, 63, 1, 'Add', NULL, 0, NULL, 'agents.create', 1, '2025-03-11 02:14:52', '2025-04-28 00:38:51'),
+(88, 15, 1, 'Add', NULL, 0, NULL, 'payment-methods.create', 1, '2025-03-11 02:15:34', '2025-03-11 02:15:34'),
+(89, 15, 2, 'Edit', NULL, 0, NULL, 'payment-methods.edit', 1, '2025-03-11 02:15:51', '2025-03-11 02:15:51'),
+(90, 17, 1, 'Add', NULL, 0, NULL, 'accounts.create', 1, '2025-03-11 02:16:27', '2025-03-11 02:16:27'),
+(91, 17, 2, 'Edit', NULL, 0, NULL, 'accounts.edit', 1, '2025-03-11 02:16:42', '2025-03-11 02:16:42'),
+(92, 70, 1, 'Add', NULL, 0, NULL, 'brands.create', 1, '2025-03-11 02:38:46', '2025-03-11 02:38:46'),
+(93, 70, 2, 'Edit', NULL, 0, NULL, 'brands.edit', 1, '2025-03-11 02:38:59', '2025-03-11 02:38:59'),
+(94, 40, 2, 'Edit', NULL, 0, NULL, 'bike-models.edit', 1, '2025-03-11 02:41:05', '2025-03-11 02:41:05'),
+(95, 35, 1, 'Add', NULL, 0, NULL, 'bike-purchases.create', 1, '2025-03-11 02:46:20', '2025-03-17 22:35:27'),
+(96, 35, 2, 'Edit', NULL, 0, NULL, 'bike-purchases.edit', 1, '2025-03-11 02:46:31', '2025-03-17 22:35:31'),
+(97, 35, 3, 'Delete', NULL, 0, NULL, 'bike-purchases.destroy', 1, '2025-03-11 02:47:19', '2025-03-17 22:35:35'),
+(98, 35, 4, 'Approve', NULL, 0, NULL, 'bike-purchases.approve', 1, '2025-03-11 02:48:25', '2025-03-17 22:35:39'),
+(99, 84, 1, 'Add', NULL, 0, NULL, 'bike-sales.create', 1, '2025-03-11 02:49:28', '2025-03-11 02:49:28'),
+(100, 84, 2, 'Edit', NULL, 0, NULL, 'bike-sales.edit', 1, '2025-03-11 02:49:39', '2025-03-11 02:49:39'),
+(101, 84, 3, 'Delete', NULL, 0, NULL, 'bike-sales.destroy', 1, '2025-03-11 02:49:56', '2025-03-11 02:49:56'),
+(102, 84, 4, 'Approve', NULL, 0, NULL, 'bike-sales.approve', 1, '2025-03-11 02:50:23', '2025-03-11 02:50:23'),
+(103, 85, 1, 'Edit', NULL, 0, NULL, 'bike-profits.edit', 1, '2025-03-11 02:51:17', '2025-03-11 02:51:17'),
+(104, 85, 2, 'Close', NULL, 0, NULL, 'bike-profits.change-status', 1, '2025-03-11 02:51:37', '2025-03-14 14:05:47'),
+(105, 0, 10, 'Expense Manage', '<i class=\"nav-icon fa-solid fa-money-bill-wave\"></i>', 1, NULL, NULL, 1, '2025-03-11 21:50:17', '2025-05-29 10:27:37'),
+(106, 105, 1, 'Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expense-categories.create', 'expense-categories.index', 1, '2025-03-11 21:50:17', '2025-03-11 22:32:03'),
+(107, 106, 1, 'Add', NULL, 0, 'expense-categories.create', 'expense-categories.create', 1, '2025-03-11 22:32:22', '2025-03-11 22:33:55'),
+(108, 106, 2, 'Edit', NULL, 0, NULL, 'expense-categories.edit', 1, '2025-03-11 22:33:32', '2025-03-11 22:33:32'),
+(109, 105, 1, 'Expense Heads', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expense-heads.create', 'expense-heads.index', 1, '2025-03-11 23:14:34', '2025-03-11 23:14:34'),
+(110, 105, 3, 'Expenses', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'expenses.create', 'expenses.index', 1, '2025-03-12 00:35:41', '2025-03-12 00:35:41'),
+(111, 109, 1, 'Add', NULL, 0, NULL, 'expense-heads.create', 1, '2025-03-12 00:36:37', '2025-03-12 00:36:37'),
+(112, 109, 2, 'Edit', NULL, 0, NULL, 'expense-heads.edit', 1, '2025-03-12 00:36:58', '2025-03-12 00:36:58'),
+(113, 110, 1, 'Add', NULL, 0, NULL, 'expenses.create', 1, '2025-03-12 00:38:33', '2025-03-12 00:38:33'),
+(114, 110, 2, 'Edit', NULL, 0, NULL, 'expenses.edit', 1, '2025-03-12 00:38:50', '2025-03-12 00:38:50'),
+(115, 110, 3, 'Delete', NULL, 0, NULL, 'expenses.destroy', 1, '2025-03-12 00:39:22', '2025-03-12 00:39:22'),
+(116, 110, 4, 'Approve', NULL, 0, NULL, 'expenses.approve', 1, '2025-03-12 00:39:54', '2025-03-12 00:39:54'),
+(117, 73, 5, 'View', NULL, 0, NULL, 'bike-service-records.view', 1, '2025-03-12 03:21:49', '2025-03-20 02:05:57'),
+(118, 110, 5, 'View', NULL, 0, NULL, 'expenses.view', 1, '2025-03-12 03:53:02', '2025-03-12 03:53:02'),
+(119, 85, 3, 'View Records', NULL, 0, NULL, 'bike-profits.share-records', 1, '2025-03-14 14:06:39', '2025-03-14 14:06:39'),
+(120, 119, 1, 'Edit', NULL, 0, NULL, 'bike-profits.share-records.edit', 1, '2025-03-14 14:08:04', '2025-03-14 14:08:04'),
+(121, 119, 2, 'Delete', NULL, 0, NULL, 'bike-profits.share-records.destroy', 1, '2025-03-14 14:08:50', '2025-03-14 14:10:43'),
+(122, 119, 3, 'Approve', NULL, 0, NULL, 'bike-profits.share-records.approve', 1, '2025-03-14 14:09:29', '2025-03-14 14:09:29'),
+(123, 119, 0, 'Create', NULL, 0, NULL, 'bike-profits.share-records.create', 1, '2025-03-14 14:11:31', '2025-03-14 14:11:50'),
+(124, 130, 1, 'Setup', '<i class=\"fa-solid fa-users-gear nav-icon\"></i>', 1, NULL, NULL, 1, '2025-03-14 22:25:16', '2025-03-16 21:32:06'),
+(125, 124, 1, 'Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'categories.create', 'categories.index', 1, '2025-03-14 22:26:40', '2025-03-14 22:37:43'),
+(126, 124, 2, 'Sub Category', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'sub-categories.create', 'sub-categories.index', 1, '2025-03-14 22:39:29', '2025-03-14 22:39:29'),
+(127, 0, 6, 'Service Items', '<i class=\"nav-icon fas fa-stethoscope\"></i>', 1, 'items.create', 'items.index', 1, '2025-03-14 22:58:29', '2025-04-28 02:59:51'),
+(128, 124, 4, 'Suppliers', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'suppliers.create', 'suppliers.index', 1, '2025-03-15 12:51:51', '2025-03-16 21:49:08'),
+(129, 130, 4, 'Supplier Payments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'payments.create', 'payments.index', 1, '2025-03-15 13:14:30', '2025-03-23 03:39:42'),
+(130, 0, 11, 'Inventory Manage', '<i class=\"nav-icon fas fa-warehouse\"></i>', 1, NULL, NULL, 0, '2025-03-15 13:22:44', '2025-04-28 02:44:48'),
+(131, 130, 2, 'Purchase', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'purchases.create', 'purchases.index', 1, '2025-03-16 03:00:54', '2025-03-23 03:38:41'),
+(132, 84, 5, 'View', '<i class=\"far fa-dot-circle nav-icon\"></i>', 0, NULL, 'bike-service-records.invoice', 1, '2025-03-20 02:04:27', '2025-03-20 02:04:27'),
+(133, 73, 6, 'Print', NULL, 0, NULL, 'bike-service-records.invoice.print', 1, '2025-03-20 02:05:40', '2025-03-20 02:06:27'),
+(134, 35, 5, 'View', NULL, 0, NULL, 'bike-purchases.invoice', 1, '2025-03-20 03:05:09', '2025-03-20 03:05:09'),
+(135, 35, 6, 'Print', NULL, 0, NULL, 'bike-purchases.invoice.print', 1, '2025-03-20 03:05:32', '2025-03-20 03:05:32'),
+(136, 0, 5, 'Agent', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, 'customers.create', 'customers.index', 1, '2025-03-22 13:17:08', '2025-04-29 22:56:08'),
+(137, 0, 6, 'Jobs', '<i class=\"fa fa-tasks nav-icon\"></i>', 1, 'sales.create', 'sales.index', 1, '2025-03-22 14:31:30', '2025-04-28 23:03:09'),
+(138, 0, 8, 'Agent Payments', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, 'customer-payments.create', 'customer-payments.index', 1, '2025-03-23 02:47:00', '2025-05-25 02:56:34'),
+(139, 0, 12, 'Loan Manage', '<i class=\"nav-icon fas fa-hand-holding-usd\"></i>', 1, NULL, NULL, 0, '2025-04-08 23:37:41', '2025-04-28 00:21:48'),
+(140, 139, 1, 'Party Manage', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'parties.create', 'parties.index', 1, '2025-04-08 23:39:23', '2025-04-08 23:39:23'),
+(141, 139, 2, 'Loans', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, 'loans.create', 'loans.index', 1, '2025-04-09 22:25:30', '2025-04-09 22:25:41'),
+(142, 139, 3, 'Party Payments', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'party-payments.index', 1, '2025-04-10 12:01:23', '2025-04-10 12:03:56'),
+(143, 141, 1, 'Add', NULL, 0, NULL, 'loans.create', 1, '2025-04-11 11:13:03', '2025-04-11 11:13:03'),
+(144, 141, 2, 'Edit', NULL, 0, NULL, 'loans.edit', 1, '2025-04-11 11:15:09', '2025-04-11 11:15:09'),
+(145, 141, 3, 'Delete', NULL, 0, NULL, 'loans.destroy', 1, '2025-04-11 11:15:28', '2025-04-11 11:15:28'),
+(146, 141, 4, 'Approve', NULL, 0, NULL, 'loans.approve', 1, '2025-04-11 11:16:04', '2025-04-11 11:16:04'),
+(147, 141, 5, 'View', NULL, 0, NULL, 'loans.invoice', 1, '2025-04-11 11:17:32', '2025-04-11 11:17:32'),
+(148, 141, 6, 'Print', NULL, 0, NULL, 'loans.invoice.print', 1, '2025-04-11 11:17:58', '2025-04-11 11:17:58'),
+(149, 131, 1, 'Add', NULL, 0, NULL, 'purchases.create', 1, '2025-04-13 01:08:40', '2025-04-13 01:08:40'),
+(150, 131, 2, 'Edit', NULL, 0, NULL, 'purchases.edit', 1, '2025-04-13 01:09:15', '2025-04-13 01:09:15'),
+(151, 131, 3, 'Delete', NULL, 0, NULL, 'purchases.destroy', 1, '2025-04-13 01:09:32', '2025-04-13 01:09:32'),
+(152, 131, 5, 'View', NULL, 0, NULL, 'purchases.vouchar', 1, '2025-04-13 01:11:25', '2025-04-13 01:11:25'),
+(153, 131, 6, 'Print', NULL, 0, NULL, 'purchases.vouchar.print', 1, '2025-04-13 01:11:48', '2025-04-13 01:11:48'),
+(154, 131, 4, 'Add Payment', NULL, 0, NULL, 'purchases.payment.store', 1, '2025-04-13 01:12:31', '2025-04-13 01:13:29'),
+(155, 137, 1, 'Add', NULL, 0, NULL, 'sales.create', 1, '2025-04-13 02:50:15', '2025-04-13 02:50:15'),
+(156, 137, 2, 'Edit', NULL, 0, NULL, 'sales.edit', 1, '2025-04-13 02:50:37', '2025-04-13 02:50:37'),
+(157, 137, 3, 'Delete', NULL, 0, NULL, 'sales.destroy', 1, '2025-04-13 02:50:52', '2025-04-13 02:50:52'),
+(158, 137, 4, 'Approve', NULL, 0, NULL, 'sales.approve', 1, '2025-04-13 02:51:25', '2025-04-13 02:51:25'),
+(159, 137, 5, 'View', NULL, 0, NULL, 'sales.invoice', 1, '2025-04-13 02:52:47', '2025-04-13 02:52:47'),
+(160, 137, 6, 'Print', NULL, 0, NULL, 'sales.invoice.print', 1, '2025-04-13 02:53:16', '2025-04-13 02:53:16'),
+(161, 137, 7, 'Payment', NULL, 0, NULL, 'sales.payment.store', 1, '2025-04-13 02:53:58', '2025-04-13 02:53:58'),
+(162, 35, 8, 'Repurchase', NULL, 0, NULL, 'bike-purchases.repurchase', 1, '2025-04-19 23:24:13', '2025-04-19 23:24:13'),
+(163, 71, 1, 'Add', NULL, 0, NULL, 'fundtransfers.create', 1, '2025-04-21 00:57:36', '2025-04-21 00:57:36'),
+(164, 71, 2, 'Edit', NULL, 0, NULL, 'fundtransfers.edit', 1, '2025-04-21 00:57:55', '2025-04-21 00:57:55'),
+(165, 71, 3, 'Delete', NULL, 0, NULL, 'fundtransfers.destroy', 1, '2025-04-21 00:58:14', '2025-04-21 00:58:14'),
+(166, 71, 4, 'Approve', NULL, 0, NULL, 'fundtransfers.approve', 1, '2025-04-21 00:58:30', '2025-04-21 00:58:30'),
+(167, 0, 5, 'Investor Manage', '<i class=\"nav-icon fas fa-user-tie\"></i>', 1, NULL, NULL, 0, '2025-04-21 01:05:14', '2025-04-28 00:38:05'),
+(168, 184, 6, 'Today\'s Sale', NULL, 0, NULL, NULL, 1, '2025-04-22 04:22:35', '2025-04-22 04:22:35'),
+(169, 182, 5, 'Total Cancelled Job', NULL, 0, NULL, NULL, 1, '2025-04-22 04:22:53', '2025-06-25 22:22:39'),
+(170, 182, 1, 'Total Pending Job', NULL, 0, NULL, NULL, 1, '2025-04-22 04:23:13', '2025-06-25 22:21:34'),
+(171, 182, 2, 'Total Procesing Job', NULL, 0, NULL, NULL, 1, '2025-04-22 04:23:49', '2025-06-25 22:21:53'),
+(172, 182, 3, 'Total Refunded Job', NULL, 0, NULL, NULL, 1, '2025-04-22 04:24:04', '2025-06-25 22:22:15'),
+(173, 183, 1, 'Requested For Settlement', NULL, 0, NULL, NULL, 1, '2025-04-22 04:24:26', '2025-06-25 22:25:51'),
+(174, 183, 2, 'Requested For Slip', NULL, 0, NULL, NULL, 1, '2025-04-22 04:24:47', '2025-06-25 22:26:11'),
+(175, 183, 3, 'Requested For MOFA', NULL, 0, NULL, NULL, 1, '2025-04-22 04:25:10', '2025-06-25 22:26:22'),
+(176, 52, 5, 'Accounts Reports', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'reports.accounts-reports', 1, '2025-04-22 21:17:35', '2025-04-22 21:17:35'),
+(178, 182, 4, 'Total Completed Job', NULL, 0, NULL, NULL, 1, '2025-04-23 04:50:23', '2025-06-25 22:22:28'),
+(180, 183, 4, 'Requested For Fit Card', NULL, 0, NULL, NULL, 1, '2025-04-23 04:56:04', '2025-06-25 22:26:35'),
+(182, 1, 1, 'Job Status', NULL, 0, NULL, NULL, 1, '2025-04-23 04:58:23', '2025-06-25 22:20:49'),
+(183, 1, 2, 'All Request', NULL, 0, NULL, NULL, 1, '2025-04-23 05:00:28', '2025-06-25 22:25:11'),
+(184, 1, 3, 'Bike Info', NULL, 0, NULL, NULL, 0, '2025-04-23 05:01:24', '2025-04-28 00:32:58'),
+(185, 137, 8, 'Add New Item', NULL, 0, NULL, 'sales.add-new-item', 1, '2025-05-24 11:19:20', '2025-05-24 11:19:20'),
+(186, 137, 9, 'Service Status Update', NULL, 0, NULL, 'sales.service-edit', 1, '2025-05-24 11:22:40', '2025-05-24 11:22:40'),
+(188, 137, 10, 'Pre-Medical Token', NULL, 0, NULL, 'sales.token.print', 1, '2025-06-19 05:22:25', '2025-06-19 05:22:25'),
+(189, 52, 7, 'Settlement Report', '<i class=\"far fa-dot-circle nav-icon\"></i>', 1, NULL, 'reports.settlement', 1, '2025-07-14 10:35:01', '2025-07-14 10:39:08');
 
 -- --------------------------------------------------------
 
@@ -1990,7 +2059,7 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `payment_methods` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_virtual` int NOT NULL DEFAULT '0' COMMENT '0=not virtual, 1=virtual',
   `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 0=inactive',
@@ -2004,7 +2073,10 @@ CREATE TABLE `payment_methods` (
 
 INSERT INTO `payment_methods` (`id`, `name`, `is_virtual`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Cash', 0, 1, NULL, NULL),
-(2, 'Investment Capital', 1, 1, NULL, NULL);
+(2, 'Investment Capital', 1, 1, NULL, NULL),
+(3, 'Bkash', 0, 1, '2025-06-30 06:37:37', '2025-06-30 06:37:37'),
+(4, 'Nagad', 0, 1, '2025-06-30 06:38:59', '2025-06-30 06:38:59'),
+(5, 'Bank', 0, 1, '2025-06-30 06:40:17', '2025-06-30 06:40:17');
 
 -- --------------------------------------------------------
 
@@ -2065,14 +2137,25 @@ INSERT INTO `privileges` (`id`, `role_id`, `menu_id`, `created_at`, `updated_at`
 (118, 3, 160, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
 (119, 3, 161, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
 (120, 3, 186, '2025-06-01 09:22:35', '2025-06-01 09:22:35'),
-(128, 2, 1, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(129, 2, 137, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(130, 2, 155, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(131, 2, 156, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(132, 2, 159, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(133, 2, 160, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(134, 2, 186, '2025-06-19 11:23:01', '2025-06-19 11:23:01'),
-(135, 2, 188, '2025-06-19 11:23:01', '2025-06-19 11:23:01');
+(136, 2, 1, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(137, 2, 182, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(138, 2, 170, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(139, 2, 171, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(140, 2, 172, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(141, 2, 178, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(142, 2, 169, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(143, 2, 183, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(144, 2, 173, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(145, 2, 174, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(146, 2, 175, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(147, 2, 180, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(148, 2, 137, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(149, 2, 155, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(150, 2, 156, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(151, 2, 159, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(152, 2, 160, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(153, 2, 186, '2025-06-26 04:36:59', '2025-06-26 04:36:59'),
+(154, 2, 188, '2025-06-26 04:36:59', '2025-06-26 04:36:59');
 
 -- --------------------------------------------------------
 
@@ -2215,7 +2298,7 @@ INSERT INTO `sales` (`id`, `customer_id`, `medical_id`, `country_id`, `account_i
 (29, 2, NULL, NULL, 1, 'Md Rayhan Sarkar', 'A16670279', NULL, 'SRD05985123', '0000029', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:18:39', '2025-06-15 07:53:53'),
 (30, 2, NULL, NULL, 1, 'Md. Milon Babu', 'A08911843', NULL, 'SRD05812912', '0000030', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:19:40', '2025-06-15 07:53:43'),
 (31, 2, NULL, NULL, 1, 'Md Razwanul Kobir', 'A05896961', NULL, 'SRD05411412', '0000031', '2025-05-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:21:15', '2025-06-15 07:53:31'),
-(32, 2, NULL, NULL, 1, 'Rukhan Mia', 'EK0503169', NULL, 'SRD05824278', '0000032', '2025-05-19', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:22:46', '2025-06-15 07:53:24'),
+(32, 2, NULL, NULL, 1, 'Rukhan Mia', 'EK0503169', NULL, 'SRD05824278', '0000032', '2025-05-19', 6500.00, 0.00, 0, 0.00, 0.00, 6500.00, 6500.00, NULL, NULL, 1, 1, 6, 1, '2025-06-15 05:22:46', '2025-07-15 07:33:50'),
 (33, 2, NULL, NULL, 1, 'Md Mosthofa', 'A18019062', NULL, 'SRD05935577', '0000033', '2025-05-27', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:24:29', '2025-06-15 07:53:15'),
 (34, 2, NULL, NULL, 1, 'Md Sadek Mia', 'A11640654', NULL, 'SRD05194466', '0000034', '2025-05-28', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:25:32', '2025-06-15 07:53:04'),
 (35, 2, NULL, NULL, 1, 'Md Razu', 'A17124153', NULL, 'SRD05360807', '0000035', '2025-05-31', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-15 05:26:56', '2025-06-15 07:52:34'),
@@ -2279,14 +2362,18 @@ INSERT INTO `sales` (`id`, `customer_id`, `medical_id`, `country_id`, `account_i
 (93, 5, NULL, NULL, 1, 'Atikur Rahman Sourav', 'A04478402', NULL, 'SRD06194450', '0000093', '2025-06-16', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 6, NULL, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
 (95, 6, NULL, NULL, NULL, '3456789', '8765432456789', NULL, NULL, '0000095', '2025-06-17', 9000.00, 0.00, 0, 0.00, 0.00, 9000.00, 9000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:07:34', '2025-06-18 08:50:37'),
 (96, 6, NULL, NULL, 1, '9876542345678', '65098765443567', NULL, '456789', '0000096', '2025-06-17', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-17 06:27:39', '2025-06-17 06:29:29'),
-(97, 6, NULL, NULL, NULL, 'Shoriful Alom', '34567890', NULL, NULL, '0000097', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 8, NULL, '2025-06-17 06:52:13', '2025-06-17 06:52:13'),
-(98, 2, NULL, NULL, 1, '9876542345678', '65098765443567', 'doc-07f66962-595d-424f-97dc-285df7370b06.png', '456789', '0000098', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, 1, '2025-06-17 10:57:53', '2025-06-17 11:32:52'),
-(99, 3, NULL, 191, NULL, '9876542345678', '65098765443567', 'doc-cdd9cf3c-060f-40b3-8145-e33757e3091d.png', '456789', '0000099', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, NULL, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(97, 6, NULL, NULL, NULL, 'Shoriful Alom', '34567890', NULL, NULL, '0000097', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 8, NULL, '2025-06-17 06:52:13', '2025-07-14 10:10:08'),
+(99, 3, NULL, 191, NULL, '9876542345678', '65098765443567', 'doc-cdd9cf3c-060f-40b3-8145-e33757e3091d.png', '456789', '0000099', '2025-06-17', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-17 12:00:26', '2025-07-15 03:50:44'),
 (100, 2, NULL, 18, 1, 'Nowab Shorif', '5678934', 'doc-2599bbfb-5d51-48a0-b840-c5b84a95a022.jpg', '7923434567', '0000100', '2025-06-18', 6500.00, 0.00, 0, 0.00, 0.00, 6500.00, 6500.00, NULL, NULL, 1, 1, 1, 1, '2025-06-18 09:20:57', '2025-06-18 12:25:18'),
-(101, 6, NULL, 191, NULL, 'Kawa Kader', '123456789', 'doc-8edaee34-d8d6-4723-8664-dd4a704c3a9e.png', NULL, '0000101', '2025-06-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 8, NULL, '2025-06-18 10:23:31', '2025-06-18 10:25:34'),
-(102, 2, NULL, 191, 1, 'Malek Azad', '36456dfgdfg', 'doc-d5b38a8f-daa3-4cfe-a91b-e9086f014a6d.png', '7923434567', '0000102', '2025-06-18', 7000.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, NULL, 1, 1, 1, NULL, '2025-06-18 11:06:10', '2025-06-18 11:08:46'),
-(103, 2, NULL, 1, NULL, 'Malek Azad', '36456dfgdfg', NULL, '7923434567', '0000103', '2025-06-18', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 0, 1, 1, '2025-06-18 11:26:46', '2025-06-18 11:28:49'),
-(104, 6, 11, 191, NULL, 'Malek Azad', '6789075475', NULL, '34567890', '0000104', '2025-06-19', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, 1, '2025-06-19 07:25:23', '2025-06-19 07:50:32');
+(101, 6, 11, 191, NULL, 'Kawa Kader', '123456789', 'doc-8edaee34-d8d6-4723-8664-dd4a704c3a9e.png', '34534dfg344', '0000101', '2025-06-18', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 8, 1, '2025-06-18 10:23:31', '2025-07-15 07:34:40'),
+(102, 2, NULL, 191, 1, 'Malek Azad', '36456dfgdfg', 'doc-d5b38a8f-daa3-4cfe-a91b-e9086f014a6d.png', '7923434567', '0000102', '2025-06-18', 11000.00, 0.00, 0, 0.00, 0.00, 11000.00, 11000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-18 11:06:10', '2025-07-15 07:33:05'),
+(103, 2, NULL, 1, NULL, 'Malek Azad', '36456dfgdfg', NULL, '7923434567', '0000103', '2025-06-18', 4000.00, 0.00, 0, 0.00, 0.00, 4000.00, 4000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-18 11:26:46', '2025-07-14 12:47:57'),
+(104, 6, 11, 191, NULL, 'Malek Azad', '6789075475', NULL, '34567890', '0000104', '2025-06-19', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 1, 1, 1, '2025-06-19 07:25:23', '2025-06-26 05:58:15'),
+(105, 8, 11, 191, 1, 'Kamal Hossain', 'a45b789c78d', 'doc-6a333402-e680-45f8-8116-19b6ab894b87.jpg', '34kjs4567sad', '0000105', '2025-07-14', 0.00, 0.00, 0, 0.00, 0.00, 0.00, 0.00, NULL, NULL, 1, 1, 1, NULL, '2025-07-14 10:16:30', '2025-07-14 12:48:35'),
+(107, 2, 11, NULL, 1, 'Malek Azad', '123456789', NULL, '123456789', '0000107', '2025-07-15', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 0, 1, NULL, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(109, 1, 11, 119, 1, 'Jorina Khatun', '123456789', NULL, '23456789', '0000109', '2025-07-15', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 0, 1, NULL, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(110, 2, 11, 119, 1, 'Malek Azad', '888888888', NULL, '88888888', '0000110', '2025-07-15', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 0, 1, NULL, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(111, 2, 11, 119, 1, 'Malek Azad', '6789075475', NULL, '56789345', '0000111', '2025-07-15', 2000.00, 0.00, 0, 0.00, 0.00, 2000.00, 2000.00, NULL, NULL, 1, 0, 1, NULL, '2025-07-15 07:28:37', '2025-07-15 07:28:37');
 
 -- --------------------------------------------------------
 
@@ -2428,16 +2515,27 @@ INSERT INTO `sale_details` (`id`, `sale_id`, `item_id`, `date`, `unit_price`, `p
 (112, 93, 1, '2025-06-16', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-17 04:24:12', '2025-06-17 06:49:21'),
 (113, 95, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:14:56', '2025-06-17 06:14:56'),
 (114, 96, 1, '2025-06-17', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-17 06:29:12', '2025-06-17 06:29:29'),
-(118, 98, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 11:32:52', '2025-06-17 11:32:52'),
-(119, 99, 1, '2025-06-17', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-17 12:00:26', '2025-06-17 12:00:26'),
+(119, 99, 1, '2025-06-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-17 12:00:26', '2025-07-15 03:50:44'),
 (120, 95, 13, '2025-06-17', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-18 08:50:37', '2025-06-18 08:50:37'),
 (121, 95, 6, '2025-06-17', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-18 08:51:59', '2025-06-18 08:52:00'),
 (122, 100, 3, '2025-06-18', 2500.00, 2000.00, 500.00, 2500.00, 500.00, 0, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
 (123, 100, 1, '2025-06-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-18 09:20:57', '2025-06-18 09:23:59'),
 (124, 102, 1, '2025-06-18', 7000.00, 0.00, 7000.00, 7000.00, 7000.00, 0, '2025-06-18 11:06:10', '2025-06-18 11:08:45'),
-(126, 103, 1, '2025-06-18', 0.00, NULL, NULL, NULL, NULL, 0, '2025-06-18 11:28:49', '2025-06-18 11:28:49'),
+(126, 103, 1, '2025-06-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-18 11:28:49', '2025-07-14 10:09:54'),
 (127, 100, 26, '2025-06-18', 4000.00, 3500.00, 500.00, 4000.00, 500.00, 0, '2025-06-18 12:25:18', '2025-06-18 12:25:18'),
-(131, 104, 1, '2025-06-19', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-19 07:36:58', '2025-06-19 07:50:32');
+(131, 104, 1, '2025-06-19', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-19 07:36:58', '2025-06-19 07:50:32'),
+(132, 104, 13, '2025-06-19', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-26 05:58:15', '2025-06-26 05:58:15'),
+(133, 104, 6, '2025-06-19', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-06-26 05:58:57', '2025-06-26 05:58:57'),
+(134, 101, 13, '2025-06-18', 2000.00, 1500.00, 500.00, 2000.00, 500.00, 0, '2025-06-26 10:52:01', '2025-06-26 10:52:01'),
+(135, 102, 26, '2025-06-18', 4000.00, 3500.00, 500.00, 4000.00, 500.00, 0, '2025-06-26 10:53:32', '2025-06-26 10:53:32'),
+(136, 105, 1, '2025-07-14', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-07-14 10:16:30', '2025-07-14 12:48:35'),
+(137, 103, 26, '2025-06-18', 4000.00, 3500.00, 500.00, 4000.00, 500.00, 0, '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(138, 103, 6, '2025-06-18', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2025-07-14 12:47:57', '2025-07-14 12:47:57'),
+(140, 107, 13, '2025-07-15', 2000.00, NULL, NULL, NULL, NULL, 0, '2025-07-15 06:13:34', '2025-07-15 06:13:34'),
+(142, 109, 13, '2025-07-15', 2000.00, NULL, NULL, NULL, NULL, 0, '2025-07-15 06:20:40', '2025-07-15 06:20:40'),
+(143, 110, 13, '2025-07-15', 2000.00, NULL, NULL, NULL, NULL, 0, '2025-07-15 07:27:57', '2025-07-15 07:27:57'),
+(144, 111, 13, '2025-07-15', 2000.00, NULL, NULL, NULL, NULL, 0, '2025-07-15 07:28:37', '2025-07-15 07:28:37'),
+(145, 32, 31, '2025-05-19', 6500.00, 6000.00, 500.00, 6500.00, 500.00, 0, '2025-07-15 07:33:50', '2025-07-15 07:33:50');
 
 -- --------------------------------------------------------
 
@@ -2749,6 +2847,12 @@ ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -2831,13 +2935,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `account_ledgers`
 --
 ALTER TABLE `account_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `basic_infos`
@@ -2861,19 +2965,19 @@ ALTER TABLE `category_types`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `customer_payments`
 --
 ALTER TABLE `customer_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `expenses`
@@ -2933,7 +3037,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `job_service_records`
 --
 ALTER TABLE `job_service_records`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=521;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556;
 
 --
 -- AUTO_INCREMENT for table `medical_centers`
@@ -2945,7 +3049,7 @@ ALTER TABLE `medical_centers`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -2978,6 +3082,12 @@ ALTER TABLE `party_payments`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `payment_methods`
+--
+ALTER TABLE `payment_methods`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -2987,7 +3097,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -3011,13 +3121,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `sale_details`
 --
 ALTER TABLE `sale_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `status_lists`
