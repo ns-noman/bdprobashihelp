@@ -30,8 +30,8 @@
                                             <input value="{{ isset($data['item']) ? $data['item']->phone : null }}" type="number" class="form-control" name="phone" placeholder="+8801XXXXXXXXX" required>
                                         </div>
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                            <label>Email</label>
-                                            <input value="{{ isset($data['item']) ? $data['item']->email : null }}" type="email" class="form-control" name="email" placeholder="example@gmail.com">
+                                            <label>Email *</label>
+                                            <input value="{{ isset($data['item']) ? $data['item']->email : null }}" type="email" class="form-control" name="email" placeholder="example@gmail.com" required>
                                         </div>
                                         <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                             <label>Address</label>
