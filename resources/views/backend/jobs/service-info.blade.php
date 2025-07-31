@@ -1,24 +1,24 @@
 @extends('layouts.admin.master')
 @section('content')
-<style>
-    table td, table th{
-        padding: 3px!important;
-        text-align: center;
-    }
-    input[type="number"]{
-        text-align: right;
-    }
-    .item{
-        text-align: left;
-    }
-    .form-group{
-        padding: 2px;
-        margin: 0px;
-    }
-    label{
-        margin-bottom: 0px;
-    }
-</style>
+    <style>
+        table td, table th{
+            padding: 3px!important;
+            text-align: center;
+        }
+        input[type="number"]{
+            text-align: right;
+        }
+        .item{
+            text-align: left;
+        }
+        .form-group{
+            padding: 2px;
+            margin: 0px;
+        }
+        label{
+            margin-bottom: 0px;
+        }
+    </style>
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
         <section class="content">

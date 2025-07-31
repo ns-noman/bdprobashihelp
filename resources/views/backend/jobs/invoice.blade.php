@@ -31,7 +31,7 @@
                                    
                                     To
                                     <address>
-                                        <strong>{{ $data['master']['customer_name'] }}(PN:{{ $data['master']['passenger_name'] }}#{{ $data['master']['passenger_passport_no'] }})</strong><br>
+                                        <strong>{{ $data['master']['customer_code'] }}/PN:{{ $data['master']['passenger_name'] }}#{{ $data['master']['passenger_passport_no'] }}</strong><br>
                                         {{ $data['master']['customer_address'] }}<br>
                                         Phone: {{ $data['master']['customer_contact'] }}<br>
                                         Email: {{ $data['master']['customer_email'] }}<br>

@@ -9,22 +9,11 @@
                     <div class="invoice p-3 mb-3" id="my-invoice">
                         <div class="row mt-3">
                             <div class="col-4">
-                                <!-- <h4>
-                                    <img style="height: 150px;"
-                                        src="{{ asset('public/uploads/basic-info/' . $data['basicInfo']['logo']) }}"
-                                        alt="Logo" />
-                                </h4> -->
                             </div>
                             <div class="col-4 text-center">
                                 <h1>Pre-Medical Token</h1>
                             </div>
                             <div class="col-4 text-right">
-
-                                <!-- <address>
-                                    {{ $data['basicInfo']['address'] }}<br>
-                                    মোবাইল: {{ $data['basicInfo']['phone'] }}<br>
-                                    ই-মেইল: {{ $data['basicInfo']['email'] }}
-                                </address> -->
                             </div>
                         </div>
                         <div class="row" style="margin-top: 50px!important;">

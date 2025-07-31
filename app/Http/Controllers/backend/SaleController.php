@@ -240,6 +240,7 @@ class SaleController extends Controller
             'sales.created_by_id',
             'sales.updated_by_id',
             'customers.name as customer_name',
+            'customers.code as customer_code',
             'customers.phone as customer_contact',
             'customers.email as customer_email',
             'customers.address as customer_address',

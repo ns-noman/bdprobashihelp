@@ -388,7 +388,7 @@
                                                 <thead>
                                                     <tr class="bg-info">
                                                         <th class="text-center" colspan="2"><span style="color: black;">Job No: </span><br><a href="${`{{ route('sales.invoice', ':id') }}`.replace(':id', row.id)}" style="text-decoration: none; color: inherit;"><b>#${row.invoice_no}</b></a></th>
-                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Name: </span><br>${row.customer_name.toUpperCase()}(${row.customer_code.toUpperCase()})</th>
+                                                        <th class="text-center" colspan="2"><span style="color: black;">Agent Code: </span><br>${row.customer_code.toUpperCase()}</th>
                                                         <th class="text-center" colspan="2">
                                                             <span style="color: black;">Passenger Name: </span><br>
                                                             <div class="copy-cell">
