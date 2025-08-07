@@ -53,8 +53,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(170) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 0]) }}">
-                                        <span class="info-box-icon bg-success elevation-1">
-                                            <i class="fa fa-shopping-cart"></i>
+                                        <span class="info-box-icon bg-warning elevation-1">
+                                            <i class="fas fa-tasks"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total Pending Job</span>
@@ -68,10 +68,10 @@
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 1]) }}">
                                         <span class="info-box-icon bg-primary elevation-1">
-                                            <i class="fa fa-tools"></i>
+                                            <i class="fas fa-tasks"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Total Procesing Job</span>
+                                            <span class="info-box-text">Total Processing Job</span>
                                             <span class="info-box-number">
                                                 {{ $data['total_processing_job'] }}
                                             </span>
@@ -81,8 +81,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(172) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 3]) }}">
-                                        <span class="info-box-icon bg-warning elevation-1">
-                                            <i class="fa fa-cogs"></i>
+                                        <span class="info-box-icon bg-dark elevation-1">
+                                            <i class="fas fa-tasks"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total Refunded Job</span>
@@ -95,8 +95,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(178) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 2]) }}">
-                                        <span class="info-box-icon bg-warning elevation-1">
-                                            <i class="fa fa-cogs"></i>
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fas fa-tasks"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total Completed Job</span>
@@ -109,8 +109,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(169) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'job_status', 'status_filter_value' => 4]) }}">
-                                        <span class="info-box-icon bg-warning elevation-1">
-                                            <i class="fa fa-cogs"></i>
+                                        <span class="info-box-icon bg-danger elevation-1">
+                                            <i class="fas fa-tasks"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total Cancelled Job</span>
@@ -130,8 +130,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(173) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 8]) }}">
-                                        <span class="info-box-icon bg-success elevation-1">
-                                            <i class="fa fa-shopping-cart"></i>
+                                        <span class="info-box-icon bg-warning elevation-1">
+                                            <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Requested For Settlement</span>
@@ -144,8 +144,8 @@
                                 <div class="col" {{ !$authorization->hasMenuAccess(174) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 12]) }}">
-                                        <span class="info-box-icon bg-primary elevation-1">
-                                            <i class="fa fa-tools"></i>
+                                        <span class="info-box-icon bg-warning elevation-1">
+                                            <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Requested For Slip</span>
@@ -159,7 +159,7 @@
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 18]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
-                                            <i class="fa fa-cogs"></i>
+                                            <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Requested For MOFA</span>
@@ -173,7 +173,7 @@
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
                                         href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 23]) }}">
                                         <span class="info-box-icon bg-warning elevation-1">
-                                            <i class="fa fa-cogs"></i>
+                                            <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Requested For Fit Card</span>
@@ -186,109 +186,97 @@
                             </div>
                         </div>
                     @endif
+                    @if($authorization->hasMenuAccess(184))
+                        <div class="col-lg-12">
+                            <h5 class="mb-2">Others Service Status</h5>
+                            <div class="row">
+                                <div class="col" {{ !$authorization->hasMenuAccess(47) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron="" href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 2]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Today Medical Completed</span>
+                                            <span class="info-box-number">
+                                                {{ $data['today_medical_completed'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(48) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 3]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Waiting For Medical Result</span>
+                                            <span class="info-box-number">
+                                                {{ $data['waiting_for_medical_result'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(49) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 7]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Settlement Pending</span>
+                                            <span class="info-box-number">
+                                                {{ $data['pending_settlement'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(50) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 16]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Online On Wafid</span>
+                                            <span class="info-box-number">
+                                                {{ $data['online_on_wafid'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(168) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 25]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">FIT Card Ready</span>
+                                            <span class="info-box-number">
+                                                {{ $data['fit_card_ready'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(46) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron=""
+                                        href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 26]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">FIT Card Delivery Done</span>
+                                            <span class="info-box-number">
+                                                {{ $data['fit_card_delivery_done'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
             </div>
         </section>
     </div>
-@endsection
-@section('script')
-    <script>
-        let isAssetTableInitialized = false;
-        $(document).ready(function() {
-            loadBikeTableData();
-        });
-
-        function loadBikeTableData() {
-            loadBikeTable();
-            var table = $('#dataTable').DataTable({
-                processing: false,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('dashboard.bike-list') }}',
-                    type: 'GET',
-                    data: function(d) {
-                        let activeElement = $('.bikefilter.active-cust');
-                        let filteron = 'mybikes';
-                        if (activeElement.length > 0) filteron = activeElement.data('filteron');
-                        d.filteron = filteron;
-                    },
-                },
-                columns: [{
-                        data: null,
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: null,
-                        name: 'bike_models.name',
-                        orderable: true,
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return `${row.model_name} <span class="badge" style="background-color: ${row.hex_code};color: black; text-shadow: 2px 0px 8px white;">${row.color_name}</span><br>Ch#${row.chassis_no}<br>Reg#${row.registration_no}`;
-                        }
-                    },
-                    {
-                        data: 'purchase_date',
-                        name: 'bike_purchases.purchase_date'
-                    },
-                    {
-                        data: 'seller_name',
-                        name: 'sellers.name'
-                    },
-                    {
-                        data: 'purchase_price',
-                        name: 'bike_purchases.purchase_price'
-                    },
-                    {
-                        data: 'servicing_cost',
-                        name: 'bike_purchases.servicing_cost'
-                    },
-                    {
-                        data: 'total_cost',
-                        name: 'bike_purchases.total_cost'
-                    },
-                ],
-                rowCallback: function(row, data, index) {
-                    var pageInfo = table.page.info();
-                    var serialNumber = pageInfo.start + index + 1;
-                    $('td:eq(0)', row).html(serialNumber);
-                },
-                order: [],
-                search: {
-                    return: false
-                }
-            });
-            $(document).on('click', '.bikefilter', function() {
-                table.draw();
-            });
-            // $('.bikefilter.drawable').on('click', function () {
-            //     table.draw();
-            //     al
-            // });
-        }
-
-        function loadBikeTable() {
-            const table = (`
-            <table id="dataTable" class="table table-sm table-striped table-bordered table-centre text-center">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Bike Info</th>
-                        <th>Purchase Date</th>
-                        <th>Seller</th>
-                        <th>Purchase Price</th>
-                        <th>Service Cost</th>
-                        <th>Net Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        `);
-            $('#table-holder').html(table);
-        }
-        $('.activeable').on('click', function() {
-            $('.activeable').removeClass('active-cust');
-            $(this).toggleClass('active-cust');
-        });
-    </script>
 @endsection

@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 use Auth;
 
@@ -501,7 +502,7 @@ class SaleController extends Controller
                         unset($data['expire_date']);
                 }
 
-                $this->btnControl($id, $data['status_id']);
+                $this->flugControl($id, $data['status_id']);
                 
                 if(isset($data['medical_center_ids']) && count($data['medical_center_ids'])){
                     $medicalCenterTxt = '';
@@ -527,18 +528,21 @@ class SaleController extends Controller
         }
     }
 
-    public function btnControl($job_service_record_id, $status)
+
+    public function flugControl($job_service_record_id, $status)
     {
         $current_job_item = JobServiceRecords::find($job_service_record_id);
         if(in_array($status, [5,6,10,16,21,26])){
             $current_job_item->is_enabled = 1;
             $current_job_item->is_complete = 1;
+            JobServiceRecords::where(['job_id'=> $current_job_item->job_id])->update(['is_active'=> 0]);
             $current_job_item->save();
             if($status != 5) {
                 $next_item_id = Item::find($current_job_item->item_id)->next_item_id;
                 if ($next_item_id != 0) {
                     $nextServiceItem = JobServiceRecords::where(['job_id'=> $current_job_item->job_id, 'item_id'=> $next_item_id])->first();
                     $nextServiceItem->is_enabled = 1;
+                    $nextServiceItem->is_active = 1;
                     $nextServiceItem->save();
                 }else{
                     Sale::find($current_job_item->job_id)->update(['status'=> 2]);
@@ -556,19 +560,12 @@ class SaleController extends Controller
 
             $customer_id = $sale->customer_id;
             $account_id = $sale->account_id;
-            $invoice_no = $sale->invoice_no;
             $date = $sale->date;
-            $total_price = $sale->total_price;
-            $discount = $sale->discount;
-            $vat_tax = $sale->vat_tax;
             $total_payable = $sale->total_payable;
             $paid_amount = $sale->paid_amount;
             $reference_number = $sale->reference_number;
             $note = $sale->note;
-            $payment_status = $sale->payment_status;
-            $status = $sale->status;
             $created_by_id = $sale->created_by_id;
-            $updated_by_id = $sale->updated_by_id;
 
             $this->generateProfit($id);
 
@@ -621,7 +618,7 @@ class SaleController extends Controller
             
             // Update sale status
             $sale->update(['status' => 1]);
-            JobServiceRecords::where(['job_id'=>$sale->id,'item_id'=>1])->update(['is_enabled'=> 1]);
+            JobServiceRecords::where(['job_id'=>$sale->id,'item_id'=>1])->update(['is_enabled'=> 1, 'is_active'=> 1]);
             $this->updateServiceItemPurchaseFlug($sale->id);
             DB::commit();
 
@@ -768,8 +765,9 @@ class SaleController extends Controller
         if ($request->remaining_days !== null || $status_filter_type == 'service_status') {
             $days = (int) $request->remaining_days;
             $query = $query->whereHas('serviceshorts', function ($sq) use ($days, $status_filter_type, $status_filter_value, $request) {
-                $sq->where('is_complete', 0);
+                
                 if ($request->remaining_days !== null) {
+                    $sq->where('is_complete', 0);
                     $sq->whereNotNull('expire_date');
                     if ($days >= 0) {
                         $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) BETWEEN 0 AND ?', [$days]);
@@ -777,13 +775,22 @@ class SaleController extends Controller
                         $sq->whereRaw('DATEDIFF(expire_date, CURDATE()) < 0');
                     }
                 }
-
                 if ($status_filter_type == 'service_status') {
-                    $sq->where('status_id', $status_filter_value);
+                    if($status_filter_value == 2){
+                        $sq->whereDate('entry_date', Carbon::today());
+                    }else{
+                        
+                        if($status_filter_value == 7){
+                            $sq->where('is_enabled', 1);
+                        }
+                        if($status_filter_value == 16){
+                            $sq->where('is_enabled', 1);
+                        }
+                        $sq->where('status_id', $status_filter_value);
+                    }
                 }
             });
         }
-
 
         if(!$request->has('order') && $request->remaining_days==null) $query = $query->orderBy('sales.updated_at','desc')->orderBy('sales.status','asc');
         

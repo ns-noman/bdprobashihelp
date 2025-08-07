@@ -34,11 +34,6 @@
         .copy-cell:hover .copy-icon {
             display: inline;
         }
-        td:nth-child(1){
-            display: flex!important;
-            justify-content: center!important;
-            align-items: center!important;
-        }
     </style>
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
@@ -60,7 +55,7 @@
                                 <div class="row">
                                     <div class="form-group col-sm-12 col-md-{{ $colSize }} col-lg-{{ $colSize }}" {{ $roleType == 2 ? 'hidden' : null }}>
                                         <label>Agents *</label>
-                                        <select class="form-control form-control-sm filter select2" id="customer_id" name="customer_id">
+                                        <select class="form-control filter select2" id="customer_id" name="customer_id">
                                             <option value="0">All Agents</option>
                                             @foreach ($data['customers'] as $customers)
                                                 <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">
@@ -70,23 +65,32 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-md-{{ $colSize }} col-lg-{{ $colSize }}">
                                         <label>Status Filter *</label>
-                                        <select class="form-control form-control-sm filter select2" id="status_filter"
-                                            name="status_filter">
-                                            <option value="">Any</option>
-                                            <option value="job_status.0">Pending Job</option>
+                                        <select class="form-control filter select2" id="status_filter" name="status_filter">
+                                        <option value="">Any</option>
+                                        <optgroup label="Job Status">
+                                            <option class="text-danger" value="job_status.0">Pending Job</option>
                                             <option value="job_status.1">Procesing Job</option>
                                             <option value="job_status.2">Completed Job</option>
                                             <option value="job_status.3">Refunded Job</option>
                                             <option value="job_status.4">Cancelled Job</option>
+                                        </optgroup>
+                                        <optgroup label="Service Status">
+                                            <option value="service_status.2">Today Medical Completed</option>
+                                            <option value="service_status.3">Waiting For Medical Result</option>
+                                            <option value="service_status.7">Settlement Pending</option>
                                             <option value="service_status.8">Settlement Requests</option>
                                             <option value="service_status.12">Slip Request</option>
+                                            <option value="service_status.16">Online On Wafid</option>
                                             <option value="service_status.18">MOFA Request</option>
-                                            <option value="service_status.23">Fit Card Request</option>
-                                        </select>
+                                            <option value="service_status.23">FIT Card Request</option>
+                                            <option value="service_status.25">FIT Card Ready</option>
+                                            <option value="service_status.26">FIT Card Delivery Done</option>
+                                        </optgroup>
+                                    </select>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-{{ $colSize }} col-lg-{{ $colSize }}">
                                         <label>Remaining Days *</label>
-                                        <select class="form-control form-control-sm filter select2" id="remaining_days"
+                                        <select class="form-control filter select2" id="remaining_days"
                                             name="remaining_days">
                                             <option value="">Any</option>
                                             <option value="0">Today Expiring</option>
@@ -229,6 +233,7 @@
 
 
             var table = $('#dataTable').DataTable({
+                pageLength: 100,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -267,7 +272,8 @@
                         d._token = $('meta[name="csrf-token"]').attr('content');
                     }
                 },
-                columns: [{
+                columns: [
+                    {
                         data: null,
                         orderable: false,
                         searchable: false,
