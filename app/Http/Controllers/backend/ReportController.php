@@ -220,6 +220,7 @@ class ReportController extends Controller
         [
             'sales.id',
             'customers.name as agent_name',
+            'customers.code as agent_code',
             'sales.passenger_passport_no',
             'sales.localhost_no',
         ];

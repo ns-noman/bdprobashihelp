@@ -238,7 +238,7 @@
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Online On Wafid</span>
+                                            <span class="info-box-text">Online Fit On Wafid</span>
                                             <span class="info-box-number">
                                                 {{ $data['online_on_wafid'] }}
                                             </span>

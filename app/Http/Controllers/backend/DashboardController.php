@@ -6,9 +6,6 @@ use App\Models\BasicInfo;
 use App\Models\Sale;
 use App\Models\JobServiceRecords;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Auth;
 

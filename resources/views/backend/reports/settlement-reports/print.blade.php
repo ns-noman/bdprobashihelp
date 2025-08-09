@@ -10,8 +10,6 @@
                           <div class="row">
                               <div class="col-12">
                                   <h4>
-                                    {{-- <img style="height: 50px;width: px;" src="{{ asset('public/uploads/basic-info/' . $data['basicInfo']['logo']) }}" alt="Logo" />
-                                      {{ $data['basicInfo']['title'] }} --}}
                                       <small class="float-right">Print Date: {{ date('dS M Y', strtotime(Date('Y-m-d'))) }}</small>
                                   </h4>
                               </div>
@@ -35,10 +33,11 @@
                                       <thead>
                                             <tr>
                                                 <th>SN</th>
-                                                <th>Agent Name</th>
+                                                {{-- <th>Agent Name</th> --}}
+                                                <th>Agent Code</th>
                                                 <th>Passport No</th>
                                                 <th>Local Host</th>
-                                                <th>Local Host Bar</th>
+                                                {{-- <th>Local Host Bar</th> --}}
                                                 <th>Amount</th>
                                             </tr>  
                                         </thead>
@@ -46,9 +45,10 @@
                                             @foreach ($data['lists'] as $list)
                                                 <tr style="text-align: center">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $list['agent_name'] }}</td>
+                                                    <td>{{ $list['agent_code'] }}</td>
+                                                    {{-- <td>{{ $list['agent_name'] }}</td> --}}
                                                     <td>{{ $list['passenger_passport_no'] }}</td>
-                                                    <td>{{ $list['localhost_no'] }}</td>
+                                                    {{-- <td>{{ $list['localhost_no'] }}</td> --}}
                                                     <td><svg class="barcode" data-barcode="{{ $list['localhost_no'] ?? 'N/A' }}"></svg></td>
                                                     <td></td>
                                                 </tr>
@@ -85,10 +85,13 @@
                 $('.barcode').each(function () {
                     const value = $(this).data('barcode') || 'N/A';
                     JsBarcode(this, value, {
-                        format: "CODE128",
+                        // format: "CODE128",
+                        // width: 1,
+                        // height: 30,
+                        // displayValue: false
                         width: 1,
-                        height: 30,
-                        displayValue: false
+                        height: 20,
+                        displayValue: true
                     });
                 });
                 customPrint();

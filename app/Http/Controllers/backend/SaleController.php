@@ -97,10 +97,45 @@ class SaleController extends Controller
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.jobs.add-new-item',compact('data'));
     }
+    public function is_duplicate($sale_id, $new_item_package_ids)
+    {   
+        $soldItems = [];
+        $saleDetails = SaleDetails::where('sale_id', $sale_id)->get();
+        foreach($saleDetails as $key=> $sd){
+            $item = Item::find($sd->item_id);
+            if ($item->item_type == 0) {
+                $soldItems[] = $item->id;
+            } else{
+                $package_item_ids = Item::where('package_id', $item->id)->pluck('package_item_id')->toArray();
+                foreach ($package_item_ids as $pid) {
+                    $soldItems[] = $pid;
+                }
+            }
+        }
+
+        $newItemIds = [];
+        foreach($new_item_package_ids as $key=> $nipid){
+            $item = Item::find($nipid);
+            if ($item->item_type == 0) {
+                $newItemIds[] = $item->id;
+            } else{
+                $package_item_ids = Item::where('package_id', $item->id)->pluck('package_item_id')->toArray();
+                foreach ($package_item_ids as $pid) {
+                    $newItemIds[] = $pid;
+                }
+            }
+        }
+        return count(array_intersect($soldItems, $newItemIds)) > 0 ? true : false;
+    }
     public function newStore(Request $request,$id)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
+
+
+            
+
+
             
             $account_id = $request->account_id;
             $date = $request->date;
@@ -112,10 +147,16 @@ class SaleController extends Controller
             $reference_number = $request->reference_number;
 
             $created_by_id = Auth::guard('admin')->user()->id;
-            $item_id = $request->item_id;
+            $item_ids = $request->item_id;
             $unit_price = $request->unit_price;
-    
             $updated_by_id = Auth::guard('admin')->user()->id;
+
+
+            if($this->is_duplicate($id, $item_ids)){
+                return redirect()->back()->with('alert', ['messageType' => 'warning', 'message' => 'Duplicate Item Found!']);
+            }
+
+
             $sale = Sale::find($id);
             $sale->total_price += $total_pice;
             $sale->total_payable += $total_payable;
@@ -129,10 +170,10 @@ class SaleController extends Controller
             $sale->payment_status = ($sale->total_payable == $sale->paid_amount) ? 1 : 0;
             $sale->updated_by_id = $updated_by_id;
             $sale->save();
-            for ($i = 0; $i < count($item_id); $i++) {
+            for ($i = 0; $i < count($item_ids); $i++) {
                 $saleDetails = new SaleDetails();
                 $saleDetails->sale_id = $sale->id;
-                $saleDetails->item_id = $item_id[$i];
+                $saleDetails->item_id = $item_ids[$i];
                 $saleDetails->date = $sale->date;
                 $saleDetails->unit_price = $unit_price[$i];
                 $saleDetails->save();
@@ -185,11 +226,11 @@ class SaleController extends Controller
             }
             $this->updateServiceItemPurchaseFlug($sale->id);
             $this->generateProfit($id);
-            DB::commit();
+            // DB::commit();
             return redirect()->route('sales.index')->with('alert', ['messageType' => 'success', 'message' => 'Data Inserted Successfully!']);
         } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
+            // DB::rollback();
+            // return redirect()->back()->with('alert', ['messageType' => 'error', 'message' => 'Something went wrong! ' . $e->getMessage()]);
         }
     }
 
@@ -624,7 +665,7 @@ class SaleController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Sale approved successfully.'
+                'message' => 'Job approved successfully.'
             ], 200);
             
         } catch (\Exception $e) {
@@ -679,12 +720,9 @@ class SaleController extends Controller
     {
         // Start with all standalone service items
         $service_item_ids = Item::where(['item_type' => 0, 'is_saleable' => 0])->pluck('id')->toArray();
-    
         $saleDetails = SaleDetails::where('sale_id', $sale_id)->get();
-    
         foreach ($saleDetails as $sd) {
             $item = Item::findOrFail($sd->item_id);
-    
             if ($item->item_type == 0) {
                 // Already included in initial list, but just in case
                 if (!in_array($item->id, $service_item_ids)) {
@@ -693,7 +731,7 @@ class SaleController extends Controller
             } elseif ($item->item_type == 1) {
                 // For packages, fetch all items in the package
                 $package_item_ids = Item::where('package_id', $item->id)->pluck('package_item_id')->toArray();
-    
+                
                 foreach ($package_item_ids as $pid) {
                     if (!in_array($pid, $service_item_ids)) {
                         $service_item_ids[] = $pid;
@@ -701,7 +739,6 @@ class SaleController extends Controller
                 }
             }
         }
-    
         // Update job service records where items match and not purchased yet
         JobServiceRecords::where([
             'job_id' => $sale_id,
@@ -715,6 +752,25 @@ class SaleController extends Controller
     {
         Sale::destroy($id);
         SaleDetails::where('sale_id',$id)->delete();
+        return response()->json(['success'=>true,'message'=>'Data Deleted Successfully!'], 200);
+    }
+    
+    public function deleteSoldItems($id)
+    {
+        $saleDetail = SaleDetails::find($id);
+
+        $salePrice = $saleDetail->unit_price;
+        $discount = $saleDetail->unit_price - $saleDetail->net_sale_price;
+        
+        $sale = Sale::find($saleDetail->sale_id);
+        $sale->total_price -= $salePrice;
+        $sale->total_payable -= ($salePrice - $discount);
+        $sale->paid_amount -= ($salePrice - $discount);
+        $sale->discount -= $discount;
+        $sale->payment_status = ($sale->total_payable == $sale->paid_amount) ? 1 : 0;
+        $sale->save();
+
+        $saleDetail->delete();
         return response()->json(['success'=>true,'message'=>'Data Deleted Successfully!'], 200);
     }
 
@@ -779,12 +835,12 @@ class SaleController extends Controller
                     if($status_filter_value == 2){
                         $sq->whereDate('entry_date', Carbon::today());
                     }else{
-                        
                         if($status_filter_value == 7){
                             $sq->where('is_enabled', 1);
                         }
                         if($status_filter_value == 16){
                             $sq->where('is_enabled', 1);
+                            $status_filter_value = 17;
                         }
                         $sq->where('status_id', $status_filter_value);
                     }

@@ -34,6 +34,10 @@
         .copy-cell:hover .copy-icon {
             display: inline;
         }
+        .btn-action-size {
+            width: 35px;
+            height: 35px;
+        }
     </style>
     <div class="content-wrapper">
         @include('layouts.admin.content-header')
@@ -80,7 +84,7 @@
                                             <option value="service_status.7">Settlement Pending</option>
                                             <option value="service_status.8">Settlement Requests</option>
                                             <option value="service_status.12">Slip Request</option>
-                                            <option value="service_status.16">Online On Wafid</option>
+                                            <option value="service_status.16">Online Fit On WAFID</option>
                                             <option value="service_status.18">MOFA Request</option>
                                             <option value="service_status.23">FIT Card Request</option>
                                             <option value="service_status.25">FIT Card Ready</option>
@@ -193,8 +197,46 @@
 @endsection
 @section('script')
     <script>
-        
+        let page_length = 10;
         let rollType = "{{ $roleType }}";
+        let customer_id = "{{ $customer_id }}";
+        const hasPermission = 
+        {
+            edit: parseInt("{{ $edit }}"),
+            delete: parseInt("{{ $delete }}"),
+            approve: parseInt("{{ $approve }}"),
+            view: parseInt("{{ $view }}"),
+            print: parseInt("{{ $print }}"),
+            payment: parseInt("{{ $payment }}"),
+            add_new_item: parseInt("{{ $add_new_item }}"),
+            service_status_update: parseInt("{{ $service_status_update }}"),
+            token: parseInt("{{ $token }}"),
+        };
+
+
+        function saveFiltersToLocalStorage(data = {}) {
+            const filters = {
+                customer_id: $('#customer_id').val(),
+                status_filter: $('#status_filter').val(),
+                remaining_days: $('#remaining_days').val(),
+                page_length: data.page_length || page_length,
+            };
+            localStorage.setItem('sales_filters', JSON.stringify(filters));
+        }
+
+        function loadFiltersFromLocalStorage() {
+            const saved = localStorage.getItem('sales_filters');
+            if (saved) {
+                const filters = JSON.parse(saved);
+                if (filters.customer_id !== undefined) $('#customer_id').val(filters.customer_id).trigger('change.select2');
+                if (filters.status_filter !== undefined) $('#status_filter').val(filters.status_filter).trigger('change.select2');
+                if (filters.remaining_days !== undefined) $('#remaining_days').val(filters.remaining_days).trigger('change.select2');
+                if (filters.page_length !== undefined) page_length = filters.page_length || page_length;
+            }
+        }
+
+        
+        
 
         $('#status_filter').on('change', function() {
             const url = new URL(window.location.href);
@@ -204,18 +246,12 @@
 
         });
         $(document).ready(function() {
-            let customer_id = "{{ $customer_id }}";
-            const hasPermission = {
-                edit: parseInt("{{ $edit }}"),
-                delete: parseInt("{{ $delete }}"),
-                approve: parseInt("{{ $approve }}"),
-                view: parseInt("{{ $view }}"),
-                print: parseInt("{{ $print }}"),
-                payment: parseInt("{{ $payment }}"),
-                add_new_item: parseInt("{{ $add_new_item }}"),
-                service_status_update: parseInt("{{ $service_status_update }}"),
-                token: parseInt("{{ $token }}"),
-            };
+
+            loadFiltersFromLocalStorage();
+
+
+
+
             $(document).on('click', '.pay-now', function(e) {
                 $('#sale_id').val($(this).attr('sale-id'));
                 $('#amount').val(parseFloat($(this).attr('due')).toFixed(2));
@@ -233,7 +269,7 @@
 
 
             var table = $('#dataTable').DataTable({
-                pageLength: 100,
+                pageLength: page_length,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -471,7 +507,11 @@
                 }
             });
             $(document).on('change', '.filter', function() {
+                saveFiltersToLocalStorage();
                 table.draw();
+            });
+            $('#dataTable').on('length.dt', function(e, settings, len) {
+                saveFiltersToLocalStorage({ page_length: len });
             });
 
             $(document).on('click', '.delete button', function(e) {
@@ -633,17 +673,17 @@
             let destroy = `{{ route('sales.destroy', ':id') }}`.replace(':id', row.id);
             let action = ` <div>`;
 
-            if (hasPermission.token) action += `<a style="width: 35px;width: 35px;" href="${token}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-receipt"></i></a><br>`;
-            if (hasPermission.view) action += `<a style="width: 35px;width: 35px;" href="${view}" class="btn btn-sm btn-warning"><i class="fa-solid fa-eye"></i></a><br>`;
-            if (hasPermission.print) action += `<a style="width: 35px;width: 35px;" href="${print}" class="btn btn-sm btn-dark"><i class="fa-solid fa-print"></i></a><br>`;
-            if (hasPermission.payment) action += `<button style="width: 35px;width: 35px;" due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn btn-success btn-sm pay-now" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}><i class="fa-solid fa-hand-holding-dollar"></i></button><br>`;
-            if (hasPermission.add_new_item) action += `<a style="width: 35px;width: 35px;" href="${addNewItem}" class="btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}"><i class="fa-solid fa-plus"></i></a><br>`;
-            if (hasPermission.edit) action += `<a style="width: 35px;width: 35px;" href="${edit}" class="btn btn-sm btn-info ${row.status != '0' && rollType != 1 ? 'disabled' : null}"><i class="fa-solid fa-pen-to-square"></i></a><br>`;
+            if (hasPermission.token) action += `<a style="" href="${token}" class="btn-action-size btn btn-sm btn-secondary"><i class="fa-solid fa-receipt"></i></a><br>`;
+            if (hasPermission.view) action += `<a href="${view}" class="btn-action-size btn btn-sm btn-warning"><i class="fa-solid fa-eye"></i></a><br>`;
+            if (hasPermission.print) action += `<a href="${print}" class="btn-action-size btn btn-sm btn-dark"><i class="fa-solid fa-print"></i></a><br>`;
+            if (hasPermission.payment) action += `<button due="${row.total_payable - row.paid_amount}" sale-id="${row.id }" type="button" class="btn-action-size btn btn-success btn-sm pay-now" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" ${(row.total_payable - row.paid_amount)==0? 'disabled' : null}><i class="fa-solid fa-hand-holding-dollar"></i></button><br>`;
+            if (hasPermission.add_new_item) action += `<a href="${addNewItem}" class="btn-action-size btn btn-sm btn-primary ${row.status == '2' ? "disabled" : null}"><i class="fa-solid fa-plus"></i></a><br>`;
+            if (hasPermission.edit) action += `<a href="${edit}" class="btn-action-size btn btn-sm btn-info ${row.status != '0' && rollType != 1 ? 'disabled' : null}"><i class="fa-solid fa-pen-to-square"></i></a><br>`;
             if (hasPermission.delete){
                 action += `<form class="delete" action="${destroy}" method="post">
                                     @csrf
                                 @method('DELETE')
-                                <button style="width: 35px;width: 35px;" type="submit" class="btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
+                                <button type="submit" class="btn-action-size btn btn-sm btn-danger" ${row.status != '0' ? "disabled" : null}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                         </form>`;
@@ -651,6 +691,8 @@
             action += `</div>`;
             return action;
         }
+
+    
 
     </script>
 @endsection

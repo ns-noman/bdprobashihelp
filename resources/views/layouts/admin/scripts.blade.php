@@ -83,7 +83,7 @@
 			toastr.warning("{{ session('alert')['message'] }}", "Warning!");
 		}
 		if("{{ session('alert')['messageType'] == 'danger' }}"){
-			toastr.warning("{{ session('alert')['message'] }}", "Danger!");
+			toastr.warning("{{ session(key: 'alert')['message'] }}", "Danger!");
 		}
     @endif
 </script>

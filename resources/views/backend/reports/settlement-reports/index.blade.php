@@ -45,10 +45,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th>SN</th>
-                                                            <th>Agent Name</th>
+                                                            <th>Agent Code</th>
                                                             <th>Passport No</th>
                                                             <th>Local Host</th>
-                                                            <th>Local Host Bar</th>
+                                                            {{-- <th>Local Host Bar</th> --}}
                                                             <th>Amount</th>
                                                         </tr>
                                                     </thead>
@@ -100,7 +100,8 @@
         columns: [
 
                     { data: null, orderable: false, searchable: false },
-                    { data: 'agent_name', name: 'customers.agent_name'},
+                    { data: 'agent_code', name: 'customers.agent_code'},
+                    // { data: 'agent_name', name: 'customers.agent_name'},
                     {
                         data: 'passenger_passport_no', 
                         name: 'sales.passenger_passport_no', 
@@ -110,15 +111,15 @@
                             return row.passenger_passport_no.toUpperCase();
                         }
                     },
-                    {
-                        data: 'localhost_no', 
-                        name: 'sales.localhost_no', 
-                        orderable: true, 
-                        searchable: true, 
-                        render: function(data, type, row, meta) {
-                            return row.localhost_no.toUpperCase();
-                        }
-                    },
+                    // {
+                    //     data: 'localhost_no', 
+                    //     name: 'sales.localhost_no', 
+                    //     orderable: true, 
+                    //     searchable: true, 
+                    //     render: function(data, type, row, meta) {
+                    //         return row.localhost_no.toUpperCase();
+                    //     }
+                    // },
                     {
                         data: 'localhost_no', 
                         name: 'sales.localhost_no', 
@@ -151,10 +152,10 @@
                 $('.barcode').each(function () {
                     const value = $(this).data('barcode') || 'N/A';
                     JsBarcode(this, value, {
-                        format: "CODE128",
+                        // format: "CODE128",
                         width: 1,
-                        height: 30,
-                        displayValue: false,
+                        height: 20,
+                        displayValue: true
                     });
                 });
             }

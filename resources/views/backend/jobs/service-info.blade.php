@@ -56,7 +56,7 @@
                                                     <label>Status *</label>
                                                     <select name="status_id" id="status_id" class="form-control select2">
                                                         @foreach ($data['statusList'] as $statusList)
-                                                            <option @selected($data['jobServiceRecord']['status_id'] == $statusList['id']) value="{{ $statusList['id'] }}">{{ $statusList['id'] }}: {{ $statusList['name_for_agent'] ? $statusList['name_for_agent'] : $statusList['name'] }}</option>
+                                                            <option @selected($data['jobServiceRecord']['status_id'] == $statusList['id']) value="{{ $statusList['id'] }}">{{ $statusList['name_for_agent'] ? $statusList['name_for_agent'] : $statusList['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

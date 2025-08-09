@@ -220,6 +220,7 @@ Route::prefix('backend')->group(function () {
                 Route::put('service-update/{serviceRecordId}','serviceUpdate')->name('sales.service-update');
                 Route::delete('delete/{id}','destroy')->name('sales.destroy');
                 Route::get('approve/{id}','approve')->name('sales.approve');
+                Route::delete('delete-sold-items/{id}','deleteSoldItems')->name('sales.delete-sold-items');
             });
 
             Route::prefix('customers')->controller(CustomerController::class)->group(function(){
