@@ -8,6 +8,8 @@ use App\Models\Expense;
 use App\Models\Sale;
 use App\Models\Account;
 use App\Models\AccountLedger;
+use App\Models\Customer;
+use App\Models\CustomerLedger;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -267,5 +269,57 @@ class ReportController extends Controller
         return Account::join('payment_methods', 'payment_methods.id', '=', 'accounts.payment_method_id')
                             ->where(['accounts.status'=>1, 'payment_methods.is_virtual'=>0])
                             ->select('accounts.*', 'payment_methods.name as payment_method');
+    }
+    public function agentLedger(Request $request)
+    {
+        $data['breadcrumb'] = ['title' => 'Agent Ledger'];
+        if ($request->isMethod("POST")) {
+            $data['date'] = $request->date;
+            $data['customer_id'] = $request->customer_id;
+            $query = $this->agentLedgerQuery($data);
+            $query2 = clone $query;
+            $agentLedgerSummery = $query2->select(DB::raw('SUM(credit_amount) as credit_amount, SUM(debit_amount) as debit_amount'))->first();
+            return DataTables::of($query)->with(['customerLedgerSummery'=> $agentLedgerSummery])->make(true);
+        }else {
+            $print = $request->input('print');
+            if ($print=='true') {
+                $data['basicInfo'] = BasicInfo::first()->toArray();
+                $data['date'] = $request->date;
+                $data['customer_id'] = $request->customer_id;
+                $query = $this->agentLedgerQuery($data);
+                $data['lists'] = $query->get()->toArray();
+                $data['customer_info'] = Customer::find($data['customer_id']);
+                return view('backend.reports.customer-ledgers.print', compact('data'));
+            }else {
+                $data['customers'] = Customer::where('status',1)->orderBy('name','asc')->get()->toArray();
+                return view('backend.reports.customer-ledgers.index', compact('data'));
+            }
+        }
+    }
+
+    public function agentLedgerQuery($data)
+    {
+        $select = [
+            'customer_ledgers.id',
+            'customer_ledgers.customer_id',
+            'sales.invoice_no',
+            'sales.passenger_passport_no',
+            'customer_ledgers.sale_id',
+            'customer_ledgers.payment_id',
+            'customer_ledgers.account_id',
+            'customer_ledgers.particular',
+            'customer_ledgers.date',
+            'customer_ledgers.debit_amount',
+            'customer_ledgers.credit_amount',
+            'customer_ledgers.current_balance',
+            'customer_ledgers.reference_number',
+        ];
+        if ($data['date']) [$year, $month] = explode('-', $data['date']);
+        $query = CustomerLedger::leftJoin('sales','sales.id', '=', 'customer_ledgers.sale_id')->whereYear('customer_ledgers.date', $year)
+                    ->whereMonth('customer_ledgers.date', $month)
+                    ->where('customer_ledgers.customer_id', $data['customer_id'])
+                    ->orderBy('customer_ledgers.id')
+                    ->select($select);
+        return $query;
     }
 }

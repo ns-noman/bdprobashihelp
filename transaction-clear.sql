@@ -19,3 +19,9 @@ UPDATE `parties` SET `current_balance`='0' WHERE 1;
 -- Expenses
 TRUNCATE `expenses`;
 TRUNCATE `expense_details`;
+
+
+DELETE
+FROM `customer_ledgers`
+WHERE (credit_amount = 0 OR credit_amount IS NULL)
+  AND (debit_amount = 0 OR debit_amount IS NULL);

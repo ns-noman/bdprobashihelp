@@ -150,6 +150,7 @@ Route::prefix('backend')->group(function () {
                 Route::match(['get', 'post'],'stock-reports','stockReport')->name('reports.stock-reports');
                 Route::match(['get', 'post'],'stock-histories','stockHistory')->name('reports.stock-histories');
                 Route::match(['get', 'post'],'settlement','settlement')->name('reports.settlement');
+                Route::match(['get', 'post'],'agent-ledgers','agentLedger')->name('reports.agent-ledgers');
             });
 
 

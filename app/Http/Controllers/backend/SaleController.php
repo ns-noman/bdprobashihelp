@@ -610,15 +610,16 @@ class SaleController extends Controller
 
             $this->generateProfit($id);
 
-            // Customer ledger entry for sale
-            $customerLedgerDataSale['customer_id'] = $customer_id;
-            $customerLedgerDataSale['sale_id'] = $sale->id;
-            $customerLedgerDataSale['particular'] = 'Sale';
-            $customerLedgerDataSale['date'] = $date;
-            $customerLedgerDataSale['credit_amount'] = $total_payable;
-            $customerLedgerDataSale['note'] = $note;
-            $customerLedgerDataSale['created_by_id'] = $created_by_id;
-            $this->customerLedgerTransction($customerLedgerDataSale);
+            if($total_payable > 0 || $total_payable < 0 ){
+                $customerLedgerDataSale['customer_id'] = $customer_id;
+                $customerLedgerDataSale['sale_id'] = $sale->id;
+                $customerLedgerDataSale['particular'] = 'Sale';
+                $customerLedgerDataSale['date'] = $date;
+                $customerLedgerDataSale['credit_amount'] = $total_payable;
+                $customerLedgerDataSale['note'] = $note;
+                $customerLedgerDataSale['created_by_id'] = $created_by_id;
+                $this->customerLedgerTransction($customerLedgerDataSale);
+            }
 
             if ($paid_amount>0)
             {
