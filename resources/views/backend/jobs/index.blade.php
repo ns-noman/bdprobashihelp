@@ -346,15 +346,8 @@
                                     let serviceNotPurchaseEvent = '';
                                     let serviceNamePrefix = '';
 
-
                                     if (job_service_record.medical_centers != null) {
-                                        let centersArray = job_service_record
-                                            .medical_centers.split('|');
-                                        centersArray.forEach((center, index) => {
-                                            medicalCenterTxt += center.split(':')[
-                                                2] + ((index + 1) < centersArray
-                                                    .length ? ', ' : '');
-                                        });
+                                        medicalCenterTxt = job_service_record.medical_centers.split('|').map((item, index) => {return (index+1) + ". " + item.split(':')[1]}).join('<br>');
                                     }
 
                                     statusTxt = job_service_record.servicestatus.name;
@@ -408,7 +401,7 @@
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.entry_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;">${job_service_record.expire_date ?? ''}</td>
                                                 <td style="vertical-align: middle;width: auto;background-color: ${remaining_days_obj.hasExpireDate && (remaining_days_obj.remaining_days!=null && remaining_days_obj.remaining_days>=0) ? getColorFromPercentage(remaining_days_obj.maxRemainingDays, remaining_days_obj.remaining_days) : ''}">${remaining_days_obj.remaining_days_label}</td>
-                                                <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${medicalCenterTxt}</td>
+                                                <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal; font-size: 11px;font-weight: bold;">${medicalCenterTxt}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.slip_no || job_service_record.mofa_no || ''}</td>
                                                 <td style="vertical-align: middle;width: auto;word-break: normal; white-space: normal;">${job_service_record.remarks ?? ''}</td>
                                             </tr>`;
