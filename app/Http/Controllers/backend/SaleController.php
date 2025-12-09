@@ -74,7 +74,7 @@ class SaleController extends Controller
         $data['is_agent'] = Auth::guard('admin')->user()->agent_id ? true : false;
         $data['agent_id'] = Auth::guard('admin')->user()->agent_id;
         $data['countries'] = Country::where('status', '=', 1)->get();
-        $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>1])->orderBy('id','asc')->get()->toArray();
+        $data['centers'] = MedicalCenter::where(['status'=>1, 'parent_id'=>null])->orderBy('id','asc')->get()->toArray();
         return view('backend.jobs.create-or-edit',compact('data'));
     }
     public function addNewItem($id=null)
@@ -251,8 +251,7 @@ class SaleController extends Controller
             $data['statusList'] = $data['statusList']->whereNotNull('name_for_agent');
         }
         $data['statusList'] = $data['statusList']->orderBy('srl', 'asc')->get()->toArray();
-
-        $data['centers'] = MedicalCenter::where(['status'=>1, 'medical_type'=>0])->orderBy('name','asc')->get()->toArray();
+        $data['centers'] = MedicalCenter::where(['status'=>1, 'parent_id'=>$data['sale']['medical_id']])->orderBy('name','asc')->get()->toArray();
         $data['breadcrumb'] = $this->breadcrumb;
         return view('backend.jobs.service-info',compact('data'));
     }
@@ -672,9 +671,8 @@ class SaleController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'success' => false,
-                'message' => 'Error approving sale.',
-                'error'   => $e->getMessage(),
+                'messageType' => false,
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

@@ -10,8 +10,10 @@ return new class extends Migration
     {
         Schema::create('medical_centers', function (Blueprint $table) {
             $table->id();
+            $table->integer('parent_id')->default(null)->nullable();
             $table->string('name');
             $table->string('code');
+            $table->string('address')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0=Inactive, 1=Active');
             $table->timestamps();
         });

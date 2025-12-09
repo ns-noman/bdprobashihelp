@@ -224,6 +224,16 @@ Route::prefix('backend')->group(function () {
                 Route::delete('delete-sold-items/{id}','deleteSoldItems')->name('sales.delete-sold-items');
             });
 
+
+            Route::prefix('medical-centers')->controller(MedicalCenterController::class)->group(function(){
+                Route::get('','index')->name('medical-centers.index');
+                Route::get('create','createOrEdit')->name('medical-centers.create');
+                Route::get('edit/{id?}','createOrEdit')->name('medical-centers.edit');
+                Route::post('store','store')->name('medical-centers.store');
+                Route::put('update/{id}','update')->name('medical-centers.update');
+                Route::delete('delete/{id}','destroy')->name('medical-centers.destroy');
+            });
+
             Route::prefix('customers')->controller(CustomerController::class)->group(function(){
                 Route::get('','index')->name('customers.index');
                 Route::post('store','store')->name('customers.store');

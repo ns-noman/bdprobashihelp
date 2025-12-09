@@ -10,12 +10,15 @@ class MedicalCenter extends Model
     use HasFactory;
     protected $fillable = 
     [
-        'medical_type',
+        'parent_id',
         'name',
         'code',
         'address',
         'status',
     ];
-    
-    
+
+    public function parent()
+    {
+        return $this->belongsTo(MedicalCenter::class, 'parent_id');
+    }
 }

@@ -5,12 +5,8 @@ namespace App\Http\Controllers\backend;
 use App\Models\Sale;
 use App\Models\SaleDetails;
 use App\Models\BasicInfo;
-use App\Models\PaymentMethod;
-use App\Models\CustomerPayment;
 use App\Models\Customer;
 use App\Models\Item;
-use App\Models\BikeService;
-use App\Models\CustomerLedger;
 use App\Models\JobServiceRecords;
 use App\Models\MedicalCenter;
 use App\Models\StatusList;
@@ -18,8 +14,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Auth;
-use Carbon\Carbon;
 
 class MyJobContorller extends Controller
 {
