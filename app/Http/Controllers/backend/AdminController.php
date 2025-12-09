@@ -94,27 +94,53 @@ class AdminController extends Controller
         $data['breadcrumb'] = ['title'=> 'Profile'];
         return view('backend.profile.profile',compact('data'));
     }
-    public function updatePassword(Request $request, $id=null)
+    public function updatePassword(Request $request, $id = null)
     {
-        if($request->isMethod('post'))
-        {
-            $data = Admin::find($id)->update(['password'=>Hash::make($request->new_password)]);
-            return response()->json($data, 200);
-        }
-        $data['breadcrumb'] = ['title'=> 'Update Password'];
-        return view('backend.update-password.update-password',compact('data'));
-    }
+        if ($request->isMethod('post')) {
 
+            $request->validate([
+                'new_password' => 'required|string|min:6'
+            ]);
+
+            $admin = Admin::find($id);
+
+            if (!$admin) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'User not found'
+                ], 404);
+            }
+
+            $admin->password = Hash::make($request->new_password);
+            $saved = $admin->save();
+
+            return response()->json([
+                'status'  => $saved ? true : false,
+                'message' => $saved ? 'Password updated successfully' : 'Update failed'
+            ], 200);
+        }
+
+        $data['breadcrumb'] = ['title'=> 'Update Password'];
+        return view('backend.update-password.update-password', compact('data'));
+    }
     public function checkPassword(Request $request)
     {
-        if(Hash::check($request->current_password, Auth::guard('admin')->user()->password)){
-            $data = true;
-        }else{
-            $data = false;
-        }
-        return response()->json($data, 200);
-    }
+        $request->validate([
+            'current_password' => 'required|string|min:3',
+        ]);
 
+        $admin = Auth::guard('admin')->user();
+
+        if (!$admin) {
+            return response()->json(['status' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
+        $isCorrect = Hash::check($request->current_password, $admin->password);
+
+        return response()->json([
+            'status' => $isCorrect
+        ], 200);
+    }
     public function login(Request $request){
         if (Auth::guard('admin')->check()) {
             return redirect()->route('dashboard.index');
