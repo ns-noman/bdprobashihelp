@@ -777,6 +777,12 @@ class SaleController extends Controller
     {
         $status_filter_type = $request->input('status_filter_type');
         $status_filter_value = $request->input('status_filter_value');
+
+        $customer_id = Auth::guard('admin')->user()->agent_id;
+        $user_type = Auth::guard('admin')->user()->type;
+
+        $customer_id = $user_type == 2 ? $customer_id : $request->customer_id;
+ 
         $select = 
         [
             'sales.id',
@@ -809,8 +815,8 @@ class SaleController extends Controller
                     ->join('admins', 'admins.id', '=', 'sales.created_by_id');
 
 
-        if($request->has('customer_id') && $request->customer_id != 0){
-            $query = $query->where('customer_id', $request->customer_id);
+        if($request->has('customer_id') && $customer_id != 0){
+            $query = $query->where('customer_id', $customer_id);
         }
 
         if($status_filter_type == 'job_status'){

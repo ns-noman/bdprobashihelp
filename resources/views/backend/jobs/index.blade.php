@@ -61,9 +61,8 @@
                                         <label>Agents *</label>
                                         <select class="form-control filter select2" id="customer_id" name="customer_id">
                                             <option value="0">All Agents</option>
-                                            @foreach ($data['customers'] as $customers)
-                                                <option @selected(Auth::guard('admin')->user()->agent_id == $customers['id']) value="{{ $customers['id'] }}">
-                                                    {{ $customers['name'] }}</option>
+                                            @foreach ($data['customers'] as $customer)
+                                                <option value="{{ $customer['id'] }}">{{ $customer['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -216,7 +215,7 @@
 
         function saveFiltersToLocalStorage(data = {}) {
             const filters = {
-                customer_id: $('#customer_id').val(),
+                customer_id: $('#customer_id option:selected').val(),
                 status_filter: $('#status_filter').val(),
                 remaining_days: $('#remaining_days').val(),
                 page_length: data.page_length || page_length,
@@ -298,7 +297,7 @@
                                 status_filter_value = null;
                             }
                         }
-                        const customer_id = $('#customer_id').val();
+                        const customer_id = $('#customer_id option:selected').val();
                         const remaining_days = $('#remaining_days').val();
 
                         d.customer_id = customer_id || (rollType == 2 ? "{{ $customer_id }}" : 0);
