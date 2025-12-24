@@ -78,13 +78,15 @@
                                             <option value="job_status.4">Cancelled Job</option>
                                         </optgroup>
                                         <optgroup label="Service Status">
-                                            <option value="service_status.2">Today Medical Completed</option>
-                                            <option value="service_status.3">Waiting For Medical Result</option>
-                                            <option value="service_status.7">Settlement Pending</option>
+                                            <option value="service_status.1">Waiting For Medical Complete</option>
+                                            <option value="service_status.2">Today's Pre-Medical Completed List</option>
+                                            <option value="service_status.3">Waiting for Result Published</option>
+                                            <option value="service_status.7">Waiting for Satelment</option>
                                             <option value="service_status.8">Settlement Requests</option>
+                                            <option value="service_status.11">Waiting for Slip submission</option>
                                             <option value="service_status.12">Slip Request</option>
                                             <option value="service_status.16">Online Fit On WAFID</option>
-                                            <option value="service_status.18">MOFA Request</option>
+                                            <option value="service_status.18">Requested for MOFA</option>
                                             <option value="service_status.23">FIT Card Request</option>
                                             <option value="service_status.25">FIT Card Ready</option>
                                             <option value="service_status.26">FIT Card Delivery Done</option>

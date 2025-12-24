@@ -59,7 +59,13 @@ class DashboardController extends Controller
                 ->count();
 
         $data['today_medical_completed'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
-                ->where(['sales.status'=> 1])
+                ->where(['sales.status'=> 1, 'job_service_records.status_id'=> 2])
+                ->whereDate('job_service_records.entry_date', Carbon::today())
+                ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
+                ->count();
+
+        $data['today_medical_pending'] = JobServiceRecords::join('sales', 'sales.id', '=', 'job_service_records.job_id')
+                ->where(['sales.status'=> 1, 'job_service_records.status_id'=> 1])
                 ->whereDate('job_service_records.entry_date', Carbon::today())
                 ->when($agent_id, fn($q) => $q->where('sales.customer_id', $agent_id))
                 ->count();

@@ -148,7 +148,7 @@
                                             <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Requested For Slip</span>
+                                            <span class="info-box-text">Waiting for Slip submission</span>
                                             <span class="info-box-number">
                                                 {{ $data['request_for_slip'] }}
                                             </span>
@@ -162,7 +162,7 @@
                                             <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Requested For MOFA</span>
+                                            <span class="info-box-text">Requested for MOFA</span>
                                             <span class="info-box-number">
                                                 {{ $data['request_for_mofa'] }}
                                             </span>
@@ -176,7 +176,7 @@
                                             <i class="fas fa-share-square"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Requested For Fit Card</span>
+                                            <span class="info-box-text">Waiting for FIT Card Processing</span>
                                             <span class="info-box-number">
                                                 {{ $data['request_for_fitcard'] }}
                                             </span>
@@ -191,12 +191,25 @@
                             <h5 class="mb-2">Others Service Status</h5>
                             <div class="row">
                                 <div class="col" {{ !$authorization->hasMenuAccess(47) ? 'hidden' : null }}>
+                                    <a class="info-box cursor-pointer mb-3 activeable2" data-filteron="" href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 1]) }}">
+                                        <span class="info-box-icon bg-success elevation-1">
+                                            <i class="fa fa-tag"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Waiting For Medical Complete</span>
+                                            <span class="info-box-number">
+                                                {{ $data['today_medical_pending'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col" {{ !$authorization->hasMenuAccess(47) ? 'hidden' : null }}>
                                     <a class="info-box cursor-pointer mb-3 activeable2" data-filteron="" href="{{ route('sales.index', ['status_filter_type' => 'service_status', 'status_filter_value' => 2]) }}">
                                         <span class="info-box-icon bg-success elevation-1">
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Today Medical Completed</span>
+                                            <span class="info-box-text">Today's Pre-Medical Completed List</span>
                                             <span class="info-box-number">
                                                 {{ $data['today_medical_completed'] }}
                                             </span>
@@ -210,7 +223,7 @@
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Waiting For Medical Result</span>
+                                            <span class="info-box-text">Waiting for Result Published</span>
                                             <span class="info-box-number">
                                                 {{ $data['waiting_for_medical_result'] }}
                                             </span>
@@ -224,7 +237,7 @@
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Settlement Pending</span>
+                                            <span class="info-box-text">Waiting for Satelment</span>
                                             <span class="info-box-number">
                                                 {{ $data['pending_settlement'] }}
                                             </span>
@@ -238,7 +251,7 @@
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">Online Fit On Wafid</span>
+                                            <span class="info-box-text">Online Fit On WAFID</span>
                                             <span class="info-box-number">
                                                 {{ $data['online_on_wafid'] }}
                                             </span>
@@ -252,7 +265,7 @@
                                             <i class="fa fa-tag"></i>
                                         </span>
                                         <div class="info-box-content">
-                                            <span class="info-box-text">FIT Card Ready</span>
+                                            <span class="info-box-text">FIT Card Ready for Delivery</span>
                                             <span class="info-box-number">
                                                 {{ $data['fit_card_ready'] }}
                                             </span>
